@@ -1,10 +1,11 @@
-<link rel="stylesheet" href="/css/error.css">
-
 <div class="container">
     <div class="error">
         <h1>{{statusCode}}</h1>
         <h2>error</h2>
         <p>{{errorContent}}</p>
+        {{#if redirectURL}}
+        <a class="btn btn-dark" href="{{redirectURL}}">{{redirectContent}}</a>
+        {{/if}}
     </div>
     <div class="stack-container">
         <div class="card-container">
@@ -110,7 +111,4 @@
             </div>
         </div>
     </div>
-
 </div>
-
-<script src="/js/error.js"></script>

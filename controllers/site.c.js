@@ -1,10 +1,10 @@
 module.exports = {
-    getIndex: async(req,res,next) => {
+    getIndex: async (req, res, next) => {
         try {
-            res.render('index')
+            res.render('index');
         } catch (error) {
             next(error);
         };
-        
+
     }
 }
