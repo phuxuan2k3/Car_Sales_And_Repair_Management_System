@@ -11,5 +11,6 @@ const authenticate = require('../middlewares/authentication');
 
 router.use(session);
 router.get('/', authenticate.auth, siteController.getIndex);
+router.get('/login', siteController.getLoginPage);
 
 module.exports = router;
