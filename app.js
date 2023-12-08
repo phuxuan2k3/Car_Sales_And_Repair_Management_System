@@ -14,6 +14,7 @@ configStaticResource(app,path.join(__dirname,'public'))
 
 //Router
 app.use('/',require('./routers/site.r'));
+app.use('/test',require('./routers/testview.r'))
 
 //Handle error middleware
 app.use(NotFound);
