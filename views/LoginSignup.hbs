@@ -1,63 +1,21 @@
-<style>
-    :root {
-        --primaryColor: #0B488E;
-        --secondaryColor: #fff;
-    }
-
-    .textPrimary {
-        color: var(--primaryColor) !important;
-    }
-
-    .bgPrimary {
-        background-color: var(--primaryColor) !important;
-    }
-
-
-    .loginImage img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-
-    .content {
-        transition: 0.2s ease-in;
-    }
-
-    .carousel {
-        transition: 0.5s ease-in;
-    }
-
-    .hidden {
-        opacity: 0;
-    }
-
-    .carouselSignup {
-        transform: translateX(-140%);
-    }
-
-    .changeToSignup {
-        transform: translateX(71%);
-    }
-</style>
-
 <div class="container-fluid">
     <div class="bg-light row justify-content-center align-items-center g-2  vh-100 m-5">
         <div class="col-7 content">
             <div class=" m-5 loginContent">
                 <p class="h1 mb-5">Welcome to SGX Auto</p>
-                <form action="" class="loginForm">
+                <form action="/login" method="POST" class="loginForm">
                     <div class="mb-4">
                         <label for="loginUsername" class="form-label">Username</label>
-                        <input type="text" class="form-control w-75" id="loginUsername" placeholder="Enter username">
+                        <input name="Username" type="text" class="form-control w-75" id="loginUsername"
+                            placeholder="Enter username">
                     </div>
                     <div class="mb-4">
                         <label for="loginPassword" class="form-label ">Password</label>
-                        <input type="password" id="loginPassword" class="form-control  w-75"
+                        <input name="Password" type="password" id="loginPassword" class="form-control  w-75"
                             placeholder="Enter password" />
                     </div>
                     <div class="mb-4">
-                        <input class="form-check-input me-2" type="checkbox" value="" id="rememberMe" />
+                        <input name="Remember" class="form-check-input me-2" type="checkbox" value="" id="rememberMe" />
                         <label class="form-check-label" for="rememberMe">
                             Remember me
                         </label>
@@ -67,7 +25,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <button type="button" class="btn rounded-5 bgPrimary text-light w-25 loginButton">Log
+                        <button type="submit" class="btn rounded-5 bgPrimary text-light w-25 loginButton">Log
                             in</button>
                     </div>
                 </form>
@@ -126,24 +84,3 @@
     </div>
 
 </div>
-
-<script>
-    let content = $('.content')
-    let loginContent = $('.loginContent')
-    let signupContent = $('.signupContent')
-    let createAccountLink = $('.createAccountLink');
-    let carousel = $('.carousel');
-
-    const changeForm = (e) => 
-    {
-        carousel.toggleClass('carouselSignup');
-        content.toggleClass('changeToSignup hidden');
-        setTimeout(()=> {
-            loginContent.toggleClass('d-none');
-            signupContent.toggleClass('d-none');
-            content.toggleClass('hidden');
-        },600)
-       
-    }
-
-</script>

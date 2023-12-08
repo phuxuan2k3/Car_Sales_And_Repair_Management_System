@@ -1,0 +1,40 @@
+    :root {
+        --primaryColor: #0B488E;
+        --secondaryColor: #fff;
+    }
+
+    .textPrimary {
+        color: var(--primaryColor) !important;
+    }
+
+    .bgPrimary {
+        background-color: var(--primaryColor) !important;
+    }
+
+
+    .loginImage img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+
+    .content {
+        transition: 0.2s ease-in;
+    }
+
+    .carousel {
+        transition: 0.5s ease-in;
+    }
+
+    .hidden {
+        opacity: 0;
+    }
+
+    .carouselSignup {
+        transform: translateX(-140%);
+    }
+
+    .changeToSignup {
+        transform: translateX(71%);
+    }
