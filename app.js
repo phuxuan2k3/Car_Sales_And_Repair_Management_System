@@ -2,17 +2,22 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const ENV = process.env;
-const expbs = require('express-handlebars');
-const router = require('./routers/router');
+const path = require('path');
+const configEV = require('./config/configEV')
+const configStaticResource = require('./config/configStaticResource')
+const  {NotFound, HandleError} = require('./middlewares/ErrorHandling');
 
-const hbs = expbs.create({
-    defaultLayout: 'main'
-})
 
-app.engine('handlebars', hbs.engine);
-app.set('views', './views');
-app.set('view engine', 'handlebars');
+// Config
+configEV(app,path.join(__dirname,'views'));
+configStaticResource(app,path.join(__dirname,'public'))
 
-app.use(router)
+//Router
+app.use('/',require('./routers/site.r'));
 
+//Handle error middleware
+app.use(NotFound);
+app.use(HandleError);
+
+//Run server
 app.listen(ENV.WEBPORT);
