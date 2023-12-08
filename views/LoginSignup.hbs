@@ -1,0 +1,149 @@
+<style>
+    :root {
+        --primaryColor: #0B488E;
+        --secondaryColor: #fff;
+    }
+
+    .textPrimary {
+        color: var(--primaryColor) !important;
+    }
+
+    .bgPrimary {
+        background-color: var(--primaryColor) !important;
+    }
+
+
+    .loginImage img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+
+    .content {
+        transition: 0.2s ease-in;
+    }
+
+    .carousel {
+        transition: 0.5s ease-in;
+    }
+
+    .hidden {
+        opacity: 0;
+    }
+
+    .carouselSignup {
+        transform: translateX(-140%);
+    }
+
+    .changeToSignup {
+        transform: translateX(71%);
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="bg-light row justify-content-center align-items-center g-2  vh-100 m-5">
+        <div class="col-7 content">
+            <div class=" m-5 loginContent">
+                <p class="h1 mb-5">Welcome to SGX Auto</p>
+                <form action="" class="loginForm">
+                    <div class="mb-4">
+                        <label for="loginUsername" class="form-label">Username</label>
+                        <input type="text" class="form-control w-75" id="loginUsername" placeholder="Enter username">
+                    </div>
+                    <div class="mb-4">
+                        <label for="loginPassword" class="form-label ">Password</label>
+                        <input type="password" id="loginPassword" class="form-control  w-75"
+                            placeholder="Enter password" />
+                    </div>
+                    <div class="mb-4">
+                        <input class="form-check-input me-2" type="checkbox" value="" id="rememberMe" />
+                        <label class="form-check-label" for="rememberMe">
+                            Remember me
+                        </label>
+                    </div>
+                    <div class="mb-4 createAccount">
+                        <a class="createAccountLink" onclick="changeForm()">Create an account</a>
+                    </div>
+
+                    <div class="mb-4">
+                        <button type="button" class="btn rounded-5 bgPrimary text-light w-25 loginButton">Log
+                            in</button>
+                    </div>
+                </form>
+            </div>
+            <div class=" m-5 signupContent d-none">
+                <div class="heading text-center mb-5">
+                    <p class="h2">Create an account</p>
+                    <p class="fs-8">Already have an ccount? <a onclick="changeForm()">Log in</a> </p>
+                </div>
+                <form action="" class="m-5 signupForm">
+                    <div class="mb-4">
+                        <label for="signupUsername" class="form-label">What should we call you?</label>
+                        <input type="text" class="form-control w-100" id="signupUsername"
+                            placeholder="Enter your username">
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="form-label">What's your email?</label>
+                        <input type="text" class="form-control w-100" id="email" placeholder="Enter your username">
+                    </div>
+                    <div class="mb-4">
+                        <label for="signupPassword" class="form-label ">Create a password</label>
+                        <input type="password" id="signupPassword" class="form-control  w-100"
+                            placeholder="Enter your password" />
+                    </div>
+                    <div class="mb-4">
+                        <input class="form-check-input me-2" type="checkbox" value="" id="policy" />
+                        <label class="form-check-label" for="policy">
+                            By creating an account, you agree to the Terms of use and Privacy Policy.
+                        </label>
+                    </div>
+                    <div class="mb-4">
+                        <button type="button" class="btn rounded-5 bgPrimary text-light w-100 loginButton">Create an
+                            account</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-5 h-100 m-0 p-0">
+            <div id="carousel" class="carousel slide h-100" data-bs-ride="carousel">
+                <div class="carousel-inner h-100">
+                    <div class="carousel-item active loginImage h-100">
+                        <img src="https://wallpaperaccess.com/full/462025.jpg" class=" w-100" alt="...">
+                    </div>
+                    <div class="carousel-item loginImage h-100">
+                        <img src="https://wallpaperaccess.com/full/1662265.jpg" class=" w-100" alt="...">
+                    </div>
+                    <div class="carousel-item loginImage h-100">
+                        <img src="https://i.pinimg.com/564x/12/9c/08/129c085e41afa08d481439e117735057.jpg"
+                            class=" w-100" alt="...">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<script>
+    let content = $('.content')
+    let loginContent = $('.loginContent')
+    let signupContent = $('.signupContent')
+    let createAccountLink = $('.createAccountLink');
+    let carousel = $('.carousel');
+
+    const changeForm = (e) => 
+    {
+        carousel.toggleClass('carouselSignup');
+        content.toggleClass('changeToSignup hidden');
+        setTimeout(()=> {
+            loginContent.toggleClass('d-none');
+            signupContent.toggleClass('d-none');
+            content.toggleClass('hidden');
+        },600)
+       
+    }
+
+</script>
