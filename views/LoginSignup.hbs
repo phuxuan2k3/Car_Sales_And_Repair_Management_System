@@ -84,31 +84,3 @@
     </div>
 
 </div>
-
-<script>
-    
-    let content = $('.content')
-    let loginContent = $('.loginContent')
-    let signupContent = $('.signupContent')
-    let createAccountLink = $('.createAccountLink');
-    let carousel = $('.carousel');
-
-    const changeForm = (e) => 
-    {
-        carousel.toggleClass('carouselSignup');
-        content.toggleClass('changeToSignup hidden');
-        setTimeout(()=> {
-            loginContent.toggleClass('d-none');
-            signupContent.toggleClass('d-none');
-            content.toggleClass('hidden');
-        },600)
-       
-    }
-
-    let isLogin = {{isLogin}}
-    if(isLogin == false) {
-        changeForm();
-    }
-
-
-</script>
