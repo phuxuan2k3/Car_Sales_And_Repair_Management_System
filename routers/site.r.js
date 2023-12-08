@@ -10,4 +10,5 @@ const siteController = require('../controllers/site.c');
 router.get('/',siteController.getIndex);
 
 
+
 module.exports = router;
