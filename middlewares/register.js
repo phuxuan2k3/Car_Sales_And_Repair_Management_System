@@ -1,0 +1,3 @@
+//Todo: callback to register here! check username, email,...
+module.exports = (req, res) => {
+}

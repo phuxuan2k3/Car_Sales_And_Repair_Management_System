@@ -9,7 +9,7 @@ module.exports = {
 
     HandleError: (err, req, res, next) => {
         if (!(err instanceof AppError)) {
-            err = new AppError(StatusCodes.INTERNAL_SERVER_ERROR, "Server died!")
+            err = new AppError(StatusCodes.INTERNAL_SERVER_ERROR, err)
         }
         res.status(err.statusCode).render('error', {
             statusCode: err.statusCode,

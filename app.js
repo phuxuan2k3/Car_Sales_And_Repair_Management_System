@@ -17,10 +17,10 @@ configSession(app);
 
 // Không cần thiết xoá cache
 //No Caching
-// app.use((req, res, next) => {
-//     res.header('Cache-Control', 'no-store, no-cache, must-revalidate');
-//     next();
-// });
+app.use((req, res, next) => {
+    res.header('Cache-Control', 'no-store, no-cache, must-revalidate');
+    next();
+});
 
 //Router
 app.use('/', require('./routers/site.r'));
