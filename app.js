@@ -5,18 +5,22 @@ const ENV = process.env;
 const path = require('path');
 const configEV = require('./config/configEV')
 const configStaticResource = require('./config/configStaticResource')
+const configSession = require('./config/configSession');
 const { NotFound, HandleError } = require('./middlewares/ErrorHandling');
-const session = require('./config/session');
 
 
 // Config
+app.use(express.urlencoded({ extended: true }));
 configEV(app, path.join(__dirname, 'views'));
 configStaticResource(app, path.join(__dirname, 'public'))
+configSession(app);
 
-app.use(express.urlencoded({ extended: true }));
-
-//Session
-app.use(session);
+// Không cần thiết xoá cache
+//No Caching
+// app.use((req, res, next) => {
+//     res.header('Cache-Control', 'no-store, no-cache, must-revalidate');
+//     next();
+// });
 
 //Router
 app.use('/', require('./routers/site.r'));
