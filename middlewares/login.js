@@ -2,7 +2,6 @@ require('dotenv').config();
 const ENV = process.env;
 
 module.exports = (req, res) => {
-
     console.log(req.body);
 
     //Todo: check account here, if wrong, send json {success:bool, message:''}

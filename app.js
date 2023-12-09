@@ -6,7 +6,7 @@ const path = require('path');
 const configEV = require('./config/configEV')
 const configStaticResource = require('./config/configStaticResource')
 const { NotFound, HandleError } = require('./middlewares/ErrorHandling');
-const session = require('./middlewares/session');
+const session = require('./config/session');
 
 
 // Config
@@ -17,12 +17,6 @@ app.use(express.urlencoded({ extended: true }));
 
 //Session
 app.use(session);
-
-//No Caching
-app.use((req, res, next) => {
-    res.header('Cache-Control', 'no-store, no-cache, must-revalidate');
-    next();
-});
 
 //Router
 app.use('/', require('./routers/site.r'));

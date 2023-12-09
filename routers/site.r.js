@@ -12,4 +12,5 @@ const loginUser = require('../middlewares/login');
 router.get('/', authenticate, siteController.getIndex);
 router.get('/login', siteController.getLoginPage);
 router.post('/login', loginUser);
+
 module.exports = router;
