@@ -13,9 +13,8 @@ const { NotFound, HandleError } = require('./middlewares/ErrorHandling');
 app.use(express.urlencoded({ extended: true }));
 configEV(app, path.join(__dirname, 'views'));
 configStaticResource(app, path.join(__dirname, 'public'))
-configSession(app);
+// configSession(app);
 
-// Không cần thiết xoá cache
 //No Caching
 app.use((req, res, next) => {
     res.header('Cache-Control', 'no-store, no-cache, must-revalidate');

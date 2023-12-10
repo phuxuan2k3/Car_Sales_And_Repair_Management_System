@@ -21,7 +21,16 @@ router.get('/signup',async (req,res,next) => {
 
 router.get('/customer',async (req,res,next) => {
     try {
-        res.render('customerPage');
+        res.render('guestDashboard');
+    } catch (error) {
+        next(error);
+    };
+    
+})
+
+router.get('/cardetail',async (req,res,next) => {
+    try {
+        res.render('carDetail');
     } catch (error) {
         next(error);
     };
