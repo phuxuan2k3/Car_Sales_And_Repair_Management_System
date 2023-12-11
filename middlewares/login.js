@@ -10,6 +10,7 @@ module.exports = (req, res) => {
     req.session.isAuth = true;
     //todo: align permission here
     req.session.permission = 'guest';
+
     if (req.body.Remember) {
         req.session.cookie.maxAge = parseInt(ENV.REMEMBERTIMEACESS);//hour
     }

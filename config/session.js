@@ -25,7 +25,6 @@ const configSession = (app) => {
         store,
         secret: ENV.SESSIONIDSECRET,
         cookie: {
-            maxAge: parseInt(ENV.DEFAULTTIMEACCESS)
         },
         saveUninitialized: true,
         resave: false
