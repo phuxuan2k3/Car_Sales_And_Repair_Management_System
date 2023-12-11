@@ -5,7 +5,7 @@ const authenticate = require('../middlewares/authentication');
 const loginUser = require('../middlewares/login');
 const registerUser = require('../middlewares/register');
 const logoutUser = require('../middlewares/logout');
-const authorizate = require('../middlewares/authorizationFactory');
+const authorize = require('../middlewares/authorizationFactory');
 
 // LƯU Ý VỀ BẢN CHẤT
 // CÁC XÁC THỰC PHÂN QUYỀN PHẢI CÀI ĐẶT TRONG MIDDLEWARE RIÊNG ROUTER REQUIRE VÀO ĐỂ DÙNG
@@ -20,6 +20,6 @@ router.get('/register', siteController.getRegisterPage);
 router.post('/register', registerUser);
 router.post('/logout', logoutUser);
 
-router.use(authenticate, authorizate);
+router.use(authenticate, authorize);
 
 module.exports = router;
