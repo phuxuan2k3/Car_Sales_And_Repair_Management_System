@@ -9,10 +9,10 @@ module.exports = (req, res) => {
     //if account is correct
     req.session.isAuth = true;
     //todo: align permission here
-    req.session.permission = 'guest';
+    req.session.permission = 'admin';
     if (req.body.Remember) {
-        req.session.cookie.maxAge = ENV.REMEMBERTIMEACESS;//hour
+        req.session.cookie.maxAge = parseInt(ENV.REMEMBERTIMEACESS);//hour
     }
-    return res.redirect(`/${req.session.permission}Dashboard`);
+    return res.redirect(`/dashboard`);
     //or send json {redirect: '/'}
 }
