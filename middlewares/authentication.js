@@ -8,5 +8,4 @@ module.exports = (req, res, next) => {
         let err = new AppError(StatusCodes.UNAUTHORIZED, "You must login before access this page!", '/login', 'Login Here!');
         next(err);
     }
-
 }

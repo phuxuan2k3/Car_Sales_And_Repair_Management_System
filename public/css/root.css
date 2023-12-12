@@ -1,0 +1,20 @@
+:root {
+    --primaryColor: #0B488E;
+    --secondaryColor: #fff;
+}
+
+.textPrimary {
+    color: var(--primaryColor) !important;
+}
+
+.bgPrimary {
+    background-color: var(--primaryColor) !important;
+}
+
+.opacity4 {
+    opacity: 0.4;
+}
+
+.no-wrap {
+    white-space: nowrap;
+}
