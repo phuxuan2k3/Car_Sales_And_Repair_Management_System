@@ -1,9 +1,9 @@
-const { tryCatchMiddleware } = require('../../utils/tryCatch');
+const tryCatch = require('../../utils/tryCatch');
 require('dotenv').config();
 const ENV = process.env;
 
 module.exports = {
-    getDashboard: tryCatchMiddleware(async (req, res) => {
+    getDashboard: tryCatch(async (req, res) => {
         res.render('guestDashboard', { title: 'DashBoard' });
     })
 }
