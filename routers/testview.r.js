@@ -21,7 +21,7 @@ router.get('/signup', async (req, res, next) => {
 
 router.get('/customer', async (req, res, next) => {
     try {
-        res.render('RoleView/guest/guestDashboard');
+        res.render('RoleView/guest/guestDashboard',{jsFile: 'guestDashboard.js'});
     } catch (error) {
         next(error);
     };
