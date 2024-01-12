@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get('/login', async (req, res, next) => {
     try {
-        res.render('LoginSignup', { isLogin: true });
+        res.render('LoginSignup', { isLogin: true ,jsFile: 'loginSignUp.js', cssFile: 'loginSignUp.css' });
     } catch (error) {
         next(error);
     };
@@ -12,7 +12,7 @@ router.get('/login', async (req, res, next) => {
 
 router.get('/signup', async (req, res, next) => {
     try {
-        res.render('LoginSignup', { isLogin: false });
+        res.render('LoginSignup', { isLogin: false,jsFile: 'loginSignUp.js', cssFile: 'loginSignUp.css' });
     } catch (error) {
         next(error);
     };
@@ -21,7 +21,7 @@ router.get('/signup', async (req, res, next) => {
 
 router.get('/customer', async (req, res, next) => {
     try {
-        res.render('guestDashboard');
+        res.render('RoleView/guest/guestDashboard');
     } catch (error) {
         next(error);
     };
@@ -30,7 +30,7 @@ router.get('/customer', async (req, res, next) => {
 
 router.get('/cardetail', async (req, res, next) => {
     try {
-        res.render('carDetail');
+        res.render('RoleView/guest/carDetail');
     } catch (error) {
         next(error);
     };

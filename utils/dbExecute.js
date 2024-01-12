@@ -8,7 +8,7 @@ module.exports = {
         return await db.any(query);
     },
     getCustom: async (limit, offset, tableName) => {
-        const query = `SELECT * FROM "${tableName}" LIMIT ${limit} OFFSET ${offset}`;//order by
+        const query = `SELECT * FROM "${tableName}"  OFFSET ${offset} LIMIT ${limit}`;//order by
         return await db.any(query);
     },
     getById: async (id, tableName) => {
