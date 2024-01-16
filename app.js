@@ -31,5 +31,3 @@ app.use(HandleError);
 
 //Run server
 app.listen(ENV.WEBPORT);
-
-server.listen(3000);
