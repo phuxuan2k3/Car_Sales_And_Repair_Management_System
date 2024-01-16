@@ -13,7 +13,7 @@ const { NotFound, HandleError } = require('./middlewares/ErrorHandling');
 app.use(express.urlencoded({ extended: true }));
 configEV(app, path.join(__dirname, 'views'));
 configStaticResource(app, path.join(__dirname, 'public'))
-// configSession(app);
+configSession(app);
 
 //No Caching
 app.use((req, res, next) => {
@@ -31,3 +31,16 @@ app.use(HandleError);
 
 //Run server
 app.listen(ENV.WEBPORT);
+
+io.on('connection', socket => {
+    console.log(socket.id);
+    socket.on('disconnect', () => {
+        console.log(socket.id, ' disconnected');
+    })
+    socket.on('chat message', msg => {
+
+        socket.broadcast.emit('chat message', msg);
+    })
+})
+
+server.listen(3000);

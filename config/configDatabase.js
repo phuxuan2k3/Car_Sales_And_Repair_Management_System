@@ -11,21 +11,22 @@ const cn = {
 };
 db = pgp(cn);
 
-module.exports = {
-    execute:  async (sql, param) => {
-        let dbcn = null;
-        try {
-            dbcn = await db.connect();
-            const data = await dbcn.query(sql, param);
-            return data;
-        } catch (error) {
-            throw error;
-        } finally {
-            if (dbcn) {
-                dbcn.done();
-            }
-        }
-    }
-}
+//do this in utils/dbExecute.js
+// module.exports = {
+//     execute:  async (sql, param) => {
+//         let dbcn = null;
+//         try {
+//             dbcn = await db.connect();
+//             const data = await dbcn.query(sql, param);
+//             return data;
+//         } catch (error) {
+//             throw error;
+//         } finally {
+//             if (dbcn) {
+//                 dbcn.done();
+//             }
+//         }
+//     }
+// }
 
-// module.exports = { db, pgp };
+ module.exports = { db, pgp };
