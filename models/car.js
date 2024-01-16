@@ -39,6 +39,11 @@ module.exports = class Car {
         let query = `select "type" from "${tableName}"`
         return await dbExecute.customQuery(query);
     }
+    static async getCarById(id) {
+        let query = `select * from "${tableName}" where "id"=${id}`
+        const data = await dbExecute.customQuery(query);
+        return data.map(c => {return new Car(c)});
+    }
     static async getCarPage(brands,types,maxPrice,limit, offset) {
         let query = `select * from "${tableName}"`
         let brandQuery;

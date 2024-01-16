@@ -78,18 +78,21 @@ const generateCarInfo = async () => {
     for (const car of carData) {
         CarList.append(`
             <div class="carInfo">
-                <div class="card ms-4 me-4 mb-3 " style="width: 18rem; height: 30rem">
-                    <div class="card-body">
-                        <p class="card-text fw-bold fs-2 mb-0">${car.car_name}</p>
-                        <p class="fw-bold fs-8  text-opacity-25 textPrimary opacity4">${car.type}</p>
-                    </div>
-                    <img src="/images/car.png" class="w-100" alt="...">
-                    <div class="card-body d-flex flex-row justify-content-between opacity4 textPrimary">
-                        <div class="d-flex flex-row align-items-center ">
-                            <i class="fa-solid  fa-user-group"></i>
-                            <p class="m-0 ms-1">${car.quantity} people</p>
+                <div class="card ms-4 me-4 mb-3 carInfoCard" style="width: 18rem; height: 25rem">
+                    <div class="info" index="${car.id}">
+                        <div class="card-body">
+                            <p class="card-text fw-bold fs-5 textPrimary mb-0">${car.car_name}</p>
+                            <p class="fw-bold fs-8  text-opacity-25 textPrimary opacity4">${car.type}</p>
+                        </div>
+                        <img src="/images/car.png" class="w-100" alt="...">
+                        <div class="card-body d-flex flex-row justify-content-between opacity4 textPrimary">
+                            <div class="d-flex flex-row align-items-center ">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <p class="m-0 ms-1">${car.year}</p>
+                            </div>
                         </div>
                     </div>
+                    
                     <div class="card-body d-flex flex-row justify-content-between  textPrimary">
                         <div class="fs-4">${car.price}vnđ</div>
                         <button type="button" ${car.quantity < 1 ? "disabled" : " "} id="buyButton_${car.id}" class="btn border-0 btn-primary bgPrimary">
@@ -100,6 +103,11 @@ const generateCarInfo = async () => {
             </div>
         `)
     }
+    $('.info').each((index,ele) => {
+        $(ele).click((e) => {
+            window.location.assign(`http://localhost:3000/test/cardetail?id=${$(ele).attr('index')}`)
+        })
+    })
 }
 
 const pageInit = async () => {
