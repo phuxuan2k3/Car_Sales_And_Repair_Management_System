@@ -22,12 +22,15 @@ app.use((req, res, next) => {
 });
 
 //Router
+app.use('/test', require('./routers/testview.r')) //Test view
+app.use('/api',require('./routers/api.r'));
 app.use('/', require('./routers/site.r'));
-app.use('/test', require('./routers/testview.r'))
+
 
 //Handle error middleware
 app.use(NotFound);
 app.use(HandleError);
+
 
 //Run server
 app.listen(ENV.WEBPORT);
