@@ -32,15 +32,4 @@ app.use(HandleError);
 //Run server
 app.listen(ENV.WEBPORT);
 
-io.on('connection', socket => {
-    console.log(socket.id);
-    socket.on('disconnect', () => {
-        console.log(socket.id, ' disconnected');
-    })
-    socket.on('chat message', msg => {
-
-        socket.broadcast.emit('chat message', msg);
-    })
-})
-
 server.listen(3000);
