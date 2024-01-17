@@ -2,6 +2,7 @@ const tryCatch = require('../utils/tryCatch');
 require('dotenv').config();
 const ENV = process.env;
 const Car = require('../models/car');
+const User = require('../models/user');
 
 module.exports = {
     //Car API
@@ -33,4 +34,10 @@ module.exports = {
         const data = await Car.getCarPage(brands, types, maxPrice, perPage, offset);
         res.json(data);
     }),
+
+    //User
+    getUserById: tryCatch(async (req, res) => {
+        const data = await User.getById(id);
+        res.json(data);
+    })
 }
