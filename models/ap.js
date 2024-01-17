@@ -4,7 +4,7 @@ const { TableName } = require('pg-promise');
 const tableName = 'auto_part';
 
 module.exports = class AutoPart {
-    constructor(obj){
+    constructor(obj) {
         this.id = obj.ap_id;
         this.name = obj.name;
         this.supplier = obj.supplier;
@@ -12,11 +12,11 @@ module.exports = class AutoPart {
     }
     static async getAll() {
         const data = await dbExecute.getAll(tableName);
-        return data.map(c =>{ return new AutoPart(c)});
+        return data.map(c => { return new AutoPart(c) });
     }
     static async getCustom(limit, offset) {
         const data = await dbExecute.getCustom(limit, offset, tableName);
-        return data.map(c =>{ return new AutoPart(c)});
+        return data.map(c => { return new AutoPart(c) });
     }
     static async insert(entity) {
         return await dbExecute.insert(entity, tableName);
@@ -30,7 +30,7 @@ module.exports = class AutoPart {
     static async getAutoPartByID(id) {
         const query = `select * from "${tableName}" where "ap_id"=${id}`;
         const data = await dbExecute.customQuery(query);
-        return data.map(c => {return new AutoPart(c)});
+        return data.map(c => { return new AutoPart(c) });
     }
     static async getApPage(suppliers, limit, offset) {
         let query = `select * from "${tableName}"`
@@ -58,7 +58,7 @@ module.exports = class AutoPart {
         }
     }
     static async getAllSupplier() {
-        const query = `select "supplier" from "${tableName}"`
+        const query = `select distinct "supplier" from "${tableName}"`
         const data = await dbExecute.customQuery(query);
         return data;
     }

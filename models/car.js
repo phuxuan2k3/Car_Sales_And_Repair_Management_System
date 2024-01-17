@@ -32,11 +32,11 @@ module.exports = class Car {
         return await dbExecute.delete(id, tableName);
     }
     static async getAllBrand() {
-        let query = `select "brand" from "${tableName}"`
+        let query = `select distinct "brand" from "${tableName}"`
         return await dbExecute.customQuery(query);
     }
     static async getAllType() {
-        let query = `select "type" from "${tableName}"`
+        let query = `select distinct "type" from "${tableName}"`
         return await dbExecute.customQuery(query);
     }
     static async getCarById(id) {
