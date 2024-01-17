@@ -37,7 +37,7 @@ module.exports = {
 
     //User
     getUserById: tryCatch(async (req, res) => {
-        const data = await User.getById(id);
+        const data = await User.getById(req.params.id);
         res.json(data);
     })
 }

@@ -24,6 +24,11 @@
                         <a class="createAccountLink" onclick="changeForm()">Create an account</a>
                     </div>
 
+                    <div class="mb-4" id="loginMessage" style="display: none;color: #ff0000;">
+                        <i class="fa-solid fa-square-xmark"></i>
+                        <span class="message">{{loginMsg}}</span>
+                    </div>
+
                     <div class="mb-4">
                         <button type="submit" class="btn rounded-5 bgPrimary text-light w-25 loginButton">Log
                             in</button>
@@ -57,7 +62,7 @@
                         </label>
                     </div>
                     <div class="mb-4">
-                        <button type="button" class="btn rounded-5 bgPrimary text-light w-100 loginButton">Create an
+                        <button type="submit" class="btn rounded-5 bgPrimary text-light w-100 loginButton">Create an
                             account</button>
                     </div>
                 </form>

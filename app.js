@@ -7,6 +7,9 @@ const configEV = require('./config/configEV')
 const configStaticResource = require('./config/configStaticResource')
 const configSession = require('./config/configSession');
 const { NotFound, HandleError } = require('./middlewares/ErrorHandling');
+const passport = require('./config/mainPassport');
+const bodyParser = require('body-parser');
+const flash = require('express-flash');
 
 
 // Config
@@ -14,16 +17,25 @@ app.use(express.urlencoded({ extended: true }));
 configEV(app, path.join(__dirname, 'views'));
 configStaticResource(app, path.join(__dirname, 'public'))
 configSession(app);
+app.use(bodyParser.json());
+app.use(flash());
 
 //No Caching
-app.use((req, res, next) => {
-    res.header('Cache-Control', 'no-store, no-cache, must-revalidate');
-    next();
-});
+// app.use((req, res, next) => {
+//     res.header('Cache-Control', 'no-store, no-cache, must-revalidate');
+//     next();
+// });
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 
 //Router
+app.use(require('./routers/site.r'));
+
 app.use('/test', require('./routers/testview.r')) //Test view
-app.use('/api',require('./routers/api.r'));
+app.use('/api', require('./routers/api.r'));
 app.use('/', require('./routers/site.r'));
 
 

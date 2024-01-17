@@ -1,5 +1,5 @@
 const dbExecute = require('../utils/dbExecute');
-const tableName = 'User';
+const tableName = 'user_info';
 
 module.exports = class User {
     constructor(u) {
@@ -31,6 +31,10 @@ module.exports = class User {
     }
     static async getById(id) {
         return await dbExecute.getById(id, tableName);
+    }
+    static async getByUsername(username) {
+        let query = `SELECT * from ${tableName} where "username" = '${username}';`;
+        return await dbExecute.customQuery(query);
     }
     //todo: add more function that system need
 }

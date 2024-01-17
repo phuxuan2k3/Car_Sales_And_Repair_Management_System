@@ -16,7 +16,7 @@ const pgPool = new pg.Pool({
 
 const store = new pgSession({
     pool: pgPool,
-    tableName: 'UserSessions',
+    tableName: 'user-session',
     createTableIfMissing: true
 });
 
@@ -24,9 +24,9 @@ const configSession = (app) => {
     app.use(session({
         store,
         secret: ENV.SESSIONIDSECRET,
-        cookie: {
-            maxAge: parseInt(ENV.DEFAULTTIMEACCESS)
-        },
+        // cookie: {
+        //     maxAge: parseInt(ENV.DEFAULTTIMEACCESS)
+        // },
         saveUninitialized: true,
         resave: false
     }))
