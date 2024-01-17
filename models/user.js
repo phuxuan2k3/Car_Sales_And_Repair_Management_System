@@ -7,7 +7,6 @@ module.exports = class User {
     constructor(...args) {
         //Todo: assign value here
     }
-
     static async getAll() {
         return await dbExecute.getAll(tableName);
     }

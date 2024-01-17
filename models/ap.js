@@ -27,4 +27,39 @@ module.exports = class AutoPart {
     static async delete(id) {
         return await dbExecute.delete(id, tableName);
     }
+    static async getAutoPartByID(id) {
+        const query = `select * from "${tableName}" where "ap_id"=${id}`;
+        const data = await dbExecute.customQuery(query);
+        return data.map(c => {return new AutoPart(c)});
+    }
+    static async getApPage(suppliers, limit, offset) {
+        let query = `select * from "${tableName}"`
+        let filterArr = [];
+        let supplierArr = [];
+        let supplierQuery;
+        if (suppliers != undefined) {
+            for (const supplier of suppliers) {
+                supplierArr.push(`"supplier"='${supplier}'`)
+            }
+            supplierQuery = supplierArr.join(' or ');
+            supplierQuery = `( ${supplierQuery} )`
+            filterArr.push(supplierQuery);
+        }
+        let filterString = filterArr.join(' and ');
+        if (filterArr.length != 0) query += ' where ' + filterString;
+        const totalPage = Math.ceil((await dbExecute.customQuery(query)).length / limit);
+        query += ` offset ${offset} limit ${limit}`;
+        const data = await dbExecute.customQuery(query);
+        const apData = data.map(c => { return new AutoPart(c) });
+        console.log(query)
+        return {
+            totalPage: totalPage,
+            data: apData,
+        }
+    }
+    static async getAllSupplier() {
+        const query = `select "supplier" from "${tableName}"`
+        const data = await dbExecute.customQuery(query);
+        return data;
+    }
 }

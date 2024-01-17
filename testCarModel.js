@@ -16,6 +16,16 @@ const TestFunction = async () => {
     //     description: "trung"
     // }
     // await Car.insert(entity);
+    // const entity = {
+    //     car_name: "Tien",
+    //     brand: "Tien",
+    //     type: "Tien",
+    //     year: 2003,
+    //     price: 2003,
+    //     quantity: 2003,
+    //     description: "Tien"
+    // }
+    // await Car.update(27,entity);
 }
 
 TestFunction();

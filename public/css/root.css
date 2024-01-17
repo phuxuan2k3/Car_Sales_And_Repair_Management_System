@@ -18,3 +18,8 @@
 .no-wrap {
     white-space: nowrap;
 }
+
+pre {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
