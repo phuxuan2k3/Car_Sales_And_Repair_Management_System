@@ -3,12 +3,14 @@ const dbExecute = require('../utils/dbExecute');
 const { TableName } = require('pg-promise');
 const tableName = 'auto_part';
 
+
 module.exports = class AutoPart {
     constructor(obj) {
         this.id = obj.ap_id;
         this.name = obj.name;
         this.supplier = obj.supplier;
         this.quantity = obj.quantity;
+        this.price = obj.price;
     }
     static async getAll() {
         const data = await dbExecute.getAll(tableName);
@@ -28,9 +30,8 @@ module.exports = class AutoPart {
         return await dbExecute.delete(id, tableName);
     }
     static async getAutoPartByID(id) {
-        const query = `select * from "${tableName}" where "ap_id"=${id}`;
-        const data = await dbExecute.customQuery(query);
-        return data.map(c => { return new AutoPart(c) });
+        const data = await dbExecute.getById(id,tableName)
+        return new AutoPart(data);
     }
     static async getApPage(suppliers, limit, offset) {
         let query = `select * from "${tableName}"`

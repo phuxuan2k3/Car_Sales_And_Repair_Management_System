@@ -5,7 +5,23 @@ const TestFunction = async () => {
     // const data = await AutoPart.getApPage(undefined,2,1);
     // const data = await AutoPart.getAllSupplier();
     // const data = await AutoPart.getAutoPartByID(15);
-    // console.log(data);
+    // const entity = {
+    //     name: "trung",
+    //     supplier: "kien giang",
+    //     quantity: 120,
+    //     price: 1200
+    // }
+    // const id = await AutoPart.insert(entity);
+    // console.log(id);
+    // const data = await AutoPart.delete(154);
+    // const entity = {
+    //     name: "newTrung",
+    //     supplier: "An Giang",
+    //     quantity: 120,
+    //     price: 1200
+    // }
+    // const id = await AutoPart.update(155,entity);
+    // console.log(id);
 }
 
 TestFunction();
