@@ -4,7 +4,7 @@ const ENV = process.env;
 
 module.exports = {
     getIndex: tryCatch(async (req, res) => {
-        res.redirect('/login');
+        res.redirect('/dashboard');
     }),
     getLoginPage: tryCatch(async (req, res) => {
         const failureMessage = req.flash()['error'];

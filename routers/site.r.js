@@ -7,7 +7,7 @@ const registerUser = require('../middlewares/register');
 const logoutUser = require('../middlewares/logout');
 const authorize = require('../middlewares/authorizationFactory');
 const passport = require('../config/mainPassport');
-
+const checkRemember = require('../middlewares/checkRemember');
 
 //no authenticate need
 router.get('/', siteController.getIndex);
@@ -17,7 +17,7 @@ router.post('/register', registerUser);
 router.post('/logout', logoutUser);
 
 //authenticate
-router.post('/login', passport.authenticate('local', { successRedirect: '/dashboard', failureRedirect: '/login', failureFlash: true }));
+router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), checkRemember, siteController.getIndex);
 
 router.use(authenticate, authorize);
 

@@ -84,7 +84,7 @@ const generateCarInfo = async () => {
                             <p class="card-text fw-bold fs-5 textPrimary mb-0">${car.car_name}</p>
                             <p class="fw-bold fs-8  text-opacity-25 textPrimary opacity4">${car.type}</p>
                         </div>
-                        <img src="/images/car.png" class="w-100" alt="...">
+                            <img src="/images/car.png" class="w-100" alt="...">  
                         <div class="card-body d-flex flex-row justify-content-between opacity4 textPrimary">
                             <div class="d-flex flex-row align-items-center ">
                                 <i class="fa-solid fa-calendar-days"></i>
@@ -103,7 +103,7 @@ const generateCarInfo = async () => {
             </div>
         `)
     }
-    $('.info').each((index,ele) => {
+    $('.info').each((index, ele) => {
         $(ele).click((e) => {
             window.location.assign(`http://localhost:3000/test/cardetail?id=${$(ele).attr('index')}`)
         })

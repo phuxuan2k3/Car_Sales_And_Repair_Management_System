@@ -1,10 +1,6 @@
-module.exports = (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            console.log(err);
-            throw err;
-        }
+module.exports = (req, res, next) => {
+    req.logout((err) => {
+        if (err) { return next(err); }
         res.redirect('/');
-        //Todo: or send json
     });
 }
