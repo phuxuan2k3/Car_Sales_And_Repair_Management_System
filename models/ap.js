@@ -6,7 +6,7 @@ const tableName = 'auto_part';
 
 module.exports = class AutoPart {
     constructor(obj) {
-        this.id = obj.ap_id;
+        this.id = obj.id;
         this.name = obj.name;
         this.supplier = obj.supplier;
         this.quantity = obj.quantity;
