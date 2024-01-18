@@ -11,6 +11,6 @@ module.exports = {
     getCarDetail: tryCatch(async (req, res) => {
         const id = req.query.id;
         const carData = await Car.getCarById(id);
-        res.render('RoleView/guest/carDetail', { data: carData[0] })
+        res.render('RoleView/guest/carDetail', { nameOfUser: req.session.passport.user.nameOfUser, data: carData[0] })
     })
 }

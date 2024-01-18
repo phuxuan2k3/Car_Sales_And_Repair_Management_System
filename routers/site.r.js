@@ -18,8 +18,15 @@ router.post('/logout', logoutUser);
 
 //authenticate
 router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), checkRemember, siteController.getIndex);
+
 router.get('/login/federated/facebook', passport.authenticate('facebook'));
 router.get('/oauth2/redirect/facebook', passport.authenticate('facebook', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+}));
+
+router.get('/login/federated/google', passport.authenticate('google'));
+router.get('/oauth2/redirect/google', passport.authenticate('google', {
     successRedirect: '/',
     failureRedirect: '/login'
 }));
