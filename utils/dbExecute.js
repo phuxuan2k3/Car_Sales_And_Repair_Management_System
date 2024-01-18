@@ -18,19 +18,19 @@ module.exports = {
     ,
     insert: async (entity, tableName) => {
         let query = queryHelper.insert(entity, null, tableName);
-        query += `RETURNING id;`;
+        query += ` RETURNING id;`;
         return await db.one(query);
     }
     ,
     delete: async (id, tableName) => {
         let query = `DELETE  FROM "${tableName}"`;//'order by ...' may be added if it does not follow any order.
-        query += `WHERE "id" = ${id};`;
+        query += ` WHERE "id" = ${id};`;
         return await db.none(query);
     }
     ,
     update: async (id, entity, tableName) => {
         let query = pgp.helpers.update(entity, null, tableName);
-        query += `WHERE "id" = ${id};`;
+        query += ` WHERE "id" = ${id};`;
         return await db.none(query);
     },
     customQuery: async (query) => {

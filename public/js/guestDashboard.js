@@ -7,12 +7,21 @@ let CurrentMP = $('#CurrentMP')
 let maxPriceRange = $('#maxPriceRange');
 let TypeCheckList = $('#TypeCheckList');
 let BrandCheckList = $('#BrandCheckList');
+let SearchBar = $('#SearchBar')
 let CarList = $('#CarList');
 let PageInfo = $('#PageInfo');
 let totalPage;
 
 
 maxPriceRange.on('input', async (e) => {
+    page = 1;
+    await updateCarData();
+    CurrentMP.text(`${maxPriceRange.val()}vnđ`);
+    updatePageInfo();
+})
+
+SearchBar.on('input',async (e) => {
+    // console.log(SearchBar.val() != '');
     page = 1;
     await updateCarData();
     CurrentMP.text(`${maxPriceRange.val()}vnđ`);
@@ -65,8 +74,10 @@ const updateCarData = async () => {
     });
     if (brandArr.length > 0) queryElement.push(brandArr.join('&'));
     if (typeArr.length > 0) queryElement.push(typeArr.join('&'));
+    if(SearchBar.val() != '') queryElement.push(`search=${SearchBar.val()}`);
     let query = queryElement.join('&');
     let url = `/api/car/car_page?${query}&page=${page}&per_page=${per_page}&max_price=${maxPriceRange.val()}`
+    console.log(url);
     const rsData = await fetchData(url);
     carData = rsData.data;
     totalPage = rsData.totalPage;
@@ -96,7 +107,7 @@ const generateCarInfo = async () => {
                     <div class="card-body d-flex flex-row justify-content-between  textPrimary">
                         <div class="fs-4">${car.price}vnđ</div>
                         <button type="button" ${car.quantity < 1 ? "disabled" : " "} id="buyButton_${car.id}" class="btn border-0 btn-primary bgPrimary">
-                            BUY NOW
+                            ADD TO CART
                         </button>
                     </div>
                 </div>

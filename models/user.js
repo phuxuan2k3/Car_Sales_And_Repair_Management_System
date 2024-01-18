@@ -14,7 +14,6 @@ module.exports = class User {
         this.address = u.address;
         this.lastname = u.lastname;
     }
-
     static async getAll() {
         return await dbExecute.getAll(tableName);
     }
