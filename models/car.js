@@ -1,6 +1,4 @@
-const { response } = require('express');
 const dbExecute = require('../utils/dbExecute');
-const { TableName } = require('pg-promise');
 const tableName = 'car';
 
 module.exports = class Car {
@@ -15,8 +13,7 @@ module.exports = class Car {
         this.quantity = obj.quantity; 
     }
     static async getAll() {
-        const data = await dbExecute.getAll(tableName);
-        return data.map(c =>{ return new Car(c)});
+        return await dbExecute.getAll(tableName);
     }
     static async getCustom(limit, offset) {
         const data = await dbExecute.getCustom(limit, offset, tableName);

@@ -1,5 +1,6 @@
 const dbExecute = require('../utils/dbExecute');
 const tableName = 'user_info';
+const usernameGenerator = require('../utils/uniqueString');
 
 module.exports = class User {
     constructor(u) {
@@ -21,6 +22,12 @@ module.exports = class User {
         return await dbExecute.getCustom(limit, offset, tableName);
     }
     static async insert(entity) {
+        if (!entity.username) {
+            entity.username = usernameGenerator();
+        }
+        if (!entity.permission) {
+            entity.permission = 'cus';
+        }
         return await dbExecute.insert(entity, tableName);
     }
     static async update(id, entity) {
