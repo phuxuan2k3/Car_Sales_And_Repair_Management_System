@@ -16,11 +16,11 @@ module.exports = (passport) => {
             // if (!(await bcrypt.compare(password, user.Password))) {
             //     return done(null, false, { message: 'Password incorrect!' });
             // }
-            
+
             if ((password !== user.password)) {
                 return done(null, false, { message: 'Password incorrect!' });
             }
-
+            user.nameOfUser = user.lastname + ' ' + user.firstname;
             return done(null, user);
         } catch (error) {
             return done(error);

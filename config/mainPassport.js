@@ -8,7 +8,7 @@ configLocalPassport(passport);
 configFacebookPassport(passport);
 
 passport.serializeUser((user, done) => {
-    done(null, { id: user.id, permission: user.permission });
+    done(null, { id: user.id, permission: user.permission, nameOfUser: user.nameOfUser });
 });
 
 passport.deserializeUser(async function (deUser, done) {

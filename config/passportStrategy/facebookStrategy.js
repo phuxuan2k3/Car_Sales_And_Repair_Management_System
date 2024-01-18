@@ -19,13 +19,14 @@ module.exports = (passport) => {
                 await FC.insert({ user_id, provider: profile.provider, subject: profile.id });
                 user = {
                     id: user_id,
-                    name: profile.displayName,
-                    permission: 'cus'
+                    nameOfUser: profile.displayName,
+                    permission: 'cus',
                 };
             }
             else {
                 let row = data[0];
                 user = await User.getById(row.user_id);
+                user.nameOfUser = user.firstname;
             }
             return cb(null, user);
         } catch (error) {
