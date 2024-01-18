@@ -31,7 +31,6 @@ module.exports = {
     update: async (id, entity, tableName) => {
         let query = pgp.helpers.update(entity, null, tableName);
         query += ` WHERE "id" = ${id};`;
-        console.log(query)
         return await db.none(query);
     },
     customQuery: async (query) => {

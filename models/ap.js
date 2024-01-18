@@ -2,11 +2,14 @@ const { response } = require('express');
 const dbExecute = require('../utils/dbExecute');
 const { TableName } = require('pg-promise');
 const tableName = 'auto_part';
+const { pgp } = require('../config/configDatabase');
+const queryHelper = pgp.helpers;
+
 
 
 module.exports = class AutoPart {
     constructor(obj) {
-        this.id = obj.id;
+        this.ap_id = obj.ap_id;
         this.name = obj.name;
         this.supplier = obj.supplier;
         this.quantity = obj.quantity;
@@ -21,17 +24,23 @@ module.exports = class AutoPart {
         return data.map(c => { return new AutoPart(c) });
     }
     static async insert(entity) {
-        return await dbExecute.insert(entity, tableName);
+        let query = queryHelper.insert(entity,null,tableName);
+        query += ` RETURNING ap_id;`;
+        return await dbExecute.customQuery(query);
     }
     static async update(id, entity) {
-        return await dbExecute.update(id, entity, tableName);
+        let query = pgp.helpers.update(entity, null, tableName);
+        query += ` WHERE "ap_id" = ${id};`;
+        return await dbExecute.customQuery(query);
     }
     static async delete(id) {
-        return await dbExecute.delete(id, tableName);
+        let query = `DELETE  FROM "${tableName}"`;
+        query += ` WHERE "ap_id" = ${id};`;
+        return await dbExecute.customQuery(query);
     }
     static async getAutoPartByID(id) {
-        const data = await dbExecute.getById(id,tableName)
-        return new AutoPart(data);
+        let query = `SELECT * FROM "${tableName}" WHERE "ap_id"=${id}` 
+        return await dbExecute.customQuery(query);
     }
     static async getApPage(suppliers, limit, offset) {
         let query = `select * from "${tableName}"`

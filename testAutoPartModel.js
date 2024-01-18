@@ -13,15 +13,16 @@ const TestFunction = async () => {
     // }
     // const id = await AutoPart.insert(entity);
     // console.log(id);
-    // const data = await AutoPart.delete(154);
+    const data = await AutoPart.delete(156);
     // const entity = {
     //     name: "newTrung",
     //     supplier: "An Giang",
     //     quantity: 120,
     //     price: 1200
     // }
-    // const id = await AutoPart.update(155,entity);
+    // const id = await AutoPart.update(156,entity);
     // console.log(id);
+    console.log(data);
 }
 
 TestFunction();
