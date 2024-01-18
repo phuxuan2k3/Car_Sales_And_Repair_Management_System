@@ -11,21 +11,28 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-2 mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link {{#if store}}active{{/if}} no-wrap" aria-current="page" href="/test/dashboard">Store</a>
+                    <a class="nav-link {{#if store}}active{{/if}} no-wrap" aria-current="page"
+                        href="/test/dashboard">Store</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link no-wrap {{#if repair}}active{{/if}} " href="/test/repairservice">Repair service</a>
+                    <a class="nav-link no-wrap {{#if repair}}active{{/if}} " href="/test/repairservice">Repair
+                        service</a>
                 </li>
 
             </ul>
             <div class="searchForm me-auto w-100">
                 <i class="fa fa-search"></i>
-                <input id="SearchBar" class="form-control me-auto w-50 rounded-pill" type="search" placeholder="Search something here"
-                    aria-label="Search">
+                <input id="SearchBar" class="form-control me-auto w-50 rounded-pill" type="search"
+                    placeholder="Search something here" aria-label="Search">
             </div>
-            <div class="userInfo d-flex flex-end">
-                <img src="https://th.bing.com/th/id/R.8b167af653c2399dd93b952a48740620?rik=%2fIwzk0n3LnH7dA&pid=ImgRaw&r=0"
-                    class="rounded-circle p-3" style="width: 80px; height: 80px;" alt="" />
+            <div class="userInfo d-flex flex-end col-4">
+                <form action='/logout' method="POST">
+                    <span>{{nameOfUser}}</span>
+                    <button type='submit' style="all: unset;">
+                        <img src="https://th.bing.com/th/id/R.8b167af653c2399dd93b952a48740620?rik=%2fIwzk0n3LnH7dA&pid=ImgRaw&r=0"
+                            class="rounded-circle p-3" style="width: 80px; height: 80px;" alt="" />
+                    </button>
+                </form>
             </div>
         </div>
 
