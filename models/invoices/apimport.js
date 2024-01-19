@@ -1,85 +1,123 @@
-const dbExecuteImp = require('../../utils/dbExecute.imp');
-const { SelectQuery, InsertQuery, UpdateQuery, ExactUpdateQuery, DeleteQuery } = require('../../utils/queryBuilder');
-const tableNameInvoice = 'car_import_invoice';
-const tableNameReport = 'car_import_report';
+const { SelectQuery, InsertQuery, ExactUpdateQuery, DeleteQuery } = require('../../utils/queryBuilder');
 
-class CarReport {
+const AIR_Table = {
+    NAME: 'ap_import_report',
+    importinvoice_id: 'importinvoice_id',
+    ap_id: 'ap_id',
+    quantity: 'quantity',
+    date: 'date',
+}
+
+const AII_Table = {
+    NAME: 'ap_import_invoice',
+    importinvoice_id: 'importinvoice_id',
+    sm_id: 'sm_id',
+}
+
+
+class ApReport {
     constructor() {
         this.importinvoice_id = null;
-        this.car_id = null;
+        this.ap_id = null;
         this.quantity = null;
         this.date = new Date();
     }
     static castObj(obj) {
-        const res = new CarReport();
+        const res = new ApReport();
         res.importinvoice_id = obj.importinvoice_id;
-        res.car_id = obj.car_id;
+        res.ap_id = obj.ap_id;
         res.quantity = obj.quantity;
         res.date = this.date;
         return res;
     }
-    static castParam(importinvoice_id, car_id, quantity, date) {
-        let res = new CarReport();
+    static castParam(importinvoice_id, ap_id, quantity, date) {
+        let res = new ApReport();
         res.importinvoice_id = importinvoice_id;
-        res.car_id = car_id;
+        res.ap_id = ap_id;
         res.quantity = quantity;
         res.date = date;
         return res;
     }
 
+    // read
+    // get aps from a invoice
+    static async getApReports(importinvoice_id) {
+        const data = await SelectQuery.init(AIR_Table.NAME).setSelectAll().addEqual(AIR_Table.importinvoice_id, importinvoice_id).execute();
+        return data.map(d => { return ApReport.castObj(d) });
+    }
 
+    // cud
+    // return importinvoice_id, ap_id
+    static async insert(entity) {
+        const res = await InsertQuery.init(AIR_Table.NAME).default(entity, [AIR_Table.importinvoice_id, AIR_Table.ap_id]).execute();
+        return res;
+    }
+    // return rows affected
+    static async update(entity) {
+        const res = await ExactUpdateQuery.init(AIR_Table.NAME).default(entity, [AIR_Table.importinvoice_id, AIR_Table.ap_id]).execute();
+        return res;
+    }
+    // return rows affected
+    static async delete({ importinvoice_id, car_id }) {
+        const res = await DeleteQuery.init(AIR_Table.NAME).default({ importinvoice_id, car_id }).execute();
+        return res;
+    }
 }
 
-class CarInvoice {
+class ApInvoice {
     constructor() {
         this.sm_id = null;
         this.importinvoice_id = null;
     }
     static castObj(obj) {
-        const res = new CarInvoice();
+        const res = new ApInvoice();
         res.sm_id = obj.sm_id;
         res.importinvoice_id = obj.importinvoice_id;
         return res;
     }
     static castParam(sm_id, importinvoice_id) {
-        const res = new CarInvoice();
+        const res = new ApInvoice();
         res.sm_id = sm_id;
         res.importinvoice_id = importinvoice_id;
         return res;
     }
 
     // read
-    // get all car invoices
+    // get all ap invoices
     static async getAll() {
-        const data = await SelectQuery.init(tableNameInvoice).setSelectAll().execute();
-        return data;
+        const data = await SelectQuery.init(AII_Table.NAME).setSelectAll().execute();
+        return data.map(d => ApInvoice.castObj(d));
     }
-    // get all car invoices by page, by store manager, NOT-TEST
+    // get all ap invoices by page, by store manager, NOT-TEST
     static async getByStoreManager(sm_id) {
-        const data = await SelectQuery.init(tableNameInvoice).setSelectAll().addEqual('sm_id', sm_id).execute();
-        return data;
+        const data = await SelectQuery.init(AII_Table.NAME).setSelectAll().addEqual(AII_Table.sm_id, sm_id).execute();
+        return data.map(d => ApInvoice.castObj(d));
     }
 
     // cud
+    // return importinvoice_id
     static async insert(entity) {
-        const res = await InsertQuery.init(tableNameInvoice).default(entity, ['importinvoice_id']).execute();
+        const res = await InsertQuery.init(AII_Table.NAME).default(entity, [AII_Table.importinvoice_id]).execute();
         return res;
     }
+    // return rows affected
     static async update(entity) {
-        const res = await ExactUpdateQuery.init(tableNameInvoice).default(entity, ['importinvoice_id']).execute();
+        const res = await ExactUpdateQuery.init(AII_Table.NAME).default(entity, [AII_Table.importinvoice_id]).execute();
         return res;
     }
+    // return rows affected
     static async delete({ importinvoice_id }) {
-        const res = await DeleteQuery.init(tableNameInvoice).default({ importinvoice_id }).execute();
+        const res = await DeleteQuery.init(AII_Table.NAME).default({ importinvoice_id }).execute();
         return res;
     }
 }
+
 
 // >>>> =============================================
 // Test set flag to 1 for testing
 // <<<< =============================================
 
-// Car Report
+// Ap Report
 if (0) {
     (async () => {
         // in: invoice id
@@ -137,103 +175,6 @@ if (0) {
 }
 
 
-
-module.exports = { CarInvoice, CarReport };
-
-
-class ApReport {
-    constructor() {
-        this.importinvoice_id = null;
-        this.ap_id = null;
-        this.quantity = null;
-        this.date = new Date();
-    }
-    static castObj(obj) {
-        const res = new ApReport();
-        res.importinvoice_id = obj.importinvoice_id;
-        res.ap_id = obj.ap_id;
-        res.quantity = obj.quantity;
-        res.date = this.date;
-        return res;
-    }
-    static castParam(importinvoice_id, ap_id, quantity, date) {
-        let res = new ApReport();
-        res.importinvoice_id = importinvoice_id;
-        res.ap_id = ap_id;
-        res.quantity = quantity;
-        res.date = date;
-        return res;
-    }
-
-    // read
-    // get aps from a invoice
-    static async getApReports(importinvoice_id) {
-        const data = await SelectQuery.init(tableNameReport).setSelectAll().addEqual('importinvoice_id', importinvoice_id).execute();
-        return data.map(d => { return CarReport.castObj(d) });
-    }
-
-    // cud
-    static async insert(entity) {
-        const res = await InsertQuery.init(tableNameReport).default(entity, ['importinvoice_id', 'car_id']).execute();
-        return res;
-    }
-    static async update(entity) {
-        const res = await ExactUpdateQuery.init(tableNameReport).default(entity, ['importinvoice_id', 'car_id']).execute();
-        return res;
-    }
-    static async delete({ importinvoice_id, car_id }) {
-        const res = await DeleteQuery.init(tableNameReport).default({ importinvoice_id, car_id }).execute();
-        return res;
-    }
-}
-
-class ApInvoice {
-    constructor() {
-        this.sm_id = null;
-        this.importinvoice_id2 = null;
-    }
-    static castObj(obj) {
-        const res = new ApInvoice();
-        res.sm_id = obj.sm_id;
-        res.importinvoice_id2 = obj.importinvoice_id2;
-        return res;
-    }
-    static castParam(sm_id, importinvoice_id2) {
-        const res = new ApInvoice();
-        res.sm_id = sm_id;
-        res.importinvoice_id2 = importinvoice_id2;
-        return res;
-    }
-
-    // read
-    // get all car invoices
-    static async getAll() {
-        const data = await dbExecuteImp.getAll(tableNameInvoice);
-        return data;
-    }
-    // get all car invoices by page
-    static async getCustom(limit, offset) {
-        const data = await dbExecuteImp.getCustom(limit, offset, tableNameInvoice);
-        return data;
-    }
-    // get by store manager
-    static async getByStoreManager(sm_id) {
-        let query = `select * from "${tableNameInvoice}" where "sm_id"=${sm_id}`;
-        const data = await dbExecuteImp.customQuery(query);
-        return data;
-    }
-
-    // cud
-    static async insert(entity) {
-        return dbExecuteImp.insert(entity, ['importinvoice_id2'], tableNameInvoice);
-    }
-    static async update(importinvoice_id2, entity) {
-        return await dbExecuteImp.update(entity, { importinvoice_id2 }, tableNameInvoice);
-    }
-    static async delete(importinvoice_id2,) {
-        return await dbExecuteImp.delete({ importinvoice_id2 }, tableNameInvoice);
-    }
-}
 
 
 module.exports = { ApInvoice, ApReport };

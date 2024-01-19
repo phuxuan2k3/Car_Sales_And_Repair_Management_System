@@ -1,7 +1,19 @@
-const dbExecuteImp = require('../../utils/dbExecute.imp');
-const { SelectQuery, InsertQuery, UpdateQuery, ExactUpdateQuery, DeleteQuery } = require('../../utils/queryBuilder');
-const tableNameInvoice = 'car_import_invoice';
-const tableNameReport = 'car_import_report';
+const { SelectQuery, InsertQuery, ExactUpdateQuery, DeleteQuery } = require('../../utils/queryBuilder');
+
+const CIR_Table = {
+    NAME: 'car_import_report',
+    importinvoice_id: 'importinvoice_id',
+    car_id: 'car_id',
+    quantity: 'quantity',
+    date: 'date',
+}
+
+const CII_Table = {
+    NAME: 'car_import_invoice',
+    importinvoice_id: 'importinvoice_id',
+    sm_id: 'sm_id',
+}
+
 
 class CarReport {
     constructor() {
@@ -30,21 +42,24 @@ class CarReport {
     // read
     // get cars from a invoice
     static async getCarReports(importinvoice_id) {
-        const data = await SelectQuery.init(tableNameReport).setSelectAll().addEqual('importinvoice_id', importinvoice_id).execute();
+        const data = await SelectQuery.init(CIR_Table.NAME).setSelectAll().addEqual(CIR_Table.importinvoice_id, importinvoice_id).execute();
         return data.map(d => { return CarReport.castObj(d) });
     }
 
     // cud
+    // return importinvoice_id, car_id
     static async insert(entity) {
-        const res = await InsertQuery.init(tableNameReport).default(entity, ['importinvoice_id', 'car_id']).execute();
+        const res = await InsertQuery.init(CIR_Table.NAME).default(entity, [CIR_Table.importinvoice_id, CIR_Table.car_id]).execute();
         return res;
     }
+    // return rows affected
     static async update(entity) {
-        const res = await ExactUpdateQuery.init(tableNameReport).default(entity, ['importinvoice_id', 'car_id']).execute();
+        const res = await ExactUpdateQuery.init(CIR_Table.NAME).default(entity, [CIR_Table.importinvoice_id, CIR_Table.car_id]).execute();
         return res;
     }
+    // return rows affected
     static async delete({ importinvoice_id, car_id }) {
-        const res = await DeleteQuery.init(tableNameReport).default({ importinvoice_id, car_id }).execute();
+        const res = await DeleteQuery.init(CIR_Table.NAME).default({ importinvoice_id, car_id }).execute();
         return res;
     }
 }
@@ -70,26 +85,29 @@ class CarInvoice {
     // read
     // get all car invoices
     static async getAll() {
-        const data = await SelectQuery.init(tableNameInvoice).setSelectAll().execute();
-        return data;
+        const data = await SelectQuery.init(CII_Table.NAME).setSelectAll().execute();
+        return data.map(d => CarInvoice.castObj(d));
     }
     // get all car invoices by page, by store manager, NOT-TEST
     static async getByStoreManager(sm_id) {
-        const data = await SelectQuery.init(tableNameInvoice).setSelectAll().addEqual('sm_id', sm_id).execute();
-        return data;
+        const data = await SelectQuery.init(CII_Table.NAME).setSelectAll().addEqual(CII_Table.sm_id, sm_id).execute();
+        return data.map(d => CarInvoice.castObj(d));
     }
 
     // cud
+    // return importinvoice_id
     static async insert(entity) {
-        const res = await InsertQuery.init(tableNameInvoice).default(entity, ['importinvoice_id']).execute();
+        const res = await InsertQuery.init(CII_Table.NAME).default(entity, [CII_Table.importinvoice_id]).execute();
         return res;
     }
+    // return rows affected
     static async update(entity) {
-        const res = await ExactUpdateQuery.init(tableNameInvoice).default(entity, ['importinvoice_id']).execute();
+        const res = await ExactUpdateQuery.init(CII_Table.NAME).default(entity, [CII_Table.importinvoice_id]).execute();
         return res;
     }
+    // return rows affected
     static async delete({ importinvoice_id }) {
-        const res = await DeleteQuery.init(tableNameInvoice).default({ importinvoice_id }).execute();
+        const res = await DeleteQuery.init(CII_Table.NAME).default({ importinvoice_id }).execute();
         return res;
     }
 }
