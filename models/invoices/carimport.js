@@ -1,4 +1,5 @@
 const dbExecuteImp = require('../../utils/dbExecute.imp');
+const { SelectQuery, InsertQuery, UpdateQuery } = require('../../utils/queryBuilder');
 const tableNameInvoice = 'car_import_invoice';
 const tableNameReport = 'car_import_report';
 
@@ -26,19 +27,25 @@ class CarReport {
         return res;
     }
 
+    // TODO: Uses new query builder
+
     // read
     // get cars from a invoice
     static async getCarReports(importinvoice_id) {
-        let query = `select * from "${tableNameReport}" where "importinvoice_id"=${importinvoice_id}`;
-        const datas = await dbExecuteImp.customQuery(query);
-        return datas.map(data => { return CarReport.castObj(data) });
+        const sq = new SelectQuery(tableNameReport);
+        const data = await sq.selectAll().equal('importinvoice_id', importinvoice_id).execute();
+        return data.map(d => { return CarReport.castObj(d) });
     }
 
     // cud
     static async insert(entity) {
-        return await dbExecuteImp.insert(entity, ['importinvoice_id', 'car_id'], tableNameReport);
+        const iq = new InsertQuery(tableNameReport);
+        const res = await iq.default(entity, ['importinvoice_id', 'car_id']).execute();
+        return res;
     }
     static async update(importinvoice_id, car_id, entity) {
+        const uq = new UpdateQuery(tableNameReport);
+        const res = await uq.default(entity, ['importinvoice_id = ', 'car_id']).execute();
         return await dbExecuteImp.update(entity, { importinvoice_id, car_id }, tableNameReport);
     }
     static async delete(importinvoice_id, car_id) {
@@ -70,8 +77,9 @@ class CarInvoice {
         const data = await dbExecuteImp.getAll(tableNameInvoice);
         return data;
     }
-    // get all car invoices by page
-    static async getCustom(limit, offset) {
+    // get all car invoices by page, by store manager
+    static async getCustom(sm_id, page, perPage) {
+        let query;
         const data = await dbExecuteImp.getCustom(limit, offset, tableNameInvoice);
         return data;
     }
@@ -89,7 +97,7 @@ class CarInvoice {
     static async update(importinvoice_id, entity) {
         return await dbExecuteImp.update(entity, { importinvoice_id }, tableNameInvoice);
     }
-    static async delete(importinvoice_id,) {
+    static async delete(importinvoice_id) {
         return await dbExecuteImp.delete({ importinvoice_id }, tableNameInvoice);
     }
 }
