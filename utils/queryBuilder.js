@@ -15,6 +15,9 @@ class SelectQuery extends Query {
         this._orderByQueryArray = [];
         this._limitOffsetQuery = '';
     }
+    static init(tableName) {
+        return new SelectQuery(tableName);
+    }
     selectCount() {
         this._selectQuery = 'COUNT(*)';
         return this;
@@ -23,8 +26,8 @@ class SelectQuery extends Query {
         this._selectQuery = '*';
         return this;
     }
-    selectCols(colArray) {
-        this._selectQuery = colArray.join(', ');
+    selectCustom(customArray) {
+        this._selectQuery = customArray.join(', ');
         return this;
     }
     join(tableName, conditionString) {
@@ -107,18 +110,33 @@ class SelectQuery extends Query {
 class InsertQuery extends Query {
     constructor(tablename) {
         super(tablename);
-        this.colArray = null;
-        this.dataObj = null;
-        this.returnColArray = null;
+        this._colArray = null;
+        this._dataObj = null;
+        this._returnColArray = null;
+    }
+    static init(tableName) {
+        return new InsertQuery(tableName);
+    }
+    setDataObj(dataObj) {
+        this._dataObj = dataObj;
+        return this;
+    }
+    setColArray(colArray) {
+        this._colArray = colArray;
+        return this;
+    }
+    setReturnColArray(returnColArray) {
+        this._returnColArray = returnColArray;
+        return this;
     }
     default(dataObj, returnColArray) {
-        this.dataObj = dataObj;
-        this.returnColArray = returnColArray;
+        this._dataObj = dataObj;
+        this._returnColArray = returnColArray;
         return this;
     }
     retrive() {
-        const returnColsQuery = this.returnColArray ? " RETURNING " + this.returnColArray.join(', ') : '';
-        const query = pgp.helpers.insert(this.dataObj, this.colArray, this._tablename) + returnColsQuery;
+        const returnColsQuery = this._returnColArray ? " RETURNING " + this._returnColArray.join(', ') : '';
+        const query = pgp.helpers.insert(this._dataObj, this._colArray, this._tablename) + returnColsQuery;
         return query;
     }
     async execute(type = 'one') {
@@ -127,24 +145,43 @@ class InsertQuery extends Query {
     }
 }
 
-class UpdateQuery extends Query {
+// update at the same record dataObj (can't change primary keys)
+class ExactUpdateQuery extends Query {
     constructor(tablename) {
         super(tablename);
         this.colArray = null;
-        this.dataObj = null;
+        this._dataObj = {};
         this._primaryKeyArray = [];
     }
-    addPrimaryKey(condition) {
-        this._primaryKeyArray.push(condition);
+    static init(tableName) {
+        return new ExactUpdateQuery(tableName);
+    }
+    setDataObj(dataObj) {
+        this._dataObj = dataObj;
+        return this;
+    }
+    addPrimaryKey(primaryKey) {
+        this._primaryKeyArray.push(primaryKey);
+        return this;
     }
     default(dataObj, primaryKeyArray) {
-        this.dataObj = dataObj;
+        this._dataObj = dataObj;
         this._primaryKeyArray = primaryKeyArray;
         return this;
     }
     retrive() {
-        const where = this._primaryKeyArray.length === 0 ? '' : " WHERE " + this._primaryKeyArray.join(' AND ');
-        const query = pgp.helpers.update(this.dataObj, this.colArray, this._tablename) + where;
+        let where = '';
+        if (this._primaryKeyArray.length > 0) {
+            where = ' WHERE ';
+            this._primaryKeyArray.forEach((pk, i) => {
+                const struct = '$1:name = $2:value ';
+                where += pgp.as.format(struct, [pk, this._dataObj[pk]]);
+                if (i < this._primaryKeyArray.length - 1) {
+                    where += 'AND ';
+                }
+            });
+        }
+        const query = pgp.helpers.update(this._dataObj, this.colArray, this._tablename) + where;
         return query;
     }
     async execute(type = 'result') {
@@ -159,20 +196,49 @@ class UpdateQuery extends Query {
 class DeleteQuery extends Query {
     constructor(tablename) {
         super(tablename);
-        this.dataObj = null;
-        this._whereConditionArray = [];
+        this._primaryKeyObj = null;
+        this._conditionArray = [];
     }
-    addWhereCondition(condition) {
-        this._whereConditionArray.push(condition);
+    static init(tableName) {
+        return new DeleteQuery(tableName);
     }
-    default(dataObj, whereConditionArray) {
-        this.dataObj = dataObj;
-        this._whereConditionArray = whereConditionArray;
+    setPrimaryKeyObj(primaryKeyObj) {
+        this._primaryKeyObj = primaryKeyObj;
+        return this;
+    }
+    addCondition(condition) {
+        this._conditionArray.push(condition);
+        return this;
+    }
+    default(primaryKeyObj) {
+        this._primaryKeyObj = primaryKeyObj;
+        this._conditionArray = whereConditionArray;
         return this;
     }
     retrive() {
-        const where = this._whereConditionArray.length === 0 ? '' : " WHERE " + this._whereConditionArray.join(' AND ');
-        const query = `DELETE FROM ${this._tablename}${where}`;
+        let conditions = this._conditionArray.length === 0 ? '' : this._conditionArray.join(' AND ');
+        let primaryKeys = '';
+        let propertyKeys = Object.keys(this._primaryKeyObj);
+        if (propertyKeys.length > 0) {
+            propertyKeys.forEach((key, i) => {
+                const value = this._primaryKeyObj[key];
+                const struct = '$1:name = $2:value ';
+                primaryKeys += pgp.as.format(struct, [key, value]);
+                if (i < propertyKeys.length - 1) {
+                    primaryKeys += 'AND '
+                }
+            });
+        }
+        let where = '';
+        let midAnd = '';
+        if (conditions !== '' || primaryKeys !== '') {
+            where = ' WHERE ';
+        }
+        if (conditions !== '' && primaryKeys !== '') {
+            midAnd = ' AND ';
+        }
+        const struct = `DELETE FROM $1:name${where}${primaryKeys}${midAnd}${conditions}`;
+        const query = pgp.as.format(struct, [this._tablename]);
         return query;
     }
     async execute(type = 'result') {
@@ -210,12 +276,21 @@ class DeleteQuery extends Query {
 // sq.paging(10, 3);
 // console.log(sq.retrive());
 
-var sq = new SelectQuery('test');
-sq.selectCount().between('t', 1, 10).execute('any');
+// var sq = new SelectQuery('test');
+// sq.selectCount().between('t', 1, 10).execute('any');
+
+// console.log(ExactUpdateQuery.init('test').default({ id: 10, id2: 123, name: 'an' }, ['id', 'id2']).retrive());
+// console.log(ExactUpdateQuery.init('test').default({ id: 10, id2: 123, name: 'an' }, ['id']).retrive());
+// console.log(ExactUpdateQuery.init('test').setDataObj({ id: 10, id2: 123, name: 'an' }).addPrimaryKey('id').addPrimaryKey('id2').retrive());
+
+// console.log(DeleteQuery.init('test').setPrimaryKeyObj({ id: 10, id2: 123 }).retrive());
+// console.log(DeleteQuery.init('test').setPrimaryKeyObj({ id: 10, id2: 123 }).addCondition('"name" = \'Test\'').retrive());
+
+
 
 module.exports = {
     SelectQuery,
     InsertQuery,
-    UpdateQuery,
+    ExactUpdateQuery,
     DeleteQuery,
 }
