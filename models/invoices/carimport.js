@@ -50,6 +50,10 @@ class CarReport {
         const data = await SelectQuery.init(CIR_Table.NAME).setSelectAll().addBetweenDate(CIR_Table.date, start, end).execute();
         return data.map(d => { return CarReport.castObj(d) });
     }
+    // static async getTotalPriceByDate(start, end) {
+    //     const data = await SelectQuery.init(CIR_Table.NAME).setSelectCustom(['SUM()']).addBetweenDate(CIR_Table.date, start, end).execute();
+    //     return data.map(d => { return CarReport.castObj(d) });
+    // }
 
     // cud
     // return importinvoice_id, car_id

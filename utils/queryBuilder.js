@@ -12,6 +12,7 @@ class SelectQuery extends Query {
         this._selectQuery = '*';
         this._joinQueryArray = [];
         this._middleQueryArray = [];
+        this._groupByQueryArray = [];
         this._orderByQueryArray = [];
         this._limitOffsetQuery = '';
     }
@@ -34,31 +35,37 @@ class SelectQuery extends Query {
         this._joinQueryArray.push(`JOIN ${tableName} ON ${conditionString}`);
         return this;
     }
-    addEqual(col, val) {
+    addEqualValue(col, val) {
         const struct = `AND $1:name = $2:value`
         const query = pgp.as.format(struct, [col, val]);
         this._middleQueryArray.push(query);
         return this;
     }
-    addLike(col, key) {
+    addEqual(col, val) {
+        const struct = `AND $1:name = $2`
+        const query = pgp.as.format(struct, [col, val]);
+        this._middleQueryArray.push(query);
+        return this;
+    }
+    addLikeValue(col, key) {
         const struct = `AND $1:name LIKE \'%$2:value%\'`
         const query = pgp.as.format(struct, [col, key]);
         this._middleQueryArray.push(query);
         return this;
     }
-    addIlike(col, key) {
+    addIlikeValue(col, key) {
         const struct = `AND $1:name ILIKE \'%$2:value%\'`
         const query = pgp.as.format(struct, [col, key]);
         this._middleQueryArray.push(query);
         return this;
     }
-    addIn(col, valArray) {
+    addInCsv(col, valArray) {
         const struct = `AND $1:name IN($2:csv)`;
         const query = pgp.as.format(struct, [col, valArray]);
         this._middleQueryArray.push(query);
         return this;
     }
-    addBetween(col, low, high) {
+    addBetweenValue(col, low, high) {
         const struct = `AND $1:name BETWEEN $2:value AND $3:value`;
         const query = pgp.as.format(struct, [col, low, high]);
         this._middleQueryArray.push(query);
@@ -68,6 +75,10 @@ class SelectQuery extends Query {
         const struct = `AND $1:name BETWEEN $2::date AND $3::date`;
         const query = pgp.as.format(struct, [col, dlow, dhigh]);
         this._middleQueryArray.push(query);
+        return this;
+    }
+    addGroupBy(col) {
+        this._groupByQueryArray.push(col);
         return this;
     }
     addOrderBy(col, isAsc) {
@@ -91,7 +102,8 @@ class SelectQuery extends Query {
         const select = this._selectQuery;
         const join = this._joinQueryArray.join(' ');
         const middle = this._middleQueryArray.join(' ');
-        const orderBy = this._orderByQueryArray.length === 0 ? '' : "ORDER BY " + this._orderByQueryArray.join(' ');
+        const groupBy = this._groupByQueryArray.length === 0 ? '' : "GROUP BY " + this._groupByQueryArray.join(', ');
+        const orderBy = this._orderByQueryArray.length === 0 ? '' : "ORDER BY " + this._orderByQueryArray.join(', ');
         const limitOffset = this._limitOffsetQuery;
         const query = `
         SELECT ${select}
@@ -99,6 +111,7 @@ class SelectQuery extends Query {
         ${join}
         WHERE TRUE
         ${middle}
+        ${groupBy}
         ${orderBy}
         ${limitOffset}
         `;
@@ -255,39 +268,6 @@ class DeleteQuery extends Query {
 // >>>> =============================================
 // test area
 // <<<< =============================================
-
-// var iq = new InsertQuery('test');
-// iq.default({ id: 12, t_id: 233 }, ['id', 't_id']);
-// var q = iq.retrive();
-// console.log(q);
-
-// var sq = new SelectQuery('test');
-// console.log(sq.retrive());
-// sq.selectCount();
-// console.log(sq.retrive());
-// sq.between('t', 1, 10);
-// console.log(sq.retrive());
-// sq.ilike('t', 'anngo');
-// console.log(sq.retrive());
-// sq.in('t', [1, 3, 4, 6]);
-// console.log(sq.retrive());
-// sq.join('temp', 'test.temp = temp.id');
-// console.log(sq.retrive());
-// sq.orderBy('id', false);
-// console.log(sq.retrive());
-// sq.paging(10, 3);
-// console.log(sq.retrive());
-
-// var sq = new SelectQuery('test');
-// sq.selectCount().between('t', 1, 10).execute('any');
-
-// console.log(ExactUpdateQuery.init('test').default({ id: 10, id2: 123, name: 'an' }, ['id', 'id2']).retrive());
-// console.log(ExactUpdateQuery.init('test').default({ id: 10, id2: 123, name: 'an' }, ['id']).retrive());
-// console.log(ExactUpdateQuery.init('test').setDataObj({ id: 10, id2: 123, name: 'an' }).addPrimaryKey('id').addPrimaryKey('id2').retrive());
-
-// console.log(DeleteQuery.init('test').setPrimaryKeyObj({ id: 10, id2: 123 }).retrive());
-// console.log(DeleteQuery.init('test').setPrimaryKeyObj({ id: 10, id2: 123 }).addCondition('"name" = \'Test\'').retrive());
-
 
 module.exports = {
     SelectQuery,
