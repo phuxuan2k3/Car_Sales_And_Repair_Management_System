@@ -41,8 +41,12 @@ class ApReport {
 
     // read
     // get aps from a invoice
-    static async getReports(importinvoice_id) {
+    static async getReportsFromInvoice(importinvoice_id) {
         const data = await SelectQuery.init(AIR_Table.NAME).setSelectAll().addEqual(AIR_Table.importinvoice_id, importinvoice_id).execute();
+        return data.map(d => { return ApReport.castObj(d) });
+    }
+    static async getReportsByDate(start, end) {
+        const data = await SelectQuery.init(AIR_Table.NAME).setSelectAll().addBetweenDate(AIR_Table.date, start, end).execute();
         return data.map(d => { return ApReport.castObj(d) });
     }
 
@@ -116,7 +120,7 @@ class ApInvoice {
 // Test || set flag to 1 for testing
 // <<<< =============================================
 
-const flagReport = 0;
+const flagReport = 1;
 const flagInvoice = 0;
 
 // Ap Report
@@ -124,8 +128,14 @@ if (flagReport) {
     (async () => {
         // in: invoice id
         // out: Array of ApReport
-        var test = await ApReport.getReports(300);
+        var test = await ApReport.getReportsFromInvoice(300);
         console.log(test);
+
+        // in: start, end date
+        // out: Array of ApReport
+        var test = await ApReport.getReportsByDate(new Date("2024/01/01"), new Date());
+        console.log(test);
+
 
         // in: ApReport 
         // out: {importinvoice_id, ap_id}

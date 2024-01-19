@@ -64,6 +64,12 @@ class SelectQuery extends Query {
         this._middleQueryArray.push(query);
         return this;
     }
+    addBetweenDate(col, dlow, dhigh) {
+        const struct = `AND $1:name BETWEEN $2::date AND $3::date`;
+        const query = pgp.as.format(struct, [col, dlow, dhigh]);
+        this._middleQueryArray.push(query);
+        return this;
+    }
     addOrderBy(col, isAsc) {
         const queryAsc = isAsc ? 'ASC' : 'DESC';
         const struct = `$1:name ${queryAsc}`;
@@ -281,7 +287,6 @@ class DeleteQuery extends Query {
 
 // console.log(DeleteQuery.init('test').setPrimaryKeyObj({ id: 10, id2: 123 }).retrive());
 // console.log(DeleteQuery.init('test').setPrimaryKeyObj({ id: 10, id2: 123 }).addCondition('"name" = \'Test\'').retrive());
-
 
 
 module.exports = {

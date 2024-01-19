@@ -41,8 +41,13 @@ class CarReport {
 
     // read
     // get cars from a invoice
-    static async getReports(importinvoice_id) {
+    static async getReportsFromInvoice(importinvoice_id) {
         const data = await SelectQuery.init(CIR_Table.NAME).setSelectAll().addEqual(CIR_Table.importinvoice_id, importinvoice_id).execute();
+        return data.map(d => { return CarReport.castObj(d) });
+    }
+    // get all reports from date range
+    static async getReportsByDate(start, end) {
+        const data = await SelectQuery.init(CIR_Table.NAME).setSelectAll().addBetweenDate(CIR_Table.date, start, end).execute();
         return data.map(d => { return CarReport.castObj(d) });
     }
 
@@ -116,7 +121,7 @@ class CarInvoice {
 // Test || set flag to 1 for testing
 // <<<< =============================================
 
-const flagReport = 0;
+const flagReport = 1;
 const flagInvoice = 0;
 
 // Car Report
@@ -124,7 +129,12 @@ if (flagReport) {
     (async () => {
         // in: invoice id
         // out: Array of CarReport
-        var test = await CarReport.getReports(300);
+        var test = await CarReport.getReportsFromInvoice(300);
+        console.log(test);
+
+        // in: start, end date
+        // out: Array of CarReport
+        var test = await CarReport.getReportsByDate(new Date("2024/01/01"), new Date());
         console.log(test);
 
         // in: CarReport 
