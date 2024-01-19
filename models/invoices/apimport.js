@@ -41,7 +41,7 @@ class ApReport {
 
     // read
     // get aps from a invoice
-    static async getApReports(importinvoice_id) {
+    static async getReports(importinvoice_id) {
         const data = await SelectQuery.init(AIR_Table.NAME).setSelectAll().addEqual(AIR_Table.importinvoice_id, importinvoice_id).execute();
         return data.map(d => { return ApReport.castObj(d) });
     }
@@ -58,8 +58,8 @@ class ApReport {
         return res;
     }
     // return rows affected
-    static async delete({ importinvoice_id, car_id }) {
-        const res = await DeleteQuery.init(AIR_Table.NAME).default({ importinvoice_id, car_id }).execute();
+    static async delete({ importinvoice_id, ap_id }) {
+        const res = await DeleteQuery.init(AIR_Table.NAME).default({ importinvoice_id, ap_id }).execute();
         return res;
     }
 }
@@ -112,64 +112,66 @@ class ApInvoice {
     }
 }
 
-
 // >>>> =============================================
-// Test set flag to 1 for testing
+// Test || set flag to 1 for testing
 // <<<< =============================================
 
+const flagReport = 0;
+const flagInvoice = 0;
+
 // Ap Report
-if (0) {
+if (flagReport) {
     (async () => {
         // in: invoice id
-        // out: Array of CarReport
-        var test = await CarReport.getCarReports(300);
+        // out: Array of ApReport
+        var test = await ApReport.getReports(300);
         console.log(test);
 
-        // in: CarReport 
-        // out: {importinvoice_id, car_id}
-        var test = CarReport.castParam(299, 12, 5, new Date());
-        var res = await CarReport.insert(test);
+        // in: ApReport 
+        // out: {importinvoice_id, ap_id}
+        var test = ApReport.castParam(299, 18, 5, new Date());
+        var res = await ApReport.insert(test);
         console.log(res);
 
-        // in: CarReport
+        // in: ApReport
         // out: rowCount
-        var test = await CarReport.update(CarReport.castParam(299, 12, 0, new Date()));
+        var test = await ApReport.update(ApReport.castParam(299, 18, 0, new Date()));
         console.log(test);
 
-        // in: invoice id, car id (obj)
+        // in: invoice id, ap id (obj)
         // out: rowCount
-        var test = await CarReport.delete({ importinvoice_id: 299, car_id: 12 });
+        var test = await ApReport.delete({ importinvoice_id: 299, ap_id: 18 });
         console.log(test);
     })();
 }
 
-// Car Invoice
-if (0) {
+// Ap Invoice
+if (flagInvoice) {
     (async () => {
         // in:
         // out: Array of Invoices
-        var test = await CarInvoice.getAll();
+        var test = await ApInvoice.getAll();
         console.log(test);
         console.log(test[0]);
 
         // in: sm_id (store manager id)
         // out: Array of Invoices
-        var test = await CarInvoice.getByStoreManager(3);
+        var test = await ApInvoice.getByStoreManager(3);
         console.log(test);
 
-        // in: CarInvoice
+        // in: ApInvoice
         // out: {importinvoice_id}
-        var test = await CarInvoice.insert(CarInvoice.castParam(3, 404));
+        var test = await ApInvoice.insert(ApInvoice.castParam(3, 404));
         console.log(test);
 
-        // in: CarInvoice
+        // in: ApInvoice
         // out: rowCount
-        var test = await CarInvoice.update(CarInvoice.castParam(9, 404));
+        var test = await ApInvoice.update(ApInvoice.castParam(9, 404));
         console.log(test);
 
         // in: importinvoice_id (obj)
         // out: rowCount
-        var test = await CarInvoice.delete({ importinvoice_id: 404 });
+        var test = await ApInvoice.delete({ importinvoice_id: 404 });
         console.log(test);
     })();
 }

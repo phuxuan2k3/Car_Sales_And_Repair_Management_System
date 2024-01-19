@@ -41,7 +41,7 @@ class CarReport {
 
     // read
     // get cars from a invoice
-    static async getCarReports(importinvoice_id) {
+    static async getReports(importinvoice_id) {
         const data = await SelectQuery.init(CIR_Table.NAME).setSelectAll().addEqual(CIR_Table.importinvoice_id, importinvoice_id).execute();
         return data.map(d => { return CarReport.castObj(d) });
     }
@@ -113,15 +113,18 @@ class CarInvoice {
 }
 
 // >>>> =============================================
-// Test set flag to 1 for testing
+// Test || set flag to 1 for testing
 // <<<< =============================================
 
+const flagReport = 0;
+const flagInvoice = 0;
+
 // Car Report
-if (0) {
+if (flagReport) {
     (async () => {
         // in: invoice id
         // out: Array of CarReport
-        var test = await CarReport.getCarReports(300);
+        var test = await CarReport.getReports(300);
         console.log(test);
 
         // in: CarReport 
@@ -143,7 +146,7 @@ if (0) {
 }
 
 // Car Invoice
-if (0) {
+if (flagInvoice) {
     (async () => {
         // in:
         // out: Array of Invoices
