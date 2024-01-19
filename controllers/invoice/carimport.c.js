@@ -1,7 +1,6 @@
 const tryCatch = require('../../utils/tryCatch');
 const { CarReport, CarInvoice } = require('../../models/invoices/carimport');
 require('dotenv').config();
-const ENV = process.env;
 
 module.exports = {
     // >>>> =============================================
@@ -12,7 +11,7 @@ module.exports = {
     // return: all report of an invoice 
     getCarReportsOfInvoice: tryCatch(async (req, res) => {
         const importinvoice_id = req.query.importinvoice_id;
-        const data = await CarReport.getCarReports(importinvoice_id);
+        const data = await CarReport.getReports(importinvoice_id);
         return res.json(data);
     }),
 
@@ -30,7 +29,7 @@ module.exports = {
 
     // require: body: importinvoice_id, car_id, quantity, date
     // return: rows affected (1 or 0)
-    updateCarReports: tryCatch(async (req, res) => {
+    updateCarReport: tryCatch(async (req, res) => {
         const importinvoice_id = req.body.importinvoice_id;
         const car_id = req.body.car_id;
         const quantity = req.body.quantity;
@@ -42,10 +41,10 @@ module.exports = {
 
     // require: body: importinvoice_id, car_id
     // return: rows affected (1 or 0)
-    deleteCarReports: tryCatch(async (req, res) => {
+    deleteCarReport: tryCatch(async (req, res) => {
         const importinvoice_id = req.body.importinvoice_id;
         const car_id = req.body.car_id;
-        const data = await CarReport.delete(importinvoice_id, car_id);
+        const data = await CarReport.delete({ importinvoice_id, car_id });
         return res.json(data);
     }),
 
@@ -53,15 +52,14 @@ module.exports = {
     // return: all invoices
     getAllInvoices: tryCatch(async (req, res) => {
         const data = await CarInvoice.getAll();
-        res.json(data)
+        return res.json(data)
     }),
 
-    // require: query: page, per_page
-    // return: invoices within page
-    getInvoicesByPage: tryCatch(async (req, res) => {
-        const page = parseInt(req.query.page);
-        const perPage = parseInt(req.query.per_page);
-        const data = await CarInvoice.getCustom();
-        res.json(data);
+    // require: query: sm_id
+    // return: invoices of a store manager
+    getInvoicesByStoreManager: tryCatch(async (req, res) => {
+        const sm_id = req.query.sm_id;
+        const data = await CarInvoice.getByStoreManager(sm_id);
+        return res.json(data);
     }),
 }
