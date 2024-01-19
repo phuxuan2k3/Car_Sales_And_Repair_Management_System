@@ -1,0 +1,7 @@
+.tabs .active {
+    background-color: var(--primaryColor) !important;
+}
+
+.tabs button {
+    color: gray;
+}
