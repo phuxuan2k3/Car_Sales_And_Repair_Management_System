@@ -32,8 +32,6 @@ app.use(passport.session());
 
 
 //Router
-app.use(require('./routers/site.r'));
-
 app.use('/test', require('./routers/testview.r')) //Test view
 app.use('/api', require('./routers/api.r'));
 app.use('/', require('./routers/site.r'));

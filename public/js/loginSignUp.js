@@ -18,41 +18,6 @@ const changeForm = (e) => {
 $('.loginForm').on('submit', function (e) {
     $rememberChbx = $($('form input[type="checkbox"]')[0]);
     $rememberChbx.val($rememberChbx.prop('checked') == true ? 'true' : 'false');
-
-    // $rememberChbx = $($('form input[type="checkbox"]')[0]);
-    // let isRemember = ($rememberChbx.prop('checked') == true ? 'true' : 'false');
-
-    // const Url = '/login';
-    // const postData = {
-    //     Username: $('#loginUsername').val(),
-    //     Password: $('#loginPassword').val(),
-    //     Remember: isRemember
-    // };
-
-    // fetch(Url, {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(postData)
-    // })
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error(`Network response was not ok, status: ${response.status}`);
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         if (data.success) {
-    //             window.location.href = data.redirect;
-    //         } else {
-    //             $('#loginMessage .message').text(data.message);
-    //             $('#loginMessage').toggle();
-    //         }
-    //     })
-    //     .catch(error => {
-    //         console.error('Error during fetch operation:', error);
-    //     });
 });
 
 if ($('#loginMessage .message').text()) {
@@ -63,5 +28,51 @@ if (typeof isRegister !== 'undefined') {
     if (isRegister) {
         changeForm();
     }
+}
 
+$('#registerForm').on('submit', async function (e) {
+    e.preventDefault();
+    const url = '/api/user/register';
+    const data = $('#registerForm').serializeArray().reduce(function (obj, item) {
+        obj[item.name] = item.value;
+        return obj;
+    }, {});
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log(result);
+        displayRegisterResult(result);
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+})
+
+function displayRegisterResult(result) {
+    $('.toast-body').text(result.message);
+    if (result.success) {
+        $('.toast-header').css('background-color', 'green');
+        $('.toast-body').append('<p>&#10;&#13;Automatically move to login after 2 seconds.</p>');
+        setTimeout(() => {
+            changeForm();
+        }, 2000);
+    } else {
+        $('.toast-header').css('background-color', 'red');
+    }
+    let toast = document.querySelector('.toast');
+    if (toast) {
+        let myToast = new bootstrap.Toast(toast);
+        myToast.show();
+    }
 }
