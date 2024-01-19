@@ -81,10 +81,6 @@ module.exports = class Car {
             data: carData,
         }
     }
-    static async getNoRemainingCar() {
-        let query = `SELECT SUM(quantity) FROM ${tableName}`;
-        return (await dbExecute.customQuery(query))[0];
-    }
     static async getMostCar() {
         let query = `SELECT * FROM ${tableName} ORDER BY quantity DESC LIMIT 1;`
         return (await dbExecute.customQuery(query))[0];

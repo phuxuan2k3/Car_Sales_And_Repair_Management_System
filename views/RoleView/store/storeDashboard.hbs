@@ -21,10 +21,13 @@
         <div class="col-9 tab_content">
             <div class="card-body p-3 bg-white">
                 <div class="row justify-content-center">
-                    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+                    <canvas id="carChart" style="width:100%;height:300px"></canvas>
+                </div>
+                <div class="row justify-content-center">
+                    <canvas id="apChart" style="width:100%;height:300px"></canvas>
                 </div>
 
-                <div class="row">
+                <div class="row justify-content-evenly">
                     <div class="card m-3 col-5">
                         <div class="card-body">
                             <div class="row align-items-center flex-row">
@@ -36,7 +39,7 @@
                                     <hr><small class="text-muted" id="priceMostCar"></small>
                                 </div>
                                 <div class="col-7">
-                                    <div class="pieMostCar"></div>
+                                    <canvas id="mostCar" style="height:50px;width:50px"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +55,7 @@
                                     <hr><small class="text-muted" id="priceMostAp">Lorem ipsum dolor sit</small>
                                 </div>
                                 <div class="col-7">
-                                    <div class="pieMostAp"></div>
+                                    <canvas id="mostAp" style="height:50px;width:50px"></canvas>
                                 </div>
                             </div>
                         </div>

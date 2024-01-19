@@ -7,6 +7,14 @@ const FixedCar = require('../models/fixedCar');
 const User = require('../models/user');
 
 module.exports = {
+    //For store
+    getRemainingItems: tryCatch(async (req, res) => {
+        const carData = await Car.getAll();
+        const apData = await AutoPart.getAll();
+        res.json({ car: carData, ap: apData });
+    })
+    ,
+
     //Car API
     getAllCar: tryCatch(async (req, res) => {
         const data = await Car.getAll();
@@ -60,10 +68,6 @@ module.exports = {
         } catch (error) {
             req.json({ rs: false });
         };
-    }),
-    getNumberOfRemainingCar: tryCatch(async (req, res) => {
-        const data = await Car.getNoRemainingCar();
-        res.json(data);
     }),
     getMostCar: tryCatch(async (req, res) => {
         const data = await Car.getMostCar();
@@ -119,10 +123,6 @@ module.exports = {
         } catch (error) {
             req.json({ rs: false });
         };
-    }),
-    getNumberOfRemainingAutoPart: tryCatch(async (req, res) => {
-        const data = await AutoPart.getNoRemainingAp();
-        res.json(data);
     }),
     getMostAp: tryCatch(async (req, res) => {
         const data = await AutoPart.getMostAp();
