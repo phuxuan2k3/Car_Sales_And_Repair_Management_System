@@ -24,7 +24,7 @@ module.exports = class AutoPart {
         return data.map(c => { return new AutoPart(c) });
     }
     static async insert(entity) {
-        let query = queryHelper.insert(entity,null,tableName);
+        let query = queryHelper.insert(entity, null, tableName);
         query += ` RETURNING ap_id;`;
         return await dbExecute.customQuery(query);
     }
@@ -39,7 +39,7 @@ module.exports = class AutoPart {
         return await dbExecute.customQuery(query);
     }
     static async getAutoPartByID(id) {
-        let query = `SELECT * FROM "${tableName}" WHERE "ap_id"=${id}` 
+        let query = `SELECT * FROM "${tableName}" WHERE "ap_id"=${id}`
         return await dbExecute.customQuery(query);
     }
     static async getApPage(suppliers, limit, offset) {
@@ -71,5 +71,13 @@ module.exports = class AutoPart {
         const query = `select distinct "supplier" from "${tableName}"`
         const data = await dbExecute.customQuery(query);
         return data;
+    }
+    static async getNoRemainingAp() {
+        let query = `SELECT SUM(quantity) FROM ${tableName}`;
+        return (await dbExecute.customQuery(query))[0];
+    }
+    static async getMostAp() {
+        let query = `SELECT * FROM ${tableName} ORDER BY quantity DESC LIMIT 1;`
+        return (await dbExecute.customQuery(query))[0];
     }
 }

@@ -38,10 +38,10 @@ module.exports = class Car {
         return await dbExecute.customQuery(query);
     }
     static async getCarById(id) {
-        const data = await dbExecute.getById(id,tableName);
+        const data = await dbExecute.getById(id, tableName);
         return new Car(data)
     }
-    static async getCarPage(searchStr,brands, types, maxPrice, limit, offset) {
+    static async getCarPage(searchStr, brands, types, maxPrice, limit, offset) {
         let query = `select * from "${tableName}"`
         let brandQuery;
         let typeQuery;
@@ -65,7 +65,7 @@ module.exports = class Car {
             typeQuery = `( ${typeQuery} )`
             filterArr.push(typeQuery)
         }
-        if(searchStr != undefined) {
+        if (searchStr != undefined) {
             searchQuery = `( "car_name" ilike '%${searchStr}%' )`;
             filterArr.push(searchQuery);
         }
@@ -80,5 +80,13 @@ module.exports = class Car {
             totalPage: totalPage,
             data: carData,
         }
+    }
+    static async getNoRemainingCar() {
+        let query = `SELECT SUM(quantity) FROM ${tableName}`;
+        return (await dbExecute.customQuery(query))[0];
+    }
+    static async getMostCar() {
+        let query = `SELECT * FROM ${tableName} ORDER BY quantity DESC LIMIT 1;`
+        return (await dbExecute.customQuery(query))[0];
     }
 }

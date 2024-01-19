@@ -61,6 +61,14 @@ module.exports = {
             req.json({ rs: false });
         };
     }),
+    getNumberOfRemainingCar: tryCatch(async (req, res) => {
+        const data = await Car.getNoRemainingCar();
+        res.json(data);
+    }),
+    getMostCar: tryCatch(async (req, res) => {
+        const data = await Car.getMostCar();
+        res.json(data);
+    }),
 
 
     //Auto part API
@@ -79,7 +87,7 @@ module.exports = {
         const data = await AutoPart.getApPage(suppliers, perPage, offset);
         res.json(data);
     }),
-    getAllSupplier: tryCatch( async (req,res) => {
+    getAllSupplier: tryCatch(async (req, res) => {
         const data = await AutoPart.getAllSupplier();
         res.json(data);
     }),
@@ -112,13 +120,21 @@ module.exports = {
             req.json({ rs: false });
         };
     }),
+    getNumberOfRemainingAutoPart: tryCatch(async (req, res) => {
+        const data = await AutoPart.getNoRemainingAp();
+        res.json(data);
+    }),
+    getMostAp: tryCatch(async (req, res) => {
+        const data = await AutoPart.getMostAp();
+        res.json(data);
+    }),
 
     //Fixed car API
-    getAllFixedCar: tryCatch(async (req,res) => {
+    getAllFixedCar: tryCatch(async (req, res) => {
         const data = await FixedCar.getAll();
         res.json(data);
     }),
-    getFixedCarByCusId: tryCatch(async (req,res) => {
+    getFixedCarByCusId: tryCatch(async (req, res) => {
         const id = req.query.id;
         const data = await FixedCar.getFixedCarByCusId(id);
         res.json(data);
