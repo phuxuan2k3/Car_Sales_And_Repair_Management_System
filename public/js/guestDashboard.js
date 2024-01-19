@@ -116,7 +116,7 @@ const generateCarInfo = async () => {
     }
     $('.info').each((index, ele) => {
         $(ele).click((e) => {
-            window.location.assign(`http://localhost:3000/test/cardetail?id=${$(ele).attr('index')}`)
+            window.location.assign(`http://localhost:3000/cardetail?id=${$(ele).attr('index')}`)
         })
     })
 }

@@ -3,7 +3,7 @@
 {{!-- Navigation --}}
 <nav class="navbar  navbar-expand-lg bg-body-tertiary ">
     <div class="container-fluid bg-white p-3">
-        <a class="navbar-brand fw-bold fs-3 textPrimary" href="/test/dashboard">SGX Auto</a>
+        <a class="navbar-brand fw-bold fs-3 textPrimary" href="/dashboard">SGX Auto</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -12,10 +12,10 @@
             <ul class="navbar-nav me-2 mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link {{#if store}}active{{/if}} no-wrap" aria-current="page"
-                        href="/test/dashboard">Store</a>
+                        href="/dashboard">Store</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link no-wrap {{#if repair}}active{{/if}} " href="/test/repairservice">Repair
+                    <a class="nav-link no-wrap {{#if repair}}active{{/if}} " href="/repairservice">Repair
                         service</a>
                 </li>
 
@@ -25,9 +25,9 @@
                 <input id="SearchBar" class="form-control me-auto w-50 rounded-pill" type="search"
                     placeholder="Search something here" aria-label="Search">
             </div>
-            <div class="userInfo d-flex flex-end col-4">
-                <form action='/logout' method="POST">
-                    <span>{{nameOfUser}}</span>
+            <div class="userInfo ">
+                <form  action='/logout' class="d-flex align-items-center" method="POST">
+                    <span class="no-wrap">{{nameOfUser}}</span>
                     <button type='submit' style="all: unset;">
                         <img src="https://th.bing.com/th/id/R.8b167af653c2399dd93b952a48740620?rik=%2fIwzk0n3LnH7dA&pid=ImgRaw&r=0"
                             class="rounded-circle p-3" style="width: 80px; height: 80px;" alt="" />
