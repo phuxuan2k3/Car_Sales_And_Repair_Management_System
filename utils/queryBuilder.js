@@ -18,71 +18,68 @@ class SelectQuery extends Query {
     static init(tableName) {
         return new SelectQuery(tableName);
     }
-    selectCount() {
+    setSelectCount() {
         this._selectQuery = 'COUNT(*)';
         return this;
     }
-    selectAll() {
+    setSelectAll() {
         this._selectQuery = '*';
         return this;
     }
-    selectCustom(customArray) {
+    setSelectCustom(customArray) {
         this._selectQuery = customArray.join(', ');
         return this;
     }
-    join(tableName, conditionString) {
+    addJoin(tableName, conditionString) {
         this._joinQueryArray.push(`JOIN ${tableName} ON ${conditionString}`);
         return this;
     }
-    equal(col, val) {
+    addEqual(col, val) {
         const struct = `AND $1:name = $2:value`
         const query = pgp.as.format(struct, [col, val]);
         this._middleQueryArray.push(query);
         return this;
     }
-    like(col, key) {
+    addLike(col, key) {
         const struct = `AND $1:name LIKE \'%$2:value%\'`
         const query = pgp.as.format(struct, [col, key]);
         this._middleQueryArray.push(query);
         return this;
     }
-    ilike(col, key) {
+    addIlike(col, key) {
         const struct = `AND $1:name ILIKE \'%$2:value%\'`
         const query = pgp.as.format(struct, [col, key]);
         this._middleQueryArray.push(query);
         return this;
     }
-    in(col, valArray) {
+    addIn(col, valArray) {
         const struct = `AND $1:name IN($2:csv)`;
         const query = pgp.as.format(struct, [col, valArray]);
         this._middleQueryArray.push(query);
         return this;
     }
-    between(col, low, high) {
+    addBetween(col, low, high) {
         const struct = `AND $1:name BETWEEN $2:value AND $3:value`;
         const query = pgp.as.format(struct, [col, low, high]);
         this._middleQueryArray.push(query);
         return this;
     }
-    orderBy(col, isAsc) {
+    addOrderBy(col, isAsc) {
         const queryAsc = isAsc ? 'ASC' : 'DESC';
         const struct = `$1:name ${queryAsc}`;
         const query = pgp.as.format(struct, [col]);
         this._orderByQueryArray.push(query);
         return this;
     }
-    paging(perPage, page) {
+    setPaging(perPage, page) {
         const offset = perPage * (page - 1);
         const struct = `LIMIT $1:value OFFSET $2:value`;
         const query = pgp.as.format(struct, [perPage, offset]);
         this._limitOffsetQuery = query;
         return this;
     }
-    // combos
-    defaultCountPaging(perPage, page) {
-        this.selectCount();
-        this.paging(perPage, page);
-        return this;
+    removePaging() {
+        this._limitOffsetQuery = '';
     }
     retrive() {
         const select = this._selectQuery;
@@ -212,7 +209,6 @@ class DeleteQuery extends Query {
     }
     default(primaryKeyObj) {
         this._primaryKeyObj = primaryKeyObj;
-        this._conditionArray = whereConditionArray;
         return this;
     }
     retrive() {

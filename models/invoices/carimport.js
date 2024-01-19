@@ -1,5 +1,5 @@
 const dbExecuteImp = require('../../utils/dbExecute.imp');
-const { SelectQuery, InsertQuery, UpdateQuery } = require('../../utils/queryBuilder');
+const { SelectQuery, InsertQuery, UpdateQuery, ExactUpdateQuery, DeleteQuery } = require('../../utils/queryBuilder');
 const tableNameInvoice = 'car_import_invoice';
 const tableNameReport = 'car_import_report';
 
@@ -27,29 +27,25 @@ class CarReport {
         return res;
     }
 
-    // TODO: Uses new query builder
-
     // read
     // get cars from a invoice
     static async getCarReports(importinvoice_id) {
-        const sq = new SelectQuery(tableNameReport);
-        const data = await sq.selectAll().equal('importinvoice_id', importinvoice_id).execute();
+        const data = await SelectQuery.init(tableNameReport).setSelectAll().addEqual('importinvoice_id', importinvoice_id).execute();
         return data.map(d => { return CarReport.castObj(d) });
     }
 
     // cud
     static async insert(entity) {
-        const iq = new InsertQuery(tableNameReport);
-        const res = await iq.default(entity, ['importinvoice_id', 'car_id']).execute();
+        const res = await InsertQuery.init(tableNameReport).default(entity, ['importinvoice_id', 'car_id']).execute();
         return res;
     }
-    static async update(importinvoice_id, car_id, entity) {
-        const uq = new UpdateQuery(tableNameReport);
-        const res = await uq.default(entity, ['importinvoice_id = ', 'car_id']).execute();
-        return await dbExecuteImp.update(entity, { importinvoice_id, car_id }, tableNameReport);
+    static async update(entity) {
+        const res = await ExactUpdateQuery.init(tableNameReport).default(entity, ['importinvoice_id', 'car_id']).execute();
+        return res;
     }
-    static async delete(importinvoice_id, car_id) {
-        return await dbExecuteImp.delete({ importinvoice_id, car_id }, tableNameReport);
+    static async delete({ importinvoice_id, car_id }) {
+        const res = await DeleteQuery.init(tableNameReport).default({ importinvoice_id, car_id }).execute();
+        return res;
     }
 }
 
@@ -74,33 +70,91 @@ class CarInvoice {
     // read
     // get all car invoices
     static async getAll() {
-        const data = await dbExecuteImp.getAll(tableNameInvoice);
+        const data = await SelectQuery.init(tableNameInvoice).setSelectAll().execute();
         return data;
     }
-    // get all car invoices by page, by store manager
-    static async getCustom(sm_id, page, perPage) {
-        let query;
-        const data = await dbExecuteImp.getCustom(limit, offset, tableNameInvoice);
-        return data;
-    }
-    // get by store manager
+    // get all car invoices by page, by store manager, NOT-TEST
     static async getByStoreManager(sm_id) {
-        let query = `select * from "${tableNameInvoice}" where "sm_id"=${sm_id}`;
-        const data = await dbExecuteImp.customQuery(query);
+        const data = await SelectQuery.init(tableNameInvoice).setSelectAll().addEqual('sm_id', sm_id).execute();
         return data;
     }
 
     // cud
     static async insert(entity) {
-        return dbExecuteImp.insert(entity, ['importinvoice_id'], tableNameInvoice);
+        const res = await InsertQuery.init(tableNameInvoice).default(entity, ['importinvoice_id']).execute();
+        return res;
     }
-    static async update(importinvoice_id, entity) {
-        return await dbExecuteImp.update(entity, { importinvoice_id }, tableNameInvoice);
+    static async update(entity) {
+        const res = await ExactUpdateQuery.init(tableNameInvoice).default(entity, ['importinvoice_id']).execute();
+        return res;
     }
-    static async delete(importinvoice_id) {
-        return await dbExecuteImp.delete({ importinvoice_id }, tableNameInvoice);
+    static async delete({ importinvoice_id }) {
+        const res = await DeleteQuery.init(tableNameInvoice).default({ importinvoice_id }).execute();
+        return res;
     }
 }
+
+// >>>> =============================================
+// Test set flag to 1 for testing
+// <<<< =============================================
+
+// Car Report
+if (0) {
+    (async () => {
+        // in: invoice id
+        // out: Array of CarReport
+        var test = await CarReport.getCarReports(300);
+        console.log(test);
+
+        // in: CarReport 
+        // out: {importinvoice_id, car_id}
+        var test = CarReport.castParam(299, 12, 5, new Date());
+        var res = await CarReport.insert(test);
+        console.log(res);
+
+        // in: CarReport
+        // out: rowCount
+        var test = await CarReport.update(CarReport.castParam(299, 12, 0, new Date()));
+        console.log(test);
+
+        // in: invoice id, car id (obj)
+        // out: rowCount
+        var test = await CarReport.delete({ importinvoice_id: 299, car_id: 12 });
+        console.log(test);
+    })();
+}
+
+// Car Invoice
+if (0) {
+    (async () => {
+        // in:
+        // out: Array of Invoices
+        var test = await CarInvoice.getAll();
+        console.log(test);
+        console.log(test[0]);
+
+        // in: sm_id (store manager id)
+        // out: Array of Invoices
+        var test = await CarInvoice.getByStoreManager(3);
+        console.log(test);
+
+        // in: CarInvoice
+        // out: {importinvoice_id}
+        var test = await CarInvoice.insert(CarInvoice.castParam(3, 404));
+        console.log(test);
+
+        // in: CarInvoice
+        // out: rowCount
+        var test = await CarInvoice.update(CarInvoice.castParam(9, 404));
+        console.log(test);
+
+        // in: importinvoice_id (obj)
+        // out: rowCount
+        var test = await CarInvoice.delete({ importinvoice_id: 404 });
+        console.log(test);
+    })();
+}
+
 
 
 module.exports = { CarInvoice, CarReport };
