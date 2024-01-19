@@ -51,33 +51,59 @@
                 </form>
 
             </div>
-            <div class=" m-5 signupContent d-none">
-                <div class="heading text-center mb-5">
+            <div class=" m-5 signupContent d-none mt-1">
+                <div class="heading text-center mb-2">
                     <p class="h2">Create an account</p>
-                    <p class="fs-8">Already have an ccount? <a onclick="changeForm()">Log in</a> </p>
+                    <p class="fs-8">Already have an account?
+                        <a href="#!" onclick="changeForm()">Log in</a>
+                    </p>
+
                 </div>
-                <form action="" class="m-5 signupForm">
-                    <div class="mb-4">
-                        <label for="signupUsername" class="form-label">What should we call you?</label>
-                        <input type="text" class="form-control w-100" id="signupUsername"
+                <form action="#" class="m-5 signupForm mt-1" id="registerForm">
+                    <div class="mb-2">
+                        <label for="signupUsername" class="form-label">What is your username?</label>
+                        <input required name="username" type="text" class="form-control w-100" id="signupUsername"
                             placeholder="Enter your username">
                     </div>
-                    <div class="mb-4">
-                        <label for="email" class="form-label">What's your email?</label>
-                        <input type="text" class="form-control w-100" id="email" placeholder="Enter your username">
-                    </div>
-                    <div class="mb-4">
+                    <div class="mb-2">
                         <label for="signupPassword" class="form-label ">Create a password</label>
-                        <input type="password" id="signupPassword" class="form-control  w-100"
+                        <input required name="password" type="password" id="signupPassword" class="form-control  w-100"
                             placeholder="Enter your password" />
                     </div>
-                    <div class="mb-4">
+                    <div class="row col-12 mb-2">
+                        <div class="col-6">
+                            <label for="firstname" class="form-label">First name</label>
+                            <input required name="firstname" type="text" class="form-control w-100" id="firstname"
+                                placeholder="Enter your first name">
+                        </div>
+                        <div class="col-6">
+                            <label for="lastname" class="form-label">Last name</label>
+                            <input required name="lastname" type="text" class="form-control w-100" id="lastname"
+                                placeholder="Enter your last name">
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="phonenumber" class="form-label">What's your phone number?</label>
+                        <input name="lastname" type="text" class="form-control w-100" id="phonenumber"
+                            placeholder="Enter your phone number">
+                    </div>
+                    <div class="mb-2">
+                        <label for="dob" class="form-label">What's your date of birth?</label>
+                        <input required name="dob" type="date" class="form-control w-100" id="dob"
+                            placeholder="Enter your date of birth">
+                    </div>
+                    <div class="mb-2">
+                        <label for="address" class="form-label">What's your address?</label>
+                        <input name="address" type="text" class="form-control w-100" id="address"
+                            placeholder="Enter your address">
+                    </div>
+                    <div class="mb-2">
                         <input class="form-check-input me-2" type="checkbox" value="" id="policy" />
                         <label class="form-check-label" for="policy">
                             By creating an account, you agree to the Terms of use and Privacy Policy.
                         </label>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-2">
                         <button type="submit" class="btn rounded-5 bgPrimary text-light w-100 loginButton">Create an
                             account</button>
                     </div>
@@ -101,6 +127,20 @@
             </div>
         </div>
     </div>
+
+    {{!-- notification --}}
+    <div class="toast top-0 end-0 position-fixed m-5" id="notification" role="alert" aria-live="assertive"
+        aria-atomic="true" data-bs-autohide="true" data-bs-config='{"delay":5000}'>
+        <div class=" toast-header">
+            <img src="car.png" style="width: 20px; height 20px" class="rounded me-2">
+            <strong class="me-auto">Sài Gòn Xanh</strong>
+            <small class="text-body-secondary">0 mins ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+        </div>
+    </div>
+
 </div>
 
 {{#if isRegister}}
