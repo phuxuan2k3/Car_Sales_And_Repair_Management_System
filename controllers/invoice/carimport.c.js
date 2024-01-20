@@ -30,9 +30,33 @@ module.exports = {
         return res.json({ carInvoices });
     }),
 
-    // require: body: importinvoice_id, car_id, quantity, date
-    // return: importinvoice_id, car_id of newly inserted object
-    addCarReport: tryCatch(async (req, res) => {
+    // require: body: importinvoice_id, sm_id, total_price (can be null)
+    // return: result
+    addCarInvoice: tryCatch(async (req, res) => {
+        const ci = CarInvoice.castObj(req.body);
+        const result = CarInvoice.castObj(await CarInvoice.insert(ci));
+        return res.json({ result });
+    }),
+
+    // require: body: importinvoice_id, sm_id, total_price (can be null)
+    // return: result
+    updateApInvoice: tryCatch(async (req, res) => {
+        const ci = CarInvoice.castObj(req.body);
+        const result = CarInvoice.castObj(await CarInvoice.update(ci));
+        return res.json({ result });
+    }),
+
+    // require: body: importinvoice_id
+    // return: result
+    deleteApInvoice: tryCatch(async (req, res) => {
+        const { importinvoice_id } = (req.body);
+        const result = CarInvoice.castObj(await CarInvoice.delete({ importinvoice_id }));
+        return res.json({ result });
+    }),
+
+    // require: body: importinvoice_id, car_id, quantity, date (can be null)
+    // return: result
+    addCarReportToInvoice: tryCatch(async (req, res) => {
         const importinvoice_id = req.body.importinvoice_id;
         const car_id = req.body.car_id;
         const quantity = req.body.quantity;
@@ -42,8 +66,8 @@ module.exports = {
         return res.json({ result });
     }),
 
-    // require: body: importinvoice_id, car_id, quantity, date
-    // return: rows affected (1 or 0)
+    // require: body: importinvoice_id, car_id, quantity, date (can be null)
+    // return: result
     updateCarReport: tryCatch(async (req, res) => {
         const importinvoice_id = req.body.importinvoice_id;
         const car_id = req.body.car_id;
@@ -54,8 +78,8 @@ module.exports = {
         return res.json({ result });
     }),
 
-    // require: body: importinvoice_id, car_id
-    // return: rows affected (1 or 0)
+    // require: body: importinvoice_id, car_id (can be null)
+    // return: result
     deleteCarReport: tryCatch(async (req, res) => {
         const importinvoice_id = req.body.importinvoice_id;
         const car_id = req.body.car_id;

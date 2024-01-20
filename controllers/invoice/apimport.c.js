@@ -30,9 +30,33 @@ module.exports = {
         return res.json({ apInvoices });
     }),
 
-    // require: body: importinvoice_id, ap_id, quantity, date
-    // return: importinvoice_id, ap_id of newly inserted object
-    addApReport: tryCatch(async (req, res) => {
+    // require: body: importinvoice_id, sm_id, total_price (can be null)
+    // return: result
+    addApInvoice: tryCatch(async (req, res) => {
+        const ai = ApInvoice.castObj(req.body);
+        const result = ApInvoice.castObj(await ApInvoice.insert(ai));
+        return res.json({ result });
+    }),
+
+    // require: body: importinvoice_id, sm_id, total_price (can be null)
+    // return: result
+    updateApInvoice: tryCatch(async (req, res) => {
+        const ai = ApInvoice.castObj(req.body);
+        const result = ApInvoice.castObj(await ApInvoice.update(ai));
+        return res.json({ result });
+    }),
+
+    // require: body: importinvoice_id
+    // return: result
+    deleteApInvoice: tryCatch(async (req, res) => {
+        const { importinvoice_id } = (req.body);
+        const result = ApInvoice.castObj(await ApInvoice.delete({ importinvoice_id }));
+        return res.json({ result });
+    }),
+
+    // require: body: importinvoice_id, ap_id, quantity, date (can be null)
+    // return: result
+    addApReportToInvoice: tryCatch(async (req, res) => {
         const importinvoice_id = req.body.importinvoice_id;
         const ap_id = req.body.ap_id;
         const quantity = req.body.quantity;
@@ -42,8 +66,8 @@ module.exports = {
         return res.json({ result });
     }),
 
-    // require: body: importinvoice_id, ap_id, quantity, date
-    // return: rows affected (1 or 0)
+    // require: body: importinvoice_id, ap_id, quantity, date (can be null)
+    // return: result
     updateApReport: tryCatch(async (req, res) => {
         const importinvoice_id = req.body.importinvoice_id;
         const ap_id = req.body.ap_id;
@@ -54,8 +78,8 @@ module.exports = {
         return res.json({ result });
     }),
 
-    // require: body: importinvoice_id, ap_id
-    // return: rows affected (1 or 0)
+    // require: body: importinvoice_id, ap_id (can be null)
+    // return: result
     deleteApReport: tryCatch(async (req, res) => {
         const importinvoice_id = req.body.importinvoice_id;
         const ap_id = req.body.ap_id;
