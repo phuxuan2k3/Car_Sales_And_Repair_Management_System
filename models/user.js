@@ -24,8 +24,13 @@ module.exports = class User {
         if (!entity.permission) {
             entity.permission = 'cus';
         }
-        createPaymentAccount(entity.id);
-        return await dbExecute.insert(entity, tableName);
+        try {
+            const res = await dbExecute.insert(entity, tableName);
+            await createPaymentAccount(res.id);
+            return res;
+        } catch (error) {
+            throw error;
+        }
     }
     static async update(id, entity) {
         return await dbExecute.update(id, entity, tableName);
