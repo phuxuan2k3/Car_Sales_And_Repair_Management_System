@@ -1,5 +1,5 @@
 const tryCatch = require('../../utils/tryCatch');
-const { FixRecord, FixDetail } = require('../../models/invoices/carfixrecord');
+const { FixRecord, FixDetail } = require('../../models/invoices/fixrecord');
 require('dotenv').config();
 
 module.exports = {

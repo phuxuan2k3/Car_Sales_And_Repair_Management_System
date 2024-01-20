@@ -1,5 +1,5 @@
 const tryCatch = require('../../utils/tryCatch');
-const { SaleRecord, SaleDetail } = require('../../models/invoices/carsalerecord');
+const { SaleRecord, SaleDetail } = require('../../models/invoices/salerecord');
 require('dotenv').config();
 
 module.exports = {
