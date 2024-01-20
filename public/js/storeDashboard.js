@@ -179,10 +179,40 @@ function displayApChart() {
     });
 }
 
-async function display() {
+async function displayDashboard() {
     await getData();
     displayCarChart();
     displayApChart();
 }
 
-display();
+displayDashboard();
+
+//getMode
+//displaymode
+
+function removeContent() {
+    $('#mainContent').empty();
+}
+
+function displayMode(mode) {
+    removeContent();
+    switch (mode) {
+        case 'car':
+            displayCar();
+            break;
+        case 'ap':
+            displayAp();
+            break;
+        default:
+            displayDashboard();
+            break;
+    }
+}
+
+function displayCar() {
+
+}
+
+function displayAp() {
+
+}
