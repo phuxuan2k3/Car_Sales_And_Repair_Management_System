@@ -6,8 +6,8 @@
                 aria-orientation="vertical">
                 <div class="card w-100 h-100 border border-0">
                     <div class="card-body">
-                        <button id="dashboard" class="w-100 text-start nav-link active mb-1" 
-                            data-bs-toggle="pill" data-bs-target="#v-pills-dashboard" type="button" role="tab"
+                        <button id="dashboard" class="w-100 text-start nav-link active mb-1" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-dashboard" type="button" role="tab"
                             aria-controls="v-pills-dashboard" aria-selected="true"><i
                                 class="fa-solid fa-house me-2"></i> <a style="all:unset" href="/">Dashboard</a></button>
                         <button id="car" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
@@ -177,9 +177,68 @@
                     </div>
                 </div>
 
+                <div class="edit-form">
+                    <div class="dark-background"></div>
+                    <div class="form-container rounded bg-white mt-5 mb-5">
+                        <div class="row">
+                            <div class="col-md-3 border-right">
+                                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
+                                        class="rounded-circle mt-5" width="150px"
+                                        src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span
+                                        class="font-weight-bold">Avatar</span>
+
+                                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB
+                                    </div>
+                                    <input name="avatar" class="form-control primary" type="file" id="formFile">
+                                </div>
+                            </div>
+                            <div class="col-md-5 border-right ms-5 ps-4">
+                                <div class="p-3 py-5">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h4 class="text-right">Profile Settings</h4>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-12"><label class="labels">Name</label><input type="text"
+                                                class="form-control" placeholder="name" value=""></div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-12"><label class="labels">Brand</label><input type="text"
+                                                class="form-control" placeholder="brand" value=""></div>
+                                        <div class="col-md-12"><label class="labels">Type</label><input type="text"
+                                                class="form-control" placeholder="type" value=""></div>
+                                        <div class="col-md-12"><label class="labels">Year</label><input type="text"
+                                                class="form-control" placeholder="year" value=""></div>
+                                        <div class="col-md-12"><label class="labels">Price</label><input type="text"
+                                                class="form-control" placeholder="price" value=""></div>
+                                        <div class="col-md-12"><label class="labels">Description</label><input
+                                                type="text" class="form-control" placeholder="description" value="">
+                                        </div>
+                                        <div class="col-md-12"><label class="labels">Quantity</label><input type="text"
+                                                class="form-control" placeholder="quantity" value=""></div>
+                                    </div>
+                                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button"
+                                            type="button">Save
+                                            Profile</button></div>
+                                </div>
+                            </div>
+
+                            <div class="col-3 ms-5">
+                                <div class="p-3 py-5">
+                                    <div class="d-flex justify-content-between align-items-center experience"><span
+                                            class="border px-3 p-1 add-experience"><i
+                                                class="fa-solid fa-xmark"></i>&nbsp;Close</span></div><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 </div>
 </div>
