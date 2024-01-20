@@ -1,5 +1,9 @@
 const { pgp, db } = require('../config/configDatabase');
 
+function removeEmptyProperty(obj) {
+    return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null));
+}
+
 class Query {
     constructor(tableName) {
         this._tablename = tableName;
@@ -145,8 +149,9 @@ class InsertQuery extends Query {
         this._returnColArray = returnColArray;
         return this;
     }
+    // removes null properties from data object
     default(dataObj, returnColArray) {
-        this._dataObj = dataObj;
+        this._dataObj = removeEmptyProperty(dataObj);
         this._returnColArray = returnColArray;
         return this;
     }
@@ -180,8 +185,9 @@ class ExactUpdateQuery extends Query {
         this._primaryKeyArray.push(primaryKey);
         return this;
     }
+    // removes null properties from data object
     default(dataObj, primaryKeyArray) {
-        this._dataObj = dataObj;
+        this._dataObj = removeEmptyProperty(dataObj);
         this._primaryKeyArray = primaryKeyArray;
         return this;
     }

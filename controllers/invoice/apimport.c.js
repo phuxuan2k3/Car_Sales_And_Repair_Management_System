@@ -11,7 +11,7 @@ module.exports = {
     // return: all report of an invoice 
     getApReportsOfInvoice: tryCatch(async (req, res) => {
         const importinvoice_id = req.query.importinvoice_id;
-        const data = await ApReport.getReports(importinvoice_id);
+        const data = await ApReport.getReportsFromInvoice(importinvoice_id);
         return res.json(data);
     }),
 
@@ -35,7 +35,7 @@ module.exports = {
         const quantity = req.body.quantity;
         const date = req.body.date;
         const cr = ApReport.castParam(importinvoice_id, ap_id, quantity, date);
-        const data = await ApReport.update(importinvoice_id, ap_id, cr);
+        const data = await ApReport.update(cr);
         return res.json(data);
     }),
 

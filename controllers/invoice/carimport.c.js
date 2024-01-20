@@ -11,7 +11,7 @@ module.exports = {
     // return: all report of an invoice 
     getCarReportsOfInvoice: tryCatch(async (req, res) => {
         const importinvoice_id = req.query.importinvoice_id;
-        const data = await CarReport.getReports(importinvoice_id);
+        const data = await CarReport.getReportsFromInvoice(importinvoice_id);
         return res.json(data);
     }),
 
@@ -35,7 +35,7 @@ module.exports = {
         const quantity = req.body.quantity;
         const date = req.body.date;
         const cr = CarReport.castParam(importinvoice_id, car_id, quantity, date);
-        const data = await CarReport.update(importinvoice_id, car_id, cr);
+        const data = await CarReport.update(cr);
         return res.json(data);
     }),
 
