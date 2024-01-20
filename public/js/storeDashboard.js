@@ -324,12 +324,12 @@ function displayAp() {
             </div>
         </div>
         <div class="col-1">
-            <div class="job-right my-4 flex-shrink-0 edit" data-index=${index}>
-                <a href="#!" class="btn d-block w-100 d-sm-inline-block btn-light"><i
+            <div class="job-right my-4 flex-shrink-0 edit" >
+                <a href="#!" class="btn d-block w-100 d-sm-inline-block btn-light" data-index=${index}><i
                     class="fa-solid fa-pen-to-square" style="color: #0b488e;" data-index=${index}></i></a>
             </div>
-            <div class="job-right my-4 flex-shrink-0 delete" data-index=${index}>
-                <a href="#!" class="btn d-block w-100 d-sm-inline-block btn-light"><i
+            <div class="job-right my-4 flex-shrink-0 delete">
+                <a href="#!" class="btn d-block w-100 d-sm-inline-block btn-light" data-index=${index}><i
                     class="fa-solid fa-trash" style="color: #7e1811;" data-index=${index}></i></a>
             </div>
         </div>
@@ -352,7 +352,7 @@ $('#ap').click(() => {
 
 function assignCloseForm() {
     $('.close').click(() => {
-        $('form').remove();
+        $('.edit-form').remove();
     })
 }
 
