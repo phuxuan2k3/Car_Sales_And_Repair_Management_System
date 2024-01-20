@@ -7,6 +7,7 @@ const FR_Table = {
     date: 'date',
     total_price: 'total_price',
     status: 'status',
+    pay: 'pay',
 }
 
 const FD_Table = {
@@ -90,6 +91,7 @@ class FixRecord {
         this.date = null;
         this.total_price = null;
         this.status = null;
+        this.pay = null;
     }
     static castObj(obj) {
         const cast = new FixRecord();
@@ -98,15 +100,17 @@ class FixRecord {
         cast.date = obj.date;
         cast.total_price = obj.total_price;
         cast.status = obj.status;
+        cast.pay = obj.pay;
         return cast;
     }
-    static castParam(fixrecord_id, car_plate, date, total_price, status) {
+    static castParam(fixrecord_id, car_plate, date, total_price, status, pay) {
         const cast = new FixRecord();
         cast.fixrecord_id = fixrecord_id;
         cast.car_plate = car_plate;
         cast.date = date;
         cast.total_price = total_price;
         cast.status = status;
+        cast.pay = pay;
         return cast;
     }
 
@@ -167,8 +171,8 @@ if (fixRecordFlag) {
         console.log(await FixRecord.getRecordsByPlate('63A1-88888'));
         console.log(await FixRecord.getRecordsByDate(new Date("2024/01/01"), new Date()));
         console.log(await FixRecord.getRecordById(7));
-        console.log(await FixRecord.insert(FixRecord.castParam(6, '63A1-88888', new Date(), 0, 'Processing')));
-        console.log(await FixRecord.update(FixRecord.castParam(6, '63A1-88888', new Date(), 0, 'Fixed')));
+        console.log(await FixRecord.insert(FixRecord.castParam(6, '63A1-88888', new Date(), 0, 'Processing', true)));
+        console.log(await FixRecord.update(FixRecord.castParam(6, '63A1-88888', new Date(), 0, 'Fixed', false)));
         console.log(await FixRecord.delete({ fixrecord_id: 6 }));
     })();
 }

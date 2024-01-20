@@ -40,7 +40,7 @@ module.exports = {
 
     // require: body: importinvoice_id, sm_id, total_price (can be null)
     // return: result
-    updateApInvoice: tryCatch(async (req, res) => {
+    updateCarInvoice: tryCatch(async (req, res) => {
         const ci = CarInvoice.castObj(req.body);
         const result = CarInvoice.castObj(await CarInvoice.update(ci));
         return res.json({ result });
@@ -48,7 +48,7 @@ module.exports = {
 
     // require: body: importinvoice_id
     // return: result
-    deleteApInvoice: tryCatch(async (req, res) => {
+    deleteCarInvoice: tryCatch(async (req, res) => {
         const { importinvoice_id } = (req.body);
         const result = CarInvoice.castObj(await CarInvoice.delete({ importinvoice_id }));
         return res.json({ result });
