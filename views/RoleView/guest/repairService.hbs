@@ -28,12 +28,34 @@
     </div>
 </div>
 
-<div class="alert alert-light position-absolute z-3 top-50 start-50 translate-middle d-none" id="paymentAlert"
+<div class="alert w-50 alert-light position-absolute z-3 top-50 start-50 translate-middle d-none" id="paymentAlert"
     role="alert">
-    <h4 class="alert-heading">Payment</h4>
-    <p> </p>
+    <h4 class="alert-heading"><i class="fa-solid fa-credit-card" style="color: #74C0FC;"></i> Payment</h4>
     <hr>
-    <button id="confirmPaymentButton" class="btn btn-warning w-100" role="button">Pay</button>
+    <div class="row justify-content-center align-items-center d-none" style="height: 200px;" id="spinner">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <div id="paymentInfo">
+        <p>Order ID: 123</p>
+        <p>Date: 123</p>
+        <p>Your balance: 123</p>
+        <p>Total price: 123</p>
+    </div>
+    <div id="successTransaction" class="d-none d-flex flex-column justify-content-center align-items-center">
+        <i class="fa-regular fa-circle-check " style="color: #63E6BE;font-size: 10rem"></i>
+        <p class="fs-3 textPrimary">Successful transaction <i class="fa-regular fa-face-grin-hearts"></i></p>
+    </div>
+    <div id="falseTransaction" class="d-none d-flex flex-column justify-content-center align-items-center">
+        <i class="fa-solid fa-circle-exclamation" style="color: #74C0FC;font-size: 10rem"></i>
+        <p class="fs-3 textPrimary">Failed transaction <i class="fa-regular fa-face-sad-cry"></i></p>
+        
+    </div>
+    <hr>
+    <button id="confirmPaymentButton" class="btn text-light btn-warning w-100 mb-3" role="button">Pay</button>
+    <button id="cancelButton" class="btn btn-danger w-100 mb-3"  role="button">Cancel</button>
+    <button id="backButton" class="btn btn-info w-100 mb-3 d-none"  role="button">Back to service page</button>
 </div>
 
 <div class="overlay z-2 d-none" id="overplay"></div>

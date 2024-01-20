@@ -82,7 +82,7 @@ module.exports = {
     // return: fixrecord update result
     updatePayOfFixRecord: tryCatch(async (req, res) => {
         const { fixrecord_id, pay } = req.body;
-        const result = FixDetail.update({ fixrecord_id, pay });
+        const result = FixRecord.update({ fixrecord_id, pay });
         return res.json({ result });
     }),
 }
