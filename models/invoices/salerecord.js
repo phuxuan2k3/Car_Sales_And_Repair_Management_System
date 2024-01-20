@@ -121,8 +121,9 @@ class SaleRecord {
 // Test
 // <<<< =============================================
 
-const saleDetailFlag = 1;
+const saleDetailFlag = 0;
 const saleRecordFlag = 0;
+const micsFlag = 1;
 
 if (saleDetailFlag) {
     (async () => {
@@ -144,6 +145,18 @@ if (saleRecordFlag) {
         console.log(await SaleRecord.delete({ salerecord_id: 199 }));
     })();
 }
+
+if (micsFlag) {
+    (async () => {
+        // const insertedObjId = await SaleRecord.insert({ cus_id: 42, date: new Date() });
+        const insertObj = SaleRecord.castParam(null, 42, new Date(), null);
+        const insertedObjId = SaleRecord.castObj(await SaleRecord.insert(insertObj));
+        console.log(insertedObjId.salerecord_id);
+        console.log(await SaleRecord.update(SaleRecord.castParam(insertedObjId.salerecord_id, 46, new Date())));
+        console.log(await SaleRecord.delete({ salerecord_id: insertedObjId.salerecord_id }));
+    })();
+}
+
 
 module.exports = {
     SaleDetail,
