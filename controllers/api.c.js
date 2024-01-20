@@ -5,6 +5,7 @@ const Car = require('../models/car');
 const AutoPart = require('../models/ap');
 const FixedCar = require('../models/fixedCar');
 const User = require('../models/user');
+const {FixRecord} = require('../models/invoices/fixrecord');
 
 module.exports = {
     //For store
@@ -12,9 +13,7 @@ module.exports = {
         const carData = await Car.getAll();
         const apData = await AutoPart.getAll();
         res.json({ car: carData, ap: apData });
-    })
-    ,
-
+    }),
     //Car API
     getAllCar: tryCatch(async (req, res) => {
         const data = await Car.getAll();
@@ -139,7 +138,12 @@ module.exports = {
         const data = await FixedCar.getFixedCarByCusId(id);
         res.json(data);
     }),
-
+    addNewFixedCar: tryCatch(async (req, res) => {
+        const entity = req.body;
+        const cusId = await FixedCar.insert(entity);
+        const data = await FixRecord.insert(FixRecord.castParam(null, entity.car_plate, new Date(), 0, 'Processing', false))
+        res.json(data);
+    }),
 
     //User
     getUserById: tryCatch(async (req, res) => {

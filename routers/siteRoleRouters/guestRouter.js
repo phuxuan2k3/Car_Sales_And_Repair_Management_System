@@ -5,5 +5,6 @@ const guestController = require('../../controllers/siteRoleControllers/guestCont
 router.get('/dashboard', guestController.getDashboard);
 router.get('/cardetail', guestController.getCarDetail)
 router.get('/repairservice',guestController.getRepairService);
+router.get('/repairservice/detail',guestController.getRepairDetail);
 
 module.exports = router;

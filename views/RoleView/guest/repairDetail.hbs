@@ -1,0 +1,47 @@
+<div class="container-fluid">
+    {{> Nav/guestNav}}
+    <div class="row">
+        <div class="card border-0">
+            <div class="card-body">
+                <h4 class="card-title textPrimary fw-bold">REPAIR DETAIL</h4>
+                <h5 class="card-title textPrimary fw-bold">Record ID: {{recordId}}</h5>
+                <table class="table table-hover">
+                    <thead class="table-info" id="tbHeader">
+                        <tr class="text-center">
+                            <th scope="col">Date</th>
+                            <th scope="col">Detail</th>
+                            <th scope="col">Mechanic</th>
+                            <th scope="col">Auto part</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Ap price</th>
+                            <th scope="col">Total price</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbBody">
+                        {{#each data }}
+                        <tr class="text-center">
+                            <td scope="col">{{this.date}}</td>
+                            <td scope="col">{{this.detail}}</td>
+                            <td scope="col">{{this.mec.lastname}}</td>
+                            <td scope="col">{{this.ap.name}}</td>
+                            <td scope="col">{{this.quantity}}</td>
+                            <td scope="col">{{this.ap.price}}</td>
+                            <td scope="col">{{this.price}}</td>
+                            <td scope="col">{{this.Status}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    {{> footer}}
+</div>
+{{#if userId}}
+<script>
+    let userId = {{ userId }}
+</script>
+{{/if}}

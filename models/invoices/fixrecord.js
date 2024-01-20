@@ -153,29 +153,29 @@ class FixRecord {
 // Test
 // <<<< =============================================
 
-const fixDetailFlag = 0;
-const fixRecordFlag = 0;
+// const fixDetailFlag = 0;
+// const fixRecordFlag = 0;
 
-if (fixDetailFlag) {
-    (async () => {
-        console.log(await FixDetail.getByFixRecord(7));
-        console.log(await FixDetail.insert(FixDetail.castParam(new Date(), 'bla bla bla', 12000000, 0, 300, 14, 6, 'Fixed', 32)));
-        console.log(await FixDetail.update(FixDetail.castParam(new Date(), 'adasd', 12000000, 0, 300, 14, 6, 'Fixed', 32)));
-        console.log(await FixDetail.delete({ fixdetail_id: 0 }));
-    })();
-}
+// if (fixDetailFlag) {
+//     (async () => {
+//         console.log(await FixDetail.getByFixRecord(7));
+//         console.log(await FixDetail.insert(FixDetail.castParam(new Date(), 'bla bla bla', 12000000, 0, 300, 14, 6, 'Fixed', 32)));
+//         console.log(await FixDetail.update(FixDetail.castParam(new Date(), 'adasd', 12000000, 0, 300, 14, 6, 'Fixed', 32)));
+//         console.log(await FixDetail.delete({ fixdetail_id: 0 }));
+//     })();
+// }
 
-if (fixRecordFlag) {
-    (async () => {
-        console.log(await FixRecord.getAll());
-        console.log(await FixRecord.getRecordsByPlate('63A1-88888'));
-        console.log(await FixRecord.getRecordsByDate(new Date("2024/01/01"), new Date()));
-        console.log(await FixRecord.getRecordById(7));
-        console.log(await FixRecord.insert(FixRecord.castParam(6, '63A1-88888', new Date(), 0, 'Processing', true)));
-        console.log(await FixRecord.update(FixRecord.castParam(6, '63A1-88888', new Date(), 0, 'Fixed', false)));
-        console.log(await FixRecord.delete({ fixrecord_id: 6 }));
-    })();
-}
+// if (fixRecordFlag) {
+//     (async () => {
+//         console.log(await FixRecord.getAll());
+//         console.log(await FixRecord.getRecordsByPlate('63A1-88888'));
+//         console.log(await FixRecord.getRecordsByDate(new Date("2024/01/01"), new Date()));
+//         console.log(await FixRecord.getRecordById(7));
+//         console.log(await FixRecord.insert(FixRecord.castParam(6, '63A1-88888', new Date(), 0, 'Processing', true)));
+//         console.log(await FixRecord.update(FixRecord.castParam(6, '63A1-88888', new Date(), 0, 'Fixed', false)));
+//         console.log(await FixRecord.delete({ fixrecord_id: 6 }));
+//     })();
+// }
 
 module.exports = {
     FixDetail,

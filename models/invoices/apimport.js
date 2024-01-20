@@ -120,71 +120,71 @@ class ApInvoice {
 // Test || set flag to 1 for testing
 // <<<< =============================================
 
-const flagReport = 1;
-const flagInvoice = 0;
+// const flagReport = 1;
+// const flagInvoice = 0;
 
-// Ap Report
-if (flagReport) {
-    (async () => {
-        // in: invoice id
-        // out: Array of ApReport
-        var test = await ApReport.getReportsFromInvoice(300);
-        console.log(test);
+// // Ap Report
+// if (flagReport) {
+//     (async () => {
+//         // in: invoice id
+//         // out: Array of ApReport
+//         var test = await ApReport.getReportsFromInvoice(300);
+//         console.log(test);
 
-        // in: start, end date
-        // out: Array of ApReport
-        var test = await ApReport.getReportsByDate(new Date("2024/01/01"), new Date());
-        console.log(test);
+//         // in: start, end date
+//         // out: Array of ApReport
+//         var test = await ApReport.getReportsByDate(new Date("2024/01/01"), new Date());
+//         console.log(test);
 
 
-        // in: ApReport 
-        // out: {importinvoice_id, ap_id}
-        var test = ApReport.castParam(299, 18, 5, new Date());
-        var res = await ApReport.insert(test);
-        console.log(res);
+//         // in: ApReport 
+//         // out: {importinvoice_id, ap_id}
+//         var test = ApReport.castParam(299, 18, 5, new Date());
+//         var res = await ApReport.insert(test);
+//         console.log(res);
 
-        // in: ApReport
-        // out: rowCount
-        var test = await ApReport.update(ApReport.castParam(299, 18, 0, new Date()));
-        console.log(test);
+//         // in: ApReport
+//         // out: rowCount
+//         var test = await ApReport.update(ApReport.castParam(299, 18, 0, new Date()));
+//         console.log(test);
 
-        // in: invoice id, ap id (obj)
-        // out: rowCount
-        var test = await ApReport.delete({ importinvoice_id: 299, ap_id: 18 });
-        console.log(test);
-    })();
-}
+//         // in: invoice id, ap id (obj)
+//         // out: rowCount
+//         var test = await ApReport.delete({ importinvoice_id: 299, ap_id: 18 });
+//         console.log(test);
+//     })();
+// }
 
-// Ap Invoice
-if (flagInvoice) {
-    (async () => {
-        // in:
-        // out: Array of Invoices
-        var test = await ApInvoice.getAll();
-        console.log(test);
-        console.log(test[0]);
+// // Ap Invoice
+// if (flagInvoice) {
+//     (async () => {
+//         // in:
+//         // out: Array of Invoices
+//         var test = await ApInvoice.getAll();
+//         console.log(test);
+//         console.log(test[0]);
 
-        // in: sm_id (store manager id)
-        // out: Array of Invoices
-        var test = await ApInvoice.getByStoreManager(3);
-        console.log(test);
+//         // in: sm_id (store manager id)
+//         // out: Array of Invoices
+//         var test = await ApInvoice.getByStoreManager(3);
+//         console.log(test);
 
-        // in: ApInvoice
-        // out: {importinvoice_id}
-        var test = await ApInvoice.insert(ApInvoice.castParam(3, 404));
-        console.log(test);
+//         // in: ApInvoice
+//         // out: {importinvoice_id}
+//         var test = await ApInvoice.insert(ApInvoice.castParam(3, 404));
+//         console.log(test);
 
-        // in: ApInvoice
-        // out: rowCount
-        var test = await ApInvoice.update(ApInvoice.castParam(9, 404));
-        console.log(test);
+//         // in: ApInvoice
+//         // out: rowCount
+//         var test = await ApInvoice.update(ApInvoice.castParam(9, 404));
+//         console.log(test);
 
-        // in: importinvoice_id (obj)
-        // out: rowCount
-        var test = await ApInvoice.delete({ importinvoice_id: 404 });
-        console.log(test);
-    })();
-}
+//         // in: importinvoice_id (obj)
+//         // out: rowCount
+//         var test = await ApInvoice.delete({ importinvoice_id: 404 });
+//         console.log(test);
+//     })();
+// }
 
 
 

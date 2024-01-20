@@ -1,10 +1,86 @@
-<div class="container-fluid">
-    {{> Nav/guestNav}}
-
-    <div class="row">
-        
+<div class="alert alert-light position-absolute z-3 top-50 start-50 translate-middle d-none" id="successAlert"
+    role="alert">
+    <h4 class="alert-heading"><i class="fa-solid fa-circle-check" style="color: #63E6BE;"></i> Well done!</h4>
+    <p> Dear {{nameOfUser}},<br>
+        We are pleased to inform you that your repair service registration has been successfully received and
+        processed. Our team is now working to schedule and address your repair needs.
+    </p>
+    <hr>
+    <div class="d-flex flex-row justify-content-between">
+        <p class="mb-0">Best regards, SGX Auto</p>
+        <a name="" id="" class="btn btn-primary" href="/repairservice" role="button">Done</a>
     </div>
 
-    {{> footer}}
-
 </div>
+
+<div class="alert alert-light position-absolute z-3 top-50 start-50 translate-middle  d-none" id="failedAlert"
+    role="alert">
+    <h4 class="alert-heading"><i class="fa-solid fa-circle-xmark" style="color: #ff0f0f;"></i> Registration Failed</h4>
+    <p> Dear {{nameOfUser}},<br>
+        We regret to inform you that your attempt to register for repair service was unsuccessful.
+        Please check the information provided and try again. If the issue persists, feel free to contact our support
+        team for assistance.
+    </p>
+    <hr>
+    <div class="d-flex flex-row justify-content-between">
+        <p class="mb-0">Best regards, SGX Auto</p>
+        <a name="" id="" class="btn btn-danger" href="/repairservice" role="button">Back</a>
+    </div>
+</div>
+
+<div class="alert alert-light position-absolute z-3 top-50 start-50 translate-middle d-none" id="paymentAlert"
+    role="alert">
+    <h4 class="alert-heading">Payment</h4>
+    <p> </p>
+    <hr>
+    <button id="confirmPaymentButton" class="btn btn-warning w-100" role="button">Pay</button>
+</div>
+
+<div class="overlay z-2 d-none" id="overplay"></div>
+
+<div class="container-fluid">
+    {{> Nav/guestNav}}
+    <div class="row justify-content-center align-items-center">
+        <div class="row mb-2">
+            <div class="card border-0">
+                <div class="card-body ">
+                    <h4 class="card-title fw-bold fs-5 textPrimary">Register</h4>
+                    <form class="d-flex justify-content-between align-items-center">
+                        <label for="inputCarPlate" class="form-label no-wrap me-3">Car-plate</label>
+                        <input type="text" class="form-control w-75 me-3" id="inputCarPlate"
+                            aria-describedby="carPlateHelp" placeholder="68K2-XXXXX">
+                        <button type="submit" id="registerButton" class="btn btn-primary w-25">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="card border-0">
+                <div class="card-body">
+                    <h4 class="card-title fw-bold fs-5 textPrimary">History</h4>
+                    <table class="table table-hover">
+                        <thead class="table-info" id="tbHeader">
+                            <tr class="text-center">
+                                <th scope="col">#</th>
+                                <th scope="col">car_plate</th>
+                                <th scope="col">date</th>
+                                <th scope="col">total_price</th>
+                                <th scope="col">status</th>
+                                <th scope="col">pay</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {{> footer}}
+</div>
+{{#if userId}}
+<script>
+    let userId = {{ userId }}
+</script>
+{{/if}}
