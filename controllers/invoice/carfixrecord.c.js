@@ -7,11 +7,27 @@ module.exports = {
     // API
     // <<<< ============================================= 
 
-    // require: body: car_plate
+    // require: query: car_plate
     // return: all record of a car_plate 
     getSaleRecordsByPlate: tryCatch(async (req, res) => {
-        const car_plate = req.body.car_plate;
+        const car_plate = req.query.car_plate;
         const fixRecords = await FixRecord.getRecordsByPlate(car_plate);
+        return res.json({ fixRecords });
+    }),
+
+    // require: query: fixrecord_id 
+    // return: fixRecord (single), fixDetails of that record (array)
+    getFullFixRecord: tryCatch(async (req, res) => {
+        const fixrecord_id = req.query.fixrecord_id;
+        const fixRecord = await FixRecord.getRecordById(fixrecord_id);
+        const fixDetails = await FixDetail.getByFixRecord(fixrecord_id);
+        return res.json({ fixRecord, fixDetails })
+    }),
+
+    // require: 
+    // return: all fixRecords (no details)
+    getAllFixRecords: tryCatch(async (req, res) => {
+        const fixRecords = await FixRecord.getAll();
         return res.json({ fixRecords });
     }),
 
@@ -23,8 +39,8 @@ module.exports = {
         const date = new Date(req.body.date);
         const status = req.body.status;
         const fixRecordData = FixRecord.castParam(null, car_plate, date, null, status);
-        const insertResultFixRecord = FixRecord.castObj(await FixRecord.insert(fixRecordData));
-        return res.json({ insertResultFixRecord });
+        const result = FixRecord.castObj(await FixRecord.insert(fixRecordData));
+        return res.json({ result });
     }),
 
     // require: body: fixrecord_id, date, detail, price, ap_id, mec_id, Status, quantity
@@ -34,23 +50,31 @@ module.exports = {
         date = new Date(date);
         price = parseFloat(price) || 0;
         const fixDetailData = FixDetail.castParam(date, detail, price, null, fixrecord_id, ap_id, mec_id, Status, quantity);
-        const insertResultFixDetail = FixDetail.castObj(await FixDetail.insert(fixDetailData));
-        return res.json({ insertResultFixDetail });
+        const result = FixDetail.castObj(await FixDetail.insert(fixDetailData));
+        return res.json({ result });
     }),
 
-    // require: body: fixrecord_id 
-    // return: fixRecord (single), fixDetails of that record (array)
-    getFullFixRecord: tryCatch(async (req, res) => {
-        const fixrecord_id = req.body.fixrecord_id;
-        const fixRecord = await FixRecord.getRecordById(fixrecord_id);
-        const fixDetails = await FixDetail.getByFixRecord(fixrecord_id);
-        return res.json({ fixRecord, fixDetails })
+    // require: body: fixdetail_id, Status
+    // return: fixdetail update result
+    updateStatusOfFixDetail: tryCatch(async (req, res) => {
+        const { fixdetail_id, Status } = req.body;
+        const result = FixDetail.update({ fixdetail_id, Status });
+        return res.json({ result });
     }),
 
-    // require: 
-    // return: all fixRecords (no details)
-    getAllSaleRecords: tryCatch(async (req, res) => {
-        const fixRecords = await FixRecord.getAll();
-        return res.json({ fixRecords });
+    // require: body: fixdetail_id, detail
+    // return: fixdetail update result
+    updateDetailOfFixDetail: tryCatch(async (req, res) => {
+        const { fixdetail_id, detail } = req.body;
+        const result = FixDetail.update({ fixdetail_id, detail });
+        return res.json({ result });
+    }),
+
+    // require: body: fixrecord_id, status
+    // return: fixrecord update result
+    updateStatusOfFixRecord: tryCatch(async (req, res) => {
+        const { fixrecord_id, status } = req.body;
+        const result = FixDetail.update({ fixrecord_id, status });
+        return res.json({ result });
     }),
 }

@@ -1,7 +1,8 @@
 const { pgp, db } = require('../config/configDatabase');
 
+// helper
 function removeEmptyProperty(obj) {
-    return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null));
+    return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null && v != undefined));
 }
 
 class Query {

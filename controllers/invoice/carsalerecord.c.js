@@ -7,11 +7,27 @@ module.exports = {
     // API
     // <<<< ============================================= 
 
-    // require: body: cus_id
+    // require: query: cus_id
     // return: all record of a customer 
     getSaleRecordsByCusId: tryCatch(async (req, res) => {
-        const cus_id = req.body.cus_id;
+        const cus_id = req.query.cus_id;
         const saleRecords = await SaleRecord.getRecordsByCusId(cus_id);
+        return res.json({ saleRecords });
+    }),
+
+    // require: query: salerecord_id 
+    // return: saleRecord (single), saleDetails of that record (array)
+    getFullSaleRecord: tryCatch(async (req, res) => {
+        const salerecord_id = req.query.salerecord_id;
+        const saleRecord = await SaleRecord.getRecordById(salerecord_id);
+        const saleDetails = await SaleDetail.getBySaleRecord(salerecord_id);
+        return res.json({ saleRecord, saleDetails })
+    }),
+
+    // require:
+    // return: all saleRecords (no details)
+    getAllSaleRecords: tryCatch(async (req, res) => {
+        const saleRecords = await SaleRecord.getAll();
         return res.json({ saleRecords });
     }),
 
@@ -30,22 +46,9 @@ module.exports = {
             const insertResultSaleDetail = SaleDetail.castObj(await SaleDetail.insert(saleDetail));
             insertResultSaleDetailArray.push({ insertResultSaleDetail });
         }
-        return res.json({ insertResultSaleRecord, insertResultSaleDetailArray });
-    }),
-
-    // require: body: salerecord_id 
-    // return: saleRecord (single), saleDetails of that record (array)
-    getFullSaleRecord: tryCatch(async (req, res) => {
-        const salerecord_id = req.body.salerecord_id;
-        const saleRecord = await SaleRecord.getRecordById(salerecord_id);
-        const saleDetails = await SaleDetail.getBySaleRecord(salerecord_id);
-        return res.json({ saleRecord, saleDetails })
-    }),
-
-    // require:
-    // return: all saleRecords (no details)
-    getAllSaleRecords: tryCatch(async (req, res) => {
-        const saleRecords = await SaleRecord.getAll();
-        return res.json({ saleRecords });
+        const result = {
+            insertResultSaleRecord, insertResultSaleDetailArray
+        };
+        return res.json({ result });
     }),
 }
