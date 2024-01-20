@@ -1,11 +1,3 @@
-.tabs .active {
-    background-color: var(--primaryColor) !important;
-}
-
-.tabs button {
-    color: gray;
-}
-
 .job-box {
     background: #fff;
     -webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
