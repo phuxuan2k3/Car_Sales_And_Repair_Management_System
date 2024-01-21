@@ -3,6 +3,7 @@ require('dotenv').config();
 const ENV = process.env;
 const Car = require('../../models/car');
 const User = require('../../models/user');
+const Cart = require('../../models/cart');
 const AutoPart = require('../../models/ap');
 const  {FixDetail} = require('../../models/invoices/fixrecord')
 
@@ -13,7 +14,10 @@ module.exports = {
     getCarDetail: tryCatch(async (req, res) => {
         const id = req.query.id;
         const carData = await Car.getCarById(id);
-        res.render('RoleView/guest/carDetail', { nameOfUser: req.session.passport.user.nameOfUser, data: carData,title: carData.car_name, store: true })
+        let cartData = await Cart.getCarInCart(req.user.id,id);
+        cartData = cartData.length <= 0 ? null : cartData[0];
+        let cartQuantity = cartData ==  null ? null : cartData.quantity;
+        res.render('RoleView/guest/carDetail', {cartQuantity: cartQuantity,userId: req.user.id,cartData: cartData, nameOfUser: req.session.passport.user.nameOfUser, data: carData,title: carData.car_name, store: true, jsFile: 'carDetail.js', cssFile: 'carDetail.css' })
     }),
     getRepairService: tryCatch(async (req,res) => {
         res.render('RoleView/guest/repairService', {userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Repair service",cssFile: "repairService.css", repair: true, jsFile: "repairService.js"});

@@ -154,7 +154,7 @@ const redirectToCartEvent = async () => {
 }
 
 const setAddToCartEvent = async (userId, car) => {
-    const cartData = await fetchData(`http://localhost:3000/api/cart/find?customer_ID=${userId}&car_ID=${car.id}`);
+    const cartData = await fetchData(`/api/cart/find?customer_ID=${userId}&car_ID=${car.id}`);
     let maxQuantity = cartData != null ? car.quantity - cartData[0].quantity : car.quantity
     overlay.toggleClass('d-none');
     popupWindow.toggleClass('d-none');
