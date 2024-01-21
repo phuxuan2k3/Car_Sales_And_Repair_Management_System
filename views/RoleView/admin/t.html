@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous" />
+    <!-- Font awesome CSS -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row d-flex">
+            <h2>Customer</h2>
+            <div class="col-md-6">
+                <button class="btn btn-success"><i class="fa fa-add"></i> <span>Add New
+                        Employee</span></button>
+            </div>
+        </div>
+        <div class="row">
+
+            <!-- Table -->
+            <table v-show="!loading"
+                   class="table">
+                <thead class="table-primary"
+                       style="border-bottom: 2px solid black">
+                    <tr>
+                        <th class="py-3"
+                            style="width: 15%;">First</th>
+                        <th class="py-3"
+                            style="width: 15%;">Last</th>
+                        <th class="py-3"
+                            style="width: 35%;">Email</th>
+                        <th class="py-3"
+                            style="width: 25%;">Avatar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template v-for="record in records">
+                        <tr role="button"
+                            @click="$emit('rowClick', record)">
+                            <td class="py-3 ps-3">{{record.id}}</td>
+                            <td class="py-3">{{record.firstName}}</td>
+                            <td class="py-3">{{record.lastName}}</td>
+                            <td class="py-3">{{record.email}}</td>
+                            <td class="py-3 align-middle"
+                                style="height: 180px;">
+                                <img class="img-thumbnail"
+                                     :src="record.avatarSource">
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+
+            <!-- Preloading wrapper -->
+            <div v-show="loading"
+                 class="text-center m-auto">
+                <div class="spinner-border text-primary"
+                     role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <!-- Table Pagination -->
+            <ul class="pagination m-2 mt-auto">
+                <li class="page-item"
+                    @click="paginateDown">
+                    <a class="page-link"
+                       href="#/"
+                       aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <template v-for="n in totalPage">
+                    <li :class="{active: n === currentPage}"
+                        class="page-item"
+                        @click="currentPageChanged(n)">
+                        <a v-if="n !== currentPage"
+                           class="page-link"
+                           href="#/">
+                            {{n}}
+                        </a>
+                        <span v-else
+                              class="page-link"
+                              style="user-select: none;">
+                            {{n}}
+                        </span>
+                    </li>
+                </template>
+                <li class="page-item"
+                    @click="paginateUp">
+                    <a class="page-link"
+                       href="#/"
+                       aria-label="Next"
+                       @click="">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Jquery JS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>

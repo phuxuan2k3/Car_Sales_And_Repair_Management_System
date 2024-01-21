@@ -1,0 +1,220 @@
+<style>
+    .tabs .active  {
+        background-color: var(--primaryColor) !important;
+    }
+    .tabs button {
+        color: gray ;
+    }
+</style>
+
+<div class="container-fluid">
+    {{> nav}}
+    <div class="row">
+        <div class="col-3 tabs">
+            <div class="nav flex-column nav-pills vh-100 me-3" id="v-pills-tab"
+                role="tablist"
+                aria-orientation="vertical">
+                <div class="card w-100 h-100 border border-0">
+                    <div class="card-body">
+                        <button class="w-100 text-start nav-link active mb-1"
+                            id="v-pills-dashboard-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#v-pills-dashboard" type="button"
+                            role="tab"
+                            aria-controls="v-pills-dashboard"
+                            aria-selected="true"><i
+                                class="fa-solid fa-house me-2"></i>Dashboard</button>
+                        <button class="w-100 text-start nav-link mb-1"
+                            style="background-color:green; color:whitesmoke;"
+                            id="v-pills-document-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button"
+                            role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i
+                                class="fa-regular fa-file-lines me-2"></i>Add
+                            new Employee</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-xl">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h2>User <b>Management</b></h2>
+                    </div>
+                    <div class="col-sm-7">
+                        <a href="#" class="btn btn-secondary"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
+                        <a href="#" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>						
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>						
+                        <th>Date Created</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><a href="#"><img src="/examples/images/avatar/1.jpg" class="avatar" alt="Avatar"> Michael Holz</a></td>
+                        <td>04/10/2013</td>                        
+                        <td>Admin</td>
+                        <td><span class="status text-success">&bull;</span> Active</td>
+                        <td>
+                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><a href="#"><img src="/examples/images/avatar/2.jpg" class="avatar" alt="Avatar"> Paula Wilson</a></td>
+                        <td>05/08/2014</td>                       
+                        <td>Publisher</td>
+                        <td><span class="status text-success">&bull;</span> Active</td>
+                        <td>
+                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><a href="#"><img src="/examples/images/avatar/3.jpg" class="avatar" alt="Avatar"> Antonio Moreno</a></td>
+                        <td>11/05/2015</td>
+                        <td>Publisher</td>
+                        <td><span class="status text-danger">&bull;</span> Suspended</td>                        
+                        <td>
+                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                        </td>                        
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><a href="#"><img src="/examples/images/avatar/4.jpg" class="avatar" alt="Avatar"> Mary Saveley</a></td>
+                        <td>06/09/2016</td>
+                        <td>Reviewer</td>
+                        <td><span class="status text-success">&bull;</span> Active</td>
+                        <td>
+                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><a href="#"><img src="/examples/images/avatar/5.jpg" class="avatar" alt="Avatar"> Martin Sommer</a></td>
+                        <td>12/08/2017</td>                        
+                        <td>Moderator</td>
+                        <td><span class="status text-warning">&bull;</span> Inactive</td>
+                        <td>
+                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="clearfix">
+                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                <ul class="pagination">
+                    <li class="page-item disabled"><a href="#">Previous</a></li>
+                    <li class="page-item"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>     
+        
+                        {{!-- Form --}}
+                        <form action="#" class="m-5 signupForm mt-1"
+                            id="registerForm">
+                            <div class="mb-2">
+                                <label for="signupUsername"
+                                    class="form-label">What is your
+                                    username?</label>
+                                <input required name="username" type="text"
+                                    class="form-control w-100"
+                                    id="signupUsername"
+                                    placeholder="Enter your username">
+                            </div>
+                            <div class="mb-2">
+                                <label for="signupPassword"
+                                    class="form-label ">Create a
+                                    password</label>
+                                <input required name="password" type="password"
+                                    id="signupPassword"
+                                    class="form-control  w-100"
+                                    placeholder="Enter your password" />
+                            </div>
+                            <div class="row col-12 mb-2">
+                                <div class="col-6">
+                                    <label for="firstname"
+                                        class="form-label">First name</label>
+                                    <input required name="firstname" type="text"
+                                        class="form-control w-100"
+                                        id="firstname"
+                                        placeholder="Enter your first name">
+                                </div>
+                                <div class="col-6">
+                                    <label for="lastname"
+                                        class="form-label">Last name</label>
+                                    <input required name="lastname" type="text"
+                                        class="form-control w-100" id="lastname"
+                                        placeholder="Enter your last name">
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label for="phonenumber"
+                                    class="form-label">What's your phone
+                                    number?</label>
+                                <input name="lastname" type="text"
+                                    class="form-control w-100" id="phonenumber"
+                                    placeholder="Enter your phone number">
+                            </div>
+                            <div class="mb-2">
+                                <label for="dob" class="form-label">What's your
+                                    date of birth?</label>
+                                <input required name="dob" type="date"
+                                    class="form-control w-100" id="dob"
+                                    placeholder="Enter your date of birth">
+                            </div>
+                            <div class="mb-2">
+                                <label for="address" class="form-label">What's
+                                    your address?</label>
+                                <input name="address" type="text"
+                                    class="form-control w-100" id="address"
+                                    placeholder="Enter your address">
+                            </div>
+                            <div class="mb-2">
+                                <input class="form-check-input me-2"
+                                    type="checkbox" value id="policy" />
+                                <label class="form-check-label" for="policy">
+                                    By creating an account, you agree to the
+                                    Terms of use and Privacy Policy.
+                                </label>
+                            </div>
+                            <div class="mb-2">
+                                <button type="submit"
+                                    class="btn rounded-5 bgPrimary text-light w-100 loginButton">Create
+                                    an
+                                    account</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

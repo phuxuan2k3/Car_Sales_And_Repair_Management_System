@@ -149,7 +149,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon paymentServer.js",
+    "start": "nodemon app.js",
+    "payment": "nodemon paymentServer.js",
     "testdb": "node models/user.js"
   },
   "keywords": [],
