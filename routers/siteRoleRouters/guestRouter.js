@@ -6,5 +6,6 @@ router.get('/dashboard', guestController.getDashboard);
 router.get('/cardetail', guestController.getCarDetail)
 router.get('/repairservice',guestController.getRepairService);
 router.get('/repairservice/detail',guestController.getRepairDetail);
+router.get('/cart',guestController.getCartPage);
 
 module.exports = router;

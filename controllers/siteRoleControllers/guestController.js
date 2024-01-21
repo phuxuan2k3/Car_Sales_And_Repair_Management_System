@@ -32,5 +32,8 @@ module.exports = {
             element.ap = ap[0];
         }
         res.render('RoleView/guest/repairDetail', {recordId: id,data: data,userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Repair service", repair: true});
-    })
+    }),
+    getCartPage: tryCatch( async (req,res) => {
+        res.render('RoleView/guest/cartView', {userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Repair service",cssFile: "cartView.css", repair: true, jsFile: "cartView.js"});
+    }),
 }
