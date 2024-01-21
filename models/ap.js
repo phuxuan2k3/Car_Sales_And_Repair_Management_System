@@ -1,6 +1,5 @@
 const { response } = require('express');
 const dbExecute = require('../utils/dbExecute');
-const { TableName } = require('pg-promise');
 const tableName = 'auto_part';
 const { pgp } = require('../config/configDatabase');
 const queryHelper = pgp.helpers;

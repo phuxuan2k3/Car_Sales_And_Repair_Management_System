@@ -5,6 +5,7 @@ const Car = require('../models/car');
 const AutoPart = require('../models/ap');
 const FixedCar = require('../models/fixedCar');
 const User = require('../models/user');
+const Cart = require('../models/cart');
 const {FixRecord} = require('../models/invoices/fixrecord');
 
 module.exports = {
@@ -15,6 +16,11 @@ module.exports = {
         res.json({ car: carData, ap: apData });
     }),
     //Car API
+    getByCarId: tryCatch (async (req,res) => {
+        const id = req.query.id;
+        const data = await Car.getCarById(id);
+        res.json(data);
+    }),
     getAllCar: tryCatch(async (req, res) => {
         const data = await Car.getAll();
         res.json(data);
@@ -154,5 +160,38 @@ module.exports = {
     getUserById: tryCatch(async (req, res) => {
         const data = await User.getById(req.params.id);
         res.json(data);
+    }),
+
+    //Cart
+    getCartByCusID: tryCatch(async (req,res) => {
+        const id = req.query.id;
+        const data = await Cart.getCartByCusID(id);
+        res.json(data);
+    }),
+    getCarInCart: tryCatch(async (req,res) => {
+        const {customer_ID,car_ID} = req.query;
+        let data = await Cart.getCarInCart(customer_ID,car_ID);
+        data = data.length <= 0 ? null: data;
+        res.json(data);
+    }),
+    insertToCart: tryCatch(async (req,res) => {
+        const entity = req.body;
+        const data = await Cart.insert(entity);
+        res.json(data);
+    }),
+    updateCarQuanTityInCart: tryCatch(async (req,res) => {
+        const {customer_ID,car_ID,quantity} = req.body;
+        console.log(quantity)
+        let check = await Cart.getCarInCart(customer_ID,car_ID);
+        check = check.length <= 0 ? null: check;
+        if(check == null) return res.status(400).send('Update error')
+        await Cart.updateCarQuanTityInCart(customer_ID,car_ID,quantity);
+        return res.json(true);
+    }),
+    deleteCartItem: tryCatch(async (req,res) => {
+        const {customer_ID,car_ID} = req.body;
+        await Cart.deleteCartItem(customer_ID,car_ID);
+        return res.json(true);
     })
+
 }

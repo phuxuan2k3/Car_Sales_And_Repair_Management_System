@@ -1,3 +1,6 @@
+<div id="popupWindow" class="z-3 w-50  d-none">
+</div>
+<div class="overlay z-2 d-none" id="overplay"></div>
 <div class="container-fluid">
     {{> Nav/guestNav}}
     <div class="row">
@@ -60,3 +63,8 @@
     </div>
     {{>footer}}
 </div>
+{{#if userId}}
+<script>
+    let userId = {{ userId }}
+</script>
+{{/if}}

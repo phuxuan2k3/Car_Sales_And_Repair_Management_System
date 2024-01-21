@@ -53,7 +53,7 @@ registerButton.click(async (e) => {
             popupWindow.empty();
             popupWindow.removeClass('d-none');
             popupWindow.append(`
-                <div class="alert alert-light position-absolute z-3 top-50 start-50 translate-middle" id="successAlert"
+                <div class="alert alert-light position-fixed z-3 top-50 start-50 translate-middle" id="successAlert"
                     role="alert">
                     <h4 class="alert-heading"><i class="fa-solid fa-circle-check" style="color: #63E6BE;"></i> Well done!</h4>
                     <p> Dear ${nameOfUser},<br>
@@ -74,7 +74,7 @@ registerButton.click(async (e) => {
             popupWindow.empty()
             popupWindow.removeClass('d-none');
             popupWindow.append(`
-            <div class="alert alert-light position-absolute z-3 top-50 start-50 translate-middle  d-none" id="failedAlert"
+            <div class="alert alert-light position-fixed z-3 top-50 start-50 translate-middle  d-none" id="failedAlert"
                 role="alert">
                 <h4 class="alert-heading"><i class="fa-solid fa-circle-xmark" style="color: #ff0f0f;"></i> Registration Failed</h4>
                 <p> Dear ${nameOfUser},<br>
@@ -96,6 +96,7 @@ registerButton.click(async (e) => {
 })
 
 const generateTable = async () => {
+    tbBody.empty();
     let index = $('.recordInfo').length;
     for (const car of fixedCar) {
         rs = await fetch(`/api/cfix/car-plate?car_plate=${car.car_plate}`);
@@ -123,7 +124,7 @@ const generateTable = async () => {
         popupWindow.removeClass('d-none');
         popupWindow.empty();
         popupWindow.append(`
-        <div class="alert w-50 alert-light position-absolute z-3 top-50 start-50 translate-middle " id="paymentAlert" role="alert">
+        <div class="alert w-50 alert-light position-fixed z-3 top-50 start-50 translate-middle " id="paymentAlert" role="alert">
             <h4 class="alert-heading"><i class="fa-solid fa-credit-card" style="color: #74C0FC;"></i> Payment</h4>
             <hr>
             <div class="row justify-content-center align-items-center d-none" style="height: 200px;" id="spinner">
@@ -235,7 +236,6 @@ carPlateInput.on('input',async function(e) {
     const car_plate = $(this).val();
     let rs = await fetch(`/api/car/fixed/find?id=${userId}&car_plate=${car_plate}`);
     fixedCar = await rs.json();
-    tbBody.empty();
     generateTable();
 })
 

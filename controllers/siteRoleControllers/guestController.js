@@ -8,7 +8,7 @@ const  {FixDetail} = require('../../models/invoices/fixrecord')
 
 module.exports = {
     getDashboard: tryCatch(async (req, res) => {
-        res.render('RoleView/guest/guestDashboard', { nameOfUser: req.session.passport.user.nameOfUser, title: 'DashBoard', jsFile: 'guestDashboard.js', cssFile: 'guestDashBoard.css', store : true });
+        res.render('RoleView/guest/guestDashboard', {userId: req.user.id ,nameOfUser: req.session.passport.user.nameOfUser, title: 'DashBoard', jsFile: 'guestDashboard.js', cssFile: 'guestDashBoard.css', store : true });
     }),
     getCarDetail: tryCatch(async (req, res) => {
         const id = req.query.id;

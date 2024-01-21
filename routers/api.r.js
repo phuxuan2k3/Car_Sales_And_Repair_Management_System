@@ -11,6 +11,7 @@ const FixRecord = require('../controllers/invoice/fixrecord.c');
 //Handle login here
 //Car
 router.get('/car/all',  ApiController.getAllCar);
+router.get('/car/find',  ApiController.getByCarId);
 router.get('/car/type',  ApiController.getAllType);
 router.get('/car/brand',  ApiController.getAllBrand);
 router.get('/car/car_page',  ApiController.getCarPage);
@@ -77,5 +78,12 @@ router.post('/imap/delete-invoice', ApImport.deleteApInvoice);
 router.post('/imap/add-report', ApImport.addApReportToInvoice);
 router.post('/imap/update-report', ApImport.updateApReport);
 router.post('/imap/delete-report', ApImport.deleteApReport);
+
+//Cart
+router.get('/cart', ApiController.getCartByCusID);
+router.get('/cart/find', ApiController.getCarInCart);
+router.post('/cart/add', ApiController.insertToCart);
+router.post('/cart/delete', ApiController.deleteCartItem);
+router.post('/cart/update_quantity',ApiController.updateCarQuanTityInCart);
 
 module.exports = router;
