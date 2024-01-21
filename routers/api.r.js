@@ -10,6 +10,7 @@ router.get('/car/type', ApiController.getAllType);
 router.get('/car/brand', ApiController.getAllBrand);
 router.get('/car/car_page', ApiController.getCarPage);
 router.get('/car/most_car', ApiController.getMostCar);
+router.get('/car/imgs/:id', ApiController.getCarImgs)
 
 //AutoPart
 router.get('/ap/all', ApiController.getAllAp);
@@ -21,7 +22,6 @@ router.get('/ap/most_ap', ApiController.getMostAp);
 //Fixed car
 router.get('/car/fixed/all', ApiController.getAllFixedCar);
 router.get('/car/fixed/find', ApiController.getFixedCarByCusId);
-
 //User
 router.get('/user/:id', ApiController.getUserById);
 router.post('/user/register', registerUser);

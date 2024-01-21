@@ -5,6 +5,9 @@ const Car = require('../models/car');
 const AutoPart = require('../models/ap');
 const FixedCar = require('../models/fixedCar');
 const User = require('../models/user');
+const path = require('path');
+const appDir = path.dirname((require.main.filename));
+const fs = require('fs');
 
 module.exports = {
     //For store
@@ -138,6 +141,24 @@ module.exports = {
         const id = req.query.id;
         const data = await FixedCar.getFixedCarByCusId(id);
         res.json(data);
+    }),
+    getCarImgs: tryCatch(async (req, res) => {
+        const id = req.params.id;
+        //todo: make it in utils
+        let curImgs = [];
+        const directoryPath = path.join(appDir, `public/images/cars/${id}`, 'others');
+        fs.readdir(directoryPath, (err, files) => {
+            if (err) {
+                console.error('Error reading directory:', err);
+                return;
+            }
+
+            console.log('Files in the directory:');
+            files.forEach(file => {
+                curImgs.push(file);
+            });
+            res.json(curImgs);
+        });
     }),
 
 
