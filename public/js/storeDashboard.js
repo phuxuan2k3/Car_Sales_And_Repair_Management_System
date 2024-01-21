@@ -341,13 +341,13 @@ function displayAp() {
 }
 
 $('#dashboard').click(() => {
-    displayMode('dashboard');
+    window.location.href = '/dashboard';
 })
 $('#car').click(() => {
-    displayMode('car');
+    window.location.href = '/car';
 })
 $('#ap').click(() => {
-    displayMode('ap');
+    window.location.href = '/ap';
 })
 
 function assignCloseForm() {
@@ -373,7 +373,9 @@ function assignCarEdit() {
 
                                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB
                                     </div>
-                                    <input name="avatar" class="form-control primary" type="file" id="formFile">
+                                    
+                                    <input id="input-id" type="file" class="file" data-preview-file-type="text">                               
+                                
                                 </div>
                             </div>
                             <div class="col-md-5 border-right ms-5 ps-4">
@@ -437,7 +439,7 @@ function assignApEdit() {
 
                                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB
                                     </div>
-                                    <input name="avatar" class="form-control primary" type="file" id="formFile">
+                                    <input id="input-id" type="file" class="file" data-preview-file-type="text">
                                 </div>
                             </div>
                             <div class="col-md-5 border-right ms-5 ps-4">
