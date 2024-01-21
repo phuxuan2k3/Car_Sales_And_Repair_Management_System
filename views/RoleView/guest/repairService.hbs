@@ -1,61 +1,4 @@
-<div class="alert alert-light position-absolute z-3 top-50 start-50 translate-middle d-none" id="successAlert"
-    role="alert">
-    <h4 class="alert-heading"><i class="fa-solid fa-circle-check" style="color: #63E6BE;"></i> Well done!</h4>
-    <p> Dear {{nameOfUser}},<br>
-        We are pleased to inform you that your repair service registration has been successfully received and
-        processed. Our team is now working to schedule and address your repair needs.
-    </p>
-    <hr>
-    <div class="d-flex flex-row justify-content-between">
-        <p class="mb-0">Best regards, SGX Auto</p>
-        <a name="" id="" class="btn btn-primary" href="/repairservice" role="button">Done</a>
-    </div>
-
-</div>
-
-<div class="alert alert-light position-absolute z-3 top-50 start-50 translate-middle  d-none" id="failedAlert"
-    role="alert">
-    <h4 class="alert-heading"><i class="fa-solid fa-circle-xmark" style="color: #ff0f0f;"></i> Registration Failed</h4>
-    <p> Dear {{nameOfUser}},<br>
-        We regret to inform you that your attempt to register for repair service was unsuccessful.
-        Please check the information provided and try again. If the issue persists, feel free to contact our support
-        team for assistance.
-    </p>
-    <hr>
-    <div class="d-flex flex-row justify-content-between">
-        <p class="mb-0">Best regards, SGX Auto</p>
-        <a name="" id="" class="btn btn-danger" href="/repairservice" role="button">Back</a>
-    </div>
-</div>
-
-<div class="alert w-50 alert-light position-absolute z-3 top-50 start-50 translate-middle d-none" id="paymentAlert"
-    role="alert">
-    <h4 class="alert-heading"><i class="fa-solid fa-credit-card" style="color: #74C0FC;"></i> Payment</h4>
-    <hr>
-    <div class="row justify-content-center align-items-center d-none" style="height: 200px;" id="spinner">
-        <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
-    <div id="paymentInfo">
-        <p>Order ID: 123</p>
-        <p>Date: 123</p>
-        <p>Your balance: 123</p>
-        <p>Total price: 123</p>
-    </div>
-    <div id="successTransaction" class="d-none d-flex flex-column justify-content-center align-items-center">
-        <i class="fa-regular fa-circle-check " style="color: #63E6BE;font-size: 10rem"></i>
-        <p class="fs-3 textPrimary">Successful transaction <i class="fa-regular fa-face-grin-hearts"></i></p>
-    </div>
-    <div id="falseTransaction" class="d-none d-flex flex-column justify-content-center align-items-center">
-        <i class="fa-solid fa-circle-exclamation" style="color: #74C0FC;font-size: 10rem"></i>
-        <p class="fs-3 textPrimary">Failed transaction <i class="fa-regular fa-face-sad-cry"></i></p>
-        
-    </div>
-    <hr>
-    <button id="confirmPaymentButton" class="btn text-light btn-warning w-100 mb-3" role="button">Pay</button>
-    <button id="cancelButton" class="btn btn-danger w-100 mb-3"  role="button">Cancel</button>
-    <button id="backButton" class="btn btn-info w-100 mb-3 d-none"  role="button">Back to service page</button>
+<div id="popupWindow" class="z-3 w-50  d-none">
 </div>
 
 <div class="overlay z-2 d-none" id="overplay"></div>
@@ -79,21 +22,27 @@
         <div class="row mb-2">
             <div class="card border-0">
                 <div class="card-body">
-                    <h4 class="card-title fw-bold fs-5 textPrimary">History</h4>
-                    <table class="table table-hover">
-                        <thead class="table-info" id="tbHeader">
-                            <tr class="text-center">
-                                <th scope="col">#</th>
-                                <th scope="col">car_plate</th>
-                                <th scope="col">date</th>
-                                <th scope="col">total_price</th>
-                                <th scope="col">status</th>
-                                <th scope="col">pay</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbBody">
-                        </tbody>
-                    </table>
+                    <div class="d-flex flex-start justify-content-center align-items-center mb-3">
+                        <h4 class="card-title fw-bold fs-5 textPrimary me-3">History</h4>
+                        <input id="carPlateInput" type="text" class="form-control me-auto w-50 rounded-pill"
+                            placeholder="Search by car-plate ">;
+                    </div>
+                    <div class="table-responsive" style="height: 30rem;">
+                        <table class="table  table-hover">
+                            <thead class="table-info" id="tbHeader">
+                                <tr class="text-center">
+                                    <th scope="col" style="width: 5%;">#</th>
+                                    <th scope="col" style="width: 15%;">car_plate</th>
+                                    <th scope="col" style="width: 30%;">date</th>
+                                    <th scope="col" style="width: 10%;">total_price</th>
+                                    <th scope="col" style="width: 20%;">status</th>
+                                    <th scope="col" style="width: 20%;">pay</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbBody">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -106,3 +55,9 @@
     let userId = {{ userId }}
 </script>
 {{/if}}
+
+{{#if nameOfUser}}
+<script>
+    let nameOfUser = "{{nameOfUser}}"
+</script>
+{{/if }}

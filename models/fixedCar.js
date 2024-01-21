@@ -35,4 +35,9 @@ module.exports = class FixedCar {
         const query = `select * from "${tableName}" where "car_plate"='${plate}'`
         return await dbExecute.customQuery(query);
     }
+    static async getFixedCarByCusIdAndSearch(id,car_plate){
+        let query = `select * from "${tableName}" where "id"='${id}'`
+        if(car_plate != null) query +=  ` and  "car_plate" ilike '%${car_plate}%'`
+        return await dbExecute.customQuery(query);
+    }
 }

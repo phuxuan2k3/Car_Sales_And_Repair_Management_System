@@ -25,7 +25,7 @@ router.get('/ap/most_ap', ApiController.getMostAp);
 
 //Fixed car
 router.get('/car/fixed/all', ApiController.getAllFixedCar);
-router.get('/car/fixed/find', ApiController.getFixedCarByCusId);
+router.get('/car/fixed/find', ApiController.getFixedCarByCusIdAndSearch);
 router.post('/car/fixed/add',ApiController.addNewFixedCar);
 
 //User

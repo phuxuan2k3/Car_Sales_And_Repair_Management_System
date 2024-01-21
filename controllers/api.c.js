@@ -138,13 +138,18 @@ module.exports = {
         const data = await FixedCar.getFixedCarByCusId(id);
         res.json(data);
     }),
+    getFixedCarByCusIdAndSearch: tryCatch(async (req, res) => {
+        const id = req.query.id;
+        const car_plate = req.query.car_plate == undefined? null : req.query.car_plate;
+        const data = await FixedCar.getFixedCarByCusIdAndSearch(id,car_plate);
+        res.json(data);
+    }),
     addNewFixedCar: tryCatch(async (req, res) => {
         const entity = req.body;
         const cusId = await FixedCar.insert(entity);
         const data = await FixRecord.insert(FixRecord.castParam(null, entity.car_plate, new Date(), 0, 'Processing', false))
         res.json(data);
     }),
-
     //User
     getUserById: tryCatch(async (req, res) => {
         const data = await User.getById(req.params.id);
