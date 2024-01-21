@@ -150,7 +150,7 @@ const refreshEvent = async () => {
 }
 
 const redirectToCartEvent = async () => {
-    window.location.assign('/dashboard')
+    window.location.assign('/cart')
 }
 
 const setAddToCartEvent = async (userId, car) => {
@@ -171,9 +171,9 @@ const setAddToCartEvent = async (userId, car) => {
                 ${cartData != null ? `
                 <p>Number of items in the shopping cart: ${cartData[0].quantity}</p>
                 ` : ''}
-                <div class="${maxQuantity <= 0 ? 'd-none' : ''}">
-                    <label for="#quantityInput">Enter quantity: </label>
-                    <input type="number" id="quantityInput" value="1"   min="1" max="${maxQuantity}">
+                <div class="${maxQuantity <= 0 ? 'd-none' : ''} d-flex flex-row align-items-center">
+                    <label class="me-3" for="#quantityInput">Enter quantity: </label>
+                    <input class="text-center rounded-pill form-control w-25 " type="number" id="quantityInput" value="1"   min="1" max="${maxQuantity}">
                 </div>
             </div>
             <div id="successTransaction" class="d-none d-flex flex-column justify-content-center align-items-center">

@@ -73,9 +73,9 @@
                                     <label>Number of items in the shopping cart: {{cartQuantity}}</label>
                                 </div>
                                 {{/if}}
-                                <div>
-                                    <label for="#quantityInput">Enter quantity: </label>
-                                    <input type="number" id="quantityInput" value="1" min="1"
+                                <div class="d-flex flex-row align-items-center"> 
+                                    <label class="no-wrap" for="#quantityInput">Enter quantity: </label>
+                                    <input type="number" id="quantityInput" class="rounded-pill form-control w-50" value="1" min="1"
                                         max="{{subtract data.quantity cartData.quantity}}">
                                 </div>
                                 <button type="button" onclick="confirmAddEvent({{data.id}},{{cartQuantity}})"
