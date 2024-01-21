@@ -12,6 +12,10 @@ const refreshEvent = async () =>
     location.href = location.href;
 }
 
+const redirectToCartEvent = async () => {
+    window.location.assign('/cart');
+}
+
 
 const confirmAddEvent = async (carId,cartQuantity) => {
     await setAddToCartEvent(userId,carId);
@@ -89,7 +93,7 @@ const setAddToCartEvent = async (userId, carId) => {
                 <p class="fs-3 textPrimary">Failed transaction <i class="fa-regular fa-face-sad-cry"></i></p>
             </div>
             <hr>
-            <button id="redirectToCartButton" onClick="redirectToCartEvent()" class="btn btn-warning w-100 mb-3"  role="button">Go to cart</button>
+            <button id="redirectToCartButton" onClick="redirectToCartEvent()" class="btn btn-warning w-100 mb-3 d-none"  role="button">Go to cart</button>
             <button id="refreshButton" onClick="refreshEvent()" class="btn btn-danger w-100 mb-3 d-none"  role="button">Back</button>
             </div>
     `)
