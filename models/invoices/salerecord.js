@@ -100,6 +100,18 @@ class SaleRecord {
         const data = await SelectQuery.init(SR_Table.NAME).setSelectAll().addBetweenDate(SR_Table.date, start, end).execute();
         return data.map(d => SaleRecord.castObj(d));
     }
+    static async getTotalPriceByDateByCus(start, end, cus_id) {
+        const sq = SelectQuery.init(SR_Table.NAME)
+            .setSelectCustom(['COALESCE(SUM(total_price), 0) AS tp']);
+        if (start != null && end != null) {
+            sq.addBetweenDate('date', start, end, 'alias');
+        }
+        if (cus_id != null) {
+            sq.addEqual('cus_id', cus_id);
+        }
+        const data = await sq.execute('one');
+        return data.tp;
+    }
 
     // cud
     static async insert(entity) {
@@ -123,7 +135,8 @@ class SaleRecord {
 
 const saleDetailFlag = 0;
 const saleRecordFlag = 0;
-const micsFlag = 1;
+const insertNullFlag = 0;
+const statisticFlag = 0;
 
 if (saleDetailFlag) {
     (async () => {
@@ -146,7 +159,7 @@ if (saleRecordFlag) {
     })();
 }
 
-if (micsFlag) {
+if (insertNullFlag) {
     (async () => {
         // const insertedObjId = await SaleRecord.insert({ cus_id: 42, date: new Date() });
         const insertObj = SaleRecord.castParam(null, 42, new Date(), null);
@@ -157,6 +170,13 @@ if (micsFlag) {
     })();
 }
 
+if (statisticFlag) {
+    (async () => {
+        console.log(await SaleRecord.getTotalPriceByDateByCus(new Date("01/01/2024"), new Date(), null));
+        console.log(await SaleRecord.getTotalPriceByDateByCus(null, null, 46));
+        console.log(await SaleRecord.getTotalPriceByDateByCus(new Date("01/01/2024"), new Date(), 46));
+    })();
+}
 
 module.exports = {
     SaleDetail,

@@ -50,10 +50,14 @@ class CarReport {
         const data = await SelectQuery.init(CIR_Table.NAME).setSelectAll().addBetweenDate(CIR_Table.date, start, end).execute();
         return data.map(d => { return CarReport.castObj(d) });
     }
-    // static async getTotalPriceByDate(start, end) {
-    //     const data = await SelectQuery.init(CIR_Table.NAME).setSelectCustom(['SUM()']).addBetweenDate(CIR_Table.date, start, end).execute();
-    //     return data.map(d => { return CarReport.castObj(d) });
-    // }
+    static async getTotalPriceByDate(start, end) {
+        const data = await SelectQuery.init(`${CIR_Table.NAME} cir`)
+            .addJoin('car c', 'cir.car_id = c.id')
+            .setSelectCustom(['SUM(cir.quantity * c.price) AS tp'])
+            .addBetweenDate(`cir.${CIR_Table.date}`, start, end, 'alias')
+            .execute('one');
+        return data.tp;
+    }
 
     // cud
     // return importinvoice_id, car_id
@@ -125,8 +129,9 @@ class CarInvoice {
 // Test || set flag to 1 for testing
 // <<<< =============================================
 
-const flagReport = 1;
+const flagReport = 0;
 const flagInvoice = 0;
+const flagStatistic = 0;
 
 // Car Report
 if (flagReport) {
@@ -186,6 +191,15 @@ if (flagInvoice) {
         // in: importinvoice_id (obj)
         // out: rowCount
         var test = await CarInvoice.delete({ importinvoice_id: 404 });
+        console.log(test);
+    })();
+}
+
+if (flagStatistic) {
+    (async () => {
+        // in: date start to end
+        // out: total price (value)
+        var test = await CarReport.getTotalPriceByDate(new Date("01/01/2024"), new Date());
         console.log(test);
     })();
 }
