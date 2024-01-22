@@ -5,7 +5,7 @@ const Car = require('../../models/car');
 const User = require('../../models/user');
 const Cart = require('../../models/cart');
 const AutoPart = require('../../models/ap');
-const {SaleRecord} = require('../../models/invoices/salerecord')
+const {SaleRecord ,SaleDetail} = require('../../models/invoices/salerecord')
 const  {FixDetail} = require('../../models/invoices/fixrecord')
 
 module.exports = {
@@ -41,6 +41,18 @@ module.exports = {
             const car = await Car.getCarById(cartItem.car_ID);
             cartItem.car = car;
         }
-        res.render('RoleView/guest/cartView', {saleData: saleData,adminId: 440,cartData: cartData,userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Repair service",cssFile: "cartView.css", repair: true, jsFile: "cartView.js"});
+        res.render('RoleView/guest/cartView', {saleData: saleData,adminId: 440,cartData: cartData,userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Cart",cssFile: "cartView.css", jsFile: "cartView.js"});
     }),
+    getRecordDetail: tryCatch(async (req,res) => {
+        const id = req.query.id;
+        const order = await SaleRecord.getRecordById(id);
+        const saleData = await SaleDetail.getBySaleRecord(id); 
+        for (const e of saleData) {
+            const car = await Car.getCarById(e.car_id);
+            e.car = car;
+        }
+        res.render('RoleView/guest/saleRecordDetail', {order: order,saleData: saleData,adminId: 440,userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Detail sale order"});
+    
+    })
+    
 }

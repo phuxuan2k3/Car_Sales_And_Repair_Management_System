@@ -9,3 +9,17 @@
     align-items: center;
     z-index: 1000;
 }
+
+.cartItem:hover {
+    background-color: rgba(173, 216, 230, 0.677);
+}
+
+.disabled_item {
+    color: rgba(0, 0, 0, 0.303);
+    pointer-events: none;
+    background-color: lightgray;
+}
+
+.cant_disable {
+    pointer-events: all !important;
+}

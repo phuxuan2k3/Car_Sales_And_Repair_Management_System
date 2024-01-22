@@ -1,0 +1,46 @@
+<div class="container-fluid">
+    {{> Nav/guestNav}}
+    <div class="row">
+        <div class="card border-0">
+            <div class="card-body">
+                <h4 class="card-title textPrimary fw-bold">Order detail</h4>
+                <h5 class="card-title textPrimary fw-bold">ID: {{order.salerecord_id}}</h5>
+
+                <div class="table-responsive" style="height: 20rem;">
+                    <table class="table table-hover">
+                        <thead class="table-info" id="tbHeader">
+                            <tr class="text-center">
+                                <th scope="col">#</th>
+                                <th scope="col">Car name</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Total price</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbBody">
+                            {{#each saleData }}
+                            <tr class="text-center">
+                                <td scope="col">{{add @index 1}}</td>
+                                <td scope="col">{{this.car.car_name}}</td>
+                                <td scope="col">{{this.quantity}}</td>
+                                <td scope="col">{{this.car.price}}</td>
+                                <td scope="col">{{mul this.car.price this.quantity}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row-reverse  w-100">
+            <div class="fs-4 textPrimary fw-bold me-3">TOTAL: {{order.total_price}}$</div>
+        </div>
+    </div>
+
+    {{> footer}}
+</div>
+{{#if userId}}
+<script>
+    let userId = {{ userId }}
+</script>
+{{/if}}

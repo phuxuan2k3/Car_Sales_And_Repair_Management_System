@@ -92,10 +92,6 @@ const backEvent = async () => {
 
 const confirmAddEvent = async (carId, cartQuantity) => {
 
-    let spinner = $('#spinner');
-    let popupWindow = $('#popupWindow');
-    let paymentAlert = $('#paymentAlert');
-    
     let popupContent = $('#popupContent');
     let quantityInput = $('#quantityInput');
     let redirectToCartButton = $('#redirectToCartButton');
@@ -197,6 +193,18 @@ const setAddToCartEvent = async (userId, car) => {
             <button id="refreshButton" onClick="refreshEvent()" class="btn btn-danger w-100 mb-3 d-none"  role="button">Back to dashboard</button>
             </div>
     `)
+
+    $('input[type="number"]').on('input', function () {
+        let inputValue = parseInt($(this).val(), 10);
+        if(inputValue == '' || null) $(this).val(1);
+        let min = parseInt($(this).attr('min'), 10);
+        let max = parseInt($(this).attr('max'), 10);
+        if (inputValue < min) {
+            $(this).val(min);
+        } else if (inputValue > max) {
+            $(this).val(max);
+        }
+    });
 }
 
 
@@ -272,5 +280,6 @@ const pageInit = async () => {
 const updatePageInfo = async () => {
     PageInfo.text(`${page}/${totalPage}`)
 }
+
 
 pageInit();

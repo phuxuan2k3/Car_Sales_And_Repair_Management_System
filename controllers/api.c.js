@@ -81,7 +81,6 @@ module.exports = {
 
     updateCarQuantity: tryCatch(async (req,res) => {
         const {id,quantity} = req.body;
-        console.log(req.body);
         const rs = await Car.updateQuanTity(id,quantity);
         res.send('done');
     }),
