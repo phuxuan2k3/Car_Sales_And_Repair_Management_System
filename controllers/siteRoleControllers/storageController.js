@@ -29,11 +29,24 @@ module.exports = {
         res.render('RoleView/store/editCar', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Edit Car', jsFile: 'editCar.js', cssFile: 'store.css', curCar });
     })
     ,
+    getEditApPage: tryCatch(async (req, res) => {
+        const id = req.params.id;
+        const curAp = (await AutoPart.getAutoPartByID(id))[0];
+        res.render('RoleView/store/editAp', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Edit Auto Part', jsFile: 'editAp.js', cssFile: 'store.css', curAp });
+    })
+    ,
     editCar: tryCatch(async (req, res) => {
         const id = req.params.id;
         const car = req.body;
         await Car.update(id, car);
         res.redirect('/car');
+    })
+    ,
+    editAp: tryCatch(async (req, res) => {
+        const id = req.params.id;
+        const ap = req.body;
+        await AutoPart.update(id, ap);
+        res.redirect('/ap');
     })
     ,
     getInsertCarPage: tryCatch(async (req, res) => {

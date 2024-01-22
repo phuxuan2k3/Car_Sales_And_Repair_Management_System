@@ -14,6 +14,9 @@ router.post('/car/edit/:id', upload.fields([{ name: 'avatar', maxCount: 1 }, { n
 
 router.get('/car/insert', storageController.getInsertCarPage);
 router.post('/car/insert', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'other-images', maxCount: 10 }]),
-    storageController.insertCar);;
+    storageController.insertCar);
+
+router.get('/ap/edit/:id', storageController.getEditApPage);
+router.post('/ap/edit/:id', storageController.editAp);
 
 module.exports = router;
