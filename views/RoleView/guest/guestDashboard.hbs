@@ -4,7 +4,7 @@
 <div class="container-fluid">
     {{> Nav/guestNav}}
     <div class="row">
-        <div class="col-3">
+        <div class="col-md-3">
             {{!-- Left slide --}}
             <form class="h-100 bg-white w-100 p-3">
                 {{!-- Type --}}
@@ -15,7 +15,7 @@
                         </div>
                     </div>
                 </div>
-                {{!-- Capacity --}}
+                {{!-- Brand --}}
                 <div class="checkBox mb-3">
                     <p class="fs-8 textPrimary">Brand</p>
                     <div class="ms-3">
@@ -24,24 +24,25 @@
                     </div>
                 </div>
                 {{!-- Price --}}
-                <div class="checkBox mb-3">
+                <div class="mb-3">
                     <p class="fs-8 textPrimary">Max Price</p>
                     <div class="ms-3">
-                        <div>Current max price: <span id="CurrentMP">50000vnđ</span></div>
-                        <input type="range" class="form-range" min="0" max="50000" step="1000" id="maxPriceRange"
-                            value="50000">
+                        <div>Current max price: <span id="CurrentMP">{{maxPrice}}$</span></div>
+                        <input type="range" class="form-range" min="0" max="{{maxPrice}}" step="1000" id="maxPriceRange"
+                            value="{{maxPrice}}">
                         <div class="d-flex flex-row justify-content-between">
-                            <div class="ms-0">0</div>
-                            <div class="me-0">50000</div>
+                            <div class="ms-0">0$</div>
+                            <div class="me-0">{{maxPrice}}$</div>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
-        <div class="col-9">
+        <div class="col-md-9">
             {{!-- Main content --}}
             <div class="bg-white d-flex flex-column h-100" id="MainContent">
-                <div class="d-flex mb-auto flex-wrap  w-100 p-3" id="CarList">
+                <div class="d-flex justify-content-center mb-auto flex-wrap  w-100 p-3" id="CarList">
+
                 </div>
                 <nav class="d-flex justify-content-center" aria-label="Page navigation example">
                     <ul class="pagination">

@@ -1,8 +1,83 @@
+<style>
+    .cartItem:hover {
+        background-color: rgba(173, 216, 230, 0.677);
+    }
+
+    .disabled_item {
+        color: rgba(0, 0, 0, 0.303);
+        pointer-events: none;
+        background-color: lightgray;
+    }
+
+    .cant_disable {
+        pointer-events: all !important;
+    }
+</style>
+
+
+<div id="popupWindow" class="z-3 w-50  d-none"></div>
+<div class="overlay d-none z-2" id="overplay"></div>
+
 <div class="container-fluid">
     {{> Nav/guestNav}}
-    <div class="row">
-       
+    <div class="card align-items-center justify-content-center p-3 border-0">
+        <h4 class="card-title textPrimary fs-2 fw-bold">CART</h4>
+        {{#each cartData}}
+        <div onclick="cartItemClick({{this.car_ID}},{{mul this.car.price this.quantity}},event)"
+            id="cartItem_{{this.car_ID}}_{{this.customer_ID}}"
+            class="card  {{#isLessThanRemake this.car.quantity  this.quantity}}disabled_item{{/isLessThanRemake}}   w-100 shadow cartItem mb-3 border-0 ">
+            <div class=" card-body d-flex flex-row justify-content-between align-items-center ">
+                <div class="row w-100 align-items-center">
+                    <p id="errorNotify_{{this.car_ID}}"
+                        class="text-danger {{#isLessThan  this.quantity  this.car.quantity  }}d-none{{/isLessThan}} ">
+                        Sãn
+                        phẩm không đủ số lượng hoặc đã hết hàng</p>
+                    <div class="col-1">
+                        <input onclick="checking(event)" class="form-check-input me-2 fs-3 cartItemCheck"
+                            id="checkBox_{{this.car_ID}}_{{this.customer_ID}}" car_ID="{{this.car_ID}}" type="checkbox">
+                    </div>
+                    <div class="col-8">
+                        <div class="row ">
+                            <div class="col-md-6">
+                                <div>Car name: {{this.car.car_name}}</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div>Storage: <span>{{this.car.quantity}}</span></div>
+                            </div>
 
+                            <div class="col-md-3">
+                                <div>Price: <span id="cartItemPrice_{{this.car_ID}}">{{mul this.car.price
+                                        this.quantity}}$</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 text-center">
+                        <input onclick="quantityInput({{this.car_ID}},{{this.car.quantity}},{{this.car.price}},event)"
+                            id="quantity_{{this.car_ID}}_{{this.customer_ID}}" value="{{this.quantity}}" type="number"
+                            min="1" max="{{this.car.quantity}}"
+                            class="cant_disable {{#isLessThan this.car.quantity 0}}d-none{{/isLessThan}}   text-center w-100 quantityInput form-control rounded-pill">
+
+                    </div>
+                    <div class="col-1">
+                        <button onclick="deleteCartItem({{this.car_ID}},event)" type="button"
+                            class="cant_disable btn btn-danger">
+                            X
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        {{/each}}
+    </div>
+    <hr>
+    <div class="d-flex flex-row-reverse  w-100">
+        <div class="textPrimary fw-bold w-25 "><button disabled type="button" id="payButton"
+                class="btn w-100 btn-primary">
+                PAY
+            </button>
+        </div>
+        <div class="fs-4 textPrimary fw-bold me-3">TOTAL: <span id="mustToPay">0</span>$</div>
     </div>
 
     {{> footer}}
@@ -10,5 +85,256 @@
 {{#if userId}}
 <script>
     let userId = {{ userId }}
+    let adminId = {{ adminId }}
 </script>
 {{/if}}
+
+<script>
+
+    let overplay = $('#overplay');
+    let popupWindow = $('#popupWindow');
+    //payment
+    let amount;
+    let paymentInfo;
+    let recordId;
+    let successTransaction = $('#successTransaction');
+    let falseTransaction = $('#falseTransaction');
+    //button
+    let cancelButton = $('#cancelButton');
+    let backButton = $('#backButton')
+    let registerButton = $('#registerButton');
+    // event
+    let mustToPay = $(`#mustToPay`);
+    let payButton = $(`#payButton`);
+    let totalPrice = 0;
+    let spinner;
+    mustToPay.text(totalPrice);
+    const checking = async (event) => {
+        event.stopPropagation();
+    }
+
+    const updateStorage = async () => {
+        let items = $(`input[type='checkbox']:checked`);
+        for (const e of items) {
+            let car_ID = parseInt($(e).attr('car_ID'));
+            let ourQuantity = parseInt($(`#quantity_${car_ID}_${userId}`).val());
+            const rsf = await fetch(`/api/car/find?id=${car_ID}`)
+            const currentCarData = await rsf.json();
+            const data = {
+                "id": car_ID,
+                "quantity": currentCarData.quantity - ourQuantity
+            }
+            const rs = await fetch(`/api/car/update_quantity`, {
+                method: 'post',
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow",
+                body: JSON.stringify(data)
+            })
+        }
+    }
+
+
+    const removeCheckedItem = async () => {
+        let items = $(`input[type='checkbox']:checked`);
+        for (const e of items) {
+            let car_ID = parseInt($(e).attr('car_ID'));
+            const entity = {
+                "customer_ID": userId,
+                "car_ID": car_ID,
+            }
+            const rs = await fetch(`/api/cart/delete`, {
+                method: 'post',
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow",
+                body: JSON.stringify(entity)
+            })
+        }
+    }
+
+    const deleteCartItem = async (car_ID, event) => {
+        event.stopPropagation();
+        const entity = {
+            "customer_ID": userId,
+            "car_ID": car_ID,
+        }
+        const rs = await fetch(`/api/cart/delete`, {
+            method: 'post',
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+            body: JSON.stringify(entity)
+        })
+        location.href = location.href;
+    }
+
+
+
+
+    const cartItemClick = async (car_ID, itemPrice, event) => {
+        event.stopPropagation();
+        let checkbox = $(`#checkBox_${car_ID}_${userId}`);
+        if (checkbox.prop('checked')) {
+            checkbox.prop('checked', false);
+            totalPrice -= itemPrice
+            mustToPay.text(totalPrice);
+        } else {
+            checkbox.prop('checked', true);
+            totalPrice += itemPrice
+            mustToPay.text(totalPrice);
+        }
+        payButton.attr('disabled', totalPrice <= 0 ? true : false);
+    }
+
+    const quantityInput = async (car_ID, storageQuantity, price, event) => {
+        event.stopPropagation();
+        let inputVal = parseInt($(`#quantity_${car_ID}_${userId}`).val());
+        let cartItem = $(`#cartItem_${car_ID}_${userId}`)
+        let errorNotify = $(`#errorNotify_${car_ID}`);
+        let cartItemPrice = $(`#cartItemPrice_${car_ID}`);
+        cartItemPrice.text(`${inputVal * price}$`)
+        if (inputVal <= storageQuantity) {
+            cartItem.removeClass('disabled_item');
+            errorNotify.addClass('d-none');
+            const entity = {
+                "customer_ID": userId,
+                "car_ID": car_ID,
+                "quantity": inputVal
+            }
+            const rs = await fetch(`/api/cart/update_quantity`, {
+                method: 'post',
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow",
+                body: JSON.stringify(entity)
+            })
+
+        } else {
+            errorNotify.removeClass('d-none');
+            cartItem.addClass('disabled_item');
+        }
+    }
+
+    const check = async () => {
+        let rs = true;
+        let items = $(`input[type='checkbox']:checked`);
+        for (const e of items) {
+            let car_ID = parseInt($(e).attr('car_ID'));
+            let ourQuantity = parseInt($(`#quantity_${car_ID}_${userId}`).val());
+            const rsf = await fetch(`/api/car/find?id=${car_ID}`)
+            const currentCarData = await rsf.json();
+            if (ourQuantity > currentCarData.quantity || currentCarData.quantity <= 0) rs = false;
+        }
+        return rs;
+    }
+
+    payButton.on('click', async (e) => {
+        overplay.removeClass('d-none');
+        popupWindow.removeClass('d-none');
+        popupWindow.empty();
+        popupWindow.append(`
+        <div class="alert w-50 alert-light position-fixed z-3 top-50 start-50 translate-middle " id="paymentAlert" role="alert">
+            <h4 class="alert-heading"><i class="fa-solid fa-credit-card" style="color: #74C0FC;"></i> Payment</h4>
+            <hr>
+            <div class="row justify-content-center align-items-center d-none" style="height: 200px;" id="spinner">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <div id="paymentInfo">
+            </div>
+            <div id="successTransaction" class="d-none d-flex flex-column justify-content-center align-items-center">
+                <i class="fa-regular fa-circle-check " style="color: #63E6BE;font-size: 10rem"></i>
+                <p class="fs-3 textPrimary">Successful transaction <i class="fa-regular fa-face-grin-hearts"></i></p>
+            </div>
+            <div id="falseTransaction" class="d-none d-flex flex-column justify-content-center align-items-center">
+                <i class="fa-solid fa-circle-exclamation" style="color: #74C0FC;font-size: 10rem"></i>
+                <p class="fs-3 textPrimary">Failed transaction <i class="fa-regular fa-face-sad-cry"></i></p>
+            </div>
+            <hr>
+            <button id="confirmPaymentButton" class="btn text-light btn-warning w-100 mb-3" role="button">Pay</button>
+            <button id="cancelButton" class="btn btn-danger w-100 mb-3"  role="button">Cancel</button>
+            <button id="backButton" class="btn btn-info w-100 mb-3 d-none"  role="button">Back cart page</button>
+            </div>
+            `)
+        spinner = $('#spinner')
+        confirmPaymentButton = $('#confirmPaymentButton');
+        successTransaction = $('#successTransaction');
+        falseTransaction = $('#falseTransaction');
+        cancelButton = $('#cancelButton');
+        paymentAlert = $('#paymentAlert');
+        paymentAlert.css('opacity', 1)
+        paymentInfo = $('#paymentInfo');
+        const rs = await fetch(`http://localhost:3001/account?id=${userId}`);
+        const account = await rs.json();
+        paymentInfo.empty();
+        let date = new Date();
+        paymentInfo.append(`
+            <p>Date: ${date}</p>
+            <p>Your balance: ${account.balance}$</p>
+            <p>Total price: ${parseFloat($('#mustToPay').text())}$</p>
+        `)
+        const amount = parseFloat($('#mustToPay').text());
+        confirmPaymentButton.attr('disabled', (account.balance < amount ? true : false));
+        paymentAlert.css('opacity', 1);
+        cancelButton.on('click', () => {
+            overplay.addClass('d-none');
+            popupWindow.addClass('d-none');
+            paymentAlert.css('opacity', 0);
+        })
+        backButton = $('#backButton');
+        backButton.on('click', () => {
+            window.location.assign(`/cart`);
+        });
+        confirmPaymentButton.on('click', async () => {
+            spinner.removeClass('d-none');
+            paymentInfo.addClass('d-none');
+            confirmPaymentButton.addClass('d-none');
+            cancelButton.addClass('d-none')
+            const transactionData = {
+                from: userId,
+                to: adminId,
+                amount: amount,
+                content: "Buy car - SGXAUTO"
+            }
+            let checkRs = await check();
+            if (checkRs) {
+                const serverResponse = await fetch('http://localhost:3001/transaction', {
+                    method: 'post',
+                    credentials: "same-origin",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    redirect: "follow",
+                    body: JSON.stringify(transactionData)
+                })
+                spinner.addClass('d-none');
+                backButton.removeClass('d-none');
+                if (serverResponse.ok) {
+                    successTransaction.removeClass('d-none');
+                    //to do some thing here
+                    await updateStorage();
+                    await removeCheckedItem();
+
+
+                } else {
+                    falseTransaction.removeClass('d-none');
+                }
+            } else {
+                spinner.addClass('d-none');
+                backButton.removeClass('d-none');
+                falseTransaction.removeClass('d-none');
+            }
+        })
+    })
+
+</script>

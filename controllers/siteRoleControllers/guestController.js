@@ -9,7 +9,7 @@ const  {FixDetail} = require('../../models/invoices/fixrecord')
 
 module.exports = {
     getDashboard: tryCatch(async (req, res) => {
-        res.render('RoleView/guest/guestDashboard', {userId: req.user.id ,nameOfUser: req.session.passport.user.nameOfUser, title: 'DashBoard', jsFile: 'guestDashboard.js', cssFile: 'guestDashBoard.css', store : true });
+        res.render('RoleView/guest/guestDashboard', {maxPrice: 100000,userId: req.user.id ,nameOfUser: req.session.passport.user.nameOfUser, title: 'DashBoard', jsFile: 'guestDashboard.js', cssFile: 'guestDashBoard.css', store : true });
     }),
     getCarDetail: tryCatch(async (req, res) => {
         const id = req.query.id;
@@ -20,7 +20,7 @@ module.exports = {
         res.render('RoleView/guest/carDetail', {cartQuantity: cartQuantity,userId: req.user.id,cartData: cartData, nameOfUser: req.session.passport.user.nameOfUser, data: carData,title: carData.car_name, store: true, jsFile: 'carDetail.js', cssFile: 'carDetail.css' })
     }),
     getRepairService: tryCatch(async (req,res) => {
-        res.render('RoleView/guest/repairService', {userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Repair service",cssFile: "repairService.css", repair: true, jsFile: "repairService.js"});
+        res.render('RoleView/guest/repairService', {adminId: 440,userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Repair service",cssFile: "repairService.css", repair: true, jsFile: "repairService.js"});
     }),
     getRepairDetail: tryCatch(async (req,res) => {
         const id = req.query.id;
@@ -34,6 +34,11 @@ module.exports = {
         res.render('RoleView/guest/repairDetail', {recordId: id,data: data,userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Repair service", repair: true});
     }),
     getCartPage: tryCatch( async (req,res) => {
-        res.render('RoleView/guest/cartView', {userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Repair service",cssFile: "cartView.css", repair: true, jsFile: "cartView.js"});
+        const cartData = await Cart.getCartByCusID(req.user.id);
+        for (const cartItem of cartData) {
+            const car = await Car.getCarById(cartItem.car_ID);
+            cartItem.car = car;
+        }
+        res.render('RoleView/guest/cartView', {adminId: 440,cartData: cartData,userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Repair service",cssFile: "cartView.css", repair: true, jsFile: "cartView.js"});
     }),
 }

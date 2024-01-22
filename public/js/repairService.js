@@ -1,7 +1,10 @@
+
+
 let inputCarPlate = $('#inputCarPlate');
 let overplay = $('#overplay');
 let tbBody = $('#tbBody');
 let fixedCar;
+
 //payment
 let amount;
 let paymentInfo;
@@ -16,9 +19,9 @@ let confirmPaymentButton = $('#confirmPaymentButton');
 //alert
 let spinner = $('#spinner');
 let popupWindow = $('#popupWindow');
+let paymentAlert = $('#paymentAlert');
 let failedAlert = $('#failedAlert');
 let successAlert = $('#successAlert');
-let paymentAlert = $('#paymentAlert');
 
 const validation = () => {
     if (inputCarPlate.val() != null && inputCarPlate.val() != '') return true;;
@@ -150,7 +153,7 @@ const generateTable = async () => {
             `)
         confirmPaymentButton = $('#confirmPaymentButton');
         successTransaction = $('#successTransaction');
-        falseTransaction = $('#successTransaction');
+        falseTransaction = $('#falseTransaction');
         cancelButton = $('#cancelButton');
         paymentAlert = $('#paymentAlert');
         paymentAlert.css('opacity', 1)
@@ -182,7 +185,7 @@ const generateTable = async () => {
             cancelButton.addClass('d-none')
             const transactionData = {
                 from: userId,
-                to: 440,
+                to: adminId,
                 amount: parseFloat(amount),
                 content: "Repair service - SGXAUTO"
             }

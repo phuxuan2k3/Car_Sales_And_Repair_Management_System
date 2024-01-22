@@ -90,7 +90,12 @@ const backEvent = async () => {
     popupWindow.toggleClass('d-none');
 }
 
-const confirmAddEvent = async (carId,cartQuantity) => {
+const confirmAddEvent = async (carId, cartQuantity) => {
+
+    let spinner = $('#spinner');
+    let popupWindow = $('#popupWindow');
+    let paymentAlert = $('#paymentAlert');
+    
     let popupContent = $('#popupContent');
     let quantityInput = $('#quantityInput');
     let redirectToCartButton = $('#redirectToCartButton');
@@ -108,7 +113,7 @@ const confirmAddEvent = async (carId,cartQuantity) => {
         const entity = {
             "customer_ID": userId,
             "car_ID": carId,
-            "quantity":  cartQuantity != null ? quantity + cartQuantity : quantity
+            "quantity": cartQuantity != null ? quantity + cartQuantity : quantity
         }
         const url = cartQuantity == null ? `/api/cart/add` : `/api/cart/update_quantity`
         const rs = await fetch(url, {
@@ -201,8 +206,8 @@ const generateCarInfo = async () => {
     CarList.empty();
     for (const car of carData) {
         CarList.append(`
-            <div class="carInfo">
-                <div class="card ms-4 me-4 mb-3 carInfoCard" style="width: 18rem; height: 25rem">
+            <div class="carInfo m-3">
+                <div class="card ms-auto me-auto mb-3 carInfoCard" style="width: 18rem; height: 25rem">
                     <div class="info" index="${car.id}">
                         <div class="card-body">
                             <p class="card-text fw-bold fs-5 textPrimary mb-0">${car.car_name}</p>

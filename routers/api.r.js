@@ -16,6 +16,7 @@ router.get('/car/type',  ApiController.getAllType);
 router.get('/car/brand',  ApiController.getAllBrand);
 router.get('/car/car_page',  ApiController.getCarPage);
 router.get('/car/most_car', ApiController.getMostCar);
+router.post('/car/update_quantity',ApiController.updateCarQuantity);
 
 //AutoPart
 router.get('/ap/all', ApiController.getAllAp);

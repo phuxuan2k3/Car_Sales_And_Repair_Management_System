@@ -61,7 +61,7 @@
                                     SOLD OUT
                                 </button>
                                 {{else}}
-                                {{#isLessThan data.quantity cartData.quantity}}
+                                {{#isLessThan data.quantity cartQuantity}}
                                 <p class="me-3 text-danger ms-3">You`ve reached the maximum quantity in your cart.
                                     ({{cartData.quantity}}) !</p>
                                 <button type="button" disabled class="btn w-25 p-2 border-0 btn-primary bgPrimary">

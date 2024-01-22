@@ -79,6 +79,12 @@ module.exports = {
         res.json(data);
     }),
 
+    updateCarQuantity: tryCatch(async (req,res) => {
+        const {id,quantity} = req.body;
+        const rs = await Car.updateQuanTity(id,quantity);
+        res.send('done');
+    }),
+
 
     //Auto part API
     getAllAp: tryCatch(async (req, res) => {

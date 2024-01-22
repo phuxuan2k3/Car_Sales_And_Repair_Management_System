@@ -10,7 +10,7 @@ module.exports = class Cart {
         this.quantity = obj.quantity;
     }
     static async getCartByCusID(id) {
-        const query = `select * from "${tableName}" where "customer_ID"=${id}`;
+        const query = `select * from "${tableName}" where "customer_ID"=${id} order by "car_ID"`;
         const data = await dbExecute.customQuery(query);
         return data.map(e => { return new Cart(e) });
     }
