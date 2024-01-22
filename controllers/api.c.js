@@ -6,7 +6,7 @@ const AutoPart = require('../models/ap');
 const FixedCar = require('../models/fixedCar');
 const User = require('../models/user');
 const Cart = require('../models/cart');
-const {FixRecord} = require('../models/invoices/fixrecord');
+const { FixRecord } = require('../models/invoices/fixrecord');
 const path = require('path');
 const appDir = path.dirname((require.main.filename));
 const fs = require('fs');
@@ -19,7 +19,7 @@ module.exports = {
         res.json({ car: carData, ap: apData });
     }),
     //Car API
-    getByCarId: tryCatch (async (req,res) => {
+    getByCarId: tryCatch(async (req, res) => {
         const id = req.query.id;
         const data = await Car.getCarById(id);
         res.json(data);
@@ -85,7 +85,7 @@ module.exports = {
         const id = req.params.id;
         //todo: make it in utils
         let curImgs = [];
-        const directoryPath = path.join(appDir, `public/images/cars/${id}`, 'others');
+        const directoryPath = path.join(appDir, `public/images/cars/${id}`, 'other');
         fs.readdir(directoryPath, (err, files) => {
             if (err) {
                 console.error('Error reading directory:', err);
@@ -173,8 +173,8 @@ module.exports = {
     }),
     getFixedCarByCusIdAndSearch: tryCatch(async (req, res) => {
         const id = req.query.id;
-        const car_plate = req.query.car_plate == undefined? null : req.query.car_plate;
-        const data = await FixedCar.getFixedCarByCusIdAndSearch(id,car_plate);
+        const car_plate = req.query.car_plate == undefined ? null : req.query.car_plate;
+        const data = await FixedCar.getFixedCarByCusIdAndSearch(id, car_plate);
         res.json(data);
     }),
     addNewFixedCar: tryCatch(async (req, res) => {
@@ -190,33 +190,33 @@ module.exports = {
     }),
 
     //Cart
-    getCartByCusID: tryCatch(async (req,res) => {
+    getCartByCusID: tryCatch(async (req, res) => {
         const id = req.query.id;
         const data = await Cart.getCartByCusID(id);
         res.json(data);
     }),
-    getCarInCart: tryCatch(async (req,res) => {
-        const {customer_ID,car_ID} = req.query;
-        let data = await Cart.getCarInCart(customer_ID,car_ID);
-        data = data.length <= 0 ? null: data;
+    getCarInCart: tryCatch(async (req, res) => {
+        const { customer_ID, car_ID } = req.query;
+        let data = await Cart.getCarInCart(customer_ID, car_ID);
+        data = data.length <= 0 ? null : data;
         res.json(data);
     }),
-    insertToCart: tryCatch(async (req,res) => {
+    insertToCart: tryCatch(async (req, res) => {
         const entity = req.body;
         const data = await Cart.insert(entity);
         res.json(data);
     }),
-    updateCarQuanTityInCart: tryCatch(async (req,res) => {
-        const {customer_ID,car_ID,quantity} = req.body;
-        let check = await Cart.getCarInCart(customer_ID,car_ID);
-        check = check.length <= 0 ? null: check;
-        if(check == null) return res.status(400).send('Update error')
-        await Cart.updateCarQuanTityInCart(customer_ID,car_ID,quantity);
+    updateCarQuanTityInCart: tryCatch(async (req, res) => {
+        const { customer_ID, car_ID, quantity } = req.body;
+        let check = await Cart.getCarInCart(customer_ID, car_ID);
+        check = check.length <= 0 ? null : check;
+        if (check == null) return res.status(400).send('Update error')
+        await Cart.updateCarQuanTityInCart(customer_ID, car_ID, quantity);
         return res.json(true);
     }),
-    deleteCartItem: tryCatch(async (req,res) => {
-        const {customer_ID,car_ID} = req.body;
-        await Cart.deleteCartItem(customer_ID,car_ID);
+    deleteCartItem: tryCatch(async (req, res) => {
+        const { customer_ID, car_ID } = req.body;
+        await Cart.deleteCartItem(customer_ID, car_ID);
         return res.json(true);
     })
 
