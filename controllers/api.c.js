@@ -81,6 +81,7 @@ module.exports = {
 
     updateCarQuantity: tryCatch(async (req,res) => {
         const {id,quantity} = req.body;
+        console.log(req.body);
         const rs = await Car.updateQuanTity(id,quantity);
         res.send('done');
     }),
@@ -187,7 +188,6 @@ module.exports = {
     }),
     updateCarQuanTityInCart: tryCatch(async (req,res) => {
         const {customer_ID,car_ID,quantity} = req.body;
-        console.log(quantity)
         let check = await Cart.getCarInCart(customer_ID,car_ID);
         check = check.length <= 0 ? null: check;
         if(check == null) return res.status(400).send('Update error')

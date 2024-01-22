@@ -5,6 +5,7 @@ const Car = require('../../models/car');
 const User = require('../../models/user');
 const Cart = require('../../models/cart');
 const AutoPart = require('../../models/ap');
+const {SaleRecord} = require('../../models/invoices/salerecord')
 const  {FixDetail} = require('../../models/invoices/fixrecord')
 
 module.exports = {
@@ -35,10 +36,11 @@ module.exports = {
     }),
     getCartPage: tryCatch( async (req,res) => {
         const cartData = await Cart.getCartByCusID(req.user.id);
+        const saleData = await SaleRecord.getRecordsByCusId(req.user.id); 
         for (const cartItem of cartData) {
             const car = await Car.getCarById(cartItem.car_ID);
             cartItem.car = car;
         }
-        res.render('RoleView/guest/cartView', {adminId: 440,cartData: cartData,userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Repair service",cssFile: "cartView.css", repair: true, jsFile: "cartView.js"});
+        res.render('RoleView/guest/cartView', {saleData: saleData,adminId: 440,cartData: cartData,userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Repair service",cssFile: "cartView.css", repair: true, jsFile: "cartView.js"});
     }),
 }

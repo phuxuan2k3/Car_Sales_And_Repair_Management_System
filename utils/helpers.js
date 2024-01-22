@@ -17,3 +17,9 @@ Handlebars.registerHelper('subtract', function (value1, value2) {
 Handlebars.registerHelper('mul', function (value1, value2) {
     return value1 * value2;
 });
+
+Handlebars.registerHelper('add', function (value1, value2) {
+    return value1 + value2;
+});
+
+

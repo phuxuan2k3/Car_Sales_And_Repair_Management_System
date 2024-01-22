@@ -60,7 +60,6 @@ module.exports = class AutoPart {
         query += ` offset ${offset} limit ${limit}`;
         const data = await dbExecute.customQuery(query);
         const apData = data.map(c => { return new AutoPart(c) });
-        console.log(query)
         return {
             totalPage: totalPage,
             data: apData,

@@ -20,6 +20,9 @@
 
 <div class="container-fluid">
     {{> Nav/guestNav}}
+
+
+
     <div class="card align-items-center justify-content-center p-3 border-0">
         <h4 class="card-title textPrimary fs-2 fw-bold">CART</h4>
         {{#each cartData}}
@@ -34,7 +37,7 @@
                         phẩm không đủ số lượng hoặc đã hết hàng</p>
                     <div class="col-1">
                         <input onclick="checking(event)" class="form-check-input me-2 fs-3 cartItemCheck"
-                            id="checkBox_{{this.car_ID}}_{{this.customer_ID}}" car_ID="{{this.car_ID}}" type="checkbox">
+                            id="checkBox_{{this.car_ID}}_{{this.customer_ID}}" car_ID="{{this.car_ID}}" car_price="{{this.car.price}}" type="checkbox">
                     </div>
                     <div class="col-8">
                         <div class="row ">
@@ -44,7 +47,6 @@
                             <div class="col-md-3">
                                 <div>Storage: <span>{{this.car.quantity}}</span></div>
                             </div>
-
                             <div class="col-md-3">
                                 <div>Price: <span id="cartItemPrice_{{this.car_ID}}">{{mul this.car.price
                                         this.quantity}}$</span></div>
@@ -70,6 +72,7 @@
         </div>
         {{/each}}
     </div>
+
     <hr>
     <div class="d-flex flex-row-reverse  w-100">
         <div class="textPrimary fw-bold w-25 "><button disabled type="button" id="payButton"
@@ -78,6 +81,33 @@
             </button>
         </div>
         <div class="fs-4 textPrimary fw-bold me-3">TOTAL: <span id="mustToPay">0</span>$</div>
+    </div>
+    <hr>
+    <div class="card align-items-center justify-content-center p-3 border-0">
+        <h4 class="card-title textPrimary fs-2 fw-bold">HISTORY</h4>
+        <div class="card-body w-100">
+            <table class="table table-hover">
+                <thead class="table-info" id="tbHeader">
+                    <tr class="text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Total price</th>
+                    </tr>
+                </thead>
+                <tbody id="tbBody">
+
+                    {{#each saleData }}
+                    <tr class="text-center">
+                        <td scope="col">{{add @index 1}}</td>
+                        <td scope="col">{{this.salerecord_id}}</td>
+                        <td scope="col">{{this.date}}</td>
+                        <td scope="col">{{this.total_price}}$</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
     </div>
 
     {{> footer}}
@@ -113,6 +143,31 @@
         event.stopPropagation();
     }
 
+    const createInvoice = async () => {
+        let items = $(`input[type='checkbox']:checked`);
+        let car_id_quantity_array = [];
+        for (const e of items) {
+            let car_ID = parseInt($(e).attr('car_ID'));
+            let ourQuantity = parseInt($(`#quantity_${car_ID}_${userId}`).val());
+            car_id_quantity_array.push({ car_id: car_ID, quantity: ourQuantity });
+        }
+        const data = {
+            cus_id: userId,
+            date: new Date(),
+            car_id_quantity_array: car_id_quantity_array
+        }
+        const rs = await fetch(`/api/csale/add-cart`, {
+            method: 'post',
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+            body: JSON.stringify(data)
+        })
+    }
+    
+
     const updateStorage = async () => {
         let items = $(`input[type='checkbox']:checked`);
         for (const e of items) {
@@ -122,6 +177,10 @@
             const currentCarData = await rsf.json();
             const data = {
                 "id": car_ID,
+                "check": {
+                    a: currentCarData.quantity,
+                    b: ourQuantity,
+                },
                 "quantity": currentCarData.quantity - ourQuantity
             }
             const rs = await fetch(`/api/car/update_quantity`, {
@@ -176,6 +235,17 @@
     }
 
 
+    const updateTotalPrice = async () => {
+        totalPrice = 0;
+        let items = $(`input[type='checkbox']:checked`);
+        for (const e of items) {
+            let car_ID = parseInt($(e).attr('car_ID'));
+            let ourQuantity = parseInt($(`#quantity_${car_ID}_${userId}`).val());
+            let price = parseFloat($(e).attr('car_price'));
+            totalPrice += ourQuantity * price;
+        }
+        mustToPay.text(`${totalPrice}`)
+    }
 
 
     const cartItemClick = async (car_ID, itemPrice, event) => {
@@ -183,13 +253,10 @@
         let checkbox = $(`#checkBox_${car_ID}_${userId}`);
         if (checkbox.prop('checked')) {
             checkbox.prop('checked', false);
-            totalPrice -= itemPrice
-            mustToPay.text(totalPrice);
         } else {
             checkbox.prop('checked', true);
-            totalPrice += itemPrice
-            mustToPay.text(totalPrice);
         }
+        updateTotalPrice();
         payButton.attr('disabled', totalPrice <= 0 ? true : false);
     }
 
@@ -222,6 +289,7 @@
             errorNotify.removeClass('d-none');
             cartItem.addClass('disabled_item');
         }
+        updateTotalPrice();
     }
 
     const check = async () => {
@@ -322,10 +390,9 @@
                 if (serverResponse.ok) {
                     successTransaction.removeClass('d-none');
                     //to do some thing here
+                    await createInvoice();
                     await updateStorage();
                     await removeCheckedItem();
-
-
                 } else {
                     falseTransaction.removeClass('d-none');
                 }
