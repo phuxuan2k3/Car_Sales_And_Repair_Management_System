@@ -164,36 +164,6 @@ const flagStatistic = 0;
 //     })();
 // }
 
-// // Car Invoice
-// if (flagInvoice) {
-//     (async () => {
-//         // in:
-//         // out: Array of Invoices
-//         var test = await CarInvoice.getAll();
-//         console.log(test);
-//         console.log(test[0]);
-
-//         // in: sm_id (store manager id)
-//         // out: Array of Invoices
-//         var test = await CarInvoice.getByStoreManager(3);
-//         console.log(test);
-
-//         // in: CarInvoice
-//         // out: {importinvoice_id}
-//         var test = await CarInvoice.insert(CarInvoice.castParam(3, 404));
-//         console.log(test);
-
-//         // in: CarInvoice
-//         // out: rowCount
-//         var test = await CarInvoice.update(CarInvoice.castParam(9, 404));
-//         console.log(test);
-
-        // in: importinvoice_id (obj)
-        // out: rowCount
-        var test = await CarInvoice.delete({ importinvoice_id: 404 });
-        console.log(test);
-    })();
-}
 
 if (flagStatistic) {
     (async () => {

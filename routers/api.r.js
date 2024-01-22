@@ -10,13 +10,13 @@ const FixRecord = require('../controllers/invoice/fixrecord.c');
 
 //Handle login here
 //Car
-router.get('/car/all',  ApiController.getAllCar);
-router.get('/car/find',  ApiController.getByCarId);
-router.get('/car/type',  ApiController.getAllType);
-router.get('/car/brand',  ApiController.getAllBrand);
-router.get('/car/car_page',  ApiController.getCarPage);
+router.get('/car/all', ApiController.getAllCar);
+router.get('/car/find', ApiController.getByCarId);
+router.get('/car/type', ApiController.getAllType);
+router.get('/car/brand', ApiController.getAllBrand);
+router.get('/car/car_page', ApiController.getCarPage);
 router.get('/car/most_car', ApiController.getMostCar);
-router.post('/car/update_quantity',ApiController.updateCarQuantity);
+router.post('/car/update_quantity', ApiController.updateCarQuanTityInCart);
 router.get('/car/imgs/:id', ApiController.getCarImgs);
 router.delete('/car', ApiController.deleteCar);
 
@@ -31,7 +31,7 @@ router.delete('/ap', ApiController.deleteAp);
 //Fixed car
 router.get('/car/fixed/all', ApiController.getAllFixedCar);
 router.get('/car/fixed/find', ApiController.getFixedCarByCusIdAndSearch);
-router.post('/car/fixed/add',ApiController.addNewFixedCar);
+router.post('/car/fixed/add', ApiController.addNewFixedCar);
 
 //User
 router.get('/user/:id', ApiController.getUserById);
@@ -88,6 +88,6 @@ router.get('/cart', ApiController.getCartByCusID);
 router.get('/cart/find', ApiController.getCarInCart);
 router.post('/cart/add', ApiController.insertToCart);
 router.post('/cart/delete', ApiController.deleteCartItem);
-router.post('/cart/update_quantity',ApiController.updateCarQuanTityInCart);
+router.post('/cart/update_quantity', ApiController.updateCarQuanTityInCart);
 
 module.exports = router;
