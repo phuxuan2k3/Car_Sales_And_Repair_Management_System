@@ -156,9 +156,9 @@ const generateTable = async () => {
         falseTransaction = $('#falseTransaction');
         cancelButton = $('#cancelButton');
         paymentAlert = $('#paymentAlert');
-        paymentAlert.css('opacity', 1)
+        paymentAlert.css('opacity', 1);
         paymentInfo = $('#paymentInfo');
-        const rs = await fetch(`http://localhost:3001/account?id=${userId}`);
+        const rs = await fetch(`/api/payment/account`);
         const account = await rs.json();
         paymentInfo.empty();
         paymentInfo.append(`
@@ -189,7 +189,7 @@ const generateTable = async () => {
                 amount: parseFloat(amount),
                 content: "Repair service - SGXAUTO"
             }
-            const serverResponse = await fetch('http://localhost:3001/transaction', {
+            const serverResponse = await fetch('/api/payment/transfer', {
                 method: 'post',
                 credentials: "same-origin",
                 headers: {

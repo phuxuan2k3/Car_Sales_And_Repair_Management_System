@@ -10,6 +10,8 @@ const { FixRecord } = require('../models/invoices/fixrecord');
 const path = require('path');
 const appDir = path.dirname((require.main.filename));
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
+
 
 module.exports = {
     //For store
@@ -223,6 +225,56 @@ module.exports = {
         const { customer_ID, car_ID } = req.body;
         await Cart.deleteCartItem(customer_ID, car_ID);
         return res.json(true);
+    }),
+
+
+    //PayMent
+    getAccount: tryCatch(async (req, res) => {
+        let token = jwt.sign({ id: req.user.id }, ENV.SECRET_KEY);
+        const data = {
+            token: token
+        }
+        const rs = await fetch(`http://localhost:${ENV.PAYMENT_PORT}/account`, {
+            method: 'post',
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+            body: JSON.stringify(data)
+        });
+        if (rs.ok) {
+            const rsToken = await rs.json();
+            const verifyData = jwt.verify(rsToken,ENV.VERIFY_KEY);
+            return res.json(verifyData.account)
+        }
+        return res.status('400').send('Account not found or err');
+    }),
+    deposits: tryCatch(async (req, res) => {
+        
+    }),
+    transferMoney: tryCatch(async (req, res) => {
+        const transactionData = req.body;
+        let token = jwt.sign(transactionData, ENV.SECRET_KEY);
+        const data = {
+            token: token
+        }
+        const rs = await fetch(`http://localhost:${ENV.PAYMENT_PORT}/transaction`, {
+            method: 'post',
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+            body: JSON.stringify(data)
+        });
+        if (rs.ok) {
+            const rsToken = await rs.json();
+            const verifyData = jwt.verify(rsToken,ENV.VERIFY_KEY);
+            return res.json(verifyData)
+        }
+        return res.status('400').send('Error');
     })
+
 
 }

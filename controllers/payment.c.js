@@ -1,19 +1,19 @@
 const tryCatch = require('../utils/tryCatch');
 const Transaction = require('../models/paymentTransaction');
 const PaymentAccount = require('../models/paymentAccount');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 module.exports = {
-    getAllTransaction: tryCatch(async (req, res) => {
-        const data = await Transaction.GetAllTransaction();
-        res.json(data)
-    }),
     createNewAccount: tryCatch(async (req, res) => {
         try {
-            const entity = req.body;
+            const {token} = req.body;
+            const entity = jwt.verify(token,process.env.SECRET_KEY);
+            delete entity.iat;
             const check = await PaymentAccount.GetAccountById(entity.id);
             if (check == null) {
                 await PaymentAccount.AddNewAccount(entity);
-                return res.send("Your account has been created");
+                return res.json(jwt.sign('success',process.env.VERIFY_KEY));
             } else {
                 return res.status(400).send("Account already exists");
             }
@@ -23,13 +23,13 @@ module.exports = {
     }),
     createTransaction: tryCatch(async (req, res) => {
         try {
-            const { from, to, amount, content } = req.body;
+            var decoded = jwt.verify(req.body.token, process.env.SECRET_KEY);
+            const { from, to, amount, content } = decoded;
             const fromUser = await PaymentAccount.GetAccountById(from);
             const toUser = await PaymentAccount.GetAccountById(to);
             if (!fromUser || !toUser) {
                 return res.status(400).send('Users must exist for a transaction');
             }
-            console.log(fromUser.balance)
             if (fromUser.balance < amount) {
                 return res.status(400).send('Insufficient balance');
             }
@@ -47,20 +47,22 @@ module.exports = {
             await PaymentAccount.UpdateBalance(fromUser.id, fromUser.balance);
             await PaymentAccount.UpdateBalance(toUser.id, toUser.balance);
             await Transaction.AddNewTransaction(transaction);
-            return res.status(200).send({ from: from, to: to });
+            const rsToken = jwt.sign('success', process.env.VERIFY_KEY);
+            return res.json(rsToken);
         } catch (error) {
             return res.status(500).send("An error occurred while creating the account");
         }
     }),
-
-    getAccountById: tryCatch(async (req,res) => {
+    getAccountById: tryCatch(async (req, res) => {
         try {
-            const id = req.query.id;
+            var decoded = jwt.verify(req.body.token, process.env.SECRET_KEY);
+            const id = decoded.id;
             const account = await PaymentAccount.GetAccountById(id);
             if (account == null) {
                 return res.status(400).send("Account not exists");
             } else {
-                res.json(account);
+                const rsToken = jwt.sign({ account }, process.env.VERIFY_KEY);
+                res.json(rsToken);
             }
         } catch (error) {
             return res.status(500).send("An error occurred while getting the account");

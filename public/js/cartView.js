@@ -230,7 +230,7 @@ payButton.on('click', async (e) => {
     paymentAlert = $('#paymentAlert');
     paymentAlert.css('opacity', 1)
     paymentInfo = $('#paymentInfo');
-    const rs = await fetch(`http://localhost:3001/account?id=${userId}`);
+    const rs = await fetch(`http://localhost:3000/api/payment/account`);
     const account = await rs.json();
     paymentInfo.empty();
     let date = new Date();
@@ -264,7 +264,7 @@ payButton.on('click', async (e) => {
         }
         let checkRs = await check();
         if (checkRs) {
-            const serverResponse = await fetch('http://localhost:3001/transaction', {
+            const serverResponse = await fetch('api/payment/transfer', {
                 method: 'post',
                 credentials: "same-origin",
                 headers: {

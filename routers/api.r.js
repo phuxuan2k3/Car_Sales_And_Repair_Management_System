@@ -90,4 +90,10 @@ router.post('/cart/add', ApiController.insertToCart);
 router.post('/cart/delete', ApiController.deleteCartItem);
 router.post('/cart/update_quantity', ApiController.updateCarQuanTityInCart);
 
+//Payment 
+router.get('/payment/account',ApiController.getAccount)
+router.post('/payment/transfer',ApiController.transferMoney)
+router.post('/payment/deposits',ApiController.deposits)
+
+
 module.exports = router;
