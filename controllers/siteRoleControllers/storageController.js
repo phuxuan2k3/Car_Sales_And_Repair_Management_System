@@ -38,7 +38,7 @@ module.exports = {
     editCar: tryCatch(async (req, res) => {
         const id = req.params.id;
         const car = req.body;
-        await Car.update(id, car);
+        await Car.update(id, car, req.session.passport.user.id);
         res.redirect('/car');
     })
     ,
@@ -57,7 +57,8 @@ module.exports = {
     }),
     insertCar: tryCatch(async (req, res) => {
         const car = req.body;
-        const id = (await Car.insert(car)).id;
+        const test = await Car.insert(car, req.session.passport.user.id);
+        const id = ((test)[0]).add_newcar;
 
         const carDir = path.join(appDir, `public/images/cars/${id}`);
         const createDir = path.join(carDir, 'others');
@@ -93,7 +94,7 @@ module.exports = {
     }),
     insertAp: tryCatch(async (req, res) => {
         const ap = req.body;
-        await AutoPart.insert(ap);
+        await AutoPart.insert(ap, req.session.passport.user.id);
         res.redirect('/ap');
     })
 }
