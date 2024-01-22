@@ -5,6 +5,7 @@ const Car = require('../../models/car');
 const fs = require('fs');
 const path = require('path');
 const appDir = path.dirname((require.main.filename));
+const AutoPart = require('../../models/ap');
 
 module.exports = {
     getDashboard: tryCatch(async (req, res) => {
@@ -15,14 +16,15 @@ module.exports = {
         res.render('RoleView/store/car', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Cars', jsFile: 'storeCar.js', cssFile: 'store.css', cars });
     }),
     getApPage: tryCatch(async (req, res) => {
-        res.render('RoleView/store/ap', { nameOfUser: req.session.passport.user.nameOfUser, title: 'AutoPart', jsFile: 'storeAp.js', cssFile: 'store.css' });
+        const aps = await AutoPart.getAll();
+        res.render('RoleView/store/ap', { nameOfUser: req.session.passport.user.nameOfUser, title: 'AutoPart', jsFile: 'storeAp.js', cssFile: 'store.css', aps });
     }),
     getEditCarPage: tryCatch(async (req, res) => {
         const id = req.params.id;
         const curCar = await Car.getCarById(id);
 
         let curImgs = [];
-       
+
 
         res.render('RoleView/store/editCar', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Edit Car', jsFile: 'editCar.js', cssFile: 'store.css', curCar });
     })

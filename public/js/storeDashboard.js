@@ -36,8 +36,14 @@ async function getData() {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        MostCar = await response.json();
-        noMostCar = MostCar.quantity;
+        try {
+            MostCar = await response.json();
+            if (MostCar) {
+                noMostCar = MostCar.quantity;
+            }
+        } catch (error) {
+
+        }
 
 
         url = '/api/ap/most_ap';
@@ -45,11 +51,17 @@ async function getData() {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        MostAp = await response.json();
-        noMostAp = MostAp.quantity;
+        try {
+            MostAp = await response.json();
+            if (MostAp) {
+                noMostAp = MostAp.quantity;
+            }
+        } catch (error) {
+
+        }
+
     } catch (error) {
         console.error('Error:', error);
-        throw error;
     }
 }
 
@@ -228,7 +240,11 @@ async function displayDashboard() {
                     </div>
                 </div>
 `);
-    displayCarChart();
+    try {
+        displayCarChart();
+    } catch (error) {
+
+    }
     displayApChart();
 }
 

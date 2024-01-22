@@ -39,7 +39,19 @@
 
 <body class="bg-light">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-
+    {{!-- notification --}}
+    <div style="z-index: 100;" class="toast top-0 end-0 position-fixed m-5" id="notification" role="alert"
+        aria-live="assertive" aria-atomic="true" data-bs-autohide="false" !-- data-bs-config='{"delay":10000}' -->
+        <div class=" toast-header">
+            <img src="car.png" style="width: 20px; height 20px" class="rounded me-2">
+            <strong class="me-auto">Sài Gòn Xanh</strong>
+            <small class="text-body-secondary">0 mins ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+        </div>
+    </div>
+    {{!-- notification --}}
     {{{body}}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

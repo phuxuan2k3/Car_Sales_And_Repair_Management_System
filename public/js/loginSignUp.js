@@ -63,13 +63,14 @@ function displayRegisterResult(result) {
     $('.toast-body').text(result.message);
     if (result.success) {
         $('.toast-header').css('background-color', 'green');
-        $('.toast-body').append('<p>&#10;&#13;Automatically move to login after 2 seconds.</p>');
+        $('.toast-body').append('<p>&#10;&#13;Automatically move to login after 5 seconds.</p>');
         setTimeout(() => {
             changeForm();
-        }, 2000);
+        }, 5000);
     } else {
         $('.toast-header').css('background-color', 'red');
     }
+
     let toast = document.querySelector('.toast');
     if (toast) {
         let myToast = new bootstrap.Toast(toast);
