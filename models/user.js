@@ -44,9 +44,7 @@ module.exports = class User {
         const sq = SelectQuery.init(tableName)
             .addIlikeValue('username', username)
             .setPaging(perPage, page);
-        console.log(permission);
-        if (permission != null) {
-            console.log('ss');
+        if (permission != '') {
             sq.addEqual('permission', permission)
         }
         const data = await sq.execute();

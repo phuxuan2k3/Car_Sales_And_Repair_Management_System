@@ -1,3 +1,25 @@
 .carInfoCard:hover {
     background-color: lightgray;
 }
+
+#tableContainer,
+#formContainer {
+    z-index: 1;
+    left: 0;
+    top: 0;
+    transition: transform 0.8s ease-out 0s;
+}
+
+.slideLeft {
+    position: absolute;
+    z-index: 0;
+    transform: translateX(-1000px);
+    -webkit-transform: translateX(-1000px);
+}
+
+.slideRight {
+    position: absolute;
+    z-index: 0;
+    transform: translateX(1000px);
+    -webkit-transform: translateX(1000px);
+}

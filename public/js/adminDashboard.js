@@ -71,7 +71,7 @@ const loadUserContent = async () => {
             `
         );
     }
-    storage.totalPage = users.length % custom.perPage + 1;
+    storage.totalPage = Math.floor(users.length / custom.perPage) + 1;
     await loadPagination();
 }
 
@@ -111,7 +111,7 @@ $(async () => {
     loadUserContent();
 });
 
-// helper
+// inline functions
 function incrPage() {
     storage.page += 1;
 }
@@ -120,4 +120,13 @@ function decrPage() {
 }
 function setPage(value) {
     storage.page = value;
+}
+function toggleContent(content) {
+    if (content === 'form') {
+        $('#tableContainer').addClass('slideLeft');
+        $('#formContainer').removeClass('slideRight');
+    } else if (content === 'table') {
+        $('#tableContainer').removeClass('slideLeft');
+        $('#formContainer').addClass('slideRight');
+    }
 }
