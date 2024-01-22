@@ -61,7 +61,7 @@ module.exports = {
         const id = ((test)[0]).add_newcar;
 
         const carDir = path.join(appDir, `public/images/cars/${id}`);
-        const createDir = path.join(carDir, 'others');
+        const createDir = path.join(carDir, 'other');
         fs.mkdir(createDir, { recursive: true }, (error) => {
             if (error) {
                 throw error;
@@ -78,7 +78,7 @@ module.exports = {
                 if (req.files['other-images']) {
                     req.files['other-images'].forEach(async e => {
                         tempAvatarPath = e.path;
-                        realAvatarPath = path.join(carDir, 'others', e.originalname);
+                        realAvatarPath = path.join(carDir, 'other', e.originalname);
                         fs.rename(tempAvatarPath, realAvatarPath, (error) => {
                             if (error) {
                                 console.error('Error renaming file:', error);

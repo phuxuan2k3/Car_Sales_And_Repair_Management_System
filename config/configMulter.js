@@ -15,14 +15,14 @@ const storage = multer.diskStorage({
             if (file.fieldname == 'avatar') {
                 cb(null, path.join(appDir, `public/images/cars/${req.params.id}`))
             } else {
-                cb(null, path.join(appDir, `public/images/cars/${req.params.id}/others`))
+                cb(null, path.join(appDir, `public/images/cars/${req.params.id}/other`))
             }
         }
         else {
             if (file.fieldname == 'avatar') {
                 cb(null, path.join(appDir, `public/images/cars/tmp`))
             } else {
-                cb(null, path.join(appDir, `public/images/cars/tmp/others`))
+                cb(null, path.join(appDir, `public/images/cars/tmp/other`))
             }
         }
 
