@@ -207,11 +207,8 @@ module.exports = {
         res.json(data);
     }),
     updateCarQuanTityInCart: tryCatch(async (req,res) => {
-        const {customer_ID,car_ID,quantity} = req.body;
-        let check = await Cart.getCarInCart(customer_ID,car_ID);
-        check = check.length <= 0 ? null: check;
-        if(check == null) return res.status(400).send('Update error')
-        await Cart.updateCarQuanTityInCart(customer_ID,car_ID,quantity);
+        const {id,quantity} = req.body;
+        await Car.updateQuanTity(id,quantity);
         return res.json(true);
     }),
     deleteCartItem: tryCatch(async (req,res) => {

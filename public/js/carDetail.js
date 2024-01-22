@@ -1,6 +1,18 @@
 let overlay = $('.overlay');
 let popupWindow = $('#popupWindow')
 
+$('input[type="number"]').on('input', function () {
+    let inputValue = parseInt($(this).val(), 10);
+    if (inputValue == '' || null) $(this).val(1);
+    let min = parseInt($(this).attr('min'), 10);
+    let max = parseInt($(this).attr('max'), 10);
+    if (inputValue < min) {
+        $(this).val(min);
+    } else if (inputValue > max) {
+        $(this).val(max);
+    }
+});
+
 const fetchData = async (url) => {
     const rs = await fetch(url);
     data = await rs.json();
@@ -15,6 +27,8 @@ const refreshEvent = async () =>
 const redirectToCartEvent = async () => {
     window.location.assign('/cart');
 }
+
+
 
 
 const confirmAddEvent = async (carId,cartQuantity) => {
