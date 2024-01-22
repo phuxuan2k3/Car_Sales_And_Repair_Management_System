@@ -29,6 +29,7 @@ module.exports = class Cart {
         const query = `UPDATE "${tableName}"
                         SET  "quantity"=${newQuantity}
                         WHERE "car_ID"=${carId} and "customer_ID"=${cusId};`
+        
         return await dbExecute.customQuery(query);
     }
     static async deleteCartItem(cusId, carId) {
