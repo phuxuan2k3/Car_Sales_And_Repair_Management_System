@@ -52,6 +52,9 @@ module.exports = {
     getInsertCarPage: tryCatch(async (req, res) => {
         res.render('RoleView/store/insertCar', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Insert Car', jsFile: 'insertCar.js', cssFile: 'store.css' });
     }),
+    getInsertApPage: tryCatch(async (req, res) => {
+        res.render('RoleView/store/insertAp', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Insert Auto Part', jsFile: 'insertAp.js', cssFile: 'store.css' });
+    }),
     insertCar: tryCatch(async (req, res) => {
         const car = req.body;
         const id = (await Car.insert(car)).id;
@@ -87,5 +90,10 @@ module.exports = {
             }
         })
         res.redirect('/car');
+    }),
+    insertAp: tryCatch(async (req, res) => {
+        const ap = req.body;
+        await AutoPart.insert(ap);
+        res.redirect('/ap');
     })
 }
