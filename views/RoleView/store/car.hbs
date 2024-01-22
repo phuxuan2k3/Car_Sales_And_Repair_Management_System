@@ -58,14 +58,45 @@
                                 class="btn d-block w-100 d-sm-inline-block btn-light edit"><i
                                     class="fa-solid fa-pen-to-square" style="color: #0b488e;"></i></a>
                         </div>
-                        <div class="job-right my-4 flex-shrink-0 ">
+
+                        <div class="job-right my-4 flex-shrink-0 " data-bs-target="#deleteModal" data-bs-toggle="modal">
                             <a href="#!" class="btn d-block w-100 d-sm-inline-block btn-light delete"
-                                data-id={{this.id}}><i class="fa-solid fa-trash" style="color: #7e1811;"
-                                    data-id={{this.id}}></i></a>
+                                data-bs-target="#deleteModal" data-bs-toggle="modal" data-id={{this.id}}><i
+                                    class="fa-solid fa-trash" style="color: #7e1811;" data-id={{this.id}}></i></a>
                         </div>
+
                     </div>
                 </div>
                 {{/each}}
+
+                {{!-- Delete Modal --}}
+                <div class="modal fade modalfade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title textDanger" id="exampleModalLabel">Delete</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" id="deleteModalContent">
+                                Do you really want to delete this item?
+                            </div>
+                            <div class="modal-footer">
+                                <div class="row w-100">
+                                    <div class="col-6">
+                                        <button type="button" class="btn outlineDanger rounded-4 w-100"
+                                            data-bs-dismiss="modal">Decline</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" data-bs-dismiss="modal"
+                                            class="btn inlineDanger rounded-4 w-100" id="sureDelete">Accept</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

@@ -276,3 +276,20 @@ ul {
 .mb-30 {
     margin-bottom: 30px;
 }
+
+/* Modal */
+.modalfade {
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from {
+        transform: translateY(-10%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
