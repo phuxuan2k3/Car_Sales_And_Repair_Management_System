@@ -48,8 +48,6 @@ const createInvoice = async () => {
         body: JSON.stringify(data)
     })
 }
-
-
 const updateStorage = async () => {
     let items = $(`input[type='checkbox']:checked`);
     for (const e of items) {
@@ -58,6 +56,7 @@ const updateStorage = async () => {
         const rsf = await fetch(`/api/car/find?id=${car_ID}`)
         const currentCarData = await rsf.json();
         const data = {
+            "customer_ID": userId,
             "id": car_ID,
             "quantity": currentCarData.quantity - ourQuantity
         }
