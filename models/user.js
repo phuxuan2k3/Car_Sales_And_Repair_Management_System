@@ -1,3 +1,4 @@
+const createPaymentAccount = require('../utils/createPaymentAccount');
 const dbExecute = require('../utils/dbExecute');
 const tableName = 'user_info';
 
@@ -23,7 +24,13 @@ module.exports = class User {
         if (!entity.permission) {
             entity.permission = 'cus';
         }
-        return await dbExecute.insert(entity, tableName);
+        try {
+            const res = await dbExecute.insert(entity, tableName);
+            await createPaymentAccount(res.id);
+            return res;
+        } catch (error) {
+            throw error;
+        }
     }
     static async update(id, entity) {
         return await dbExecute.update(id, entity, tableName);
