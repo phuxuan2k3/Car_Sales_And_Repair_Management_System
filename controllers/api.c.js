@@ -5,6 +5,9 @@ const Car = require('../models/car');
 const AutoPart = require('../models/ap');
 const FixedCar = require('../models/fixedCar');
 const User = require('../models/user');
+const path = require('path');
+const appDir = path.dirname((require.main.filename));
+const fs = require('fs');
 
 module.exports = {
     //For store
@@ -54,9 +57,9 @@ module.exports = {
         const id = req.body.id;
         try {
             await Car.delete(id);
-            req.json({ rs: true });
+            res.json({ success: true, message: 'Delete successfully!' });
         } catch (error) {
-            req.json({ rs: false });
+            res.json({ success: false, message: error });
         };
     }),
     updateCar: tryCatch(async (req, res) => {
@@ -73,7 +76,24 @@ module.exports = {
         const data = await Car.getMostCar();
         res.json(data);
     }),
+    getCarImgs: tryCatch(async (req, res) => {
+        const id = req.params.id;
+        //todo: make it in utils
+        let curImgs = [];
+        const directoryPath = path.join(appDir, `public/images/cars/${id}`, 'others');
+        fs.readdir(directoryPath, (err, files) => {
+            if (err) {
+                console.error('Error reading directory:', err);
+                return;
+            }
 
+            console.log('Files in the directory:');
+            files.forEach(file => {
+                curImgs.push(file);
+            });
+            res.json(curImgs);
+        });
+    }),
 
     //Auto part API
     getAllAp: tryCatch(async (req, res) => {
@@ -128,7 +148,15 @@ module.exports = {
         const data = await AutoPart.getMostAp();
         res.json(data);
     }),
-
+    deleteAp: tryCatch(async (req, res) => {
+        const id = req.body.id;
+        try {
+            await AutoPart.delete(id);
+            res.json({ success: true, message: 'Delete successfully!' });
+        } catch (error) {
+            res.json({ success: false, message: error });
+        };
+    }),
     //Fixed car API
     getAllFixedCar: tryCatch(async (req, res) => {
         const data = await FixedCar.getAll();
@@ -139,6 +167,7 @@ module.exports = {
         const data = await FixedCar.getFixedCarByCusId(id);
         res.json(data);
     }),
+
 
 
     //User

@@ -20,11 +20,28 @@ module.exports = class Car {
         const data = await dbExecute.getCustom(limit, offset, tableName);
         return data.map(c => { return new Car(c) });
     }
-    static async insert(entity) {
-        return await dbExecute.insert(entity, tableName);
+    static async insert(entity, smid) {
+        const query = `SELECT * FROM "add_newcar"('${entity.car_name}', 
+        '${entity.brand}',
+        '${entity.type}',
+        ${entity.year},
+        ${entity.price},
+        '${entity.description}',
+        ${entity.quantity},
+        ${smid});`;
+        return await dbExecute.customQuery(query);
     }
-    static async update(id, entity) {
-        return await dbExecute.update(id, entity, tableName);
+    static async update(id, entity, smid) {
+        const query = `SELECT * FROM "update_car"('${entity.car_name}', 
+        '${entity.brand}',
+        '${entity.type}',
+        ${entity.year},
+        ${entity.price},
+        '${entity.description}',
+        ${id},
+        ${entity.add},
+        ${smid});`;
+        return await dbExecute.customQuery(query);
     }
     static async delete(id) {
         return await dbExecute.delete(id, tableName);

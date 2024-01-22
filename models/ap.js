@@ -23,9 +23,12 @@ module.exports = class AutoPart {
         const data = await dbExecute.getCustom(limit, offset, tableName);
         return data.map(c => { return new AutoPart(c) });
     }
-    static async insert(entity) {
-        let query = queryHelper.insert(entity, null, tableName);
-        query += ` RETURNING ap_id;`;
+    static async insert(entity, smid) {
+        const query = `SELECT * FROM "add_newitem"('${entity.name}', 
+        '${entity.supplier}',
+        ${entity.price},
+        ${entity.quantity},
+        ${smid});`;
         return await dbExecute.customQuery(query);
     }
     static async update(id, entity) {
