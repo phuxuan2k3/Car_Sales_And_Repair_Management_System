@@ -7,6 +7,8 @@ const Cart = require('../../models/cart');
 const AutoPart = require('../../models/ap');
 const {SaleRecord ,SaleDetail} = require('../../models/invoices/salerecord')
 const  {FixDetail} = require('../../models/invoices/fixrecord')
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
     getDashboard: tryCatch(async (req, res) => {
@@ -15,10 +17,12 @@ module.exports = {
     getCarDetail: tryCatch(async (req, res) => {
         const id = req.query.id;
         const carData = await Car.getCarById(id);
+        let dir = path.dirname(path.dirname(__dirname));
         let cartData = await Cart.getCarInCart(req.user.id,id);
+        const images = await fs.readdirSync(path.join(dir,`public/images/cars/${id}/other`));
         cartData = cartData.length <= 0 ? null : cartData[0];
         let cartQuantity = cartData ==  null ? null : cartData.quantity;
-        res.render('RoleView/guest/carDetail', {cartQuantity: cartQuantity,userId: req.user.id,cartData: cartData, nameOfUser: req.session.passport.user.nameOfUser, data: carData,title: carData.car_name, store: true, jsFile: 'carDetail.js', cssFile: 'carDetail.css' })
+        res.render('RoleView/guest/carDetail', {images:images,cartQuantity: cartQuantity,userId: req.user.id,cartData: cartData, nameOfUser: req.session.passport.user.nameOfUser, data: carData,title: carData.car_name, store: true, jsFile: 'carDetail.js', cssFile: 'carDetail.css' })
     }),
     getRepairService: tryCatch(async (req,res) => {
         res.render('RoleView/guest/repairService', {adminId: 440,userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Repair service",cssFile: "repairService.css", repair: true, jsFile: "repairService.js"});
@@ -52,7 +56,6 @@ module.exports = {
             e.car = car;
         }
         res.render('RoleView/guest/saleRecordDetail', {order: order,saleData: saleData,adminId: 440,userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Detail sale order"});
-    
     })
     
 }

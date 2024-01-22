@@ -196,7 +196,7 @@ const setAddToCartEvent = async (userId, car) => {
 
     $('input[type="number"]').on('input', function () {
         let inputValue = parseInt($(this).val(), 10);
-        if(inputValue == '' || null) $(this).val(1);
+        if (inputValue == '' || null) $(this).val(1);
         let min = parseInt($(this).attr('min'), 10);
         let max = parseInt($(this).attr('max'), 10);
         if (inputValue < min) {
@@ -215,13 +215,13 @@ const generateCarInfo = async () => {
     for (const car of carData) {
         CarList.append(`
             <div class="carInfo m-3">
-                <div class="card ms-auto me-auto mb-3 carInfoCard" style="width: 18rem; height: 25rem">
+                <div class="card ms-auto me-auto mb-3 h-100 carInfoCard d-flex flex-column " style="width: 18rem;">
                     <div class="info" index="${car.id}">
                         <div class="card-body">
                             <p class="card-text fw-bold fs-5 textPrimary mb-0">${car.car_name}</p>
                             <p class="fw-bold fs-8  text-opacity-25 textPrimary opacity4">${car.type}</p>
                         </div>
-                            <img src="/images/car.png" class="w-100" alt="...">  
+                        <img src="/images/cars/${car.id}/avatar.png" class="w-100"  style="height: 15rem;"  alt="${car.car_name}.png">  
                         <div class="card-body d-flex flex-row justify-content-between opacity4 textPrimary">
                             <div class="d-flex flex-row align-items-center ">
                                 <i class="fa-solid fa-calendar-days"></i>
@@ -229,10 +229,10 @@ const generateCarInfo = async () => {
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="card-body d-flex flex-row justify-content-between  textPrimary">
+
+                    <div class="card-body mt-auto d-flex flex-row justify-content-between align-items-center textPrimary">
                         <div class="fs-4">${car.price}$</div>
-                        <button  onclick="setAddToCartEvent(${userId},{id: ${car.id},year: ${car.year},type: '${car.type}', quantity: ${car.quantity}, year: ${car.year}, price: ${car.price}, name: '${car.car_name}' })" type="button" ${car.quantity < 1 ? "disabled" : " "} id="buyButton_${car.id}" class="btn buyButton border-0 btn-primary bgPrimary">
+                        <button style="height: 3rem" onclick="setAddToCartEvent(${userId},{id: ${car.id},year: ${car.year},type: '${car.type}', quantity: ${car.quantity}, year: ${car.year}, price: ${car.price}, name: '${car.car_name}' })" type="button" ${car.quantity < 1 ? "disabled" : " "} id="buyButton_${car.id}" class="btn buyButton border-0 btn-primary bgPrimary">
                             ADD TO CART
                         </button>
                     </div>

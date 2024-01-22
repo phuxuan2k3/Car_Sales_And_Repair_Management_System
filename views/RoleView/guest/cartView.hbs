@@ -1,4 +1,3 @@
-
 <div id="popupWindow" class="z-3 w-50  d-none"></div>
 <div class="overlay d-none z-2" id="overplay"></div>
 
@@ -36,8 +35,10 @@
                         </div>
                     </div>
                     <div class="col-2 text-center">
-                        <input onblur="blurEvent({{this.car_ID}})" oninput="quantityInput({{this.car_ID}},{{this.car.quantity}},{{this.car.price}},event)"
-                            preQuantity="{{this.quantity}}" onclick="quantityInput({{this.car_ID}},{{this.car.quantity}},{{this.car.price}},event)"
+                        <input onblur="blurEvent({{this.car_ID}})"
+                            oninput="quantityInput({{this.car_ID}},{{this.car.quantity}},{{this.car.price}},event)"
+                            preQuantity="{{this.quantity}}"
+                            onclick="quantityInput({{this.car_ID}},{{this.car.quantity}},{{this.car.price}},event)"
                             id="quantity_{{this.car_ID}}_{{this.customer_ID}}" value="{{this.quantity}}" type="number"
                             min="1" max="{{this.car.quantity}}"
                             class="cant_disable {{#isLessThan this.car.quantity 0}}d-none{{/isLessThan}}   text-center w-100 quantityInput form-control rounded-pill">
@@ -69,26 +70,28 @@
     <div class="card align-items-center justify-content-center p-3 border-0">
         <h4 class="card-title textPrimary fs-2 fw-bold">HISTORY</h4>
         <div class="card-body w-100">
-            <table class="table table-hover">
-                <thead class="table-info" id="tbHeader">
-                    <tr class="text-center">
-                        <th scope="col">#</th>
-                        <th scope="col">Order ID</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Total price</th>
-                    </tr>
-                </thead>
-                <tbody id="tbBody">
-                    {{#each saleData }}
-                    <tr class="text-center" onclick="getSaleRecordData({{this.salerecord_id}})">
-                        <td scope="col">{{add @index 1}}</td>
-                        <td scope="col">{{this.salerecord_id}}</td>
-                        <td scope="col">{{this.date}}</td>
-                        <td scope="col">{{this.total_price}}$</td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
+            <div class="table-responsive" style="height: 30rem;">
+                <table class="table table-hover">
+                    <thead class="table-info" id="tbHeader">
+                        <tr class="text-center">
+                            <th scope="col">#</th>
+                            <th scope="col">Order ID</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Total price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbBody">
+                        {{#each saleData }}
+                        <tr class="text-center" onclick="getSaleRecordData({{this.salerecord_id}})">
+                            <td scope="col">{{add @index 1}}</td>
+                            <td scope="col">{{this.salerecord_id}}</td>
+                            <td scope="col">{{this.date}}</td>
+                            <td scope="col">{{this.total_price}}$</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
