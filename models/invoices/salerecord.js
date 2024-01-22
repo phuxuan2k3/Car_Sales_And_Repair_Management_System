@@ -123,7 +123,7 @@ class SaleRecord {
 
 const saleDetailFlag = 0;
 const saleRecordFlag = 0;
-const micsFlag = 1;
+const micsFlag = 0;
 
 if (saleDetailFlag) {
     (async () => {
