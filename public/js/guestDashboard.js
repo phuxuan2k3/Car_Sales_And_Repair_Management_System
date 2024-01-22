@@ -17,7 +17,7 @@ let overlay = $('.overlay');
 
 maxPriceRange.on('input', async (e) => {
     page = 1;
-    await updateCarData();
+    await updateCarData(page);
     CurrentMP.text(`${maxPriceRange.val()}$`);
     updatePageInfo();
 })
@@ -25,34 +25,34 @@ maxPriceRange.on('input', async (e) => {
 SearchBar.on('input', async (e) => {
     // console.log(SearchBar.val() != '');
     page = 1;
-    await updateCarData();
+    await updateCarData(page);
     CurrentMP.text(`${maxPriceRange.val()}$`);
     updatePageInfo();
 })
 
 TypeCheckList.on('input', async (e) => {
     page = 1;
-    await updateCarData();
+    await updateCarData(page);
     updatePageInfo();
 })
 
 BrandCheckList.on('input', async (e) => {
     page = 1;
-    await updateCarData();
+    await updateCarData(page);
     updatePageInfo();
 })
 
 const prePage = async () => {
     if (page <= 1) return;
     page -= 1;
-    await updateCarData();
+    await updateCarData(page);
     updatePageInfo();
 }
 
 const nextPage = async () => {
     if (page >= totalPage) return;
     page += 1;
-    await updateCarData();
+    await updateCarData(page);
     updatePageInfo();
 }
 
@@ -62,7 +62,7 @@ const fetchData = async (url) => {
     return data;
 }
 
-const updateCarData = async () => {
+const updateCarData = async (page) => {
     let checkedType = $('.typeOption:checked');
     let checkedBrand = $('.brandOption:checked');
     let queryElement = [];
@@ -95,13 +95,10 @@ const confirmAddEvent = async (carId, cartQuantity) => {
     let popupContent = $('#popupContent');
     let quantityInput = $('#quantityInput');
     let redirectToCartButton = $('#redirectToCartButton');
-    let refreshButton = $('#refreshButton');
     let backButton = $('#backButton');
     let confirmAdd = $('#confirmAdd');
     redirectToCartButton.toggleClass('d-none');
     confirmAdd.toggleClass('d-none');
-    refreshButton.toggleClass('d-none');
-    backButton.toggleClass('d-none');
     popupContent.empty();
     const currentCar = await fetchData(`/api/car/find?id=${carId}`);
     const quantity = parseInt(quantityInput.val());
@@ -146,9 +143,6 @@ const confirmAddEvent = async (carId, cartQuantity) => {
     }
 }
 
-const refreshEvent = async () => {
-    window.location.assign('/dashboard')
-}
 
 const redirectToCartEvent = async () => {
     window.location.assign('/cart')
@@ -190,7 +184,6 @@ const setAddToCartEvent = async (userId, car) => {
             <button id="confirmAdd"  onClick="confirmAddEvent(${car.id},${cartData != null ? cartData[0].quantity : null})" ${maxQuantity <= 0 ? 'disabled' : ''} class="btn text-light btn-success w-100 mb-3" role="button">ADD</button>
             <button id="redirectToCartButton" onClick="redirectToCartEvent()" class="btn btn-warning w-100 mb-3 d-none"  role="button">Go to cart</button>
             <button id="backButton" onClick="backEvent()" class="btn btn-danger w-100 mb-3"  role="button">Back</button>
-            <button id="refreshButton" onClick="refreshEvent()" class="btn btn-danger w-100 mb-3 d-none"  role="button">Back to dashboard</button>
             </div>
     `)
 
