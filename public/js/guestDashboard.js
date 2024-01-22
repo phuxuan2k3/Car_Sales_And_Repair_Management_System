@@ -91,7 +91,6 @@ const backEvent = async () => {
 }
 
 const confirmAddEvent = async (carId, cartQuantity) => {
-
     let popupContent = $('#popupContent');
     let quantityInput = $('#quantityInput');
     let redirectToCartButton = $('#redirectToCartButton');

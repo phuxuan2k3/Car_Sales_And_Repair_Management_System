@@ -1,0 +1,70 @@
+<div class="container-fluid">
+    {{> Nav/guestNav}}
+    <div class="row">
+        <div class="card border-0">
+            <div class="card-body">
+                <h3 class="card-title textPrimary fw-bold">Deposit (demo)</h3>
+                <h4 class="card-title textPrimary fw-bold">Balance: <span id="cusBalance"></span>$</h4>
+                <div> 
+                    <button val="1000" type="button"  onclick="priceButtonClick(event,1000)" class="  m-2  btn btn-primary">
+                        1000$
+                    </button>
+                    <button  val="5000" type="button" onclick="priceButtonClick(event,5000)" class="  m-2 btn btn-primary">
+                        5000$
+                    </button>
+                    <button  val="10000" type="button" onclick="priceButtonClick(event,10000)" class="  m-2 btn btn-primary">
+                        10000$
+                    </button>
+                    <button  val="15000" type="button" onclick="priceButtonClick(event,15000)" class="  m-2 btn btn-primary">
+                        15000$
+                    </button>
+                    <button  val="50000" type="button" onclick="priceButtonClick(event,50000)" class="  m-2 btn btn-primary">
+                        50000$
+                    </button>
+                    <button  val="100000" type="button" onclick="priceButtonClick(event,100000)" class="  m-2 btn btn-primary">
+                        100000$
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{> footer}}
+</div>
+{{#if userId}}
+<script>
+    let userId = {{ userId }}
+</script>
+{{/if}}
+
+<script>
+    let cusBalance = $('#cusBalance')
+
+    const init = async () => {
+        const rs = await fetch('/api/payment/account');
+        const account = await rs.json();
+        cusBalance.text(account.balance)
+    }
+
+
+    const priceButtonClick = async (e,price) => {
+        const data = {
+            id: userId,
+            money: price
+        }
+        const rs = await fetch('/api/payment/deposits',{
+            method: 'post',
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+            body: JSON.stringify(data)
+        })
+        let mss = rs.ok? 'success' : 'failed';
+        alert(mss);
+        await init();
+    }
+
+    init();
+</script>

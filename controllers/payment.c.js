@@ -5,6 +5,21 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 module.exports = {
+
+    deposit: tryCatch(async (req,res) => {
+        try {
+            var decoded = jwt.verify(req.body.token, process.env.SECRET_KEY);
+            const { id, money } = decoded;
+            const account = await PaymentAccount.GetAccountById(id);
+            account.balance += money;
+            await PaymentAccount.UpdateBalance(account.id, account.balance);
+            const rsToken = jwt.sign('success', process.env.VERIFY_KEY);
+            return res.json(rsToken);
+        } catch (error) {
+            return res.status(500).send("An error occurred while creating the account");
+        };
+    }),
+
     createNewAccount: tryCatch(async (req, res) => {
         try {
             const {token} = req.body;
@@ -50,7 +65,7 @@ module.exports = {
             const rsToken = jwt.sign('success', process.env.VERIFY_KEY);
             return res.json(rsToken);
         } catch (error) {
-            return res.status(500).send("An error occurred while creating the account");
+            return res.status(500).send("An error occurred while creating an transaction");
         }
     }),
     getAccountById: tryCatch(async (req, res) => {

@@ -56,6 +56,9 @@ module.exports = {
             e.car = car;
         }
         res.render('RoleView/guest/saleRecordDetail', {order: order,saleData: saleData,adminId: 440,userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Detail sale order"});
+    }),
+    getDepositPage: tryCatch(async (req,res) => {
+        res.render('RoleView/guest/deposit', {adminId: 440,userId: req.user.id,nameOfUser: req.session.passport.user.nameOfUser,title: "Deposit"});
     })
     
 }

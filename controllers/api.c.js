@@ -251,6 +251,25 @@ module.exports = {
         return res.status('400').send('Account not found or err');
     }),
     deposits: tryCatch(async (req, res) => {
+        let token = jwt.sign(req.body, ENV.SECRET_KEY);
+        const data = {
+            token: token,
+        }
+        const rs = await fetch(`http://localhost:${ENV.PAYMENT_PORT}/deposit`, {
+            method: 'post',
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+            body: JSON.stringify(data)
+        });
+        if (rs.ok) {
+            const rsToken = await rs.json();
+            const verifyData = jwt.verify(rsToken,ENV.VERIFY_KEY);
+            return res.json(verifyData)
+        }
+        return res.status('400').send('Error');
         
     }),
     transferMoney: tryCatch(async (req, res) => {
