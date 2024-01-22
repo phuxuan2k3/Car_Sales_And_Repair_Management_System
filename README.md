@@ -11,6 +11,7 @@
 vào file main.hbs .
 Sau đó sử dụng thoải mái ở file js.
 Nhớ lúc render thì thêm tenbiencantruyen:giatri vào object truyền.
+<br>
 2) Thông báo cho dev nào cần:
    <code>
    function displayDeleteResult(result) {
