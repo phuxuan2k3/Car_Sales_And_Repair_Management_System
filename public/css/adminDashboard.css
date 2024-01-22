@@ -2,6 +2,10 @@
     background-color: lightgray;
 }
 
+#v-pills-tabContent h1 {
+    color: var(--primaryColor);
+}
+
 #tableContainer,
 #formContainer {
     z-index: 1;
@@ -13,13 +17,30 @@
 .slideLeft {
     position: absolute;
     z-index: 0;
-    transform: translateX(-1000px);
-    -webkit-transform: translateX(-1000px);
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
 }
 
 .slideRight {
     position: absolute;
     z-index: 0;
-    transform: translateX(1000px);
-    -webkit-transform: translateX(1000px);
+    transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+}
+
+/* Modal */
+.modalfade {
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from {
+        transform: translateY(-10%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }

@@ -45,7 +45,7 @@
                             data-bs-target="#v-pills-storage" type="button"
                             role="tab" aria-controls="v-pills-storage"
                             aria-selected="false"
-                            data-permission="sto"><i
+                            data-permission="sm"><i
                                 class="fa-regular fa-file-lines me-2"></i>Storage
                             Manager</button>
                         <button class="w-100 text-start nav-link mb-1"
@@ -53,7 +53,7 @@
                             data-bs-target="#v-pills-sale" type="button"
                             role="tab" aria-controls="v-pills-sale"
                             aria-selected="false"
-                            data-permission="sal"><i
+                            data-permission="sa"><i
                                 class="fa-regular fa-file-lines me-2"></i>Sale
                             Manager</button>
                     </div>
@@ -116,14 +116,14 @@
                             </div>
                             <div class="col-2 d-flex align-items-center">
                                 <button onclick="toggleContent('form')"
-                                    class="btn btn-success ms-auto"><i
+                                    class="btn inlinePrimary ms-auto"><i
                                         class="fa-solid fa-plus"></i> Add
                                     New</button>
                             </div>
                         </div>
 
                         {{!-- Table --}}
-                        <table
+                        <table id="contentTable"
                             class="table table-hover mb-2">
                             <thead class="table-primary"
                                 style="border-bottom: 2px solid black">
@@ -180,8 +180,9 @@
 
                     {{!-- Detail content --}}
                     <div class="slideRight" id="formContainer">
-                        <form action="#"
-                            class="m-5 form mt-1"
+                        <h3 class="mt-2" id="formHeader"></h3>
+                        <form method="post"
+                            class="m-4 form mt-3"
                             id="detailForm">
                             <div class="row col-12 mb-3">
                                 <div class="row col-8 pe-3">
@@ -198,9 +199,9 @@
                                     <div class="mb-2">
                                         <label for="Password"
                                             class="form-label">Password</label>
-                                        <input required
+                                        <input
                                             name="password"
-                                            type="password"
+                                            type="text"
                                             id="Password"
                                             class="form-control w-100"
                                             placeholder="Password" />
@@ -236,7 +237,7 @@
                                         <input class="form-check-input"
                                             type="radio"
                                             name="permission"
-                                            value="sto"
+                                            value="sm"
                                             id="permissionStoRad">
                                         <label class="form-check-label"
                                             for="permissionStoRad">
@@ -247,7 +248,7 @@
                                         <input class="form-check-input"
                                             type="radio"
                                             name="permission"
-                                            value="sal"
+                                            value="sa"
                                             id="permissionSalRad">
                                         <label class="form-check-label"
                                             for="permissionSalRad">
@@ -258,73 +259,63 @@
                             </div>
                             <div class="row col-12 mb-2 gy-2">
                                 <div class="col-6">
-                                    <label for="firstname"
+                                    <label for="Firstname"
                                         class="form-label">First Name</label>
-                                    <input required
+                                    <input
                                         name="firstname"
                                         type="text"
                                         class="form-control w-100"
-                                        id="firstname"
-                                        placeholder="Enter your first name">
+                                        id="Firstname"
+                                        placeholder="First name">
                                 </div>
                                 <div class="col-6">
-                                    <label for="lastname"
+                                    <label for="Lastname"
                                         class="form-label">Last Name</label>
-                                    <input required
+                                    <input
                                         name="lastname"
                                         type="text"
                                         class="form-control w-100"
-                                        id="lastname"
-                                        placeholder="Enter your last name">
+                                        id="Lastname"
+                                        placeholder="Last name">
                                 </div>
                                 <div class="col-6">
-                                    <label for="phonenumber"
+                                    <label for="Phonenumber"
                                         class="form-label">Phone Number</label>
-                                    <input name="lastname"
+                                    <input name="phonenumber"
                                         type="text"
                                         class="form-control w-100"
-                                        id="phonenumber"
-                                        placeholder="Enter your phone number">
+                                        id="Phonenumber"
+                                        placeholder="Phone number">
                                 </div>
                                 <div class="col-6">
-                                    <label for="dob"
+                                    <label for="Dob"
                                         class="form-label">Date of Birth</label>
-                                    <input required
+                                    <input
                                         name="dob"
                                         type="date"
                                         class="form-control w-100"
-                                        id="dob"
-                                        placeholder="Enter your date of birth">
+                                        id="Dob"
+                                        placeholder="Date of birth">
                                 </div>
                                 <div class="col-12 mb-2">
-                                    <label for="address"
+                                    <label for="Address"
                                         class="form-label">Address</label>
                                     <input name="address"
                                         type="text"
                                         class="form-control w-100"
-                                        id="address"
-                                        placeholder="Enter your address">
+                                        id="Address"
+                                        placeholder="Address">
                                 </div>
-                            </div>
-                            <div class="mb-5">
-                                <input class="form-check-input me-2"
-                                    type="checkbox"
-                                    value
-                                    id="policy" />
-                                <label class="form-check-label"
-                                    for="policy">
-                                    Agree to our Terms of use and Privacy
-                                    Policy.
-                                </label>
                             </div>
                             <div class="row col-12 mb-2">
                                 <div class="col-6">
-                                    <button type="submit"
+                                    <button type="button"
                                         onclick="toggleContent('table')"
                                         class="btn btn-outline-primary rounded-5 w-100">Cancel</button>
                                 </div>
                                 <div class="col-6">
-                                    <button type="submit"
+                                    <button type="button"
+                                        onclick="formSubmit()"
                                         class="btn btn-primary rounded-5 w-100">Confirm</button>
                                 </div>
                             </div>
@@ -332,6 +323,53 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Delete Modal --}}
+<div class="modal fade modalfade" id="deleteModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title textDanger"
+                    id="exampleModalLabel">Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="deleteModalContent">
+            </div>
+            <div class="modal-footer">
+                <div class="row w-100">
+                    <div class="col-6">
+                        <button type="button"
+                            class="btn outlineDanger rounded-4 w-100"
+                            data-bs-dismiss="modal">Decline</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" onclick="modalDeleteAccept()"
+                            data-bs-dismiss="modal"
+                            class="btn inlineDanger rounded-4 w-100">Accept</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Toast --}}
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive"
+        data-bs-autohide="true" data-bs-delay="2000"
+        aria-atomic="true">
+        <div class="toast-header">
+            <p class="fs-6 my-auto"></p>
+            <button type="button" class="ms-auto me-2 btn-close"
+                data-bs-dismiss="toast"
+                aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
         </div>
     </div>
 </div>

@@ -1,6 +1,9 @@
 :root {
     --primaryColor: #0B488E;
     --secondaryColor: #fff;
+
+    --warningColor: #c7a21e;
+    --dangerColor: #c71e32;
 }
 
 .textPrimary {
@@ -23,3 +26,38 @@ pre {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.inlinePrimary {
+    color: var(--secondaryColor) !important;
+    background-color: var(--primaryColor) !important;
+}
+
+.textWarning {
+    color: var(--warningColor) !important;
+}
+
+.bgWarning {
+    background-color: var(--warningColor) !important;
+}
+
+.inlineWarning {
+    color: var(--secondaryColor) !important;
+    background-color: var(--warningColor) !important;
+}
+
+.textDanger {
+    color: var(--dangerColor) !important;
+}
+
+.bgDanger {
+    background-color: var(--dangerColor) !important;
+}
+
+.outlineDanger {
+    color: var(--dangerColor) !important;
+    border-color: var(--dangerColor) !important;
+}
+
+.inlineDanger {
+    color: var(--secondaryColor) !important;
+    background-color: var(--dangerColor) !important;
+}

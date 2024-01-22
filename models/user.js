@@ -1,5 +1,5 @@
 const dbExecute = require('../utils/dbExecute');
-const { SelectQuery } = require('../utils/queryBuilder');
+const { SelectQuery, InsertQuery, ExactUpdateQuery, DeleteQuery } = require('../utils/queryBuilder');
 const tableName = 'user_info';
 
 module.exports = class User {
@@ -49,5 +49,39 @@ module.exports = class User {
         }
         const data = await sq.execute();
         return data;
+    }
+    static async getCountByUsernameSearchByPermission(username, permission) {
+        const sq = SelectQuery.init(tableName)
+            .setSelectCount()
+            .addIlikeValue('username', username);
+        if (permission != '') {
+            sq.addEqual('permission', permission)
+        }
+        const data = await sq.execute('one');
+        return data.count;
+    }
+    // return {id}
+    static async insert2(entity) {
+        const res = await InsertQuery.init(tableName).default(entity, ['id']).execute();
+        return res;
+    }
+    // return rows affected
+    static async update2(entity) {
+        const res = await ExactUpdateQuery.init(tableName).default(entity, ['id']).execute();
+        return res;
+    }
+    // return rows affected
+    static async delete2({ id }) {
+        const res = await DeleteQuery.init(tableName).default({ id }).execute();
+        return res;
+    }
+    // 
+    static async checkUsernameExists(username) {
+        const res = await SelectQuery.init(tableName).setSelectCount().addEqual('username', username).execute('one');
+        const count = parseInt(res.count) || 0;
+        if (count === 0) {
+            return false;
+        }
+        return true;
     }
 }
