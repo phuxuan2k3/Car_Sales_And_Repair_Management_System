@@ -20,7 +20,7 @@ maxPriceRange.on('input', async (e) => {
     updatePageInfo();
 })
 
-SearchBar.on('input',async (e) => {
+SearchBar.on('input', async (e) => {
     // console.log(SearchBar.val() != '');
     page = 1;
     await updateCarData();
@@ -56,8 +56,8 @@ const nextPage = async () => {
 
 const fetchData = async (url) => {
     const rs = await fetch(url);
-    data = await rs.json();
-    return data;
+    storage = await rs.json();
+    return storage;
 }
 
 const updateCarData = async () => {
@@ -74,7 +74,7 @@ const updateCarData = async () => {
     });
     if (brandArr.length > 0) queryElement.push(brandArr.join('&'));
     if (typeArr.length > 0) queryElement.push(typeArr.join('&'));
-    if(SearchBar.val() != '') queryElement.push(`search=${SearchBar.val()}`);
+    if (SearchBar.val() != '') queryElement.push(`search=${SearchBar.val()}`);
     let query = queryElement.join('&');
     let url = `/api/car/car_page?${query}&page=${page}&per_page=${per_page}&max_price=${maxPriceRange.val()}`
     console.log(url);

@@ -15,39 +15,45 @@
                 role="tablist"
                 aria-orientation="vertical">
                 <div class="card w-100 h-100 border border-0">
-                    <div class="card-body">
-                        <button class="w-100 text-start nav-link active mb-1"
-                            id="v-pills-dashboard-tab"
+                    <div class="card-body" id="permissionsContainer">
+                        <button
+                            class="w-100 text-start nav-link active mb-1"
+                            id="v-pills-all-tab"
                             data-bs-toggle="pill"
-                            data-bs-target="#v-pills-dashboard" type="button"
+                            data-bs-target="#v-pills-all" type="button"
                             role="tab"
-                            aria-controls="v-pills-dashboard"
+                            aria-controls="v-pills-all"
                             aria-selected="true"><i
-                                class="fa-solid fa-house me-2"></i>Dashboard</button>
+                                class="fa-solid fa-house me-2"></i>All</button>
+
                         <button class="w-100 text-start nav-link mb-1"
                             id="v-pills-customer-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-customer" type="button"
                             role="tab" aria-controls="v-pills-customer"
-                            aria-selected="false"><i
+                            aria-selected="false"
+                            data-permission="cus"><i
                                 class="fa-regular fa-file-lines me-2"></i>Customer</button>
                         <button class="w-100 text-start nav-link mb-1"
                             id="v-pills-mechanic-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-mechanic" type="button"
                             role="tab" aria-controls="v-pills-mechanic"
-                            aria-selected="false"><i
+                            aria-selected="false"
+                            data-permission="mec"><i
                                 class="fa-regular fa-file-lines me-2"></i>Mechanic</button>
                         <button class="w-100 text-start nav-link mb-1"
                             id="v-pills-storage-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-storage" type="button"
                             role="tab" aria-controls="v-pills-storage"
-                            aria-selected="false"><i
+                            aria-selected="false"
+                            data-permission="sto"><i
                                 class="fa-regular fa-file-lines me-2"></i>Storage
                             Manager</button>
                         <button class="w-100 text-start nav-link mb-1"
                             id="v-pills-sale-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-sale" type="button"
                             role="tab" aria-controls="v-pills-sale"
-                            aria-selected="false"><i
+                            aria-selected="false"
+                            data-permission="sal"><i
                                 class="fa-regular fa-file-lines me-2"></i>Sale
                             Manager</button>
                     </div>
@@ -56,200 +62,216 @@
         </div>
         <div class="col-9 ">
             <div class="card-body p-3 h-100 bg-white">
-                <div class="d-flex flex-column">
 
+                {{!-- List content --}}
+                <div class="d-flex flex-column">
                     {{!-- Header --}}
-                    <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade active show"
-                            id="v-pills-dashboard" role="tabpanel"
-                            aria-labelledby="v-pills-dashboard-tab d-flex flex-row"
-                            tabindex="0">
-                            <h1>Dashboard tab</h1>
+                    <div class="row">
+                        <div class="col-6 tab-content" id="v-pills-tabContent">
+                            <div class="tab-pane fade active show"
+                                id="v-pills-all" role="tabpanel"
+                                aria-labelledby="v-pills-all-tab d-flex flex-row"
+                                tabindex="0">
+                                <h1>All</h1>
+                            </div>
+                            <div class="tab-pane fade" id="v-pills-customer"
+                                role="tabpanel"
+                                aria-labelledby="v-pills-all-tab d-flex flex-row"
+                                tabindex="0">
+                                <h1>Customer</h1>
+                            </div>
+                            <div class="tab-pane fade" id="v-pills-mechanic"
+                                role="tabpanel"
+                                aria-labelledby="v-pills-all-tab d-flex flex-row"
+                                tabindex="0">
+                                <h1>Mechanic</h1>
+                            </div>
+                            <div class="tab-pane fade" id="v-pills-storage"
+                                role="tabpanel"
+                                aria-labelledby="v-pills-all-tab d-flex flex-row"
+                                tabindex="0">
+                                <h1>Storage Manager</h1>
+                            </div>
+                            <div class="tab-pane fade" id="v-pills-sale"
+                                role="tabpanel"
+                                aria-labelledby="v-pills-all-tab d-flex flex-row"
+                                tabindex="0">
+                                <h1>Sale Manager</h1>
+                            </div>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-customer"
-                            role="tabpanel"
-                            aria-labelledby="v-pills-dashboard-tab d-flex flex-row"
-                            tabindex="0">
-                            <h1>Customer</h1>
+                        <div class="col-4 d-flex align-items-center">
+                            <div class="searchForm me-auto w-100 mx-3">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                    id="searchInput"
+                                    class="form-control me-auto w-100 rounded-pill"
+                                    type="search"
+                                    placeholder="Search username"
+                                    aria-label="Search">
+                            </div>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-mechanic"
-                            role="tabpanel"
-                            aria-labelledby="v-pills-dashboard-tab d-flex flex-row"
-                            tabindex="0">
-                            <h1>Mechanic</h1>
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-storage"
-                            role="tabpanel"
-                            aria-labelledby="v-pills-dashboard-tab d-flex flex-row"
-                            tabindex="0">
-                            <h1>Storage Manager</h1>
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-sale"
-                            role="tabpanel"
-                            aria-labelledby="v-pills-dashboard-tab d-flex flex-row"
-                            tabindex="0">
-                            <h1>Sale Manager</h1>
+                        <div class="col-2 d-flex align-items-center">
+                            <button class="btn btn-success ms-auto"><i
+                                    class="fa-solid fa-plus"></i> Add
+                                New</button>
                         </div>
                     </div>
 
                     {{!-- Table --}}
                     <table
-                        class="table">
+                        class="table table-hover">
                         <thead class="table-primary"
                             style="border-bottom: 2px solid black">
                             <tr>
                                 <th>First name</th>
                                 <th>Last name</th>
                                 <th>Username</th>
-                                <th>Address</th>
                                 <th>Permission</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="UserContent">
+                        <tbody id="userContent">
                         </tbody>
                     </table>
 
                     {{!-- Pagination --}}
+                    <div class="row d-flex">
+                        {{!-- PerPage --}}
+                        <div class="row g-3 align-items-center">
+                            <div class="col-auto">
+                                <label for="perPageInput"
+                                    class="col-form-label">Per Page</label>
+                            </div>
+                            <div class="col-auto">
+                                <input type="number" id="perPageInput"
+                                    value="5"
+                                    min="1"
+                                    max="10"
+                                    class="form-control">
+                            </div>
+                        </div>
 
+                        {{!-- Page --}}
+                        <ul id="paginationContainer"
+                            class="pagination ms-auto">
+                            <li class="page-item" onclick="decrPage()">
+                                <a class="page-link"
+                                    href="#/"
+                                    aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+
+                            <li class="page-item" onclick="incrPage()">
+                                <a class="page-link"
+                                    href="#/"
+                                    aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+
+                {{!-- Detail content --}}
+                <form action="#"
+                    class="m-5 signupForm mt-1"
+                    id="registerForm">
+                    <div class="mb-2">
+                        <label for="signupUsername"
+                            class="form-label">What is your
+                            username?</label>
+                        <input required
+                            name="username"
+                            type="text"
+                            class="form-control w-100"
+                            id="signupUsername"
+                            placeholder="Enter your username">
+                    </div>
+                    <div class="mb-2">
+                        <label for="signupPassword"
+                            class="form-label ">Create a
+                            password</label>
+                        <input required
+                            name="password"
+                            type="password"
+                            id="signupPassword"
+                            class="form-control  w-100"
+                            placeholder="Enter your password" />
+                    </div>
+                    <div class="row col-12 mb-2">
+                        <div class="col-6">
+                            <label for="firstname"
+                                class="form-label">First name</label>
+                            <input required
+                                name="firstname"
+                                type="text"
+                                class="form-control w-100"
+                                id="firstname"
+                                placeholder="Enter your first name">
+                        </div>
+                        <div class="col-6">
+                            <label for="lastname"
+                                class="form-label">Last name</label>
+                            <input required
+                                name="lastname"
+                                type="text"
+                                class="form-control w-100"
+                                id="lastname"
+                                placeholder="Enter your last name">
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="phonenumber"
+                            class="form-label">What's your phone
+                            number?</label>
+                        <input name="lastname"
+                            type="text"
+                            class="form-control w-100"
+                            id="phonenumber"
+                            placeholder="Enter your phone number">
+                    </div>
+                    <div class="mb-2">
+                        <label for="dob"
+                            class="form-label">What's your
+                            date of birth?</label>
+                        <input required
+                            name="dob"
+                            type="date"
+                            class="form-control w-100"
+                            id="dob"
+                            placeholder="Enter your date of birth">
+                    </div>
+                    <div class="mb-2">
+                        <label for="address"
+                            class="form-label">What's
+                            your address?</label>
+                        <input name="address"
+                            type="text"
+                            class="form-control w-100"
+                            id="address"
+                            placeholder="Enter your address">
+                    </div>
+                    <div class="mb-2">
+                        <input class="form-check-input me-2"
+                            type="checkbox"
+                            value
+                            id="policy" />
+                        <label class="form-check-label"
+                            for="policy">
+                            By creating an account, you agree to the
+                            Terms of use and Privacy Policy.
+                        </label>
+                    </div>
+                    <div class="mb-2">
+                        <button type="submit"
+                            class="btn rounded-5 bgPrimary text-light w-100 loginButton">Create
+                            an
+                            account</button>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
 </div>
-
-{{!--
-<ul class="pagination m-2 mt-auto">
-    <li class="page-item"
-        @click="paginateDown">
-        <a class="page-link"
-            href="#/"
-            aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-        </a>
-    </li>
-    <template v-for="n in totalPage">
-        <li :class="{active: n === currentPage}"
-            class="page-item"
-            @click="currentPageChanged(n)">
-            <a v-if="n !== currentPage"
-                class="page-link"
-                href="#/">
-                {{n}}
-            </a>
-            <span v-else
-                class="page-link"
-                style="user-select: none;">
-                {{n}}
-            </span>
-        </li>
-    </template>
-    <li class="page-item"
-        @click="paginateUp">
-        <a class="page-link"
-            href="#/"
-            aria-label="Next"
-            @click>
-            <span aria-hidden="true">&raquo;</span>
-        </a>
-    </li>
-</ul>
-
-{{!-- Form --}}
-<form action="#"
-    class="m-5 signupForm mt-1"
-    id="registerForm">
-    <div class="mb-2">
-        <label for="signupUsername"
-            class="form-label">What is your
-            username?</label>
-        <input required
-            name="username"
-            type="text"
-            class="form-control w-100"
-            id="signupUsername"
-            placeholder="Enter your username">
-    </div>
-    <div class="mb-2">
-        <label for="signupPassword"
-            class="form-label ">Create a
-            password</label>
-        <input required
-            name="password"
-            type="password"
-            id="signupPassword"
-            class="form-control  w-100"
-            placeholder="Enter your password" />
-    </div>
-    <div class="row col-12 mb-2">
-        <div class="col-6">
-            <label for="firstname"
-                class="form-label">First name</label>
-            <input required
-                name="firstname"
-                type="text"
-                class="form-control w-100"
-                id="firstname"
-                placeholder="Enter your first name">
-        </div>
-        <div class="col-6">
-            <label for="lastname"
-                class="form-label">Last name</label>
-            <input required
-                name="lastname"
-                type="text"
-                class="form-control w-100"
-                id="lastname"
-                placeholder="Enter your last name">
-        </div>
-    </div>
-    <div class="mb-2">
-        <label for="phonenumber"
-            class="form-label">What's your phone
-            number?</label>
-        <input name="lastname"
-            type="text"
-            class="form-control w-100"
-            id="phonenumber"
-            placeholder="Enter your phone number">
-    </div>
-    <div class="mb-2">
-        <label for="dob"
-            class="form-label">What's your
-            date of birth?</label>
-        <input required
-            name="dob"
-            type="date"
-            class="form-control w-100"
-            id="dob"
-            placeholder="Enter your date of birth">
-    </div>
-    <div class="mb-2">
-        <label for="address"
-            class="form-label">What's
-            your address?</label>
-        <input name="address"
-            type="text"
-            class="form-control w-100"
-            id="address"
-            placeholder="Enter your address">
-    </div>
-    <div class="mb-2">
-        <input class="form-check-input me-2"
-            type="checkbox"
-            value
-            id="policy" />
-        <label class="form-check-label"
-            for="policy">
-            By creating an account, you agree to the
-            Terms of use and Privacy Policy.
-        </label>
-    </div>
-    <div class="mb-2">
-        <button type="submit"
-            class="btn rounded-5 bgPrimary text-light w-100 loginButton">Create
-            an
-            account</button>
-    </div>
-</form>
-
---}}

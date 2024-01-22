@@ -1,4 +1,5 @@
 const dbExecute = require('../utils/dbExecute');
+const { SelectQuery } = require('../utils/queryBuilder');
 const tableName = 'user_info';
 
 module.exports = class User {
@@ -39,4 +40,14 @@ module.exports = class User {
         return await dbExecute.customQuery(query);
     }
     //todo: add more function that system need
+    static async getByUsernameSearchByPermissionByPage(username, permission, page, perPage) {
+        const sq = SelectQuery.init(tableName)
+            .addIlikeValue('username', username)
+            .setPaging(perPage, page);
+        if (permission != null) {
+            sq.addEqual('permission', permission)
+        }
+        const data = await sq.execute();
+        return data;
+    }
 }
