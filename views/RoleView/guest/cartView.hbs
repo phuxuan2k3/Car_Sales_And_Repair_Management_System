@@ -1,0 +1,105 @@
+<div id="popupWindow" class="z-3 w-50  d-none"></div>
+<div class="overlay d-none z-2" id="overplay"></div>
+
+<div class="container-fluid">
+    {{> Nav/guestNav}}
+    <div class="card align-items-center justify-content-center p-3 border-0">
+        <h4 class="card-title textPrimary fs-2 fw-bold">CART</h4>
+        {{#each cartData}}
+        <div onclick="cartItemClick({{this.car_ID}},{{mul this.car.price this.quantity}},event)"
+            id="cartItem_{{this.car_ID}}_{{this.customer_ID}}"
+            class="card  {{#isLessThanRemake this.car.quantity  this.quantity}}disabled_item{{/isLessThanRemake}}   w-100 shadow cartItem mb-3 border-0 ">
+            <div class=" card-body d-flex flex-row justify-content-between align-items-center ">
+                <div class="row w-100 align-items-center">
+                    <p id="errorNotify_{{this.car_ID}}"
+                        class="text-danger {{#isLessThan  this.quantity  this.car.quantity  }}d-none{{/isLessThan}} ">
+                        Sãn
+                        phẩm không đủ số lượng hoặc đã hết hàng</p>
+                    <div class="col-1">
+                        <input onclick="checking(event)" class="form-check-input me-2 fs-3 cartItemCheck"
+                            id="checkBox_{{this.car_ID}}_{{this.customer_ID}}" car_ID="{{this.car_ID}}"
+                            car_price="{{this.car.price}}" type="checkbox">
+                    </div>
+                    <div class="col-8">
+                        <div class="row ">
+                            <div class="col-md-6">
+                                <div>Car name: {{this.car.car_name}}</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div>Storage: <span>{{this.car.quantity}}</span></div>
+                            </div>
+                            <div class="col-md-3">
+                                <div>Price: <span id="cartItemPrice_{{this.car_ID}}">{{mul this.car.price
+                                        this.quantity}}$</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 text-center">
+                        <input onblur="blurEvent({{this.car_ID}})"
+                            oninput="quantityInput({{this.car_ID}},{{this.car.quantity}},{{this.car.price}},event)"
+                            preQuantity="{{this.quantity}}"
+                            onclick="quantityInput({{this.car_ID}},{{this.car.quantity}},{{this.car.price}},event)"
+                            id="quantity_{{this.car_ID}}_{{this.customer_ID}}" value="{{this.quantity}}" type="number"
+                            min="1" max="{{this.car.quantity}}"
+                            class="cant_disable {{#isLessThan this.car.quantity 0}}d-none{{/isLessThan}}   text-center w-100 quantityInput form-control rounded-pill">
+
+                    </div>
+                    <div class="col-1">
+                        <button onclick="deleteCartItem({{this.car_ID}},event)" type="button"
+                            class="cant_disable btn btn-danger">
+                            X
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        {{/each}}
+    </div>
+
+    <hr>
+    <div class="d-flex flex-row-reverse  w-100">
+        <div class="textPrimary fw-bold w-25 "><button disabled type="button" id="payButton"
+                class="btn w-100 btn-primary">
+                PAY
+            </button>
+        </div>
+        <div class="fs-4 textPrimary fw-bold me-3">TOTAL: <span id="mustToPay">0</span>$</div>
+    </div>
+    <hr>
+    <div class="card align-items-center justify-content-center p-3 border-0">
+        <h4 class="card-title textPrimary fs-2 fw-bold">HISTORY</h4>
+        <div class="card-body w-100">
+            <div class="table-responsive" style="height: 30rem;">
+                <table class="table table-hover">
+                    <thead class="table-info" id="tbHeader">
+                        <tr class="text-center">
+                            <th scope="col">#</th>
+                            <th scope="col">Order ID</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Total price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbBody">
+                        {{#each saleData }}
+                        <tr class="text-center" onclick="getSaleRecordData({{this.salerecord_id}})">
+                            <td scope="col">{{add @index 1}}</td>
+                            <td scope="col">{{this.salerecord_id}}</td>
+                            <td scope="col">{{this.date}}</td>
+                            <td scope="col">{{this.total_price}}$</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {{> footer}}
+</div>
+{{#if userId}}
+<script>
+    let userId = {{ userId }}
+    let adminId = {{ adminId }}
+</script>
+{{/if}}

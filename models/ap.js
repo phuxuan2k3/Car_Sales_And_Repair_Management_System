@@ -1,6 +1,5 @@
 const { response } = require('express');
 const dbExecute = require('../utils/dbExecute');
-const { TableName } = require('pg-promise');
 const tableName = 'auto_part';
 const { pgp } = require('../config/configDatabase');
 const queryHelper = pgp.helpers;
@@ -64,7 +63,6 @@ module.exports = class AutoPart {
         query += ` offset ${offset} limit ${limit}`;
         const data = await dbExecute.customQuery(query);
         const apData = data.map(c => { return new AutoPart(c) });
-        console.log(query)
         return {
             totalPage: totalPage,
             data: apData,

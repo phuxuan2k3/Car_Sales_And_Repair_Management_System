@@ -25,14 +25,32 @@
                 <input id="SearchBar" class="form-control me-auto w-50 rounded-pill" type="search"
                     placeholder="Search something here" aria-label="Search">
             </div>
-            <div class="userInfo ">
-                <form action='/logout' class="d-flex align-items-center" method="POST">
+            <div class="userInfo dropdown d-flex align-items-center">
+                {{!-- <form action='/logout' class="d-flex align-items-center" method="POST">
+
                     <span class="no-wrap">{{nameOfUser}}</span>
                     <button type='submit' style="all: unset;">
                         <img src="https://th.bing.com/th/id/R.8b167af653c2399dd93b952a48740620?rik=%2fIwzk0n3LnH7dA&pid=ImgRaw&r=0"
                             class="rounded-circle p-3" style="width: 80px; height: 80px;" alt="" />
                     </button>
-                </form>
+                </form> --}}
+                <a href="/cart"><i class="fa-solid fa-cart-shopping me-2"></i></a>
+                <span class="no-wrap me-2">{{nameOfUser}}</span>
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <img src="https://th.bing.com/th/id/R.8b167af653c2399dd93b952a48740620?rik=%2fIwzk0n3LnH7dA&pid=ImgRaw&r=0"
+                        class="rounded-circle p-3" style="width: 80px; height: 80px;" alt="" />
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                    {{!-- <li class="mb-3"><a class="dropdown-item" href="#">Deposit money</a></li> --}}
+                    <li class="mb-3">
+                        <form action='/logout' class="d-flex align-items-center" method="POST">
+                            <button type='submit' class=" w-100 btn btn-danger">
+                                Log out <i class="fa-solid fa-right-from-bracket"></i>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
             </div>
         </div>
 

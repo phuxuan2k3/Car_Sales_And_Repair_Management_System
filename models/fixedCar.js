@@ -1,6 +1,5 @@
 const { response } = require('express');
 const dbExecute = require('../utils/dbExecute');
-const { TableName } = require('pg-promise');
 const tableName = 'fixed_car';
 
 module.exports = class FixedCar {
@@ -18,7 +17,9 @@ module.exports = class FixedCar {
         return data.map(c => { return new FixedCar(c) });
     }
     static async insert(entity) {
-        return await dbExecute.insert(entity, tableName);
+        const check = await module.exports.getFixedCarByPlate(entity.car_plate);
+        if(check.length <= 0) await dbExecute.insert(entity, tableName);
+        return entity.id;
     }
     static async update(id, entity) {
         return await dbExecute.update(id, entity, tableName);
@@ -27,8 +28,16 @@ module.exports = class FixedCar {
         return await dbExecute.delete(id, tableName);
     }
     static async getFixedCarByCusId(id) {
-        let query = `select * from "${tableName}" where "id"=${id}`
-        const data = await dbExecute.customQuery(query);
-        return data.map(c => { return new FixedCar(c) });
+        const query = `select * from "${tableName}" where "id"='${id}'`
+        return await dbExecute.customQuery(query);
+    }
+    static async getFixedCarByPlate(plate) {
+        const query = `select * from "${tableName}" where "car_plate"='${plate}'`
+        return await dbExecute.customQuery(query);
+    }
+    static async getFixedCarByCusIdAndSearch(id,car_plate){
+        let query = `select * from "${tableName}" where "id"='${id}'`
+        if(car_plate != null) query +=  ` and  "car_plate" ilike '%${car_plate}%'`
+        return await dbExecute.customQuery(query);
     }
 }

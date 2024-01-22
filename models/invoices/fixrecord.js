@@ -175,14 +175,14 @@ const fixDetailFlag = 0;
 const fixRecordFlag = 0;
 const micsFlag = 0;
 
-if (fixDetailFlag) {
-    (async () => {
-        console.log(await FixDetail.getByFixRecord(7));
-        console.log(await FixDetail.insert(FixDetail.castParam(new Date(), 'bla bla bla', 12000000, 0, 300, 14, 6, 'Fixed', 32)));
-        console.log(await FixDetail.update(FixDetail.castParam(new Date(), 'adasd', 12000000, 0, 300, 14, 6, 'Fixed', 32)));
-        console.log(await FixDetail.delete({ fixdetail_id: 0 }));
-    })();
-}
+// if (fixDetailFlag) {
+//     (async () => {
+//         console.log(await FixDetail.getByFixRecord(7));
+//         console.log(await FixDetail.insert(FixDetail.castParam(new Date(), 'bla bla bla', 12000000, 0, 300, 14, 6, 'Fixed', 32)));
+//         console.log(await FixDetail.update(FixDetail.castParam(new Date(), 'adasd', 12000000, 0, 300, 14, 6, 'Fixed', 32)));
+//         console.log(await FixDetail.delete({ fixdetail_id: 0 }));
+//     })();
+// }
 
 if (fixRecordFlag) {
     (async () => {

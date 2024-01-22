@@ -138,26 +138,26 @@ const saleRecordFlag = 0;
 const insertNullFlag = 0;
 const statisticFlag = 0;
 
-if (saleDetailFlag) {
-    (async () => {
-        console.log(await SaleDetail.getBySaleRecord(201));
-        console.log(await SaleDetail.insert(SaleDetail.castParam(201, 4, 4)));
-        console.log(await SaleDetail.update(SaleDetail.castParam(201, 4, 0)));
-        console.log(await SaleDetail.delete({ salerecord_id: 201, car_id: 4 }));
-    })();
-}
+// if (saleDetailFlag) {
+//     (async () => {
+//         console.log(await SaleDetail.getBySaleRecord(201));
+//         console.log(await SaleDetail.insert(SaleDetail.castParam(201, 4, 4)));
+//         console.log(await SaleDetail.update(SaleDetail.castParam(201, 4, 0)));
+//         console.log(await SaleDetail.delete({ salerecord_id: 201, car_id: 4 }));
+//     })();
+// }
 
-if (saleRecordFlag) {
-    (async () => {
-        console.log(await SaleRecord.getAll());
-        console.log(await SaleRecord.getRecordsByCusId(46));
-        console.log(await SaleRecord.getRecordsByDate(new Date("2024/01/01"), new Date()));
-        console.log(await SaleRecord.getRecordById(201));
-        console.log(await SaleRecord.insert(SaleRecord.castParam(199, 42, new Date(), 0)));
-        console.log(await SaleRecord.update(SaleRecord.castParam(199, 46, new Date(), 1000)));
-        console.log(await SaleRecord.delete({ salerecord_id: 199 }));
-    })();
-}
+// if (saleRecordFlag) {
+//     (async () => {
+//         console.log(await SaleRecord.getAll());
+//         console.log(await SaleRecord.getRecordsByCusId(46));
+//         console.log(await SaleRecord.getRecordsByDate(new Date("2024/01/01"), new Date()));
+//         console.log(await SaleRecord.getRecordById(201));
+//         console.log(await SaleRecord.insert(SaleRecord.castParam(199, 42, new Date(), 0)));
+//         console.log(await SaleRecord.update(SaleRecord.castParam(199, 46, new Date(), 1000)));
+//         console.log(await SaleRecord.delete({ salerecord_id: 199 }));
+//     })();
+// }
 
 if (insertNullFlag) {
     (async () => {

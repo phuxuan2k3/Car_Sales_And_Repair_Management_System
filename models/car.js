@@ -43,6 +43,12 @@ module.exports = class Car {
         ${smid});`;
         return await dbExecute.customQuery(query);
     }
+    static async updateQuanTity(id,quantity) {
+        let entity = await dbExecute.getById(id, tableName);
+        entity.quantity = quantity;
+        delete entity.id;
+        return await dbExecute.update(id, entity, tableName);
+    }
     static async delete(id) {
         return await dbExecute.delete(id, tableName);
     }
@@ -90,7 +96,7 @@ module.exports = class Car {
         let filterString = filterArr.join(' and ');
         if (filterArr.length != 0) query += ' where ' + filterString;
         const totalPage = Math.ceil((await dbExecute.customQuery(query)).length / limit);
-        query += ` offset ${offset} limit ${limit}`;
+        query += ` order by "id" offset ${offset} limit ${limit}`;
         const data = await dbExecute.customQuery(query);
         const carData = data.map(c => { return new Car(c) });
         return {

@@ -51,5 +51,19 @@ module.exports = {
         } catch (error) {
             return res.status(500).send("An error occurred while creating the account");
         }
+    }),
+
+    getAccountById: tryCatch(async (req,res) => {
+        try {
+            const id = req.query.id;
+            const account = await PaymentAccount.GetAccountById(id);
+            if (account == null) {
+                return res.status(400).send("Account not exists");
+            } else {
+                res.json(account);
+            }
+        } catch (error) {
+            return res.status(500).send("An error occurred while getting the account");
+        }
     })
 }

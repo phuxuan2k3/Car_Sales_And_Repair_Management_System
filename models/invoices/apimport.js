@@ -130,39 +130,39 @@ class ApInvoice {
 
 const flagReport = 0;
 const flagInvoice = 0;
-const flagStatistic = 1;
+const flagStatistic = 0;
 
-// Ap Report
-if (flagReport) {
-    (async () => {
-        // in: invoice id
-        // out: Array of ApReport
-        var test = await ApReport.getReportsFromInvoice(300);
-        console.log(test);
+// // Ap Report
+// if (flagReport) {
+//     (async () => {
+//         // in: invoice id
+//         // out: Array of ApReport
+//         var test = await ApReport.getReportsFromInvoice(300);
+//         console.log(test);
 
-        // in: start, end date
-        // out: Array of ApReport
-        var test = await ApReport.getReportsByDate(new Date("2024/01/01"), new Date());
-        console.log(test);
+//         // in: start, end date
+//         // out: Array of ApReport
+//         var test = await ApReport.getReportsByDate(new Date("2024/01/01"), new Date());
+//         console.log(test);
 
 
-        // in: ApReport 
-        // out: {importinvoice_id, ap_id}
-        var test = ApReport.castParam(299, 18, 5, new Date());
-        var res = await ApReport.insert(test);
-        console.log(res);
+//         // in: ApReport 
+//         // out: {importinvoice_id, ap_id}
+//         var test = ApReport.castParam(299, 18, 5, new Date());
+//         var res = await ApReport.insert(test);
+//         console.log(res);
 
-        // in: ApReport
-        // out: rowCount
-        var test = await ApReport.update(ApReport.castParam(299, 18, 0, new Date()));
-        console.log(test);
+//         // in: ApReport
+//         // out: rowCount
+//         var test = await ApReport.update(ApReport.castParam(299, 18, 0, new Date()));
+//         console.log(test);
 
-        // in: invoice id, ap id (obj)
-        // out: rowCount
-        var test = await ApReport.delete({ importinvoice_id: 299, ap_id: 18 });
-        console.log(test);
-    })();
-}
+//         // in: invoice id, ap id (obj)
+//         // out: rowCount
+//         var test = await ApReport.delete({ importinvoice_id: 299, ap_id: 18 });
+//         console.log(test);
+//     })();
+// }
 
 // Ap Invoice
 if (flagInvoice) {
