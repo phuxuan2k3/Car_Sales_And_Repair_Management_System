@@ -49,6 +49,14 @@ class ApReport {
         const data = await SelectQuery.init(AIR_Table.NAME).setSelectAll().addBetweenDate(AIR_Table.date, start, end).execute();
         return data.map(d => { return ApReport.castObj(d) });
     }
+    static async getTotalPriceByDate(start, end) {
+        const data = await SelectQuery.init(`${AIR_Table.NAME} air`)
+            .addJoin('car c', 'air.ap_id = c.id')
+            .setSelectCustom(['SUM(air.quantity * c.price) AS tp'])
+            .addBetweenDate(`air.${AIR_Table.date}`, start, end, 'alias')
+            .execute('one');
+        return data.tp;
+    }
 
     // cud
     // return importinvoice_id, ap_id
@@ -122,6 +130,7 @@ class ApInvoice {
 
 const flagReport = 0;
 const flagInvoice = 0;
+const flagStatistic = 1;
 
 // Ap Report
 if (flagReport) {
@@ -186,6 +195,14 @@ if (flagInvoice) {
     })();
 }
 
+if (flagStatistic) {
+    (async () => {
+        // in: date start to end
+        // out: total price (value)
+        var test = await ApReport.getTotalPriceByDate(new Date("01/01/2024"), new Date());
+        console.log(test);
+    })();
+}
 
 
 

@@ -132,6 +132,24 @@ class FixRecord {
         const data = await SelectQuery.init(FR_Table.NAME).setSelectAll().addBetweenDate(FR_Table.date, start, end).execute();
         return data.map(d => FixRecord.castObj(d));
     }
+    static async getTotalPriceByDateByPay(start, end, pay) {
+        const sq = SelectQuery.init(FR_Table.NAME + ' fr')
+            .addJoin('fix_detail fd', 'fd.fixrecord_id = fr.fixrecord_id')
+            .addJoin('auto_part ap', 'fd.ap_id = ap.ap_id')
+            .setSelectCustom(['COALESCE(SUM(ap.price * fd.quantity + fd.price), 0) AS tp']);
+        if (start != null && end != null) {
+            sq.addBetweenDate('fr.date', start, end, 'alias');
+        }
+        if (pay != null) {
+            sq.addEqual('fr.pay', pay, 'alias');
+        }
+        const data = await sq.execute('one');
+        return data.tp;
+    }
+    static async getRecordsSearchPlate(car_plate_key) {
+        const data = await SelectQuery.init(FR_Table.NAME).setSelectAll().addIlikeValue(FR_Table.car_plate, car_plate_key).execute();
+        return data.map(d => FixRecord.castObj(d));
+    }
 
     // cud
     static async insert(entity) {
@@ -155,6 +173,7 @@ class FixRecord {
 
 const fixDetailFlag = 0;
 const fixRecordFlag = 0;
+const micsFlag = 0;
 
 if (fixDetailFlag) {
     (async () => {
@@ -174,6 +193,15 @@ if (fixRecordFlag) {
         console.log(await FixRecord.insert(FixRecord.castParam(6, '63A1-88888', new Date(), 0, 'Processing', true)));
         console.log(await FixRecord.update(FixRecord.castParam(6, '63A1-88888', new Date(), 0, 'Fixed', false)));
         console.log(await FixRecord.delete({ fixrecord_id: 6 }));
+    })();
+}
+
+if (micsFlag) {
+    (async () => {
+        console.log(await FixRecord.getRecordsSearchPlate('88888'));
+        console.log(await FixRecord.getTotalPriceByDateByPay(new Date('01/01/2024'), new Date(), null));
+        console.log(await FixRecord.getTotalPriceByDateByPay(null, null, true));
+        console.log(await FixRecord.getTotalPriceByDateByPay(new Date('01/01/2024'), new Date(), true));
     })();
 }
 

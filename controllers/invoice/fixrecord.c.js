@@ -9,6 +9,14 @@ module.exports = {
 
     // require: query: car_plate
     // return: all record of a car_plate 
+    getSaleRecordsSearchPlate: tryCatch(async (req, res) => {
+        const car_plate = req.query.car_plate;
+        const fixRecords = await FixRecord.getRecordsSearchPlate(car_plate);
+        return res.json({ fixRecords });
+    }),
+
+    // require: query: car_plate
+    // return: all record of a car_plate 
     getSaleRecordsByPlate: tryCatch(async (req, res) => {
         const car_plate = req.query.car_plate;
         const fixRecords = await FixRecord.getRecordsByPlate(car_plate);

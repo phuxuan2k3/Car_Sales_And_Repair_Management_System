@@ -40,44 +40,44 @@ class SelectQuery extends Query {
         this._joinQueryArray.push(`JOIN ${tableName} ON ${conditionString}`);
         return this;
     }
-    addEqualValue(col, val) {
-        const struct = `AND $1:name = $2:value`
+    addEqualValue(col, val, colType = 'name') {
+        const struct = `AND $1:${colType} = $2:value`
         const query = pgp.as.format(struct, [col, val]);
         this._middleQueryArray.push(query);
         return this;
     }
-    addEqual(col, val) {
-        const struct = `AND $1:name = $2`
+    addEqual(col, val, colType = 'name') {
+        const struct = `AND $1:${colType} = $2`
         const query = pgp.as.format(struct, [col, val]);
         this._middleQueryArray.push(query);
         return this;
     }
-    addLikeValue(col, key) {
-        const struct = `AND $1:name LIKE \'%$2:value%\'`
+    addLikeValue(col, key, colType = 'name') {
+        const struct = `AND $1:${colType} LIKE \'%$2:value%\'`
         const query = pgp.as.format(struct, [col, key]);
         this._middleQueryArray.push(query);
         return this;
     }
-    addIlikeValue(col, key) {
-        const struct = `AND $1:name ILIKE \'%$2:value%\'`
+    addIlikeValue(col, key, colType = 'name') {
+        const struct = `AND $1:${colType} ILIKE \'%$2:value%\'`
         const query = pgp.as.format(struct, [col, key]);
         this._middleQueryArray.push(query);
         return this;
     }
-    addInCsv(col, valArray) {
-        const struct = `AND $1:name IN($2:csv)`;
+    addInCsv(col, valArray, colType = 'name') {
+        const struct = `AND $1:${colType} IN($2:csv)`;
         const query = pgp.as.format(struct, [col, valArray]);
         this._middleQueryArray.push(query);
         return this;
     }
-    addBetweenValue(col, low, high) {
-        const struct = `AND $1:name BETWEEN $2:value AND $3:value`;
+    addBetweenValue(col, low, high, colType = 'name') {
+        const struct = `AND $1:${colType} BETWEEN $2:value AND $3:value`;
         const query = pgp.as.format(struct, [col, low, high]);
         this._middleQueryArray.push(query);
         return this;
     }
-    addBetweenDate(col, dlow, dhigh) {
-        const struct = `AND $1:name BETWEEN $2::date AND $3::date`;
+    addBetweenDate(col, dlow, dhigh, colType = 'name') {
+        const struct = `AND $1:${colType} BETWEEN $2::date AND $3::date`;
         const query = pgp.as.format(struct, [col, dlow, dhigh]);
         this._middleQueryArray.push(query);
         return this;
@@ -86,9 +86,9 @@ class SelectQuery extends Query {
         this._groupByQueryArray.push(col);
         return this;
     }
-    addOrderBy(col, isAsc) {
+    addOrderBy(col, isAsc, colType = 'name') {
         const queryAsc = isAsc ? 'ASC' : 'DESC';
-        const struct = `$1:name ${queryAsc}`;
+        const struct = `$1:${colType} ${queryAsc}`;
         const query = pgp.as.format(struct, [col]);
         this._orderByQueryArray.push(query);
         return this;
@@ -273,8 +273,18 @@ class DeleteQuery extends Query {
 }
 
 // >>>> =============================================
-// test area
+// test area (for queries)
 // <<<< =============================================
+
+const test = 0;
+
+if (test) {
+    console.log(SelectQuery.init('test t')
+        .setSelectCustom(['SUM(total_price)'])
+        .addJoin('new n', 'n.id = t.newid')
+        .addGroupBy('name')
+        .retrive());
+}
 
 module.exports = {
     SelectQuery,
