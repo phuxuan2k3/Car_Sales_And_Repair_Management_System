@@ -185,6 +185,21 @@ class SaleRecord {
         const dataRest = await execute(queryRest, 'one');
         return { id, name, total_price, all_total: dataAll.all_total, rest_total: dataRest.rest_total };
     }
+    static async getJoinWithCustomer() {
+        const data = await SelectQuery.init(`${SR_Table.NAME} sr`)
+            .setSelectAll()
+            .addJoin('user_info u', 'u.id = sr.cus_id')
+            .execute();
+        return data;
+    }
+    static async getAllDetailFull(salerecord_id) {
+        const data = await SelectQuery.init(`sale_detail sd`)
+            .setSelectAll()
+            .addJoin('car c', 'sd.car_id = c.id')
+            .addEqual('sd.salerecord_id', salerecord_id, 'alias')
+            .execute();
+        return data;
+    }
 
 
     // cud
@@ -206,6 +221,15 @@ class SaleRecord {
 // >>>> =============================================
 // Test
 // <<<< =============================================
+
+const fullInvoiceFlag = 1;
+if (fullInvoiceFlag) {
+    (async () => {
+        console.log(await SaleRecord.getJoinWithCustomer());
+        console.log(await SaleRecord.getAllDetailFull(201));
+    })();
+}
+
 
 const statisticDateChunkFlag = 0;
 if (statisticDateChunkFlag) {

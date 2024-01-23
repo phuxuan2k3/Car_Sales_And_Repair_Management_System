@@ -164,6 +164,29 @@ class FixRecord {
         const total_price = data.map(d => d.total_price);
         return { start_date, total_price };
     }
+    static async getJoinWithCustomer() {
+        const query = SelectQuery.init(`${FR_Table.NAME} fr`)
+            .setSelectAll()
+            .addJoin('fixed_car fc', 'fc.car_plate = fr.car_plate')
+            .addJoin('user_info u', 'u.id = fc.id').retrive();
+        console.log(query);
+
+        const data = await SelectQuery.init(`${FR_Table.NAME} fr`)
+            .setSelectAll()
+            .addJoin('fixed_car fc', 'fc.car_plate = fr.car_plate')
+            .addJoin('user_info u', 'u.id = fc.id')
+            .execute();
+        return data;
+    }
+    static async getAllDetailFull(fixrecord_id) {
+        const data = await SelectQuery.init(`fix_detail fd`)
+            .setSelectAll()
+            .addJoin('auto_part ap', 'ap.ap_id = fd.ap_id')
+            .addJoin('user_info u', 'u.id = fd.mec_id')
+            .addEqual('fd.fixrecord_id', fixrecord_id, 'alias')
+            .execute();
+        return data;
+    }
 
     // cud
     static async insert(entity) {
@@ -184,6 +207,14 @@ class FixRecord {
 // >>>> =============================================
 // Test
 // <<<< =============================================
+
+const fullInvoiceFlag = 1;
+if (fullInvoiceFlag) {
+    (async () => {
+        console.log(await FixRecord.getJoinWithCustomer());
+        console.log(await FixRecord.getAllDetailFull(10));
+    })();
+}
 
 const statisticDateChunkFlag = 0;
 if (statisticDateChunkFlag) {
