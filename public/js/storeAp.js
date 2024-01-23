@@ -1,19 +1,19 @@
-$('#dashboard').click(() => {
+$('#dashboard').on('click', () => {
     window.location.href = '/dashboard';
 })
-$('#car').click(() => {
+$('#car').on('click', () => {
     window.location.href = '/car';
 })
-$('#ap').click(() => {
+$('#ap').on('click', () => {
     window.location.href = '/ap';
 })
 
-$('.delete').click(async function (e) {
+$('.delete').on('click', async function (e) {
     const id = $(e.target).data('id');
     console.log($(e.target));
     const url = `api/ap`;
     const data = { id };
-    $('#sureDelete').click(async () => {
+    $('#sureDelete').on('click', async () => {
         try {
             const response = await fetch(url, {
                 method: 'DELETE',

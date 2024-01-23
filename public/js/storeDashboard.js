@@ -277,12 +277,12 @@ function displayMode(mode) {
     }
 }
 
-$('#dashboard').click(() => {
+$('#dashboard').on('click',() => {
     window.location.href = '/dashboard';
 })
-$('#car').click(() => {
+$('#car').on('click',() => {
     window.location.href = '/car';
 })
-$('#ap').click(() => {
+$('#ap').on('click',() => {
     window.location.href = '/ap';
 })

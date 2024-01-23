@@ -35,7 +35,7 @@ inputCarPlate.on('click', ((e) => {
     inputCarPlate.removeClass('border border-danger text-danger errMss');
 }))
 
-registerButton.click(async (e) => {
+registerButton.on('click',async (e) => {
     e.preventDefault();
     if (validation() == true) {
         const entity = {
