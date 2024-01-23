@@ -55,9 +55,9 @@ module.exports = {
     // return: fixdetail insert result
     addFixDetailToRecord: tryCatch(async (req, res) => {
         const { fixrecord_id, date, detail, price, ap_id, mec_id, Status, quantity } = req.body;
-        date = new Date(date);
-        price = parseFloat(price) || 0;
-        const fixDetailData = FixDetail.castParam(date, detail, price, null, fixrecord_id, ap_id, mec_id, Status, quantity);
+        let newDate = new Date(date);
+        let newPrice = parseFloat(price) || 0;
+        const fixDetailData = FixDetail.castParam(newDate, detail, newPrice, null, fixrecord_id, ap_id, mec_id, Status, quantity);
         const result = FixDetail.castObj(await FixDetail.insert(fixDetailData));
         return res.json({ result });
     }),
@@ -82,7 +82,7 @@ module.exports = {
     // return: fixrecord update result
     updateStatusOfFixRecord: tryCatch(async (req, res) => {
         const { fixrecord_id, status } = req.body;
-        const result = FixDetail.update({ fixrecord_id, status });
+        const result = FixRecord.update({ fixrecord_id, status });
         return res.json({ result });
     }),
 

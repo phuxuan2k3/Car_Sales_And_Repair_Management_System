@@ -168,6 +168,15 @@ module.exports = {
             res.json({ success: false, message: error });
         };
     }),
+
+    updateAutoPartQuantity: tryCatch(async (req, res) => {
+        const {ap_id,quantity} = req.body;
+        const data = await AutoPart.updateQuanTity(ap_id,quantity);
+        res.json(data);
+    }
+    ),
+
+
     //Fixed car API
     getAllFixedCar: tryCatch(async (req, res) => {
         const data = await FixedCar.getAll();
@@ -187,7 +196,7 @@ module.exports = {
     addNewFixedCar: tryCatch(async (req, res) => {
         const entity = req.body;
         const cusId = await FixedCar.insert(entity);
-        const data = await FixRecord.insert(FixRecord.castParam(null, entity.car_plate, new Date(), 0, 'Processing', false))
+        const data = await FixRecord.insert(FixRecord.castParam(null, entity.car_plate, new Date(), 0, 'Processing', false));
         res.json(data);
     }),
     //User

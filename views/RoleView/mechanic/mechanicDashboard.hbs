@@ -1,8 +1,12 @@
+<div id="popupWindow" class="z-3 w-50  d-none">
+</div>
+<div class="overlay z-2 d-none" id="overplay"></div>
+
 <div class="container-fluid">
     {{> Nav/mechanicNav}}
     <div class="row">
-        <div class="col-md-3 tabs">
-            <div class="nav flex-column nav-pills vh-100 me-3" id="v-pills-tab" role="tablist"
+        <div class="col-md-3  tabs">
+            <div class="nav flex-column nav-pills h-100 me-3" id="v-pills-tab" role="tablist"
                 aria-orientation="vertical">
                 <div class="card w-100 h-100 border border-0">
                     <div class="card-body">
@@ -17,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-9 tab_content">
+        <div class="col-md-9  tab_content">
             <div class="card-body p-3 h-100 bg-white">
                 <div class="tab-content" id="v-pills-tabContent">
                     {{!-- PHẦN DASHBOARD --}}
@@ -63,7 +67,7 @@
                             <div id="recordHeader" class="d-flex flex-row justify-content-between align-items-center">
                                 <h2 class="textPrimary me-2">Fix detail <span id="currentId"></span></h2>
                             </div>
-                            <div class="table-responsive" style="height: 20rem;">
+                            <div class="table-responsive" style="height: 15rem;">
                                 <table class="table table-hover">
                                     <thead class="table-info" id="tbHeader">
                                         <tr class="text-center">
@@ -81,13 +85,18 @@
                                 </table>
                             </div>
                             <div id="optionButtonGroup" class="d-flex flex-row d-none ">
-                                <button id="addButton" class="w-25 me-3 btn btn-primary">ADD</button>
-                                <button id="doneButton" class="w-25 me-3 btn btn-success">DONE</button>
+                                <button id="addButton" onclick="addNewDetail()"
+                                    class="w-25 me-3 btn btn-primary">ADD</button>
+                                <button id="doneButton" onclick="doneRecord()"
+                                    class="w-25 me-3 btn btn-success">DONE</button>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-document" role="tabpanel"
-                            aria-labelledby="v-pills-dashboard-tab d-flex flex-row" tabindex="0">
-                            <h1>Repair documents tab</h1>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-document" role="tabpanel"
+                        aria-labelledby="v-pills-dashboard-tab d-flex flex-row" tabindex="0">
+                        <h2 class="textPrimary h-100">Repair documents tab</h2>
+                        <div>
+                            <iframe src="https://www.workshopautomanuals.com/toyota/" class="w-100" style="height: 30rem;" title="Iframe Example"></iframe>
                         </div>
                     </div>
                 </div>

@@ -27,6 +27,7 @@ router.get('/ap/detail', ApiController.getAp);
 router.get('/ap/ap_page', ApiController.getApPage);
 router.get('/ap/most_ap', ApiController.getMostAp);
 router.delete('/ap', ApiController.deleteAp);
+router.post('/ap/update-quantity',ApiController.updateAutoPartQuantity)
 
 //Fixed car
 router.get('/car/fixed/all', ApiController.getAllFixedCar);

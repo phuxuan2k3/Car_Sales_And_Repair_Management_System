@@ -49,6 +49,7 @@ registerButton.click(async (e) => {
             car_plate: inputCarPlate.val(),
             id: userId
         }
+        console.log(entity)
         const serverResponse = await fetch('/api/car/fixed/add', {
             method: 'post',
             credentials: "same-origin",
@@ -117,7 +118,7 @@ const generateTable = async () => {
                             <td scope="col">${index + 1}</td>
                             <td scope="col">${record.car_plate}</td>
                             <td scope="col">${record.date}</td>
-                            <td scope="col">${record.total_price}</td>
+                            <td scope="col">${record.total_price}$</td>
                             <td scope="col">${record.status}</td>
                             <td scope="col">
                                 <button total_price="${record.total_price}" recordId="${record.fixrecord_id}" car_plate="${record.car_plate}" date="${record.date}" class="paymentButton btn btn-${record.pay == true ? `success` : `primary`} w-75"  ${record.status != `Done` || record.pay == true ? `disabled` : ``} href="#" role="button">${record.pay == true && record.status == `Done` ? "Completed" : "Pay"}</button>
@@ -171,8 +172,8 @@ const generateTable = async () => {
         paymentInfo.append(`
             <p>Order ID: ${$(this).attr('recordId')}</p>
             <p>Date: ${$(this).attr('date')}</p>
-            <p>Your balance: ${account.balance}</p>
-            <p>Total price: ${$(this).attr('total_price')}</p>
+            <p>Your balance: ${account.balance}$</p>
+            <p>Total price: ${$(this).attr('total_price')}$</p>
         `)
         amount = $(this).attr('total_price');
         recordId = parseInt($(this).attr('recordId'));

@@ -77,4 +77,12 @@ module.exports = class AutoPart {
         let query = `SELECT * FROM ${tableName} ORDER BY quantity DESC LIMIT 1;`
         return (await dbExecute.customQuery(query))[0];
     }
+    static async updateQuanTity(ap_id,quantity) {
+        let query = `
+        UPDATE "${tableName}"
+        SET "quantity"=${quantity}
+        WHERE "ap_id"=${ap_id} returning "quantity" ;
+        `
+        return (await dbExecute.customQuery(query))[0];
+    }
 }
