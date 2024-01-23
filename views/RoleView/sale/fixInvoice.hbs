@@ -1,0 +1,54 @@
+<div class="container-fluid">
+    {{!-- //todo: change nav --}}
+    {{> Nav/storeNav}}
+    <div class="row">
+        <div class="col-3 tabs">
+            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <div class="card w-100 border border-0" style="height: 600px;">
+                    <div class="card-body" style="height: 100%;">
+                        <button id="dashboard" class="w-100 text-start nav-link  mb-1" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-dashboard" type="button" role="tab"
+                            aria-controls="v-pills-dashboard" aria-selected="true"><i
+                                class="fa-solid fa-house me-2"></i> Dashboard</button>
+                        <button id="report" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i class="fa-regular fa-file-lines me-2"></i>Report</button>
+                        <button id="sale-invoices" class="w-100 text-start nav-link mb-1 active" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i class="fa-regular fa-file-lines me-2"></i>Sale Invoices</button>
+                        <button id="fix-invoices" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i class="fa-regular fa-file-lines me-2"></i>Fix Invoices</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-9 tab_content" style="height: 600px;">
+            <div class="card-body p-3 bg-white d-flex flex-column" id="mainContent" style="height: 100%;">
+
+                <table class="table">
+                    <thead class="table-danger">
+                        <tr>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each invoices}}
+                        <tr>
+                            <a style="all:unset" href="/saleDetail?invoiceId={{this.id}}">
+                                <td>{{this.name}}</td>
+                                <td>{{this.date}}</td>
+                                <td>{{this.price}}</td>
+                            </a>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
