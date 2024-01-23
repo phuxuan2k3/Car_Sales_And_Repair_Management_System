@@ -12,6 +12,7 @@ router.get('/fixInvoices', saleController.getFixInvoices);
 router.get('/fixDetail', saleController.getFixDetails);
 
 router.get('/outputSaleInvoice', saleController.getSaleInvoicePdf);
+router.get('/outputFixInvoice', saleController.getFixInvoicePdf);
 
 
 module.exports = router;

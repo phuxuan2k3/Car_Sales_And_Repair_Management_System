@@ -13,10 +13,10 @@
                         <button id="report" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
                             data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
                             aria-selected="false"><i class="fa-regular fa-file-lines me-2"></i>Report</button>
-                        <button id="sale-invoices" class="w-100 text-start nav-link mb-1 active" data-bs-toggle="pill"
+                        <button id="sale-invoices" class="w-100 text-start nav-link mb-1 " data-bs-toggle="pill"
                             data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
                             aria-selected="false"><i class="fa-regular fa-file-lines me-2"></i>Sale Invoices</button>
-                        <button id="fix-invoices" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
+                        <button id="fix-invoices" class="w-100 text-start nav-link mb-1 active" data-bs-toggle="pill"
                             data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
                             aria-selected="false"><i class="fa-regular fa-file-lines me-2"></i>Fix Invoices</button>
                     </div>
@@ -26,7 +26,7 @@
         <div class="col-9 tab_content" style="height: 600px;">
             <div class="card-body p-3 bg-white d-flex flex-column" id="mainContent" style="height: 100%;">
 
-                <table class="table">
+                <table class="table table-hover">
                     <thead class="table-danger">
                         <tr>
                             <th scope="col">Customer Name</th>
@@ -36,12 +36,10 @@
                     </thead>
                     <tbody>
                         {{#each invoices}}
-                        <tr>
-                            <a style="all:unset" href="/saleDetail?invoiceId={{this.id}}">
-                                <td>{{this.name}}</td>
-                                <td>{{this.date}}</td>
-                                <td>{{this.price}}</td>
-                            </a>
+                        <tr onclick="window.location.href = '/fixDetail?invoiceId={{this.fixrecord_id}}'">
+                            <td>{{this.lastname}} {{this.firstname}}</td>
+                            <td>{{this.date}}</td>
+                            <td>{{this.total_price}}</td>
                         </tr>
                         {{/each}}
                     </tbody>

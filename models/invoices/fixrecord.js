@@ -165,17 +165,20 @@ class FixRecord {
         return { start_date, total_price };
     }
     static async getJoinWithCustomer() {
-        const query = SelectQuery.init(`${FR_Table.NAME} fr`)
-            .setSelectAll()
-            .addJoin('fixed_car fc', 'fc.car_plate = fr.car_plate')
-            .addJoin('user_info u', 'u.id = fc.id').retrive();
-        console.log(query);
-
         const data = await SelectQuery.init(`${FR_Table.NAME} fr`)
             .setSelectAll()
             .addJoin('fixed_car fc', 'fc.car_plate = fr.car_plate')
             .addJoin('user_info u', 'u.id = fc.id')
             .execute();
+        return data;
+    }
+    static async getJoinWithCustomerById(id) {
+        const data = await SelectQuery.init(`${FR_Table.NAME} fr`)
+            .setSelectAll()
+            .addEqual('fixrecord_id', id)
+            .addJoin('fixed_car fc', 'fc.car_plate = fr.car_plate')
+            .addJoin('user_info u', 'u.id = fc.id')
+            .execute('one');
         return data;
     }
     static async getAllDetailFull(fixrecord_id) {

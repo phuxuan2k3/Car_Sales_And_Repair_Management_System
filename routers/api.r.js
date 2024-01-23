@@ -99,4 +99,8 @@ router.post('/cart/add', ApiController.insertToCart);
 router.post('/cart/delete', ApiController.deleteCartItem);
 router.post('/cart/update_quantity', ApiController.updateCarQuanTityInCart);
 
+//chart
+router.get('/revenue', ApiController.getRevenue);
+router.get('/topcar', ApiController.getTopCar);
+
 module.exports = router;

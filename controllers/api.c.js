@@ -10,6 +10,7 @@ const { FixRecord } = require('../models/invoices/fixrecord');
 const path = require('path');
 const appDir = path.dirname((require.main.filename));
 const fs = require('fs');
+const { SaleRecord } = require('../models/invoices/salerecord');
 
 module.exports = {
     //For store
@@ -227,6 +228,17 @@ module.exports = {
         const { customer_ID, car_ID } = req.body;
         await Cart.deleteCartItem(customer_ID, car_ID);
         return res.json(true);
+    }),
+
+    //for sale
+    getRevenue: tryCatch(async (req, res) => {
+        const data = await SaleRecord.getTotalPriceByNearestDateChunk('day', 10)
+        return res.json(data);
+    }),
+
+    getTopCar: tryCatch(async (req, res) => {
+        const data = await SaleRecord.getTopByQuantity(10);
+        return res.json(data);
     })
 
 }

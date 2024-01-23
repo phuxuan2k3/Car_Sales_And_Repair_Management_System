@@ -192,6 +192,14 @@ class SaleRecord {
             .execute();
         return data;
     }
+    static async getJoinWithCustomerById(id) {
+        const data = await SelectQuery.init(`${SR_Table.NAME} sr`)
+            .setSelectAll()
+            .addEqual('salerecord_id', id)
+            .addJoin('user_info u', 'u.id = sr.cus_id')
+            .execute('one');
+        return data;
+    }
     static async getAllDetailFull(salerecord_id) {
         const data = await SelectQuery.init(`sale_detail sd`)
             .setSelectAll()

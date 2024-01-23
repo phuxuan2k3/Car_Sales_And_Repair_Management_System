@@ -31,8 +31,7 @@ ul {
     width: 24%;
 }
 
-.title
-{
+.title {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 20px;
 }
@@ -40,4 +39,15 @@ ul {
 .bold {
     font-weight: bold;
     font-size: 40px;
+}
+
+.single_quick_activity {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s, transform 1s;
+}
+
+.single_quick_activity.show {
+    opacity: 1;
+    transform: translateY(0);
 }
