@@ -25,16 +25,21 @@ pre {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.errMss::-webkit-input-placeholder {
-    color: red;
+.inlinePrimary {
+    color: var(--secondaryColor) !important;
+    background-color: var(--primaryColor) !important;
 }
 
-/* cua An Ngo */
 .textWarning {
     color: var(--warningColor) !important;
 }
 
 .bgWarning {
+    background-color: var(--warningColor) !important;
+}
+
+.inlineWarning {
+    color: var(--secondaryColor) !important;
     background-color: var(--warningColor) !important;
 }
 

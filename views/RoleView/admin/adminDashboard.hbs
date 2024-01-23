@@ -1,0 +1,375 @@
+<style>
+    .tabs .active  {
+        background-color: var(--primaryColor) !important;
+    }
+    .tabs button {
+        color: gray ;
+    }
+</style>
+
+<div class="container-fluid">
+    {{> nav}}
+    <div class="row">
+        <div class="col-3 tabs">
+            <div class="nav flex-column nav-pills vh-100 me-3" id="v-pills-tab"
+                role="tablist"
+                aria-orientation="vertical">
+                <div class="card w-100 h-100 border border-0">
+                    <div class="card-body" id="permissionsContainer">
+                        <button
+                            class="w-100 text-start nav-link active mb-1"
+                            id="v-pills-all-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#v-pills-all" type="button"
+                            role="tab"
+                            aria-controls="v-pills-all"
+                            aria-selected="true"
+                            data-permission><i
+                                class="fa-solid fa-house me-2"></i>All</button>
+                        <button class="w-100 text-start nav-link mb-1"
+                            id="v-pills-customer-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-customer" type="button"
+                            role="tab" aria-controls="v-pills-customer"
+                            aria-selected="false"
+                            data-permission="cus"><i
+                                class="fa-regular fa-file-lines me-2"></i>Customer</button>
+                        <button class="w-100 text-start nav-link mb-1"
+                            id="v-pills-mechanic-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-mechanic" type="button"
+                            role="tab" aria-controls="v-pills-mechanic"
+                            aria-selected="false"
+                            data-permission="mec"><i
+                                class="fa-regular fa-file-lines me-2"></i>Mechanic</button>
+                        <button class="w-100 text-start nav-link mb-1"
+                            id="v-pills-storage-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-storage" type="button"
+                            role="tab" aria-controls="v-pills-storage"
+                            aria-selected="false"
+                            data-permission="sm"><i
+                                class="fa-regular fa-file-lines me-2"></i>Storage
+                            Manager</button>
+                        <button class="w-100 text-start nav-link mb-1"
+                            id="v-pills-sale-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-sale" type="button"
+                            role="tab" aria-controls="v-pills-sale"
+                            aria-selected="false"
+                            data-permission="sa"><i
+                                class="fa-regular fa-file-lines me-2"></i>Sale
+                            Manager</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-9 ">
+            <div class="card-body p-4 bg-white"
+                style="height:100%; min-height:100%;">
+                <div class="container w-100"
+                    style="overflow: hidden;position: relative;min-height:100%; height:auto;">
+                    {{!-- List content --}}
+                    <div class="container" id="tableContainer">
+                        {{!-- Header --}}
+                        <div class="row mt-2 mb-4">
+                            <div class="col-6 tab-content"
+                                id="v-pills-tabContent">
+                                <div class="tab-pane fade active show"
+                                    id="v-pills-all" role="tabpanel"
+                                    aria-labelledby="v-pills-all-tab d-flex flex-row"
+                                    tabindex="0">
+                                    <h1>All</h1>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-customer"
+                                    role="tabpanel"
+                                    aria-labelledby="v-pills-all-tab d-flex flex-row"
+                                    tabindex="0">
+                                    <h1>Customer</h1>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-mechanic"
+                                    role="tabpanel"
+                                    aria-labelledby="v-pills-all-tab d-flex flex-row"
+                                    tabindex="0">
+                                    <h1>Mechanic</h1>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-storage"
+                                    role="tabpanel"
+                                    aria-labelledby="v-pills-all-tab d-flex flex-row"
+                                    tabindex="0">
+                                    <h1>Storage Manager</h1>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-sale"
+                                    role="tabpanel"
+                                    aria-labelledby="v-pills-all-tab d-flex flex-row"
+                                    tabindex="0">
+                                    <h1>Sale Manager</h1>
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex align-items-center">
+                                <div class="searchForm me-auto w-100 mx-3">
+                                    <i class="fa fa-search"
+                                        aria-hidden="true"></i>
+                                    <input
+                                        id="searchInput"
+                                        class="form-control me-auto w-100 rounded-pill"
+                                        type="search"
+                                        placeholder="Search username"
+                                        aria-label="Search">
+                                </div>
+                            </div>
+                            <div class="col-2 d-flex align-items-center">
+                                <button onclick="toggleContent('form')"
+                                    class="btn inlinePrimary ms-auto"><i
+                                        class="fa-solid fa-plus"></i> Add
+                                    New</button>
+                            </div>
+                        </div>
+
+                        {{!-- Table --}}
+                        <table id="contentTable"
+                            class="table table-hover mb-2">
+                            <thead class="table-primary"
+                                style="border-bottom: 2px solid black">
+                                <tr>
+                                    <th>First name</th>
+                                    <th>Last name</th>
+                                    <th>Username</th>
+                                    <th>Permission</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userContent">
+                            </tbody>
+                        </table>
+
+                        {{!-- Pagination Container --}}
+                        <div class="row my-4 align-items-center px-3">
+                            {{!-- PerPage --}}
+                            <div class="col-auto row align-items-center">
+                                <div class="col-auto me-2">
+                                    <label for="perPageInput"
+                                        class="col-form-label">Per Page</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="number" id="perPageInput"
+                                        value="5"
+                                        min="1"
+                                        max="10"
+                                        class="form-control">
+                                </div>
+                            </div>
+
+                            {{!-- Pagination --}}
+                            <ul id="paginationContainer"
+                                class="col-auto pagination ms-auto my-auto">
+                                <li class="page-item" onclick="decrPage()">
+                                    <a class="page-link"
+                                        href="#/"
+                                        aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+
+                                <li class="page-item" onclick="incrPage()">
+                                    <a class="page-link"
+                                        href="#/"
+                                        aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    {{!-- Detail content --}}
+                    <div class="slideRight" id="formContainer">
+                        <h3 class="mt-2" id="formHeader"></h3>
+                        <form method="post"
+                            class="m-4 form mt-3"
+                            id="detailForm">
+                            <div class="row col-12 mb-3">
+                                <div class="row col-8 pe-3">
+                                    <div class="mb-2">
+                                        <label for="Username"
+                                            class="form-label">Username</label>
+                                        <input required
+                                            name="username"
+                                            type="text"
+                                            class="form-control w-100"
+                                            id="Username"
+                                            placeholder="Employee username">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label for="Password"
+                                            class="form-label">Password</label>
+                                        <input
+                                            name="password"
+                                            type="text"
+                                            id="Password"
+                                            class="form-control w-100"
+                                            placeholder="Password" />
+                                    </div>
+                                </div>
+                                <div class="row col-4 p-3">
+                                    <label
+                                        class="form-label col-12 ms-2">Permission</label>
+                                    <div class="col-6 form-check">
+                                        <input class="form-check-input"
+                                            type="radio"
+                                            name="permission"
+                                            value="cus"
+                                            id="permissionCusRad"
+                                            checked>
+                                        <label class="form-check-label"
+                                            for="permissionCusRad">
+                                            Customer
+                                        </label>
+                                    </div>
+                                    <div class="col-6 form-check">
+                                        <input class="form-check-input"
+                                            type="radio"
+                                            name="permission"
+                                            value="mec"
+                                            id="permissionMecRad">
+                                        <label class="form-check-label"
+                                            for="permissionMecRad">
+                                            Mechanic
+                                        </label>
+                                    </div>
+                                    <div class="col-6 form-check">
+                                        <input class="form-check-input"
+                                            type="radio"
+                                            name="permission"
+                                            value="sm"
+                                            id="permissionStoRad">
+                                        <label class="form-check-label"
+                                            for="permissionStoRad">
+                                            Storage
+                                        </label>
+                                    </div>
+                                    <div class="col-6 form-check">
+                                        <input class="form-check-input"
+                                            type="radio"
+                                            name="permission"
+                                            value="sa"
+                                            id="permissionSalRad">
+                                        <label class="form-check-label"
+                                            for="permissionSalRad">
+                                            Sale
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row col-12 mb-2 gy-2">
+                                <div class="col-6">
+                                    <label for="Firstname"
+                                        class="form-label">First Name</label>
+                                    <input
+                                        name="firstname"
+                                        type="text"
+                                        class="form-control w-100"
+                                        id="Firstname"
+                                        placeholder="First name">
+                                </div>
+                                <div class="col-6">
+                                    <label for="Lastname"
+                                        class="form-label">Last Name</label>
+                                    <input
+                                        name="lastname"
+                                        type="text"
+                                        class="form-control w-100"
+                                        id="Lastname"
+                                        placeholder="Last name">
+                                </div>
+                                <div class="col-6">
+                                    <label for="Phonenumber"
+                                        class="form-label">Phone Number</label>
+                                    <input name="phonenumber"
+                                        type="text"
+                                        class="form-control w-100"
+                                        id="Phonenumber"
+                                        placeholder="Phone number">
+                                </div>
+                                <div class="col-6">
+                                    <label for="Dob"
+                                        class="form-label">Date of Birth</label>
+                                    <input
+                                        name="dob"
+                                        type="date"
+                                        class="form-control w-100"
+                                        id="Dob"
+                                        placeholder="Date of birth">
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="Address"
+                                        class="form-label">Address</label>
+                                    <input name="address"
+                                        type="text"
+                                        class="form-control w-100"
+                                        id="Address"
+                                        placeholder="Address">
+                                </div>
+                            </div>
+                            <div class="row col-12 mb-2">
+                                <div class="col-6">
+                                    <button type="button"
+                                        onclick="toggleContent('table')"
+                                        class="btn btn-outline-primary rounded-5 w-100">Cancel</button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="button"
+                                        onclick="formSubmit()"
+                                        class="btn btn-primary rounded-5 w-100">Confirm</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Delete Modal --}}
+<div class="modal fade modalfade" id="deleteModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title textDanger"
+                    id="exampleModalLabel">Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="deleteModalContent">
+            </div>
+            <div class="modal-footer">
+                <div class="row w-100">
+                    <div class="col-6">
+                        <button type="button"
+                            class="btn outlineDanger rounded-4 w-100"
+                            data-bs-dismiss="modal">Decline</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" onclick="modalDeleteAccept()"
+                            data-bs-dismiss="modal"
+                            class="btn inlineDanger rounded-4 w-100">Accept</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Toast --}}
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive"
+        data-bs-autohide="true" data-bs-delay="2000"
+        aria-atomic="true">
+        <div class="toast-header">
+            <p class="fs-6 my-auto"></p>
+            <button type="button" class="ms-auto me-2 btn-close"
+                data-bs-dismiss="toast"
+                aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+        </div>
+    </div>
+</div>

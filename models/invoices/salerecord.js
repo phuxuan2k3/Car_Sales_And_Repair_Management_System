@@ -133,10 +133,7 @@ class SaleRecord {
 // Test
 // <<<< =============================================
 
-const saleDetailFlag = 0;
-const saleRecordFlag = 0;
-const insertNullFlag = 0;
-const statisticFlag = 0;
+
 
 // if (saleDetailFlag) {
 //     (async () => {
