@@ -129,40 +129,40 @@ class CarInvoice {
 // Test || set flag to 1 for testing
 // <<<< =============================================
 
-const flagReport = 0;
+const flagReport = 1;
 const flagInvoice = 0;
-const flagStatistic = 0;
+const flagStatistic = 1;
 
-// // Car Report
-// if (flagReport) {
-//     (async () => {
-//         // in: invoice id
-//         // out: Array of CarReport
-//         var test = await CarReport.getReportsFromInvoice(300);
-//         console.log(test);
+// Car Report
+if (flagReport) {
+    (async () => {
+        // in: invoice id
+        // out: Array of CarReport
+        var test = await CarReport.getReportsFromInvoice(300);
+        console.log(test);
 
-//         // in: start, end date
-//         // out: Array of CarReport
-//         var test = await CarReport.getReportsByDate(new Date("2024/01/01"), new Date());
-//         console.log(test);
+        // in: start, end date
+        // out: Array of CarReport
+        var test = await CarReport.getReportsByDate(new Date("2024/01/01"), new Date());
+        console.log(test);
 
-//         // in: CarReport 
-//         // out: {importinvoice_id, car_id}
-//         var test = CarReport.castParam(299, 12, 5, new Date());
-//         var res = await CarReport.insert(test);
-//         console.log(res);
+        // in: CarReport 
+        // out: {importinvoice_id, car_id}
+        var test = CarReport.castParam(299, 12, 5, new Date());
+        var res = await CarReport.insert(test);
+        console.log(res);
 
-//         // in: CarReport
-//         // out: rowCount
-//         var test = await CarReport.update(CarReport.castParam(299, 12, 0, new Date()));
-//         console.log(test);
+        // in: CarReport
+        // out: rowCount
+        var test = await CarReport.update(CarReport.castParam(299, 12, 0, new Date()));
+        console.log(test);
 
-//         // in: invoice id, car id (obj)
-//         // out: rowCount
-//         var test = await CarReport.delete({ importinvoice_id: 299, car_id: 12 });
-//         console.log(test);
-//     })();
-// }
+        // in: invoice id, car id (obj)
+        // out: rowCount
+        var test = await CarReport.delete({ importinvoice_id: 299, car_id: 12 });
+        console.log(test);
+    })();
+}
 
 
 if (flagStatistic) {
