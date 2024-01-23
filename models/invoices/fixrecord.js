@@ -75,6 +75,7 @@ class FixDetail {
         return res;
     }
     static async update(entity) {
+        console.log(entity)
         const res = await ExactUpdateQuery.init(FD_Table.NAME).default(entity, [FD_Table.fixdetail_id]).execute();
         return res;
     }

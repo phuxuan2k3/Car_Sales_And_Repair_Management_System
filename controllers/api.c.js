@@ -10,6 +10,8 @@ const { FixRecord } = require('../models/invoices/fixrecord');
 const path = require('path');
 const appDir = path.dirname((require.main.filename));
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
+
 const { SaleRecord } = require('../models/invoices/salerecord');
 
 module.exports = {
@@ -171,6 +173,15 @@ module.exports = {
             res.json({ success: false, message: error });
         };
     }),
+
+    updateAutoPartQuantity: tryCatch(async (req, res) => {
+        const {ap_id,quantity} = req.body;
+        const data = await AutoPart.updateQuanTity(ap_id,quantity);
+        res.json(data);
+    }
+    ),
+
+
     //Fixed car API
     getAllFixedCar: tryCatch(async (req, res) => {
         const data = await FixedCar.getAll();
@@ -190,7 +201,7 @@ module.exports = {
     addNewFixedCar: tryCatch(async (req, res) => {
         const entity = req.body;
         const cusId = await FixedCar.insert(entity);
-        const data = await FixRecord.insert(FixRecord.castParam(null, entity.car_plate, new Date(), 0, 'Processing', false))
+        const data = await FixRecord.insert(FixRecord.castParam(null, entity.car_plate, new Date(), 0, 'Processing', false));
         res.json(data);
     }),
     //User
@@ -239,6 +250,75 @@ module.exports = {
     getTopCar: tryCatch(async (req, res) => {
         const data = await SaleRecord.getTopByQuantity(10);
         return res.json(data);
+    }),
+
+
+    //PayMent
+    getAccount: tryCatch(async (req, res) => {
+        let token = jwt.sign({ id: req.user.id }, ENV.SECRET_KEY);
+        const data = {
+            token: token
+        }
+        const rs = await fetch(`http://localhost:${ENV.PAYMENT_PORT}/account`, {
+            method: 'post',
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+            body: JSON.stringify(data)
+        });
+        if (rs.ok) {
+            const rsToken = await rs.json();
+            const verifyData = jwt.verify(rsToken,ENV.VERIFY_KEY);
+            return res.json(verifyData.account)
+        }
+        return res.status('400').send('Account not found or err');
+    }),
+    deposits: tryCatch(async (req, res) => {
+        let token = jwt.sign(req.body, ENV.SECRET_KEY);
+        const data = {
+            token: token,
+        }
+        const rs = await fetch(`http://localhost:${ENV.PAYMENT_PORT}/deposit`, {
+            method: 'post',
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+            body: JSON.stringify(data)
+        });
+        if (rs.ok) {
+            const rsToken = await rs.json();
+            const verifyData = jwt.verify(rsToken,ENV.VERIFY_KEY);
+            return res.json(verifyData)
+        }
+        return res.status('400').send('Error');
+        
+    }),
+    transferMoney: tryCatch(async (req, res) => {
+        const transactionData = req.body;
+        let token = jwt.sign(transactionData, ENV.SECRET_KEY);
+        const data = {
+            token: token
+        }
+        const rs = await fetch(`http://localhost:${ENV.PAYMENT_PORT}/transaction`, {
+            method: 'post',
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+            body: JSON.stringify(data)
+        });
+        if (rs.ok) {
+            const rsToken = await rs.json();
+            const verifyData = jwt.verify(rsToken,ENV.VERIFY_KEY);
+            return res.json(verifyData)
+        }
+        return res.status('400').send('Error');
     })
+
 
 }

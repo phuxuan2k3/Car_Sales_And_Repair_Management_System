@@ -8,5 +8,6 @@ router.get('/repairservice',guestController.getRepairService);
 router.get('/repairservice/detail',guestController.getRepairDetail);
 router.get('/cart',guestController.getCartPage);
 router.get('/cart/detail',guestController.getRecordDetail);
+router.get('/deposit',guestController.getDepositPage);
 
 module.exports = router;

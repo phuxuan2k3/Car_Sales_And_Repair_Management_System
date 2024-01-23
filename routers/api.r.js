@@ -29,6 +29,7 @@ router.get('/ap/detail', ApiController.getAp);
 router.get('/ap/ap_page', ApiController.getApPage);
 router.get('/ap/most_ap', ApiController.getMostAp);
 router.delete('/ap', ApiController.deleteAp);
+router.post('/ap/update-quantity',ApiController.updateAutoPartQuantity)
 
 //Fixed car
 router.get('/car/fixed/all', ApiController.getAllFixedCar);
@@ -98,6 +99,12 @@ router.get('/cart/find', ApiController.getCarInCart);
 router.post('/cart/add', ApiController.insertToCart);
 router.post('/cart/delete', ApiController.deleteCartItem);
 router.post('/cart/update_quantity', ApiController.updateCarQuanTityInCart);
+
+//Payment 
+router.get('/payment/account',ApiController.getAccount)
+router.post('/payment/transfer',ApiController.transferMoney)
+router.post('/payment/deposits',ApiController.deposits)
+
 
 //chart
 router.get('/revenue', ApiController.getRevenue);

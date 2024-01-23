@@ -24,14 +24,21 @@ let failedAlert = $('#failedAlert');
 let successAlert = $('#successAlert');
 
 const validation = () => {
-    if (inputCarPlate.val() != null && inputCarPlate.val() != '') return true;;
-    inputCarPlate.addClass('border border-danger text-danger errMss');
-    inputCarPlate.attr('placeholder', 'Please enter your car-plate');
-    return false;
+    let inputCarPlate = $('#inputCarPlate');
+    var regex = /^\d{2}[A-Z]{1}-\d{5}$/;
+    var inputString = inputCarPlate.val();
+    if (regex.test(inputString)) {
+        return true;
+    } else {
+        inputCarPlate.val('')
+        inputCarPlate.addClass('border border-danger text-danger errMss');
+        inputCarPlate.attr('placeholder', 'Invalid car-plate');
+        return false;
+    }
 }
 
 inputCarPlate.on('click', ((e) => {
-    inputCarPlate.attr('placeholder', '68K2-XXXXX');
+    inputCarPlate.attr('placeholder', '68K-XXXXX');
     inputCarPlate.removeClass('border border-danger text-danger errMss');
 }))
 
@@ -42,6 +49,7 @@ registerButton.on('click',async (e) => {
             car_plate: inputCarPlate.val(),
             id: userId
         }
+        console.log(entity)
         const serverResponse = await fetch('/api/car/fixed/add', {
             method: 'post',
             credentials: "same-origin",
@@ -110,10 +118,10 @@ const generateTable = async () => {
                             <td scope="col">${index + 1}</td>
                             <td scope="col">${record.car_plate}</td>
                             <td scope="col">${record.date}</td>
-                            <td scope="col">${record.total_price}</td>
+                            <td scope="col">${record.total_price}$</td>
                             <td scope="col">${record.status}</td>
                             <td scope="col">
-                                <button total_price="${record.total_price}" recordId="${record.fixrecord_id}" car_plate="${record.car_plate}" date="${record.date}" class="paymentButton btn btn-${record.pay == true ? `success` : `primary`} w-75"  ${record.status != `done` || record.pay == true ? `disabled` : ``} href="#" role="button">${record.pay == true && record.status == `done` ? "Completed" : "Pay"}</button>
+                                <button total_price="${record.total_price}" recordId="${record.fixrecord_id}" car_plate="${record.car_plate}" date="${record.date}" class="paymentButton btn btn-${record.pay == true ? `success` : `primary`} w-75"  ${record.status != `Done` || record.pay == true ? `disabled` : ``} href="#" role="button">${record.pay == true && record.status == `Done` ? "Completed" : "Pay"}</button>
                             </td>
                         </tr>
             `)
@@ -156,16 +164,16 @@ const generateTable = async () => {
         falseTransaction = $('#falseTransaction');
         cancelButton = $('#cancelButton');
         paymentAlert = $('#paymentAlert');
-        paymentAlert.css('opacity', 1)
+        paymentAlert.css('opacity', 1);
         paymentInfo = $('#paymentInfo');
-        const rs = await fetch(`http://localhost:3001/account?id=${userId}`);
+        const rs = await fetch(`/api/payment/account`);
         const account = await rs.json();
         paymentInfo.empty();
         paymentInfo.append(`
             <p>Order ID: ${$(this).attr('recordId')}</p>
             <p>Date: ${$(this).attr('date')}</p>
-            <p>Your balance: ${account.balance}</p>
-            <p>Total price: ${$(this).attr('total_price')}</p>
+            <p>Your balance: ${account.balance}$</p>
+            <p>Total price: ${$(this).attr('total_price')}$</p>
         `)
         amount = $(this).attr('total_price');
         recordId = parseInt($(this).attr('recordId'));
@@ -189,7 +197,7 @@ const generateTable = async () => {
                 amount: parseFloat(amount),
                 content: "Repair service - SGXAUTO"
             }
-            const serverResponse = await fetch('http://localhost:3001/transaction', {
+            const serverResponse = await fetch('/api/payment/transfer', {
                 method: 'post',
                 credentials: "same-origin",
                 headers: {
@@ -228,14 +236,14 @@ const generateTable = async () => {
     })
 }
 
-const init = async() => {
+const init = async () => {
     let rs = await fetch(`/api/car/fixed/find?id=${userId}`);
     fixedCar = await rs.json();
     generateTable();
 }
 
 let carPlateInput = $('#carPlateInput');
-carPlateInput.on('input',async function(e) {
+carPlateInput.on('input', async function (e) {
     const car_plate = $(this).val();
     let rs = await fetch(`/api/car/fixed/find?id=${userId}&car_plate=${car_plate}`);
     fixedCar = await rs.json();
