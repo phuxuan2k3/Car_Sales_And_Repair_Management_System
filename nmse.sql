@@ -81,6 +81,37 @@ $$;
 
 
 --
+-- Name: add_oldcar(text, text, text, integer, double precision, text, integer, integer, integer); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.add_oldcar(carname text, brand text, type text, year integer, price double precision, des text, carid integer, qut integer, smid integer) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+DECLARE 
+invoiceID integer;
+current_date_var DATE;
+BEGIN
+current_date_var := CURRENT_DATE;
+if (qut==0) then
+
+	update car
+	set "car_name" = carname,"brand"=brand,"type"=type,"price"=price,"des"=des
+	where "id" = carID;
+else
+update car 
+set quantity = quantity + qut
+where "id" = carID;
+
+insert into car_import_invoice(sm_id) values (smid) returning importinvoice_id into invoiceID;
+insert into car_import_report(importinvoice_id,car_id,quantity,date) values(invoiceID, carID,qut,current_date_var);
+end if;
+return 1;
+
+END;
+$$;
+
+
+--
 -- Name: add_olditem(integer, integer, integer); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -254,6 +285,41 @@ $$;
 
 
 --
+-- Name: update_ap(text, text, double precision, integer, integer, integer); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.update_ap(apname text, csupplier text, cprice double precision, apid integer, qut integer, smid integer) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+DECLARE 
+invoiceID integer;
+current_date_var DATE;
+BEGIN
+current_date_var := CURRENT_DATE;
+if (qut=0) then
+
+	update auto_part
+	set "name" = apname,"supplier"=csupplier,"price"=cprice
+	where "ap_id" = apid;
+else
+update auto_part
+set "name" = apname,"supplier"=csupplier,"price"=cprice
+where "ap_id" = apid;
+
+update auto_part 
+set quantity = quantity + qut
+where "ap_id" = apID;
+
+insert into ap_import_invoice(sm_id) values (smid) returning importinvoice_id into invoiceID;
+insert into ap_import_report(importinvoice_id,ap_id,date,quantity) values(invoiceID, apID,current_date_var,qut);
+end if;
+return 1;
+
+END;
+$$;
+
+
+--
 -- Name: update_ap_quantity_on_fix(); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -266,6 +332,70 @@ BEGIN
   WHERE ap_id = (SELECT ap_id FROM fix_detail WHERE fixdetail_id = NEW.fixdetail_id);
   
   RETURN NEW;
+END;
+$$;
+
+
+--
+-- Name: update_car(text, text, double precision, integer, integer, integer); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.update_car(apname text, supplier text, price double precision, apid integer, qut integer, smid integer) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+DECLARE 
+invoiceID integer;
+current_date_var DATE;
+BEGIN
+current_date_var := CURRENT_DATE;
+if (qut=0) then
+
+	update auto_part
+	set "name" = apname,"supplier"=supplier,"price"=price
+	where "ap_id" = apid;
+else
+update auto_part 
+set quantity = quantity + qut
+where "ap_id" = apID;
+
+insert into ap_import_invoice(sm_id) values (smid) returning importinvoice_id into invoiceID;
+insert into ap_import_report(importinvoice_id,ap_id,date,quantity) values(invoiceID, apID,current_date_var,qut);
+end if;
+return 1;
+
+END;
+$$;
+
+
+--
+-- Name: update_car(text, text, text, integer, double precision, text, integer, integer, integer); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.update_car(carname text, cbrand text, ctype text, cyear integer, cprice double precision, des text, carid integer, qut integer, smid integer) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+DECLARE 
+invoiceID integer;
+current_date_var DATE;
+BEGIN
+current_date_var := CURRENT_DATE;
+
+if (qut=0) then
+
+	update car
+	set "car_name" = carname,"brand"=cbrand,"type"=ctype,"price"=cprice,"des"=des
+	where "id" = carID;
+else
+update car
+set "car_name" = carname,"brand"=cbrand,"type"=ctype,"price"=cprice,"description"=des,quantity = quantity + qut
+where "id" = carID;
+
+
+insert into car_import_invoice(sm_id) values (smid) returning importinvoice_id into invoiceID;
+insert into car_import_report(importinvoice_id,car_id,quantity,date) values(invoiceID, carID,qut,current_date_var);
+end if;
+return 1;
+
 END;
 $$;
 
@@ -296,7 +426,7 @@ CREATE FUNCTION public.update_car_quantity_on_sale() RETURNS trigger
     AS $$
 BEGIN
   UPDATE car
-  SET quantity = quantity - 1
+  SET quantity = quantity - new.quantity
   WHERE id = new.car_id;
   
   RETURN NEW;
@@ -412,7 +542,8 @@ CREATE TABLE public.car (
     price double precision,
     description text,
     quantity integer,
-    id integer NOT NULL
+    id integer NOT NULL,
+    CONSTRAINT car_qunt CHECK ((quantity >= 0))
 );
 
 
@@ -443,7 +574,7 @@ ALTER SEQUENCE public.car_car_id_seq OWNED BY public.car.id;
 CREATE TABLE public.car_import_invoice (
     importinvoice_id integer NOT NULL,
     sm_id integer NOT NULL,
-    total double precision
+    total double precision DEFAULT 0
 );
 
 
@@ -987,6 +1118,7 @@ COPY public.ap_import_invoice (importinvoice_id, sm_id, total) FROM stdin;
 398	81	0
 399	81	0
 400	49	0
+402	3	100
 \.
 
 
@@ -1095,6 +1227,7 @@ COPY public.ap_import_report (importinvoice_id, ap_id, date, quantity) FROM stdi
 248	17	2024-01-13	7
 216	19	2023-11-29	10
 259	14	2024-01-07	9
+402	14	2024-01-22	10
 \.
 
 
@@ -1103,9 +1236,9 @@ COPY public.ap_import_report (importinvoice_id, ap_id, date, quantity) FROM stdi
 --
 
 COPY public.auto_part (name, supplier, price, ap_id, quantity) FROM stdin;
-Spark Plugs	XYZ Motors	6	14	6
 Air Filter	AutoTech Supplies	13	15	8
 Fuel Pump	CarCare Depot	60	17	4
+Spark Plugs	abc	10	14	16
 Brake Pads	ABC Auto Parts	50	13	5
 Radiator	PartsRUs	80	16	1
 Timing Belt	Speedy Auto	26	18	6
@@ -1120,6 +1253,8 @@ Battery	PowerDrive Inc.	100	21	20
 --
 
 COPY public.car (car_name, brand, type, year, price, description, quantity, id) FROM stdin;
+xe2	a	b	2024	100	xeabc	30	25
+Ford Mustang	Ford	Sports Car	2023	45000	A classic American muscle car with a powerful engine and iconic design.	2	2
 Tesla Model 3	Tesla	Electric	2022	45000	An electric sedan with cutting-edge technology and impressive performance.	3	5
 Volkswagen Golf	Volkswagen	Hatchback	2023	23000	A versatile hatchback with a comfortable ride and European styling.	3	6
 Jeep Wrangler	Jeep	Off-Road	2022	35000	An iconic off-road vehicle with a removable top and rugged design.	6	7
@@ -1131,7 +1266,6 @@ Chevrolet Corvette	Chevrolet	Sports Car	2022	60000	A high-performance sports car
 Toyota Camry	Toyota	Sedan	2022	25000	A popular midsize sedan known for reliability and fuel efficiency.	0	1
 Chevrolet Silverado	Chevrolet	Truck	2023	35000	A rugged pickup truck known for its towing capacity and durability.	8	4
 Honda CR-V	Honda	SUV	2022	30000	A compact SUV that offers a spacious interior and advanced safety features.	1	3
-Ford Mustang	Ford	Sports Car	2023	45000	A classic American muscle car with a powerful engine and iconic design.	-1	2
 \.
 
 
@@ -1341,6 +1475,9 @@ COPY public.car_import_invoice (importinvoice_id, sm_id, total) FROM stdin;
 399	71	\N
 400	68	\N
 401	9	\N
+403	3	1000
+405	3	1000
+406	3	1000
 \.
 
 
@@ -1449,6 +1586,9 @@ COPY public.car_import_report (importinvoice_id, car_id, quantity, date) FROM st
 209	8	3	2023-11-30
 273	7	7	2023-12-05
 233	1	9	2024-01-03
+403	25	10	2024-01-22
+405	25	10	2024-01-22
+406	25	10	2024-01-22
 \.
 
 
@@ -2356,7 +2496,7 @@ alexander_great	iloveyou	sa	100	Bích Ðào	5432420\r\n	2023-11-29	Cần Thơ	Ph
 -- Name: ap_import_invoice_importinvoice_id2_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.ap_import_invoice_importinvoice_id2_seq', 401, true);
+SELECT pg_catalog.setval('public.ap_import_invoice_importinvoice_id2_seq', 402, true);
 
 
 --
@@ -2370,14 +2510,14 @@ SELECT pg_catalog.setval('public.auto_part_ap_id_seq', 153, true);
 -- Name: car_car_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.car_car_id_seq', 24, true);
+SELECT pg_catalog.setval('public.car_car_id_seq', 25, true);
 
 
 --
 -- Name: car_import_invoice_importinvoice_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.car_import_invoice_importinvoice_id_seq', 402, true);
+SELECT pg_catalog.setval('public.car_import_invoice_importinvoice_id_seq', 406, true);
 
 
 --
