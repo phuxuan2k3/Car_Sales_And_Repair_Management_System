@@ -32,7 +32,7 @@ current_date_var := CURRENT_DATE;
 insert into car(car_name,brand,type,year,price,description,quantity) values(carname,brand,"type","year",price,des, qut) returning id into carID;
 insert into car_import_invoice(sm_id) values (smid) returning importinvoice_id into invoiceID;
 insert into car_import_report(importinvoice_id,car_id,quantity,date) values(invoiceID, carID,qut,current_date_var);
-return 1;
+return carID;
 END;
 $$;
 
@@ -53,82 +53,7 @@ current_date_var := CURRENT_DATE;
 insert into auto_part("name",supplier,price,quantity) values(apname,supplier,price, qut) returning ap_id into apID;
 insert into ap_import_invoice(sm_id) values (smid) returning importinvoice_id2 into invoiceID;
 insert into ap_import_report(importinvoice_id,ap_id,date,quantity) values(invoiceID, apID,current_date_var,qut);
-return 1;
-END;
-$$;
-
-
---
--- Name: add_oldcar(integer, integer, integer); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION public.add_oldcar(carid integer, qut integer, smid integer) RETURNS boolean
-    LANGUAGE plpgsql
-    AS $$
-DECLARE 
-invoiceID integer;
-current_date_var DATE;
-BEGIN
-current_date_var := CURRENT_DATE;
-update car 
-set quantity = quantity + qut
-where "id" = carID;
-insert into car_import_invoice(sm_id) values (smid) returning importinvoice_id into invoiceID;
-insert into car_import_report(importinvoice_id,car_id,quantity,date) values(invoiceID, carID,qut,current_date_var);
-return 1;
-END;
-$$;
-
-
---
--- Name: add_oldcar(text, text, text, integer, double precision, text, integer, integer, integer); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION public.add_oldcar(carname text, brand text, type text, year integer, price double precision, des text, carid integer, qut integer, smid integer) RETURNS boolean
-    LANGUAGE plpgsql
-    AS $$
-DECLARE 
-invoiceID integer;
-current_date_var DATE;
-BEGIN
-current_date_var := CURRENT_DATE;
-if (qut==0) then
-
-	update car
-	set "car_name" = carname,"brand"=brand,"type"=type,"price"=price,"des"=des
-	where "id" = carID;
-else
-update car 
-set quantity = quantity + qut
-where "id" = carID;
-
-insert into car_import_invoice(sm_id) values (smid) returning importinvoice_id into invoiceID;
-insert into car_import_report(importinvoice_id,car_id,quantity,date) values(invoiceID, carID,qut,current_date_var);
-end if;
-return 1;
-
-END;
-$$;
-
-
---
--- Name: add_olditem(integer, integer, integer); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION public.add_olditem(apid integer, qut integer, smid integer) RETURNS boolean
-    LANGUAGE plpgsql
-    AS $$
-DECLARE 
-invoiceID integer;
-current_date_var DATE;
-BEGIN
-current_date_var := CURRENT_DATE;
-update auto_part 
-set quantity = quantity + qut
-where "ap_id" = apID;
-insert into ap_import_invoice(sm_id) values (smid) returning importinvoice_id2 into invoiceID;
-insert into ap_import_report(importinvoice_id,ap_id,date,quantity) values(invoiceID, apID,current_date_var,qut);
-return 1;
+return apID;
 END;
 $$;
 
@@ -337,37 +262,6 @@ $$;
 
 
 --
--- Name: update_car(text, text, double precision, integer, integer, integer); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION public.update_car(apname text, supplier text, price double precision, apid integer, qut integer, smid integer) RETURNS boolean
-    LANGUAGE plpgsql
-    AS $$
-DECLARE 
-invoiceID integer;
-current_date_var DATE;
-BEGIN
-current_date_var := CURRENT_DATE;
-if (qut=0) then
-
-	update auto_part
-	set "name" = apname,"supplier"=supplier,"price"=price
-	where "ap_id" = apid;
-else
-update auto_part 
-set quantity = quantity + qut
-where "ap_id" = apID;
-
-insert into ap_import_invoice(sm_id) values (smid) returning importinvoice_id into invoiceID;
-insert into ap_import_report(importinvoice_id,ap_id,date,quantity) values(invoiceID, apID,current_date_var,qut);
-end if;
-return 1;
-
-END;
-$$;
-
-
---
 -- Name: update_car(text, text, text, integer, double precision, text, integer, integer, integer); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -383,7 +277,7 @@ current_date_var := CURRENT_DATE;
 if (qut=0) then
 
 	update car
-	set "car_name" = carname,"brand"=cbrand,"type"=ctype,"price"=cprice,"des"=des
+	set "car_name" = carname,"brand"=cbrand,"type"=ctype,"price"=cprice,"description"=des
 	where "id" = carID;
 else
 update car
