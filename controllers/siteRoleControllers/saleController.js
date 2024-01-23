@@ -8,6 +8,6 @@ const appDir = path.dirname((require.main.filename));
 
 module.exports = {
     getDashboard: tryCatch(async (req, res) => {
-        res.render('RoleView/store/storeDashboard', { nameOfUser: req.session.passport.user.nameOfUser, title: 'DashBoard', jsFile: 'storeDashboard.js', cssFile: 'store.css' });
+        res.render('RoleView/sale/dashboard', { nameOfUser: req.session.passport.user.nameOfUser, title: 'DashBoard', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css' });
     })
 }

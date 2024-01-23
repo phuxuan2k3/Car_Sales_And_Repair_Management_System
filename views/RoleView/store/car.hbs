@@ -6,11 +6,11 @@
                 aria-orientation="vertical">
                 <div class="card w-100 h-100 border border-0">
                     <div class="card-body">
-                        <button id="dashboard" class="w-100 text-start nav-link active mb-1" data-bs-toggle="pill"
+                        <button id="dashboard" class="w-100 text-start nav-link  mb-1" data-bs-toggle="pill"
                             data-bs-target="#v-pills-dashboard" type="button" role="tab"
                             aria-controls="v-pills-dashboard" aria-selected="true"><i
                                 class="fa-solid fa-house me-2"></i> <a style="all:unset" href="/">Dashboard</a></button>
-                        <button id="car" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
+                        <button id="car" class="w-100 text-start nav-link mb-1 active" data-bs-toggle="pill"
                             data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
                             aria-selected="false"><i class="fa-regular fa-file-lines me-2"></i><a style="all:unset"
                                 href="/car">Cars</a></button>
@@ -31,44 +31,45 @@
                         <i class="fa-solid fa-plus"></i> Add a new Car
                     </a>
                 </div>
-                {{#each cars}}
-                <div class="job-box d-md-flex align-items-center justify-content-between mb-30">
-                    <div class="job-left my-4 d-md-flex align-items-center flex-wrap">
-                        <div class="img-holder mr-md-4 mb-md-0 mb-4 mx-auto mx-md-0 d-md-none d-lg-flex">
-                            {{this.quantity}}
+                <div id="car-container">
+                    {{#each cars}}
+                    <div class="job-box d-md-flex align-items-center justify-content-between mb-30">
+                        <div class="job-left d-md-flex align-items-center flex-wrap">
+                            <img src="/images/cars/{{this.id}}/avatar.png" class="rounded-end-circle"
+                                style="height: 150px;width:150px">
+                            <div class="job-content">
+                                <h5 class="text-center text-md-left">{{this.car_name}}</h5>
+                                <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
+                                    <li class="mr-md-4 ms-5">
+                                        <i class="zmdi zmdi-car-wash"></i>{{this.brand}}
+                                    </li>
+                                    <li class="mr-md-4 ms-5">
+                                        <i class="zmdi zmdi-money mr-2"></i>{{this.price}}
+                                    </li>
+                                    <li class="mr-md-4 ms-5">
+                                        <i class="zmdi zmdi-drink"></i> {{this.type}}
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="job-content">
-                            <h5 class="text-center text-md-left">{{this.car_name}}</h5>
-                            <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
-                                <li class="mr-md-4 ms-5">
-                                    <i class="zmdi zmdi-car-wash"></i>{{this.brand}}
-                                </li>
-                                <li class="mr-md-4 ms-5">
-                                    <i class="zmdi zmdi-money mr-2"></i>{{this.price}}
-                                </li>
-                                <li class="mr-md-4 ms-5">
-                                    <i class="zmdi zmdi-drink"></i> {{this.type}}
-                                </li>
-                            </ul>
+                        <div class="col-1">
+                            <div class="job-right my-4 flex-shrink-0 ">
+                                <a href="/car/edit/{{this.id}}"
+                                    class="btn d-block w-100 d-sm-inline-block btn-light edit"><i
+                                        class="fa-solid fa-pen-to-square" style="color: #0b488e;"></i></a>
+                            </div>
+
+                            <div class="job-right my-4 flex-shrink-0 " data-bs-target="#deleteModal"
+                                data-bs-toggle="modal">
+                                <a href="#!" class="btn d-block w-100 d-sm-inline-block btn-light delete"
+                                    data-bs-target="#deleteModal" data-bs-toggle="modal" data-id={{this.id}}><i
+                                        class="fa-solid fa-trash" style="color: #7e1811;" data-id={{this.id}}></i></a>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="col-1">
-                        <div class="job-right my-4 flex-shrink-0 ">
-                            <a href="/car/edit/{{this.id}}"
-                                class="btn d-block w-100 d-sm-inline-block btn-light edit"><i
-                                    class="fa-solid fa-pen-to-square" style="color: #0b488e;"></i></a>
-                        </div>
-
-                        <div class="job-right my-4 flex-shrink-0 " data-bs-target="#deleteModal" data-bs-toggle="modal">
-                            <a href="#!" class="btn d-block w-100 d-sm-inline-block btn-light delete"
-                                data-bs-target="#deleteModal" data-bs-toggle="modal" data-id={{this.id}}><i
-                                    class="fa-solid fa-trash" style="color: #7e1811;" data-id={{this.id}}></i></a>
-                        </div>
-
-                    </div>
+                    {{/each}}
                 </div>
-                {{/each}}
-
                 {{!-- Delete Modal --}}
                 <div class="modal fade modalfade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">

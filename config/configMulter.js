@@ -29,10 +29,9 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         if (regexPattern.test(req.url)) {
-
             const fileExtension = file.originalname.slice(file.originalname.lastIndexOf('.'));
             if (file.fieldname == 'avatar') {
-                cb(null, file.fieldname + fileExtension);
+                cb(null, file.fieldname + '.png');
             } else {
                 const uniqueSuffix = uniqueString();
                 cb(null, uniqueSuffix + fileExtension);

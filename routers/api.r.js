@@ -12,6 +12,7 @@ const FixRecord = require('../controllers/invoice/fixrecord.c');
 //Car
 router.get('/car/all', ApiController.getAllCar);
 router.get('/car/find', ApiController.getByCarId);
+router.get('/car/name', ApiController.getCarByName);
 router.get('/car/type', ApiController.getAllType);
 router.get('/car/brand', ApiController.getAllBrand);
 router.get('/car/car_page', ApiController.getCarPage);

@@ -28,6 +28,10 @@ module.exports = {
         const data = await Car.getAll();
         res.json(data);
     }),
+    getCarByName: tryCatch(async (req, res) => {
+        const data = await Car.getCarByName(req.query.name);
+        res.json(data);
+    }),
     getAllType: tryCatch(async (req, res) => {
         const data = await Car.getAllType();
         res.json(data)

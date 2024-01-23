@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
         return storeRouter(req, res, next);
     }
     else if (req.session.passport.user.permission == 'sa') {
-        return mechanicRouter(req, res, next);
+        return saleRouter(req, res, next);
     }
     next();
 }

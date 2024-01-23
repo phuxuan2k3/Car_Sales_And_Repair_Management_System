@@ -43,7 +43,7 @@ module.exports = class Car {
         ${smid});`;
         return await dbExecute.customQuery(query);
     }
-    static async updateQuanTity(id,quantity) {
+    static async updateQuanTity(id, quantity) {
         let entity = await dbExecute.getById(id, tableName);
         entity.quantity = quantity;
         delete entity.id;
@@ -63,6 +63,10 @@ module.exports = class Car {
     static async getCarById(id) {
         const data = await dbExecute.getById(id, tableName);
         return new Car(data)
+    }
+    static async getCarByName(name) {
+        const query = `select* from ${tableName} where car_name ilike '%${name}%'`
+        return await dbExecute.customQuery(query);
     }
     static async getCarPage(searchStr, brands, types, maxPrice, limit, offset) {
         let query = `select * from "${tableName}"`
