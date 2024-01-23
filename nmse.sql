@@ -313,7 +313,7 @@ where "ap_id" = apID;
 insert into ap_import_invoice(sm_id) values (smid) returning importinvoice_id into invoiceID;
 insert into ap_import_report(importinvoice_id,ap_id,date,quantity) values(invoiceID, apID,current_date_var,qut);
 end if;
-return 1;
+return apID;
 
 END;
 $$;
@@ -394,7 +394,7 @@ where "id" = carID;
 insert into car_import_invoice(sm_id) values (smid) returning importinvoice_id into invoiceID;
 insert into car_import_report(importinvoice_id,car_id,quantity,date) values(invoiceID, carID,qut,current_date_var);
 end if;
-return 1;
+return carID;
 
 END;
 $$;
@@ -2881,13 +2881,6 @@ CREATE TRIGGER update_ap_quantity_on_fix AFTER INSERT ON public.fix_detail FOR E
 --
 
 CREATE TRIGGER update_car_quantity_on_import AFTER INSERT ON public.car_import_report FOR EACH ROW EXECUTE FUNCTION public.update_car_quantity_on_import();
-
-
---
--- Name: sale_detail update_car_quantity_on_sale_trigger; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER update_car_quantity_on_sale_trigger AFTER INSERT ON public.sale_detail FOR EACH ROW EXECUTE FUNCTION public.update_car_quantity_on_sale();
 
 
 --
