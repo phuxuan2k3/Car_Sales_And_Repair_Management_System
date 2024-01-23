@@ -4,6 +4,9 @@ const { pgp, db } = require('../config/configDatabase');
 function removeEmptyProperty(obj) {
     return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null && v != undefined));
 }
+async function execute(query, type = 'query') {
+    return await db[type](query);
+}
 
 class Query {
     constructor(tableName) {
@@ -291,4 +294,5 @@ module.exports = {
     InsertQuery,
     ExactUpdateQuery,
     DeleteQuery,
+    execute
 }

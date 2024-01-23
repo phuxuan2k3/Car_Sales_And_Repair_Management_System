@@ -1,4 +1,4 @@
-const { SelectQuery, InsertQuery, ExactUpdateQuery, DeleteQuery } = require('../../utils/queryBuilder');
+const { SelectQuery, InsertQuery, ExactUpdateQuery, DeleteQuery, execute } = require('../../utils/queryBuilder');
 
 const FR_Table = {
     NAME: 'fix_record',
@@ -150,6 +150,43 @@ class FixRecord {
         const data = await SelectQuery.init(FR_Table.NAME).setSelectAll().addIlikeValue(FR_Table.car_plate, car_plate_key).execute();
         return data.map(d => FixRecord.castObj(d));
     }
+    static async getTotalPriceByNearestDateChunk(type, limit) {
+        const query = `
+        SELECT DATE_TRUNC('${type}', "date") as start_date, ROUND(SUM(total_price)::numeric,2) as total_price
+        FROM fix_record
+        GROUP BY DATE_TRUNC('${type}', "date")
+        HAVING DATE_TRUNC('${type}', "date") IS NOT NULL
+        ORDER BY start_date DESC
+        LIMIT ${limit}
+        `;
+        const data = await execute(query);
+        const start_date = data.map(d => d.start_date);
+        const total_price = data.map(d => d.total_price);
+        return { start_date, total_price };
+    }
+    static async getJoinWithCustomer() {
+        const query = SelectQuery.init(`${FR_Table.NAME} fr`)
+            .setSelectAll()
+            .addJoin('fixed_car fc', 'fc.car_plate = fr.car_plate')
+            .addJoin('user_info u', 'u.id = fc.id').retrive();
+        console.log(query);
+
+        const data = await SelectQuery.init(`${FR_Table.NAME} fr`)
+            .setSelectAll()
+            .addJoin('fixed_car fc', 'fc.car_plate = fr.car_plate')
+            .addJoin('user_info u', 'u.id = fc.id')
+            .execute();
+        return data;
+    }
+    static async getAllDetailFull(fixrecord_id) {
+        const data = await SelectQuery.init(`fix_detail fd`)
+            .setSelectAll()
+            .addJoin('auto_part ap', 'ap.ap_id = fd.ap_id')
+            .addJoin('user_info u', 'u.id = fd.mec_id')
+            .addEqual('fd.fixrecord_id', fixrecord_id, 'alias')
+            .execute();
+        return data;
+    }
 
     // cud
     static async insert(entity) {
@@ -170,6 +207,25 @@ class FixRecord {
 // >>>> =============================================
 // Test
 // <<<< =============================================
+
+const fullInvoiceFlag = 1;
+if (fullInvoiceFlag) {
+    (async () => {
+        console.log(await FixRecord.getJoinWithCustomer());
+        console.log(await FixRecord.getAllDetailFull(10));
+    })();
+}
+
+const statisticDateChunkFlag = 0;
+if (statisticDateChunkFlag) {
+    (async () => {
+        console.log(await FixRecord.getTotalPriceByNearestDateChunk('day', 10));
+        console.log(await FixRecord.getTotalPriceByNearestDateChunk('week', 10));
+        console.log(await FixRecord.getTotalPriceByNearestDateChunk('month', 10));
+        console.log(await FixRecord.getTotalPriceByNearestDateChunk('year', 10));
+    })();
+}
+
 
 const fixDetailFlag = 0;
 const fixRecordFlag = 0;

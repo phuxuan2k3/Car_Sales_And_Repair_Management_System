@@ -1,4 +1,4 @@
-const { SelectQuery, InsertQuery, ExactUpdateQuery, DeleteQuery } = require('../../utils/queryBuilder');
+const { SelectQuery, InsertQuery, ExactUpdateQuery, DeleteQuery, execute } = require('../../utils/queryBuilder');
 
 const SD_Table = {
     NAME: 'sale_detail',
@@ -112,6 +112,95 @@ class SaleRecord {
         const data = await sq.execute('one');
         return data.tp;
     }
+    static async getTotalPriceByNearestDateChunk(type, limit) {
+        const query = `
+        SELECT DATE_TRUNC('${type}', "date") as start_date, ROUND(SUM(total_price)::numeric,2) as total_price
+        FROM sale_record
+        GROUP BY DATE_TRUNC('${type}', "date")
+        HAVING DATE_TRUNC('${type}', "date") IS NOT NULL
+        ORDER BY start_date DESC
+        LIMIT ${limit}
+        `;
+        const data = await execute(query);
+        const start_date = data.map(d => d.start_date);
+        const total_price = data.map(d => d.total_price);
+        return { start_date, total_price };
+    }
+    static async getTopByQuantity(limit) {
+        const query = `
+        SELECT sd.car_id as id, car.car_name as name, SUM(sd.quantity) as total_quantity
+        FROM sale_detail sd JOIN car ON car.id = sd.car_id
+        GROUP BY sd.car_id, car.car_name
+        ORDER BY total_quantity DESC
+        LIMIT ${limit}
+        `;
+        const data = await execute(query);
+        const id = data.map(d => d.id);
+        const name = data.map(d => d.name);
+        const total_quantity = data.map(d => d.total_quantity);
+        const queryAll = `
+        SELECT SUM(sale_detail.quantity) as all_total
+        FROM sale_detail
+        `;
+        const dataAll = await execute(queryAll, 'one');
+        const queryRest = `
+        SELECT SUM(tq) as rest_total FROM (
+            SELECT SUM(sd.quantity) as tq
+            FROM sale_detail sd
+            GROUP BY sd.car_id
+            ORDER BY tq DESC
+            OFFSET ${limit}
+        )
+        `;
+        const dataRest = await execute(queryRest, 'one');
+        return { id, name, total_quantity, all_total: dataAll.all_total, rest_total: dataRest.rest_total };
+    }
+    // bonus
+    static async getTopByPrice(limit) {
+        const query = `
+        SELECT sd.car_id as id, car.car_name as name, SUM(sd.quantity * car.price) as total_price
+        FROM sale_detail sd JOIN car ON car.id = sd.car_id
+        GROUP BY sd.car_id, car.car_name
+        ORDER BY total_price DESC
+        LIMIT ${limit}
+        `;
+        const data = await execute(query);
+        const id = data.map(d => d.id);
+        const name = data.map(d => d.name);
+        const total_price = data.map(d => d.total_price);
+        const queryAll = `
+        SELECT SUM(sd.quantity * car.price) as all_total
+        FROM sale_detail sd JOIN car ON car.id = sd.car_id
+        `;
+        const dataAll = await execute(queryAll, 'one');
+        const queryRest = `
+        SELECT SUM(tp) as rest_total FROM (
+            SELECT SUM(sd.quantity * car.price) as tp
+            FROM sale_detail sd JOIN car ON car.id = sd.car_id
+            GROUP BY sd.car_id
+            ORDER BY tp DESC
+            OFFSET ${limit}
+        )
+        `;
+        const dataRest = await execute(queryRest, 'one');
+        return { id, name, total_price, all_total: dataAll.all_total, rest_total: dataRest.rest_total };
+    }
+    static async getJoinWithCustomer() {
+        const data = await SelectQuery.init(`${SR_Table.NAME} sr`)
+            .setSelectAll()
+            .addJoin('user_info u', 'u.id = sr.cus_id')
+            .execute();
+        return data;
+    }
+    static async getAllDetailFull(salerecord_id) {
+        const data = await SelectQuery.init(`sale_detail sd`)
+            .setSelectAll()
+            .addJoin('car c', 'sd.car_id = c.id')
+            .addEqual('sd.salerecord_id', salerecord_id, 'alias')
+            .execute();
+        return data;
+    }
+
 
     // cud
     static async insert(entity) {
@@ -133,6 +222,34 @@ class SaleRecord {
 // Test
 // <<<< =============================================
 
+const fullInvoiceFlag = 1;
+if (fullInvoiceFlag) {
+    (async () => {
+        console.log(await SaleRecord.getJoinWithCustomer());
+        console.log(await SaleRecord.getAllDetailFull(201));
+    })();
+}
+
+
+const statisticDateChunkFlag = 0;
+if (statisticDateChunkFlag) {
+    (async () => {
+        console.log(await SaleRecord.getTotalPriceByNearestDateChunk('day', 10));
+        console.log(await SaleRecord.getTotalPriceByNearestDateChunk('week', 10));
+        console.log(await SaleRecord.getTotalPriceByNearestDateChunk('month', 10));
+        console.log(await SaleRecord.getTotalPriceByNearestDateChunk('year', 10));
+    })();
+}
+
+const statisticRatioFlag = 0;
+if (statisticRatioFlag) {
+    (async () => {
+        console.log(await SaleRecord.getTopByQuantity(5));
+        console.log(await SaleRecord.getTopByQuantity(10));
+        console.log(await SaleRecord.getTopByPrice(5));
+        console.log(await SaleRecord.getTopByPrice(10));
+    })();
+}
 
 
 // if (saleDetailFlag) {
