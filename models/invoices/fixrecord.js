@@ -165,12 +165,6 @@ class FixRecord {
         return { start_date, total_price };
     }
     static async getJoinWithCustomer() {
-        const query = SelectQuery.init(`${FR_Table.NAME} fr`)
-            .setSelectAll()
-            .addJoin('fixed_car fc', 'fc.car_plate = fr.car_plate')
-            .addJoin('user_info u', 'u.id = fc.id').retrive();
-        console.log(query);
-
         const data = await SelectQuery.init(`${FR_Table.NAME} fr`)
             .setSelectAll()
             .addJoin('fixed_car fc', 'fc.car_plate = fr.car_plate')
