@@ -208,7 +208,7 @@ class FixRecord {
 // Test
 // <<<< =============================================
 
-const fullInvoiceFlag = 1;
+const fullInvoiceFlag = 0;
 if (fullInvoiceFlag) {
     (async () => {
         console.log(await FixRecord.getJoinWithCustomer());

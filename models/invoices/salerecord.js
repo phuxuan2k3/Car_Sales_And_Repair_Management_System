@@ -222,7 +222,7 @@ class SaleRecord {
 // Test
 // <<<< =============================================
 
-const fullInvoiceFlag = 1;
+const fullInvoiceFlag = 0;
 if (fullInvoiceFlag) {
     (async () => {
         console.log(await SaleRecord.getJoinWithCustomer());
