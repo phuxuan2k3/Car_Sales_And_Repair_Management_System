@@ -20,7 +20,7 @@ SET row_security = off;
 -- Name: add_newcar(text, text, text, integer, double precision, text, integer, integer); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.add_newcar(carname text, brand text, type text, year integer, price double precision, des text, qut integer, smid integer) RETURNS boolean
+CREATE FUNCTION public.add_newcar(carname text, brand text, type text, year integer, price double precision, des text, qut integer, smid integer) RETURNS integer
     LANGUAGE plpgsql
     AS $$
 DECLARE 
@@ -41,7 +41,7 @@ $$;
 -- Name: add_newitem(text, text, double precision, integer, integer); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.add_newitem(apname text, supplier text, price double precision, qut integer, smid integer) RETURNS boolean
+CREATE FUNCTION public.add_newitem(apname text, supplier text, price double precision, qut integer, smid integer) RETURNS integer
     LANGUAGE plpgsql
     AS $$
 DECLARE 
@@ -51,7 +51,7 @@ current_date_var DATE;
 BEGIN
 current_date_var := CURRENT_DATE;
 insert into auto_part("name",supplier,price,quantity) values(apname,supplier,price, qut) returning ap_id into apID;
-insert into ap_import_invoice(sm_id) values (smid) returning importinvoice_id2 into invoiceID;
+insert into ap_import_invoice(sm_id) values (smid) returning importinvoice_id into invoiceID;
 insert into ap_import_report(importinvoice_id,ap_id,date,quantity) values(invoiceID, apID,current_date_var,qut);
 return apID;
 END;
@@ -213,7 +213,7 @@ $$;
 -- Name: update_ap(text, text, double precision, integer, integer, integer); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.update_ap(apname text, csupplier text, cprice double precision, apid integer, qut integer, smid integer) RETURNS boolean
+CREATE FUNCTION public.update_ap(apname text, csupplier text, cprice double precision, apid integer, qut integer, smid integer) RETURNS integer
     LANGUAGE plpgsql
     AS $$
 DECLARE 
@@ -265,7 +265,7 @@ $$;
 -- Name: update_car(text, text, text, integer, double precision, text, integer, integer, integer); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.update_car(carname text, cbrand text, ctype text, cyear integer, cprice double precision, des text, carid integer, qut integer, smid integer) RETURNS boolean
+CREATE FUNCTION public.update_car(carname text, cbrand text, ctype text, cyear integer, cprice double precision, des text, carid integer, qut integer, smid integer) RETURNS integer
     LANGUAGE plpgsql
     AS $$
 DECLARE 
@@ -283,7 +283,6 @@ else
 update car
 set "car_name" = carname,"brand"=cbrand,"type"=ctype,"price"=cprice,"description"=des,quantity = quantity + qut
 where "id" = carID;
-
 
 insert into car_import_invoice(sm_id) values (smid) returning importinvoice_id into invoiceID;
 insert into car_import_report(importinvoice_id,car_id,quantity,date) values(invoiceID, carID,qut,current_date_var);
