@@ -156,6 +156,9 @@ class SaleRecord {
 //     })();
 // }
 
+let insertNullFlag = 0;
+let statisticFlag = 0;
+
 if (insertNullFlag) {
     (async () => {
         // const insertedObjId = await SaleRecord.insert({ cus_id: 42, date: new Date() });

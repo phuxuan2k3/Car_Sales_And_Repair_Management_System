@@ -33,7 +33,7 @@ app.use(passport.session());
 
 
 //Router
-app.use('/admin', require('./routers/testAdmin.r')) //Test admin
+app.use('/admin', require('./routers/siteRoleRouters/adminRouter')) //Test admin
 app.use('/test', require('./routers/testview.r')) //Test view
 app.use('/api', require('./routers/api.r'));
 app.use('/', require('./routers/site.r'));
