@@ -1,16 +1,7 @@
-<style>
-    .tabs .active  {
-        background-color: var(--primaryColor) !important;
-    }
-    .tabs button {
-        color: gray ;
-    }
-</style>
-
 <div class="container-fluid">
-    {{> nav}}
+    {{> Nav/mechanicNav}}
     <div class="row">
-        <div class="col-3 tabs">
+        <div class="col-md-3 tabs">
             <div class="nav flex-column nav-pills vh-100 me-3" id="v-pills-tab" role="tablist"
                 aria-orientation="vertical">
                 <div class="card w-100 h-100 border border-0">
@@ -26,19 +17,85 @@
                 </div>
             </div>
         </div>
-        <div class="col-9 tab_content">
+        <div class="col-md-9 tab_content">
             <div class="card-body p-3 h-100 bg-white">
                 <div class="tab-content" id="v-pills-tabContent">
+                    {{!-- PHẦN DASHBOARD --}}
                     <div class="tab-pane fade active show" id="v-pills-dashboard" role="tabpanel"
                         aria-labelledby="v-pills-dashboard-tab d-flex flex-row" tabindex="0">
-                        <h1>Dashboard tab</h1>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-document" role="tabpanel"
-                        aria-labelledby="v-pills-dashboard-tab d-flex flex-row" tabindex="0">
-                        <h1>Repair documents tab</h1>
+                        <div id="fixRecord">
+                            <div id="recordHeader" class="d-flex flex-row justify-content-between align-items-center">
+                                <h2 class="textPrimary me-2">Fix record</h2>
+                                <div>
+                                    <input class="form-check-input" type="radio" checked value="all"
+                                        name="recordOptionButton" id="allButton" />
+                                    <label class="form-check-label me-2" for=""> All </label>
+                                    <input class="form-check-input" type="radio" value="Processing"
+                                        name="recordOptionButton" id="processingButton" />
+                                    <label class="form-check-label me-2" for=""> Processing </label>
+                                    <input class="form-check-input" type="radio" value="Done" name="recordOptionButton"
+                                        id="doneButton" />
+                                    <label class="form-check-label me-2" for=""> Done </label>
+                                </div>
+                                <div class="searchForm  w-50">
+                                    <i class="fa fa-search"></i>
+                                    <input id="SearchBar" class="w-100 form-control me-auto w-50 rounded-pill"
+                                        type="search" placeholder="ID/ Car plate" aria-label="Search">
+                                </div>
+                            </div>
+                            <div class="table-responsive" style="height: 20rem;">
+                                <table class="table  table-hover">
+                                    <thead class="table-info" id="tbHeader">
+                                        <tr class="text-center">
+                                            <th scope="col" style="width: 5%;">ID</th>
+                                            <th scope="col" style="width: 25%;">car_plate</th>
+                                            <th scope="col" style="width: 30%;">date</th>
+                                            <th scope="col" style="width: 20%;">total_price</th>
+                                            <th scope="col" style="width: 20%;">status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="fixDetail">
+                            <div id="recordHeader" class="d-flex flex-row justify-content-between align-items-center">
+                                <h2 class="textPrimary me-2">Fix detail <span id="currentId"></span></h2>
+                            </div>
+                            <div class="table-responsive" style="height: 20rem;">
+                                <table class="table table-hover">
+                                    <thead class="table-info" id="tbHeader">
+                                        <tr class="text-center">
+                                            <th scope="col" style="width: 20%;">Date</th>
+                                            <th scope="col" style="width: 30%;">Detail</th>
+                                            <th scope="col" style="width: 10%;">Mechanic</th>
+                                            <th scope="col" style="width: 10%">Auto part</th>
+                                            <th scope="col" style="width: 10%">Quantity</th>
+                                            <th scope="col" style="width: 10%">Ap price</th>
+                                            <th scope="col" style="width: 10%">Total price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="detailTbBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="optionButtonGroup" class="d-flex flex-row d-none ">
+                                <button id="addButton" class="w-25 me-3 btn btn-primary">ADD</button>
+                                <button id="doneButton" class="w-25 me-3 btn btn-success">DONE</button>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-document" role="tabpanel"
+                            aria-labelledby="v-pills-dashboard-tab d-flex flex-row" tabindex="0">
+                            <h1>Repair documents tab</h1>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    {{#if userId}}
+    <script>
+        let userId = {{ userId }}; 
+    </script>
+    {{/if}}

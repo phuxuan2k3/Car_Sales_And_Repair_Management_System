@@ -24,14 +24,21 @@ let failedAlert = $('#failedAlert');
 let successAlert = $('#successAlert');
 
 const validation = () => {
-    if (inputCarPlate.val() != null && inputCarPlate.val() != '') return true;;
-    inputCarPlate.addClass('border border-danger text-danger errMss');
-    inputCarPlate.attr('placeholder', 'Please enter your car-plate');
-    return false;
+    let inputCarPlate = $('#inputCarPlate');
+    var regex = /^\d{2}[A-Z]{1}-\d{5}$/;
+    var inputString = inputCarPlate.val();
+    if (regex.test(inputString)) {
+        return true;
+    } else {
+        inputCarPlate.val('')
+        inputCarPlate.addClass('border border-danger text-danger errMss');
+        inputCarPlate.attr('placeholder', 'Invalid car-plate');
+        return false;
+    }
 }
 
 inputCarPlate.on('click', ((e) => {
-    inputCarPlate.attr('placeholder', '68K2-XXXXX');
+    inputCarPlate.attr('placeholder', '68K-XXXXX');
     inputCarPlate.removeClass('border border-danger text-danger errMss');
 }))
 
@@ -113,7 +120,7 @@ const generateTable = async () => {
                             <td scope="col">${record.total_price}</td>
                             <td scope="col">${record.status}</td>
                             <td scope="col">
-                                <button total_price="${record.total_price}" recordId="${record.fixrecord_id}" car_plate="${record.car_plate}" date="${record.date}" class="paymentButton btn btn-${record.pay == true ? `success` : `primary`} w-75"  ${record.status != `done` || record.pay == true ? `disabled` : ``} href="#" role="button">${record.pay == true && record.status == `done` ? "Completed" : "Pay"}</button>
+                                <button total_price="${record.total_price}" recordId="${record.fixrecord_id}" car_plate="${record.car_plate}" date="${record.date}" class="paymentButton btn btn-${record.pay == true ? `success` : `primary`} w-75"  ${record.status != `Done` || record.pay == true ? `disabled` : ``} href="#" role="button">${record.pay == true && record.status == `Done` ? "Completed" : "Pay"}</button>
                             </td>
                         </tr>
             `)
@@ -228,14 +235,14 @@ const generateTable = async () => {
     })
 }
 
-const init = async() => {
+const init = async () => {
     let rs = await fetch(`/api/car/fixed/find?id=${userId}`);
     fixedCar = await rs.json();
     generateTable();
 }
 
 let carPlateInput = $('#carPlateInput');
-carPlateInput.on('input',async function(e) {
+carPlateInput.on('input', async function (e) {
     const car_plate = $(this).val();
     let rs = await fetch(`/api/car/fixed/find?id=${userId}&car_plate=${car_plate}`);
     fixedCar = await rs.json();

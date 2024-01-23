@@ -79,7 +79,7 @@ const confirmAddEvent = async (carId,cartQuantity) => {
         popupContent.append(`
             <div id="falseTransaction" class="  d-flex flex-column justify-content-center align-items-center">
                 <i class="fa-solid fa-circle-exclamation" style="color: #74C0FC;font-size: 10rem"></i>
-                <p class=" text-center fs-3 textPrimary">Failed to add the product to the cart. (The quantity of the selected item has changed!)<i class="fa-regular fa-face-sad-cry"></i></p>
+                <p class=" text-center fs-3 textPrimary">Failed to add the product to the cart.<i class="fa-regular fa-face-sad-cry"></i></p>
             </div>
         `)
     }
@@ -97,14 +97,6 @@ const setAddToCartEvent = async (userId, carId) => {
             <hr>
             <div id="popupContent">
                 
-            </div>
-            <div id="successTransaction" class="d-none d-flex flex-column justify-content-center align-items-center">
-                <i class="fa-regular fa-circle-check " style="color: #63E6BE;font-size: 10rem"></i>
-                <p class="fs-3 textPrimary">Successful transaction <i class="fa-regular fa-face-grin-hearts"></i></p>
-            </div>
-            <div id="falseTransaction" class="d-none d-flex flex-column justify-content-center align-items-center">
-                <i class="fa-solid fa-circle-exclamation" style="color: #74C0FC;font-size: 10rem"></i>
-                <p class="fs-3 textPrimary">Failed transaction <i class="fa-regular fa-face-sad-cry"></i></p>
             </div>
             <hr>
             <button id="redirectToCartButton" onClick="redirectToCartEvent()" class="btn btn-warning w-100 mb-3 d-none"  role="button">Go to cart</button>

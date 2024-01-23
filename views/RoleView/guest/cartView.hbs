@@ -16,7 +16,7 @@
                         Sãn
                         phẩm không đủ số lượng hoặc đã hết hàng</p>
                     <div class="col-1">
-                        <input onclick="checking(event)" class="form-check-input me-2 fs-3 cartItemCheck"
+                        <input style="opacity: 1 !important;" disabled class="form-check-input me-2 fs-3 cartItemCheck"
                             id="checkBox_{{this.car_ID}}_{{this.customer_ID}}" car_ID="{{this.car_ID}}"
                             car_price="{{this.car.price}}" type="checkbox">
                     </div>
@@ -42,7 +42,6 @@
                             id="quantity_{{this.car_ID}}_{{this.customer_ID}}" value="{{this.quantity}}" type="number"
                             min="1" max="{{this.car.quantity}}"
                             class="cant_disable {{#isLessThan this.car.quantity 0}}d-none{{/isLessThan}}   text-center w-100 quantityInput form-control rounded-pill">
-
                     </div>
                     <div class="col-1">
                         <button onclick="deleteCartItem({{this.car_ID}},event)" type="button"
