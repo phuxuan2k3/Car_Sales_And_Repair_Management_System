@@ -210,7 +210,7 @@ if (fullInvoiceFlag) {
     })();
 }
 
-const statisticDateChunkFlag = 0;
+const statisticDateChunkFlag = 1;
 if (statisticDateChunkFlag) {
     (async () => {
         console.log(await FixRecord.getTotalPriceByNearestDateChunk('day', 10));
