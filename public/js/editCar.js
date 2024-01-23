@@ -20,6 +20,12 @@ $("#input-id").fileinput({
 
 });
 
+$('input[type="number"]').on('input', function () {
+    var inputValue = $(this).val();
+    var cleanedValue = inputValue.replace(/\D/g, '');
+    $(this).val(cleanedValue);
+});
+
 
 
 getImgs();
@@ -47,16 +53,22 @@ async function getImgs() {
                 initialPreview: dataSource,
                 initialPreviewAsData: true,
                 initialPreviewConfig: config,
-
+                showCaption: false,
+                showCancel: true,
+                showUpload: true,
                 maxFileSize: 5000,
                 maxFileCount: 10,
-                allowedFileExtensions: ['jpg', 'png'],
+                allowedFileExtensions: ['png'],
             });
         } else {
             $("#input-24").fileinput({
                 maxFileSize: 5000,
                 maxFileCount: 10,
-                allowedFileExtensions: ['jpg', 'png'],
+                allowedFileExtensions: ['png', 'jpg'],
+                showCaption: false,
+                showRemove: false,
+                showUpload: true,
+                showCancel: true
             });
         }
     } catch (error) {

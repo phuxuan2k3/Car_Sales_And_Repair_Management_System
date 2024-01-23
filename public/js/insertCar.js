@@ -16,12 +16,18 @@ $("#input-id").fileinput({
     showCaption: false,
     showRemove: true,
     showUpload: false,
-    allowedFileExtensions: ['jpg', 'png'],
+    allowedFileExtensions: ['png'],
 
 });
 
 $("#input-24").fileinput({
     maxFileSize: 5000,
     maxFileCount: 10,
-    allowedFileExtensions: ['jpg', 'png'],
+    allowedFileExtensions: ['png', 'jpg'],
+});
+
+$('input[type="number"]').on('input', function () {
+    var inputValue = $(this).val();
+    var cleanedValue = inputValue.replace(/\D/g, '');
+    $(this).val(cleanedValue);
 });

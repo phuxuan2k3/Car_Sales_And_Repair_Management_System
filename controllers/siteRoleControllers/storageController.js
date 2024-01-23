@@ -9,15 +9,15 @@ const AutoPart = require('../../models/ap');
 
 module.exports = {
     getDashboard: tryCatch(async (req, res) => {
-        res.render('RoleView/store/storeDashboard', { nameOfUser: req.session.passport.user.nameOfUser, title: 'DashBoard', jsFile: 'storeDashboard.js', cssFile: 'store.css' });
+        res.render('RoleView/store/storeDashboard', { nameOfUser: req.session.passport.user.nameOfUser, title: 'DashBoard', jsFile: 'storeDashboard.js', cssFile: 'store.css', dashboardPage: true });
     }),
     getCarPage: tryCatch(async (req, res) => {
         const cars = await Car.getAll();
-        res.render('RoleView/store/car', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Cars', jsFile: 'storeCar.js', cssFile: 'store.css', cars });
+        res.render('RoleView/store/car', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Cars', jsFile: 'storeCar.js', cssFile: 'store.css', cars, carPage: true });
     }),
     getApPage: tryCatch(async (req, res) => {
         const aps = await AutoPart.getAll();
-        res.render('RoleView/store/ap', { nameOfUser: req.session.passport.user.nameOfUser, title: 'AutoPart', jsFile: 'storeAp.js', cssFile: 'store.css', aps });
+        res.render('RoleView/store/ap', { nameOfUser: req.session.passport.user.nameOfUser, title: 'AutoPart', jsFile: 'storeAp.js', cssFile: 'store.css', aps, apPage: true });
     }),
     getEditCarPage: tryCatch(async (req, res) => {
         const id = req.params.id;
@@ -67,7 +67,7 @@ module.exports = {
                 throw error;
             } else {
                 let tempAvatarPath = req.files['avatar'][0].path;
-                let realAvatarPath = path.join(carDir, `avatar.jpg`);
+                let realAvatarPath = path.join(carDir, `avatar.png`);
                 fs.rename(tempAvatarPath, realAvatarPath, (error) => {
                     if (error) {
                         console.error('Error renaming file:', error);

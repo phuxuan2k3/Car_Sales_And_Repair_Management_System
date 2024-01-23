@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const ApiController = require('../controllers/api.c');
-const { router: invoiceApiRouter } = require('./api/invoice.api.r');
+const { router: invoiceApiRouter } = require('./apiRouters/invoice.api.r');
+const { router: adminApiRouter } = require('./apiRouters/admin.api.r');
 const registerUser = require('../middlewares/register');
 const CarImport = require('../controllers/invoice/carimport.c');
 const ApImport = require('../controllers/invoice/apimport.c');
@@ -12,6 +13,7 @@ const FixRecord = require('../controllers/invoice/fixrecord.c');
 //Car
 router.get('/car/all', ApiController.getAllCar);
 router.get('/car/find', ApiController.getByCarId);
+router.get('/car/name', ApiController.getCarByName);
 router.get('/car/type', ApiController.getAllType);
 router.get('/car/brand', ApiController.getAllBrand);
 router.get('/car/car_page', ApiController.getCarPage);
@@ -40,8 +42,15 @@ router.post('/user/register', registerUser);
 //For store
 router.get('/store/items', ApiController.getRemainingItems);
 
+// >>>> =============================================
+// Big Routers
+// <<<< =============================================
+
 // Invoices
 router.use('/invoice', invoiceApiRouter);
+
+// Admin
+router.use('/admin', adminApiRouter);
 
 
 // car sale record

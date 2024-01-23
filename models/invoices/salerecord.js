@@ -133,10 +133,7 @@ class SaleRecord {
 // Test
 // <<<< =============================================
 
-const saleDetailFlag = 0;
-const saleRecordFlag = 0;
-const insertNullFlag = 0;
-const statisticFlag = 0;
+
 
 // if (saleDetailFlag) {
 //     (async () => {
@@ -158,6 +155,9 @@ const statisticFlag = 0;
 //         console.log(await SaleRecord.delete({ salerecord_id: 199 }));
 //     })();
 // }
+
+let insertNullFlag = 0;
+let statisticFlag = 0;
 
 if (insertNullFlag) {
     (async () => {

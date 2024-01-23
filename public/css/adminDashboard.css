@@ -1,0 +1,46 @@
+.carInfoCard:hover {
+    background-color: lightgray;
+}
+
+#v-pills-tabContent h1 {
+    color: var(--primaryColor);
+}
+
+#tableContainer,
+#formContainer {
+    z-index: 1;
+    left: 0;
+    top: 0;
+    transition: transform 0.8s ease-out 0s;
+}
+
+.slideLeft {
+    position: absolute;
+    z-index: 0;
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+}
+
+.slideRight {
+    position: absolute;
+    z-index: 0;
+    transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+}
+
+/* Modal */
+.modalfade {
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from {
+        transform: translateY(-10%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

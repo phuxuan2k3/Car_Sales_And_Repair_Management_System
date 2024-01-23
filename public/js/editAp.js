@@ -7,3 +7,9 @@ $('#ap, .close').click(() => {
 $('#car').click(() => {
     window.location.href = '/car';
 })
+
+$('input[type="number"]').on('input', function () {
+    var inputValue = $(this).val();
+    var cleanedValue = inputValue.replace(/\D/g, '');
+    $(this).val(cleanedValue);
+});

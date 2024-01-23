@@ -58,8 +58,8 @@ const nextPage = async () => {
 
 const fetchData = async (url) => {
     const rs = await fetch(url);
-    data = await rs.json();
-    return data;
+    storage = await rs.json();
+    return storage;
 }
 
 const updateCarData = async () => {
