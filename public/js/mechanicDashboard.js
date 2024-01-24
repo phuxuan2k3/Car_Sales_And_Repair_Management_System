@@ -74,23 +74,23 @@ const addNewDetail = async () => {
         
             <div id="successTransaction" class="d-none d-flex flex-column justify-content-center align-items-center">
                 <i class="fa-regular fa-circle-check " style="color: #63E6BE;font-size: 10rem"></i>
-                <p class="fs-3 textPrimary">Successful transaction <i class="fa-regular fa-face-grin-hearts"></i></p>
+                <p class="fs-3 textPrimary">Successful <i class="fa-regular fa-face-grin-hearts"></i></p>
             </div>
             <div id="falseTransaction" class="d-none d-flex flex-column justify-content-center align-items-center">
                 <i class="fa-solid fa-circle-exclamation" style="color: #74C0FC;font-size: 10rem"></i>
-                <p class="fs-3 textPrimary">Failed transaction <i class="fa-regular fa-face-sad-cry"></i></p>
+                <p class="fs-3 textPrimary">Failed <i class="fa-regular fa-face-sad-cry"></i></p>
             </div>
             <button id="backButton" onClick="backEvent()" class="btn btn-danger w-100 mb-3"  role="button">Back</button>
     </div>
     `)
-   
+
     let inputAutoPart = $('#inputAutoPart');
 
     for (const autoPart of apData) {
         inputAutoPart.append(`<option ap_id="${autoPart.ap_id}" price="${autoPart.price}" quantity="${autoPart.quantity}" value="${autoPart.name}">${autoPart.name}</option>`)
     }
     updateInputQuantityIndex();
-  
+
     inputAutoPart.on('change', async (e) => {
         updateInputQuantityIndex();
     })
@@ -148,7 +148,7 @@ const addNewDetail = async () => {
 
 const updateInputQuantityIndex = () => {
     let submitButton = $(`#submitButton`);
-    submitButton.attr('disabled',$(`option:selected`).attr('quantity') <= 0);
+    submitButton.attr('disabled', $(`option:selected`).attr('quantity') <= 0);
     let inputQuantity = $('#inputQuantity');
     let apPrice = $('#apPrice');
     let storage = $('#storage');
@@ -190,7 +190,7 @@ const doneRecord = async () => {
             <button id="backButton" onClick="backEvent()" class="btn btn-danger w-100 mb-3"  role="button">NO</button>
             </div>
     `)
-    
+
     // /cfix/update-status-detail
 }
 const confirmDone = async () => {
@@ -201,7 +201,7 @@ const confirmDone = async () => {
         fixrecord_id: current_record,
         status: 'Done'
     }
-    await fetch(`api/cfix/update-status`,{
+    await fetch(`api/cfix/update-status`, {
         method: 'post',
         credentials: "same-origin",
         headers: {

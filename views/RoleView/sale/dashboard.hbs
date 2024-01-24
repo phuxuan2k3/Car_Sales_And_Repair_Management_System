@@ -29,27 +29,48 @@
                 <div class=" row justify-content-between mb-2">
 
                     <div class="single_quick_activity">
-                        <div class="title">Total Income</div>
-                        <div class="bold">$ <span class="counter">579,000</span> </div>
+                        <div class="title">Total Sale Income</div>
+                        <div class="bold">$ <span class="counter" id="saleTotal">637,000</span> </div>
                     </div>
                     <div class="single_quick_activity" style="background-color:#0dcaf0">
-                        <div class="title">Total Income</div>
-                        <div class="bold">$ <span class="counter">579,000</span> </div>
+                        <div class="title">Total Fix Income</div>
+                        <div class="bold">$ <span class="counter" id="fixTotal">224,000</span> </div>
                     </div>
                     <div class="single_quick_activity" style="background-color:#6f42c1">
-                        <div class="title">Total Income</div>
-                        <div class="bold">$ <span class="counter">579,000</span> </div>
+                        <div class="title">Number of Products</div>
+                        <div class="bold">🚗 <span class="counter" id="noCar">579,000</span> </div>
                     </div>
                     <div class="single_quick_activity" style="background-color:#20c997">
-                        <div class="title">Total Income</div>
-                        <div class="bold">$ <span class="counter">579,000</span> </div>
+                        <div class="title">Number of Customer</div>
+                        <div class="bold">👨 <span class="counter" id="noCus">579,000</span> </div>
                     </div>
 
                 </div>
-                <div class="row justify-content-around col-12" style=" height: 300px;">
-                    <div class="col-6">
-                        <canvas class=" col-4" id="chart1" style="height:40%"></canvas>
-                        <span style="font-size: 15px;color:red">*revenue of the nearest 10 days</span>
+                <div class="row justify-content-around col-12" style=" height: 300px; ">
+                    <div class=" mt-3 col-6 pt-1" style=" background: #fff;
+    -webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+    box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);">
+                        <div class="row col-12">
+                            <div class="form-contain col-4">
+                                In the nearest
+                            </div>
+                            <div class="form-contain col-3">
+                                <input type="number" value="1" id="limit" class="form-control">
+                            </div>
+                            <div class="dropdown col-3">
+                                <button class="btn dropdown-toggle" id="dropdownBtn" data-n="day" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">day</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">day</a></li>
+                                    <li><a class="dropdown-item" href="#">month</a></li>
+                                    <li><a class="dropdown-item" href="#">year</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="chart1Con">
+                            <canvas class=" col-4" id="chart1" style="max-height:40%"></canvas>
+                        </div>
+                        <span style="font-size: 15px;color:red">*revenue</span>
                     </div>
                     <div class="col-4">
                         <canvas class=" col-4" id="chart2" style="height:30%"></canvas>

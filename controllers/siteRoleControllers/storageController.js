@@ -45,7 +45,7 @@ module.exports = {
     editAp: tryCatch(async (req, res) => {
         const id = req.params.id;
         const ap = req.body;
-        await AutoPart.update(id, ap);
+        await AutoPart.update(id, ap, req.session.passport.user.id);
         res.redirect('/ap');
     })
     ,

@@ -12,6 +12,7 @@ const FixRecord = require('../controllers/invoice/fixrecord.c');
 //Handle login here
 //Car
 router.get('/car/all', ApiController.getAllCar);
+router.get('/car/count', ApiController.countCar);
 router.get('/car/find', ApiController.getByCarId);
 router.get('/car/name', ApiController.getCarByName);
 router.get('/car/type', ApiController.getAllType);
@@ -29,7 +30,7 @@ router.get('/ap/detail', ApiController.getAp);
 router.get('/ap/ap_page', ApiController.getApPage);
 router.get('/ap/most_ap', ApiController.getMostAp);
 router.delete('/ap', ApiController.deleteAp);
-router.post('/ap/update-quantity',ApiController.updateAutoPartQuantity)
+router.post('/ap/update-quantity', ApiController.updateAutoPartQuantity)
 
 //Fixed car
 router.get('/car/fixed/all', ApiController.getAllFixedCar);
@@ -39,6 +40,8 @@ router.post('/car/fixed/add', ApiController.addNewFixedCar);
 //User
 router.get('/user/:id', ApiController.getUserById);
 router.post('/user/register', registerUser);
+router.get('/countCus', ApiController.getNumberOfCus);
+router.get('/countEm', ApiController.getNumberOfEmployee);
 
 //For store
 router.get('/store/items', ApiController.getRemainingItems);
@@ -101,13 +104,15 @@ router.post('/cart/delete', ApiController.deleteCartItem);
 router.post('/cart/update_quantity', ApiController.updateCarQuanTityInCart);
 
 //Payment 
-router.get('/payment/account',ApiController.getAccount)
-router.post('/payment/transfer',ApiController.transferMoney)
-router.post('/payment/deposits',ApiController.deposits)
+router.get('/payment/account', ApiController.getAccount)
+router.post('/payment/transfer', ApiController.transferMoney)
+router.post('/payment/deposits', ApiController.deposits)
 
 
 //chart
 router.get('/revenue', ApiController.getRevenue);
 router.get('/topcar', ApiController.getTopCar);
+router.get('/saleTotal', ApiController.getSaleTotal);
+router.get('/fixTotal', ApiController.getFixTotal);
 
 module.exports = router;

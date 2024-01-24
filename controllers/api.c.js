@@ -110,6 +110,11 @@ module.exports = {
         const rs = await Car.updateQuanTity(id, quantity);
         res.send('done');
     }),
+    countCar: tryCatch(async (req, res) => {
+        const data = await Car.count();
+        console.log(data);
+        res.send(data.sum);
+    }),
 
     //Auto part API
     getAllAp: tryCatch(async (req, res) => {
@@ -175,8 +180,8 @@ module.exports = {
     }),
 
     updateAutoPartQuantity: tryCatch(async (req, res) => {
-        const {ap_id,quantity} = req.body;
-        const data = await AutoPart.updateQuanTity(ap_id,quantity);
+        const { ap_id, quantity } = req.body;
+        const data = await AutoPart.updateQuanTity(ap_id, quantity);
         res.json(data);
     }
     ),
@@ -208,6 +213,14 @@ module.exports = {
     getUserById: tryCatch(async (req, res) => {
         const data = await User.getById(req.params.id);
         res.json(data);
+    }),
+    getNumberOfCus: tryCatch(async (req, res) => {
+        const data = await User.countCustomer();
+        res.json(data.count);
+    }),
+    getNumberOfEmployee: tryCatch(async (req, res) => {
+        const data = await User.countEmployee();
+        res.json(data.count);
     }),
 
     //Cart
@@ -243,15 +256,23 @@ module.exports = {
 
     //for sale
     getRevenue: tryCatch(async (req, res) => {
-        const data = await SaleRecord.getTotalPriceByNearestDateChunk('day', 10)
+        console.log(req.query.type, req.query.limit);
+
+        const data = await SaleRecord.getTotalPriceByNearestDateChunk(req.query.type, req.query.limit)
         return res.json(data);
     }),
-
     getTopCar: tryCatch(async (req, res) => {
         const data = await SaleRecord.getTopByQuantity(10);
         return res.json(data);
     }),
-
+    getSaleTotal: tryCatch(async (req, res) => {
+        const data = await SaleRecord.getTotalPriceByDateByCus();
+        res.json(data);
+    }),
+    getFixTotal: tryCatch(async (req, res) => {
+        const data = await FixRecord.getTotalPriceByDateByPay();
+        res.json(data);
+    }),
 
     //PayMent
     getAccount: tryCatch(async (req, res) => {
@@ -270,7 +291,7 @@ module.exports = {
         });
         if (rs.ok) {
             const rsToken = await rs.json();
-            const verifyData = jwt.verify(rsToken,ENV.VERIFY_KEY);
+            const verifyData = jwt.verify(rsToken, ENV.VERIFY_KEY);
             return res.json(verifyData.account)
         }
         return res.status('400').send('Account not found or err');
@@ -291,11 +312,11 @@ module.exports = {
         });
         if (rs.ok) {
             const rsToken = await rs.json();
-            const verifyData = jwt.verify(rsToken,ENV.VERIFY_KEY);
+            const verifyData = jwt.verify(rsToken, ENV.VERIFY_KEY);
             return res.json(verifyData)
         }
         return res.status('400').send('Error');
-        
+
     }),
     transferMoney: tryCatch(async (req, res) => {
         const transactionData = req.body;
@@ -314,7 +335,7 @@ module.exports = {
         });
         if (rs.ok) {
             const rsToken = await rs.json();
-            const verifyData = jwt.verify(rsToken,ENV.VERIFY_KEY);
+            const verifyData = jwt.verify(rsToken, ENV.VERIFY_KEY);
             return res.json(verifyData)
         }
         return res.status('400').send('Error');

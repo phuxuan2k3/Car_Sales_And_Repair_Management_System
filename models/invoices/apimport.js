@@ -128,8 +128,8 @@ class ApInvoice {
 // Test || set flag to 1 for testing
 // <<<< =============================================
 
-const flagReport = 1;
-const flagInvoice = 1;
+const flagReport = 0;
+const flagInvoice = 0;
 const flagStatistic = 0;
 
 // Ap Report

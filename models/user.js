@@ -91,4 +91,12 @@ module.exports = class User {
         }
         return true;
     }
+    static async countCustomer() {
+        let query = `select count(*) from ${tableName} where permission ='cus'`;
+        return (await dbExecute.customQuery(query))[0];
+    }
+    static async countEmployee() {
+        let query = `select count(*) from ${tableName} where permission !='cus'`;
+        return (await dbExecute.customQuery(query))[0];
+    }
 }

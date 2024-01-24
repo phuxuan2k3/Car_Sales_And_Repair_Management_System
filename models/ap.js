@@ -30,9 +30,13 @@ module.exports = class AutoPart {
         ${smid});`;
         return await dbExecute.customQuery(query);
     }
-    static async update(id, entity) {
-        let query = pgp.helpers.update(entity, null, tableName);
-        query += ` WHERE "ap_id" = ${id};`;
+    static async update(id, entity, smid) {
+        const query = `SELECT * FROM "update_ap"('${entity.name}', 
+        '${entity.supplier}',
+        '${entity.price}',
+        '${id}',
+        ${entity.add},
+        ${smid});`;
         return await dbExecute.customQuery(query);
     }
     static async delete(id) {
@@ -77,7 +81,7 @@ module.exports = class AutoPart {
         let query = `SELECT * FROM ${tableName} ORDER BY quantity DESC LIMIT 1;`
         return (await dbExecute.customQuery(query))[0];
     }
-    static async updateQuanTity(ap_id,quantity) {
+    static async updateQuanTity(ap_id, quantity) {
         let query = `
         UPDATE "${tableName}"
         SET "quantity"=${quantity}

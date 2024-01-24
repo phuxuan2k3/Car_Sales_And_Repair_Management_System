@@ -173,6 +173,15 @@ class FixRecord {
             .execute();
         return data;
     }
+    static async getJoinWithCustomerPay() {
+        const data = await SelectQuery.init(`${FR_Table.NAME} fr`)
+            .setSelectAll()
+            .addEqual('pay', true)
+            .addJoin('fixed_car fc', 'fc.car_plate = fr.car_plate')
+            .addJoin('user_info u', 'u.id = fc.id')
+            .execute();
+        return data;
+    }
     static async getJoinWithCustomerById(id) {
         const data = await SelectQuery.init(`${FR_Table.NAME} fr`)
             .setSelectAll()
@@ -184,7 +193,7 @@ class FixRecord {
     }
     static async getAllDetailFull(fixrecord_id) {
         const data = await SelectQuery.init(`fix_detail fd`)
-            .setSelectAll()
+            .setSelectCustom(['ap.name as name', 'fd.quantity as quantity', 'u.lastname as lastname', 'u.firstname as firstname', 'fd.price as total', 'ap.price as price'])
             .addJoin('auto_part ap', 'ap.ap_id = fd.ap_id')
             .addJoin('user_info u', 'u.id = fd.mec_id')
             .addEqual('fd.fixrecord_id', fixrecord_id, 'alias')
@@ -220,7 +229,7 @@ if (fullInvoiceFlag) {
     })();
 }
 
-const statisticDateChunkFlag = 1;
+const statisticDateChunkFlag = 0;
 if (statisticDateChunkFlag) {
     (async () => {
         console.log(await FixRecord.getTotalPriceByNearestDateChunk('day', 10));
