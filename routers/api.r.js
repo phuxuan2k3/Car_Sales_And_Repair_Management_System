@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const ApiController = require('../controllers/api.c');
-const { router: invoiceApiRouter } = require('./apiRouters/invoice.api.r');
-const { router: adminApiRouter } = require('./apiRouters/admin.api.r');
 const registerUser = require('../middlewares/register');
 const CarImport = require('../controllers/invoice/carimport.c');
 const ApImport = require('../controllers/invoice/apimport.c');
@@ -46,16 +44,18 @@ router.get('/countEm', ApiController.getNumberOfEmployee);
 //For store
 router.get('/store/items', ApiController.getRemainingItems);
 
-// >>>> =============================================
-// Big Routers
-// <<<< =============================================
-
 // Invoices
-router.use('/invoice', invoiceApiRouter);
+// router.use('/invoice', invoiceApiRouter);
 
 // Admin
-router.use('/admin', adminApiRouter);
-
+router.get('/admin/all', ApiController.getAllUsers);
+router.get('/admin/custom', ApiController.getUsersByUsernameSearchByPermissionByPage);
+router.get('/admin/count-custom', ApiController.getUsersCountByUsernameSearchByPermission);
+router.get('/admin/single', ApiController.getUserById);
+router.post('/admin/insert', ApiController.insertUser);
+router.post('/admin/update', ApiController.updateUser);
+router.post('/admin/delete', ApiController.deleteUser);
+router.post('/admin/check-username', ApiController.checkUsernameExists)
 
 // car sale record
 router.get('/csale/all', SaleRecord.getAllSaleRecords);

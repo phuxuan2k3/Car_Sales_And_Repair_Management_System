@@ -235,6 +235,11 @@ const loadDeleteModal = () => {
                 <p>Last name: <span class="fw-bold">${data.lastname}</span></p>
             </div>
         </div>`;
+    if (data.permission === 'ad') {
+        $(acceptDeleteBtn).prop('disabled', true);
+    } else {
+        $(acceptDeleteBtn).prop('disabled', false);
+    }
     $('#deleteModalContent').html(content);
 }
 
@@ -344,22 +349,23 @@ function cudResultDisplay(result) {
     }
 }
 function displayToastResult(success, message) {
-    $('.toast-body').text(message);
-    if (success) {
-        $('.toast-header').addClass('inlinePrimary').removeClass('inlineDanger').find('p').text('Success');
-    } else {
-        $('.toast-header').addClass('inlineDanger').removeClass('inlinePrimary').find('p').text('Warning');
-    }
-    $('.toast-body').text(message);
-    let toast = document.querySelector('.toast');
-    if (toast) {
-        let myToast = new bootstrap.Toast(toast);
-        myToast.show();
-    }
+    // $('.toast-body').text(message);
+    // if (success) {
+    //     $('.toast-header').addClass('inlinePrimary').removeClass('inlineDanger').find('p').text('Success');
+    // } else {
+    //     $('.toast-header').addClass('inlineDanger').removeClass('inlinePrimary').find('p').text('Warning');
+    // }
+    // $('.toast-body').text(message);
+    // let toast = document.querySelector('.toast');
+    // if (toast) {
+    //     let myToast = new bootstrap.Toast(toast);
+    //     myToast.show();
+    // }
 }
 const permissionMapper = {
     cus: 'Customer',
     mec: 'Mechanic',
     sm: 'Storage manager',
     sa: 'Sale',
+    ad: 'Admin',
 }

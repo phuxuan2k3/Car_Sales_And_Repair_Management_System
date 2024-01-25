@@ -68,17 +68,22 @@ module.exports = class User {
         return data.count;
     }
     // return {id}
-    static async insert2(entity) {
+    static async insertFromAdmin(entity) {
         const res = await InsertQuery.init(tableName).default(entity, ['id']).execute();
         return res;
     }
     // return rows affected
-    static async update2(entity) {
+    static async updateFromAdmin(entity) {
         const res = await ExactUpdateQuery.init(tableName).default(entity, ['id']).execute();
         return res;
     }
     // return rows affected
-    static async delete2({ id }) {
+    static async deleteFromAdmin({ id }) {
+        const user = await module.exports.getById(id);
+        if (user.permission === 'ad') {
+            // cant delete admin
+            return -1;
+        }
         const res = await DeleteQuery.init(tableName).default({ id }).execute();
         return res;
     }
