@@ -115,4 +115,9 @@ router.get('/topcar', ApiController.getTopCar);
 router.get('/saleTotal', ApiController.getSaleTotal);
 router.get('/fixTotal', ApiController.getFixTotal);
 
+//Car type
+router.get('/type/all', ApiController.getAllCarType);
+//Car brand
+router.get('/brand/all', ApiController.getAllBrand);
+
 module.exports = router;

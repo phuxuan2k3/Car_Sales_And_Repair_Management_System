@@ -155,10 +155,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"nodemon app.js\" \"nodemon paymentServer.js\"",
-    "paymentServer": "nodemon paymentServer.js",
-    "testdb": "node models/user.js",
-    "app": "nodemon app.js"
+    "start": "concurrently \"nodemon AppServer/app.js\" \"nodemon PaymentServer/paymentServer.js\"",
+    "testdb": "node models/user.js"
   },
   "keywords": [],
   "author": "",

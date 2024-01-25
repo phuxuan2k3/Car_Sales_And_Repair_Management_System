@@ -11,6 +11,8 @@ const path = require('path');
 const appDir = path.dirname((require.main.filename));
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
+const CarType = require('../models/carType');
+const CarBrand = require('../models/carBrand');
 
 const { SaleRecord } = require('../models/invoices/salerecord');
 
@@ -379,5 +381,19 @@ module.exports = {
         const result = await User.checkUsernameExists(username);
         return res.json(result);
     }),
+
+
+    //car type
+    getAllCarType: tryCatch(async (req, res) => {
+        const data = await CarType.getAll();
+        res.json(data);
+    }),
+
+    //car brand
+    getAllCarBrand: tryCatch(async (req, res) => {
+        const data = await CarBrand.getAll();
+        res.json(data);
+    }),
+
 
 }
