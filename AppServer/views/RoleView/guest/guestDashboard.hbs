@@ -4,6 +4,29 @@
 <div class="container-fluid">
     {{> Nav/guestNav}}
     <div class="row">
+        <div class="row">
+            <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="10000">
+                        <img src="images/advertisement/1.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="2000">
+                        <img src="images/advertisement/2.jpg" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
         <div class="col-md-3">
             {{!-- Left slide --}}
             <form class="h-100 bg-white w-100 p-3">
@@ -41,7 +64,7 @@
         <div class="col-md-9">
             {{!-- Main content --}}
             <div class="bg-white d-flex justify-content-center flex-column h-100" id="MainContent">
-                <div class="d-flex mb-auto flex-wrap p-3 w-100"  id="CarList">
+                <div class="d-flex mb-auto flex-wrap p-3 w-100" id="CarList">
 
                 </div>
                 <nav class="d-flex justify-content-center" aria-label="Page navigation example">
