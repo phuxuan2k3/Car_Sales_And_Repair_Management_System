@@ -25,21 +25,11 @@ pre {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.inlinePrimary {
-    color: var(--secondaryColor) !important;
-    background-color: var(--primaryColor) !important;
-}
-
 .textWarning {
     color: var(--warningColor) !important;
 }
 
 .bgWarning {
-    background-color: var(--warningColor) !important;
-}
-
-.inlineWarning {
-    color: var(--secondaryColor) !important;
     background-color: var(--warningColor) !important;
 }
 
@@ -51,12 +41,41 @@ pre {
     background-color: var(--dangerColor) !important;
 }
 
-.outlineDanger {
-    color: var(--dangerColor) !important;
-    border-color: var(--dangerColor) !important;
+.inlinePrimary,
+.outlinePrimary:hover {
+    color: var(--secondaryColor) !important;
+    background-color: var(--primaryColor) !important;
 }
 
-.inlineDanger {
+.outlinePrimary,
+.inlinePrimary:hover {
+    background-color: transparent !important;
+    color: var(--primaryColor) !important;
+    border-color: var(--primaryColor) !important;
+}
+
+.inlineWarning,
+.outlineWarning:hover {
+    color: var(--secondaryColor) !important;
+    background-color: var(--warningColor) !important;
+}
+
+.outlineWarning,
+.inlineWarning:hover {
+    background-color: transparent !important;
+    color: var(--warningColor) !important;
+    border-color: var(--warningColor) !important;
+}
+
+.inlineDanger,
+.outlineDanger:hover {
     color: var(--secondaryColor) !important;
     background-color: var(--dangerColor) !important;
+}
+
+.outlineDanger,
+.inlineDanger:hover {
+    background-color: transparent !important;
+    color: var(--dangerColor) !important;
+    border-color: var(--dangerColor) !important;
 }

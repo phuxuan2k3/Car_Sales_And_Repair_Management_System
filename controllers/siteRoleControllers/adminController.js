@@ -11,7 +11,6 @@ module.exports = {
                 title: 'DashBoard',
                 jsFile: 'adminDashboard.js',
                 cssFile: 'adminDashBoard.css',
-                // store: true
             });
     }),
     getCarDetail: tryCatch(async (req, res) => {

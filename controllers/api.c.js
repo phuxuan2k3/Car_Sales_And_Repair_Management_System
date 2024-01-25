@@ -183,9 +183,7 @@ module.exports = {
         const { ap_id, quantity } = req.body;
         const data = await AutoPart.updateQuanTity(ap_id, quantity);
         res.json(data);
-    }
-    ),
-
+    }),
 
     //Fixed car API
     getAllFixedCar: tryCatch(async (req, res) => {
@@ -339,7 +337,47 @@ module.exports = {
             return res.json(verifyData)
         }
         return res.status('400').send('Error');
-    })
+    }),
 
+    // Admin - User
+    getAllUsers: tryCatch(async (req, res) => {
+        const users = await User.getAll();
+        return res.json(users);
+    }),
+    getUsersByUsernameSearchByPermissionByPage: tryCatch(async (req, res) => {
+        const { username, permission, page, perPage } = req.query;
+        const users = await User.getByUsernameSearchByPermissionByPage(username, permission, page, perPage);
+        return res.json(users);
+    }),
+    getUsersCountByUsernameSearchByPermission: tryCatch(async (req, res) => {
+        const { username, permission } = req.query;
+        const count = await User.getCountByUsernameSearchByPermission(username, permission);
+        return res.json(count);
+    }),
+    getUserById: tryCatch(async (req, res) => {
+        const { id } = req.query;
+        const user = await User.getById(id);
+        return res.json(user);
+    }),
+    insertUser: tryCatch(async (req, res) => {
+        const userData = req.body;
+        const result = await User.insertFromAdmin(userData);
+        return res.json(result);
+    }),
+    updateUser: tryCatch(async (req, res) => {
+        const userData = req.body;
+        const result = await User.updateFromAdmin(userData);
+        return res.json(result);
+    }),
+    deleteUser: tryCatch(async (req, res) => {
+        const { id } = req.body;
+        const result = await User.deleteFromAdmin({ id });
+        return res.json(result);
+    }),
+    checkUsernameExists: tryCatch(async (req, res) => {
+        const { username } = req.body;
+        const result = await User.checkUsernameExists(username);
+        return res.json(result);
+    }),
 
 }
