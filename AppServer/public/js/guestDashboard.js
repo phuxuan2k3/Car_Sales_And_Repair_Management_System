@@ -1,16 +1,14 @@
 let page = 1;
 let per_page = 6;
 let carData;
-let typeData;
-let brandData;
 let CurrentMP = $('#CurrentMP')
 let maxPriceRange = $('#maxPriceRange');
-let TypeCheckList = $('#TypeCheckList');
 let YearCheckList = $('#YearCheckList');
-let BrandCheckList = $('#BrandCheckList');
 let SearchBar = $('#SearchBar')
 let CarList = $('#CarList');
 let PageInfo = $('#PageInfo');
+let brand = 'All';
+let type = 'All';
 let totalPage;
 let popupWindow = $('#popupWindow');
 let overlay = $('.overlay');
@@ -30,12 +28,23 @@ const updateData = async () => {
     updatePageInfo();
 }
 
-const menuClickEvent = async(brand,type) => {
+const menuClickEvent = async(carBrand,carType) => {
     console.log(`${brand} ${type}`);
+    brand = carBrand != null ? `${carBrand}` : 'All';
+    type = carType != null ? `${carType}` : 'All';
+    let menuContent = $(`#menuContent`);
+    menuContent.text(`${brand} ${type != 'All' ? `: ${type}` : ''}`);
+    await updateData();
 }
 
-
-
+const removeAllCheckBox = async (e) => {
+    e.preventDefault();
+    let checkedYear = $('.yearOption:checked');
+    checkedYear.each((index, e) => {
+        $(e).prop('checked', false)
+    });
+    await updateData();
+}
 
 const prePage = async () => {
     if (page <= 1) return;
@@ -51,6 +60,7 @@ const nextPage = async () => {
     updatePageInfo();
 }
 
+// Will be fix for jwt
 const fetchData = async (url) => {
     const rs = await fetch(url);
     storage = await rs.json();
@@ -58,28 +68,18 @@ const fetchData = async (url) => {
 }
 
 const updateCarData = async (page) => {
-    let checkedType = $('.typeOption:checked');
-    let checkedBrand = $('.brandOption:checked');
     let checkedYear = $('.yearOption:checked')
     let queryElement = [];
-    let brandArr = [];
-    checkedBrand.each((index, e) => {
-        brandArr.push(`brand=${$(e).val()}`);
-    });
-    let typeArr = [];
-    checkedType.each((index, e) => {
-        typeArr.push(`type=${$(e).val()}`);
-    });
-    let yearArr = [];
+    let yearArr = []
     checkedYear.each((index, e) => {
         yearArr.push(`year=${$(e).val()}`);
     });
-    if (brandArr.length > 0) queryElement.push(brandArr.join('&'));
-    if (typeArr.length > 0) queryElement.push(typeArr.join('&'));
+    if (brand != 'All') queryElement.push(`brand=${brand}`);
+    if (type != 'All') queryElement.push(`type=${type}`);
     if (yearArr.length > 0) queryElement.push(yearArr.join('&'));
     if (SearchBar.val() != '') queryElement.push(`search=${SearchBar.val()}`);
     let query = queryElement.join('&');
-    let url = `/api/car/car_page?${query}&page=${page}&per_page=${per_page}&max_price=${maxPriceRange.val()}`
+    let url = `/api/car/car_page?${query}&page=${page}&per_page=${per_page}&max_price=${maxPriceRange.val()}`;
     const rsData = await fetchData(url);
     carData = rsData.data;
     totalPage = rsData.totalPage;
@@ -229,32 +229,10 @@ const generateCarInfo = async () => {
 }
 
 const pageInit = async () => {
-    typeData = await fetchData('/api/car/type');
-    brandData = await fetchData('/api/car/brand');
     const rsData = await fetchData(`/api/car/car_page?&page=${page}&per_page=${per_page}`)
     carData = rsData.data;
     totalPage = rsData.totalPage;
     await generateCarInfo();
-    for (const e of typeData) {
-        TypeCheckList.append(`
-        <div>
-                        <input class="form-check-input typeOption" type="checkbox" value="${e.type}" id="${e.type}">
-                        <label class="form-check-label" for="${e.type}">
-                           ${e.type}
-                        </label>
-        </div>
-        `)
-    }
-    for (const e of brandData) {
-        BrandCheckList.append(`
-        <div>
-                        <input class="form-check-input brandOption" type="checkbox" value="${e.brand}" id="${e.brand}">
-                        <label class="form-check-label" for="${e.brand}">
-                           ${e.brand}
-                        </label>
-        </div>
-        `)
-    }
     updatePageInfo();
 }
 

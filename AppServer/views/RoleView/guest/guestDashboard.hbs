@@ -32,7 +32,7 @@
                 <div class=" mb-3">
                     <p class="fs-8 textPrimary">Menu</p>
                     <div id="menu">
-                        <button type="button" class="btn btn-light w-100 text-start"
+                        <button type="button" onclick="menuClickEvent(null,null)" class="btn btn-light w-100 text-start"
                             style="border-radius: 0;">ALL</button>
                         {{#each brand }}
                         <div class="btn-group dropend w-100">
@@ -58,6 +58,7 @@
                 <div class="checkBox mb-3">
                     <p class="fs-8 textPrimary">Year</p>
                     <div class="ms-3">
+                        <p><a href="#" onclick="removeAllCheckBox(event)" class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Remove all</a></p>
                         {{#each years}}
                         <div class="form-check" id="YearCheckList">
                             <div>
@@ -92,7 +93,7 @@
             <div class="bg-white d-flex justify-content-center flex-column h-100" id="MainContent">
                 <div class="w-100 p-3 ms-3  d-flex justify-content-between">
                     <div class="me-auto">
-                        <h2 class=" textPrimary">ALL CAR</h2>
+                        <h2 class=" textPrimary" id="menuContent">All</h2>
                     </div>
                     <div class="searchForm w-50 me-3">
                         <i class="fa fa-search"></i>
