@@ -1,9 +1,13 @@
-
-
+let page = 1;
+let per_page = 5;
+let totalPage = 0
 let inputCarPlate = $('#inputCarPlate');
 let overplay = $('#overplay');
 let tbBody = $('#tbBody');
+let showedRecordData = [];
 let fixedCar;
+let fixRecordsData = [];
+
 
 //payment
 let amount;
@@ -23,6 +27,13 @@ let paymentAlert = $('#paymentAlert');
 let failedAlert = $('#failedAlert');
 let successAlert = $('#successAlert');
 
+// Will be fix for jwt
+const fetchData = async (url) => {
+    const rs = await fetch(url);
+    storage = await rs.json();
+    return storage;
+}
+
 const validation = () => {
     let inputCarPlate = $('#inputCarPlate');
     var regex = /^\d{2}[A-Z]{1}-\d{5}$/;
@@ -36,6 +47,11 @@ const validation = () => {
         return false;
     }
 }
+
+const backToPrePage = async () => {
+    window.history.back();
+}
+
 
 inputCarPlate.on('click', ((e) => {
     inputCarPlate.attr('placeholder', '68K-XXXXX');
@@ -106,27 +122,41 @@ registerButton.on('click',async (e) => {
     }
 })
 
+
+const updateFixRecordData = async () => {
+    for (const car of fixedCar) {
+        const records = (await fetchData(`/api/cfix/car-plate?car_plate=${car.car_plate}`)).fixRecords;
+        for (const record of records) {
+            fixRecordsData.push(record);
+        }
+    }
+    if(fixRecordsData.length > per_page) {
+        $('.pagination').removeClass('d-none');
+        totalPage = Math.ceil(fixRecordsData.length / per_page);
+    } else {
+        $('.pagination').addClass('d-none');
+    }
+}
+
+const updateShowedRecordData = async (curPage) => {
+    showedRecordData = fixRecordsData.slice((curPage - 1) * per_page,(curPage - 1) * per_page + per_page );
+}
+
 const generateTable = async () => {
     tbBody.empty();
-    let index = $('.recordInfo').length;
-    for (const car of fixedCar) {
-        rs = await fetch(`/api/cfix/car-plate?car_plate=${car.car_plate}`);
-        const records = (await rs.json()).fixRecords;
-        for (const record of records) {
-            tbBody.append(`
-                        <tr class="text-center recordInfo" recordId="${record.fixrecord_id}">
-                            <td scope="col">${index + 1}</td>
-                            <td scope="col">${record.car_plate}</td>
-                            <td scope="col">${record.date}</td>
-                            <td scope="col">${record.total_price}$</td>
-                            <td scope="col">${record.status}</td>
-                            <td scope="col">
-                                <button total_price="${record.total_price}" recordId="${record.fixrecord_id}" car_plate="${record.car_plate}" date="${record.date}" class="paymentButton btn btn-${record.pay == true ? `success` : `primary`} w-75"  ${record.status != `Done` || record.pay == true ? `disabled` : ``} href="#" role="button">${record.pay == true && record.status == `Done` ? "Completed" : "Pay"}</button>
-                            </td>
-                        </tr>
-            `)
-            index += 1;
-        }
+    for (const record of showedRecordData) {
+        tbBody.append(`
+                    <tr class="text-center recordInfo" recordId="${record.fixrecord_id}">
+                        <td scope="col">${fixRecordsData.indexOf(record) + 1}</td>
+                        <td scope="col">${record.car_plate}</td>
+                        <td scope="col">${record.date}</td>
+                        <td scope="col">${record.total_price}$</td>
+                        <td scope="col">${record.status}</td>
+                        <td scope="col">
+                            <button total_price="${record.total_price}" recordId="${record.fixrecord_id}" car_plate="${record.car_plate}" date="${record.date}" class="paymentButton btn btn-${record.pay == true ? `success` : `primary`} w-75"  ${record.status != `Done` || record.pay == true ? `disabled` : ``} href="#" role="button">${record.pay == true && record.status == `Done` ? "Completed" : "Pay"}</button>
+                        </td>
+                    </tr>
+        `)
     }
     let paymentButton = $('.paymentButton');
     paymentButton.on('click', async function (e) {
@@ -166,8 +196,7 @@ const generateTable = async () => {
         paymentAlert = $('#paymentAlert');
         paymentAlert.css('opacity', 1);
         paymentInfo = $('#paymentInfo');
-        const rs = await fetch(`/api/payment/account`);
-        const account = await rs.json();
+        const account = (await fetchData(`/api/payment/account`));
         paymentInfo.empty();
         paymentInfo.append(`
             <p>Order ID: ${$(this).attr('recordId')}</p>
@@ -237,18 +266,42 @@ const generateTable = async () => {
 }
 
 const init = async () => {
-    let rs = await fetch(`/api/car/fixed/find?id=${userId}`);
-    fixedCar = await rs.json();
+    fixedCar = await fetchData(`/api/car/fixed/find?id=${userId}`)
+    await updateFixRecordData();
+    await updateShowedRecordData(page);
+    await updatePageInfo();
     generateTable();
 }
 
 let carPlateInput = $('#carPlateInput');
 carPlateInput.on('input', async function (e) {
     const car_plate = $(this).val();
-    let rs = await fetch(`/api/car/fixed/find?id=${userId}&car_plate=${car_plate}`);
-    fixedCar = await rs.json();
+    fixedCar = await fetchData(`/api/car/fixed/find?id=${userId}&car_plate=${car_plate}`);
     generateTable();
 })
+
+
+const updatePageInfo = async () => {
+    $('#PageInfo').text(`${page}/${totalPage}`)
+}
+
+const prePage = async (event) => {
+    event.preventDefault();
+    if (page <= 1) return;
+    page -= 1;
+    await updateShowedRecordData(page);
+    await generateTable();
+    updatePageInfo();
+}
+
+const nextPage = async (event) => {
+    event.preventDefault();
+    if (page >= totalPage) return;
+    page += 1;
+    await updateShowedRecordData(page);
+    await generateTable();
+    updatePageInfo();
+}
 
 init();
 

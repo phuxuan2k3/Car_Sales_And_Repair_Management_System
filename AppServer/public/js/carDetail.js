@@ -13,6 +13,10 @@ $('input[type="number"]').on('input', function () {
     }
 });
 
+const backToPrePage = async () => {
+    window.history.back();
+}
+
 const fetchData = async (url) => {
     const rs = await fetch(url);
     data = await rs.json();

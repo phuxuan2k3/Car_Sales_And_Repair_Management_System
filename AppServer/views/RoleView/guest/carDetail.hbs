@@ -2,7 +2,11 @@
 <div class="overlay z-2 d-none" id="overplay"></div>
 <div class="container-fluid">
     {{> Nav/guestNav}}
-
+    <div class="m-3">
+        <button onclick="backToPrePage()"  type="button" class="btn btn-primary bgPrimary">
+            <i class="fa-solid fa-chevron-left"></i> Back
+        </button>
+    </div>
     <div class="row">
         <div class="col-12">
             {{!-- Main content --}}
@@ -13,8 +17,9 @@
                             class="carousel h-100 rounded-4 bgPrimary slide d-flex align-items-center">
                             <div class="carousel-indicators">
                                 {{#each images}}
-                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{@index}}"
-                                    {{#if @first}} class="active"  aria-current="true" {{/if}} aria-label="Slide {{add @index 1}}"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators"
+                                    data-bs-slide-to="{{@index}}" {{#if @first}} class="active" aria-current="true"
+                                    {{/if}} aria-label="Slide {{add @index 1}}"></button>
                                 {{/each}}
                             </div>
                             <div class="carousel-inner">
