@@ -60,6 +60,8 @@ const perPage = () => parseInt(perPageInput().val()) || 0;
 const loadUserContent = async () => {
     if (loading === true) return;
     loading = true;
+    // scroll preserve
+    localStorage.setItem('scrollpos', window.scrollY);
     userContent().children().empty();
     const custom = {
         username: username(),
@@ -78,11 +80,15 @@ const loadUserContent = async () => {
                 <td>${user.username}</td>
                 <td>${permissionMapper[user.permission]}</td>
                 <td>
-                    <div class="d-flex justify-content-end">
-                        <button onclick="toggleContent('form', ${user.id})" class="btn inlineWarning mx-2 px-2"><i class="fa-solid fa-pen"></i></button>
-                        <button onclick="toggleContent('modal', ${user.id})" 
-                            data-bs-toggle="modal" data-bs-target="#deleteModal"
-                            class="btn inlineDanger mx-2 px-2"><i class="fa-solid fa-trash"></i></button>
+                    <div class="row gy-md-0 gy-2">
+                        <div class="col-auto">
+                            <button onclick="toggleContent('form', ${user.id})" class="btn outlineDanger px-2"><i class="fa-solid fa-pen"></i></button>
+                        </div>
+                        <div class="col-auto">
+                            <button onclick="toggleContent('modal', ${user.id})" 
+                                data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                class="btn inlineDanger px-2"><i class="fa-solid fa-trash"></i></button>
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -95,27 +101,55 @@ const loadUserContent = async () => {
         storage.page = storage.totalPage;
     }
     await loadPagination();
+    // scroll preserve
+    var scrollpos = localStorage.getItem('scrollpos');
+    if (scrollpos) window.scrollTo(0, scrollpos);
     loading = false;
 }
 const loadPagination = async () => {
     paginationContainer().children().not(':first').not(':last').remove();
-    for (let i = 1; i <= storage.totalPage; i++) {
-        const active = i === storage._page ? 'active' : '';
-        const pageLink = i === storage._page ?
-            `<span class="page-link"
+    // config paging
+    const sRange = 2;
+    const eRange = 2;
+    const curRange = 2;
+    // item types
+    const tripleDotsItem =
+        `<li class="page-item">
+            <span class="page-link"
                 style="user-select: none;">
+                ...
+            </span>
+        </li>`;
+    const currentPageItem = (i) =>
+        `<li class="page-item active">
+            <span class="page-link"
+                style = "user-select: none;" >
                 ${i}
-            </span>`:
-            `<a class="page-link"
-                href="#/"
-                click="setPage(${i})">
+            </span>
+        </li>`;
+    const normalPageItem = (i) =>
+        `<li class="page-item" onclick="setPage(${i})">
+            <a class="page-link"
+                href="#/">
                 ${i}
-            </a>` ;
-        const pageItem =
-            /*html*/
-            `<li class="page-item ${active}">
-                ${pageLink}
-            </li>`;
+            </a>
+        </li>`;
+    const totalPage = storage.totalPage;
+    const currentPage = storage.page;
+    let goToEndDotsPosition = false;
+    for (let i = 1; i <= totalPage;) {
+        let pageItem = '';
+        if (i <= sRange || i >= currentPage - curRange && i <= currentPage + curRange || i >= totalPage - eRange + 1) {
+            if (i >= currentPage - curRange && i <= currentPage + curRange) {
+                goToEndDotsPosition = true;
+            }
+            pageItem = i === currentPage ? currentPageItem(i) : normalPageItem(i);
+            i++;
+        }
+        else {
+            pageItem = tripleDotsItem;
+            i = goToEndDotsPosition ? totalPage - eRange + 1 : currentPage - curRange;
+        }
         $(pageItem).insertBefore(paginationContainer().children().last());
     }
 }
@@ -227,6 +261,17 @@ function decrPage() {
 function setPage(value) {
     storage.page = value;
 }
+function perPageInputControlTrigger(control) {
+    const val = parseInt(control.value) || 0;
+    const max = parseInt(control.max);
+    const min = parseInt(control.min);
+    if (val < min) {
+        control.value = min;
+    }
+    else if (val > max) {
+        control.value = max;
+    }
+}
 async function formSubmit() {
     let form = document.getElementById('detailForm');
     if (form.checkValidity() == false) {
@@ -271,11 +316,11 @@ async function modalDeleteAccept() {
 async function toggleContent(content, id = null) {
     if (id != null) {
         storage.currentUserId = id;
-        $('#formHeader').text('Update').addClass('textWarning').removeClass('textPrimary');
+        $('#formHeader').text('Update').addClass('textDanger').removeClass('textPrimary');
         $('#Username').prop('disabled', true);
     } else {
         storage.currentUserId = null;
-        $('#formHeader').text('Add new').removeClass('textWarning`').addClass('textPrimary');
+        $('#formHeader').text('Add new').removeClass('textDanger`').addClass('textPrimary');
         $('#Username').prop('disabled', false);
     }
     if (content === 'form') {
@@ -301,9 +346,9 @@ function cudResultDisplay(result) {
 function displayToastResult(success, message) {
     $('.toast-body').text(message);
     if (success) {
-        $('.toast-header').addClass('inlinePrimary').removeClass('inlineWarning').find('p').text('Success');
+        $('.toast-header').addClass('inlinePrimary').removeClass('inlineDanger').find('p').text('Success');
     } else {
-        $('.toast-header').addClass('inlineWarning').removeClass('inlinePrimary').find('p').text('Warning');
+        $('.toast-header').addClass('inlineDanger').removeClass('inlinePrimary').find('p').text('Warning');
     }
     $('.toast-body').text(message);
     let toast = document.querySelector('.toast');

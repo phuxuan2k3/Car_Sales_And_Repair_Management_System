@@ -2,8 +2,20 @@
     background-color: lightgray;
 }
 
+#permissionsContainer>.active {
+    background-color: var(--dangerColor) !important;
+}
+
+#permissionsContainer>.nav-link:hover:not(.active) {
+    color: var(--dangerColor);
+}
+
+#permissionsContainer>.nav-link>i {
+    margin-right: 14px;
+}
+
 #v-pills-tabContent h1 {
-    color: var(--primaryColor);
+    color: var(--dangerColor);
 }
 
 #tableContainer,
