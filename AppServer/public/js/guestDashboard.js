@@ -6,6 +6,7 @@ let brandData;
 let CurrentMP = $('#CurrentMP')
 let maxPriceRange = $('#maxPriceRange');
 let TypeCheckList = $('#TypeCheckList');
+let YearCheckList = $('#YearCheckList');
 let BrandCheckList = $('#BrandCheckList');
 let SearchBar = $('#SearchBar')
 let CarList = $('#CarList');
@@ -22,25 +23,19 @@ maxPriceRange.on('input', async (e) => {
     updatePageInfo();
 })
 
-SearchBar.on('input', async (e) => {
-    // console.log(SearchBar.val() != '');
-    page = 1;
-    await updateCarData(page);
-    CurrentMP.text(`${maxPriceRange.val()}$`);
-    updatePageInfo();
-})
 
-TypeCheckList.on('input', async (e) => {
+const updateData = async () => {
     page = 1;
     await updateCarData(page);
     updatePageInfo();
-})
+}
 
-BrandCheckList.on('input', async (e) => {
-    page = 1;
-    await updateCarData(page);
-    updatePageInfo();
-})
+const menuClickEvent = async(brand,type) => {
+    console.log(`${brand} ${type}`);
+}
+
+
+
 
 const prePage = async () => {
     if (page <= 1) return;
@@ -65,6 +60,7 @@ const fetchData = async (url) => {
 const updateCarData = async (page) => {
     let checkedType = $('.typeOption:checked');
     let checkedBrand = $('.brandOption:checked');
+    let checkedYear = $('.yearOption:checked')
     let queryElement = [];
     let brandArr = [];
     checkedBrand.each((index, e) => {
@@ -74,8 +70,13 @@ const updateCarData = async (page) => {
     checkedType.each((index, e) => {
         typeArr.push(`type=${$(e).val()}`);
     });
+    let yearArr = [];
+    checkedYear.each((index, e) => {
+        yearArr.push(`year=${$(e).val()}`);
+    });
     if (brandArr.length > 0) queryElement.push(brandArr.join('&'));
     if (typeArr.length > 0) queryElement.push(typeArr.join('&'));
+    if (yearArr.length > 0) queryElement.push(yearArr.join('&'));
     if (SearchBar.val() != '') queryElement.push(`search=${SearchBar.val()}`);
     let query = queryElement.join('&');
     let url = `/api/car/car_page?${query}&page=${page}&per_page=${per_page}&max_price=${maxPriceRange.val()}`
@@ -90,11 +91,11 @@ const backEvent = async () => {
     popupWindow.toggleClass('d-none');
 }
 
-const confirmAddEvent = async (carId, cartQuantity) => {
+const confirmAddEvent = async (carId, cartQuantity,event) => {
+    event.preventDefault();
     let popupContent = $('#popupContent');
     let quantityInput = $('#quantityInput');
     let redirectToCartButton = $('#redirectToCartButton');
-    let backButton = $('#backButton');
     let confirmAdd = $('#confirmAdd');
     redirectToCartButton.toggleClass('d-none');
     confirmAdd.toggleClass('d-none');
@@ -154,7 +155,7 @@ const setAddToCartEvent = async (userId, car) => {
     popupWindow.toggleClass('d-none');
     popupWindow.empty();
     popupWindow.append(`
-    <div class="alert w-50 alert-light position-fixed z-3 top-50 start-50 translate-middle " id="paymentAlert" role="alert">
+    <form  action="#" onsubmit="confirmAddEvent(${car.id},${cartData != null ? cartData[0].quantity : null},event)" class="alert w-50 alert-light position-fixed z-3 top-50 start-50 translate-middle " id="paymentAlert" role="alert">
             <h4 class="alert-heading"><i class="me-3 fa-solid fa-cart-plus" style="color: #74C0FC;"></i> ADD TO CART</h4>
             <hr>
             <div id="popupContent">
@@ -167,7 +168,7 @@ const setAddToCartEvent = async (userId, car) => {
                 ` : ''}
                 <div class="${maxQuantity <= 0 ? 'd-none' : ''} d-flex flex-row align-items-center">
                     <label class="me-3" for="#quantityInput">Enter quantity: </label>
-                    <input class="text-center rounded-pill form-control w-25 " type="number" id="quantityInput" value="1"   min="1" max="${maxQuantity}">
+                    <input class="text-center rounded-pill form-control w-25" min="${1}" max="${maxQuantity}" required  type="number" id="quantityInput" value="1">
                 </div>
             </div>
             <div id="successTransaction" class="d-none d-flex flex-column justify-content-center align-items-center">
@@ -180,23 +181,11 @@ const setAddToCartEvent = async (userId, car) => {
             </div>
             <hr>
             ${maxQuantity <= 0 ? '<p class="text-danger">You`ve reached the maximum quantity in your cart. !</p>' : ''}
-            <button id="confirmAdd"  onClick="confirmAddEvent(${car.id},${cartData != null ? cartData[0].quantity : null})" ${maxQuantity <= 0 ? 'disabled' : ''} class="btn text-light btn-success w-100 mb-3" role="button">ADD</button>
-            <button id="redirectToCartButton" onClick="redirectToCartEvent()" class="btn btn-warning w-100 mb-3 d-none"  role="button">Go to cart</button>
-            <button id="backButton" onClick="backEvent()" class="btn btn-danger w-100 mb-3"  role="button">Back</button>
-            </div>
+            <button id="confirmAdd"   ${maxQuantity <= 0 ? 'disabled' : ''} class="btn text-light btn-success w-100 mb-3" role="button">ADD</button>
+            <a id="redirectToCartButton" onClick="redirectToCartEvent()" class="btn btn-warning w-100 mb-3 d-none"  role="button">Go to cart</a>
+            <a id="backButton" onClick="backEvent()" class="btn btn-danger w-100 mb-3"  role="button">Back</a>
+            </form>
     `)
-
-    $('input[type="number"]').on('input', function () {
-        let inputValue = parseInt($(this).val(), 10);
-        if (inputValue == '' || null) $(this).val(1);
-        let min = parseInt($(this).attr('min'), 10);
-        let max = parseInt($(this).attr('max'), 10);
-        if (inputValue < min) {
-            $(this).val(min);
-        } else if (inputValue > max) {
-            $(this).val(max);
-        }
-    });
 }
 
 

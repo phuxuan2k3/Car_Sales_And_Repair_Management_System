@@ -24,6 +24,11 @@ module.exports = {
         res.json({ car: carData, ap: apData });
     }),
     //Car API
+    getAllYear: tryCatch(async (req,res) => {
+        const data = await Car.getAllYear();
+        res.json(data);
+    }),
+
     getByCarId: tryCatch(async (req, res) => {
         const id = req.query.id;
         const data = await Car.getCarById(id);
@@ -49,17 +54,21 @@ module.exports = {
         const page = parseInt(req.query.page);
         const perPage = parseInt(req.query.per_page);
         let types = req.query.type;
+        let years = req.query.year;
         let brands = req.query.brand;
         let searchStr = req.query.search;
         const maxPrice = req.query.max_price;
         const offset = (page - 1) * perPage;
+        if (!(years instanceof Array) && years != undefined) {
+            years = [years];
+        }
         if (!(brands instanceof Array) && brands != undefined) {
             brands = [brands];
         }
         if (!(types instanceof Array) && types != undefined) {
             types = [types];
         }
-        const data = await Car.getCarPage(searchStr, brands, types, maxPrice, perPage, offset);
+        const data = await Car.getCarPage(years,searchStr, brands, types, maxPrice, perPage, offset);
         res.json(data);
     }),
     addNewCar: tryCatch(async (req, res) => {

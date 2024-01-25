@@ -72,13 +72,15 @@ module.exports = class Car {
         const query = `select sum(quantity) from ${tableName}`
         return (await dbExecute.customQuery(query))[0];
     }
-    static async getCarPage(searchStr, brands, types, maxPrice, limit, offset) {
+    static async getCarPage(years,searchStr, brands, types, maxPrice, limit, offset) {
         let query = `select * from "${tableName}"`
         let brandQuery;
         let typeQuery;
+        let yearQuery;
         let searchQuery;
         let filterArr = [];
         let brandFilter = [];
+        let yearFilter = [];
         let typeFilter = [];
         if (brands != undefined) {
             for (const brand of brands) {
@@ -94,7 +96,15 @@ module.exports = class Car {
             }
             typeQuery = typeFilter.join(' or ');
             typeQuery = `( ${typeQuery} )`
-            filterArr.push(typeQuery)
+            filterArr.push(typeQuery);
+        }
+        if (years != undefined) {
+            for (const year  of years) {
+                yearFilter.push(`"year"=${year}`)
+            }
+            yearQuery = yearFilter.join(' or ');
+            yearQuery = `( ${yearQuery} )`;
+            filterArr.push(yearQuery);
         }
         if (searchStr != undefined) {
             searchQuery = `( "car_name" ilike '%${searchStr}%' )`;
@@ -115,5 +125,9 @@ module.exports = class Car {
     static async getMostCar() {
         let query = `SELECT * FROM ${tableName} ORDER BY quantity DESC LIMIT 1;`
         return (await dbExecute.customQuery(query))[0];
+    }
+    static async getAllYear() {
+        let query = `SELECT DISTINCT "year" from ${tableName} ORDER BY "year"`
+        return (await dbExecute.customQuery(query));
     }
 }

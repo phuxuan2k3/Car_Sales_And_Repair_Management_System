@@ -4,15 +4,14 @@
 <div class="container-fluid">
     {{> Nav/guestNav}}
     <div class="row">
-        <div class="row">
+        <div class="row ps-5 pe-5 pt-1 pb-1 bgPrimary">
             <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active" data-bs-interval="10000">
-                        <img src="images/advertisement/1.jpg" class="d-block w-100" alt="...">
+                    {{#each sliderImage}}
+                    <div class="carousel-item {{#if @first}}active{{/if}}" data-bs-interval="10000">
+                        <img src="images/advertisement/{{this}}" class="d-block w-100" style="height: 20rem;" alt="...">
                     </div>
-                    <div class="carousel-item" data-bs-interval="2000">
-                        <img src="images/advertisement/2.jpg" class="d-block w-100" alt="...">
-                    </div>
+                    {{/each}}
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
                     data-bs-slide="prev">
@@ -29,23 +28,50 @@
 
         <div class="col-md-3">
             {{!-- Left slide --}}
-            <form class="h-100 bg-white w-100 p-3">
-                {{!-- Type --}}
-                <div class="checkBox mb-3">
-                    <p class="fs-8 textPrimary">Type</p>
-                    <div class="ms-3">
-                        <div class="form-check" id="TypeCheckList">
+            <div class="h-100 bg-white w-100 p-3">
+                <div class=" mb-3">
+                    <p class="fs-8 textPrimary">Menu</p>
+                    <div id="menu">
+                        <button type="button" class="btn btn-light w-100 text-start"
+                            style="border-radius: 0;">ALL</button>
+                        {{#each brand }}
+                        <div class="btn-group dropend w-100">
+                            <button type="button" onclick="menuClickEvent('{{this.brand}}',null)" class=" text-start btn btn-light w-75" style="border-radius: 0;">
+                                {{this.brand}}
+                            </button>
+                            <button type="button"
+                                class=" text-center btn btn-light w-25 dropdown-toggle dropdown-toggle-split "
+                                style="border-radius: 0;" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden">Toggle Dropend</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                {{#each ../type}}
+                                    <li class="dropdown-item" onclick="menuClickEvent('{{../this.brand}}','{{this.type}}')" >{{this.type}}</li>
+                                {{/each}}
+                            </ul>
                         </div>
+                        {{/each}}
                     </div>
                 </div>
-                {{!-- Brand --}}
+
+                {{!-- Year --}}
                 <div class="checkBox mb-3">
-                    <p class="fs-8 textPrimary">Brand</p>
+                    <p class="fs-8 textPrimary">Year</p>
                     <div class="ms-3">
-                        <div class="form-check" id="BrandCheckList">
+                        {{#each years}}
+                        <div class="form-check" id="YearCheckList">
+                            <div>
+                                <input oninput="updateData()" class="form-check-input yearOption" type="checkbox"
+                                    value="{{this.year}}" id="{{this.year}}">
+                                <label class="form-check-label" for="${{this.year}}">
+                                    {{this.year}}
+                                </label>
+                            </div>
                         </div>
+                        {{/each}}
                     </div>
                 </div>
+
                 {{!-- Price --}}
                 <div class="mb-3">
                     <p class="fs-8 textPrimary">Max Price</p>
@@ -59,12 +85,23 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
         <div class="col-md-9">
             {{!-- Main content --}}
             <div class="bg-white d-flex justify-content-center flex-column h-100" id="MainContent">
+                <div class="w-100 p-3 ms-3  d-flex justify-content-between">
+                    <div class="me-auto">
+                        <h2 class=" textPrimary">ALL CAR</h2>
+                    </div>
+                    <div class="searchForm w-50 me-3">
+                        <i class="fa fa-search"></i>
+                        <input id="SearchBar" oninput="updateData()" class="form-control me-auto w-100 rounded-pill" type="search"
+                            placeholder="Search car name" aria-label="Search">
+                    </div>
+                </div>
                 <div class="d-flex mb-auto flex-wrap p-3 w-100" id="CarList">
+
 
                 </div>
                 <nav class="d-flex justify-content-center" aria-label="Page navigation example">

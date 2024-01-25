@@ -4,6 +4,8 @@ const ENV = process.env;
 const Car = require('../../models/car');
 const User = require('../../models/user');
 const Cart = require('../../models/cart');
+const CarType = require('../../models/carType');
+const CarBrand = require('../../models/carBrand');
 const AutoPart = require('../../models/ap');
 const {SaleRecord ,SaleDetail} = require('../../models/invoices/salerecord')
 const  {FixDetail} = require('../../models/invoices/fixrecord')
@@ -12,7 +14,14 @@ const path = require('path');
 
 module.exports = {
     getDashboard: tryCatch(async (req, res) => {
-        res.render('RoleView/guest/guestDashboard', {maxPrice: 100000,userId: req.user.id ,nameOfUser: req.session.passport.user.nameOfUser, title: 'DashBoard', jsFile: 'guestDashboard.js', cssFile: 'guestDashBoard.css', store : true });
+        let years = await Car.getAllYear();
+        let type = await CarType.getAll();
+        let brand = await CarBrand.getAll();
+        console.log(type);
+        console.log(brand);
+        let dir = path.dirname(path.dirname(__dirname));
+        const images = await fs.readdirSync(path.join(dir,`public/images/advertisement`));
+        res.render('RoleView/guest/guestDashboard', {type: type, brand: brand,years: years,sliderImage: images,maxPrice: 100000,userId: req.user.id ,nameOfUser: req.session.passport.user.nameOfUser, title: 'DashBoard', jsFile: 'guestDashboard.js', cssFile: 'guestDashBoard.css', store : true });
     }),
     getCarDetail: tryCatch(async (req, res) => {
         const id = req.query.id;
