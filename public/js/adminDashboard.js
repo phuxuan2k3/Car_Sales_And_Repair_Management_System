@@ -235,7 +235,7 @@ const loadDeleteModal = () => {
                 <p>Last name: <span class="fw-bold">${data.lastname}</span></p>
             </div>
         </div>`;
-    if (data.permission === 'ad') {
+    if (data.permission === 'Admin') {
         $(acceptDeleteBtn).prop('disabled', true);
     } else {
         $(acceptDeleteBtn).prop('disabled', false);
