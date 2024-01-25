@@ -7,7 +7,7 @@ module.exports = {
         res.render(
             'RoleView/admin/adminDashboard',
             {
-                // nameOfUser: req.session.passport.user.nameOfUser,
+                nameOfUser: req.session.passport.user.nameOfUser,
                 title: 'DashBoard',
                 jsFile: 'adminDashboard.js',
                 cssFile: 'adminDashBoard.css',
