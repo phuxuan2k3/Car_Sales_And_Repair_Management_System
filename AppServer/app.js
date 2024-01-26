@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');
 const flash = require('express-flash');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const sslServer = require('./config/configSSL');
 
 // Config
 app.use(express.urlencoded({ extended: true }));
@@ -34,12 +35,16 @@ app.use(passport.session());
 
 //Router
 app.use('/api', require('./routers/api.r'));
-app.use('/', require('./routers/site.r'));
+
+app.use('/', (req, res, next) => {
+    console.log('to here');
+    next();
+}, require('./routers/site.r'));
 
 //Handle error middleware
 app.use(NotFound);
 app.use(HandleError);
 
+const appSSL = sslServer(app);
 
-//Run server
-app.listen(ENV.WEBPORT);
+appSSL.listen(ENV.WEBPORT);

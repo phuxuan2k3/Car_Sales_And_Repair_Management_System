@@ -17,12 +17,12 @@ module.exports = {
     }),
     getReportPage: tryCatch(async (req, res) => {
 
-        const filePath = path.join(appDir, 'report.pdf');
+        const filePath = path.join(appDir, 'public', 'pdf', 'report.pdf');
         const doc = new PDFDocument();
         const stream = fs.createWriteStream(filePath);
 
         doc.pipe(stream);
-        const logoPath = path.join(appDir, 'public', 'car.png'); // Điền đúng đường dẫn của logo
+        const logoPath = path.join(appDir, 'public', 'pdf', 'car.png'); // Điền đúng đường dẫn của logo
         doc.image(logoPath, 350, 150, { width: 200 }); // Thay đổi vị trí và kích thước theo yêu cầu
 
 
@@ -121,7 +121,7 @@ module.exports = {
         console.log(req.query.invoiceId);
         console.log(invoice);
 
-        const filePath = path.join(appDir, 'saleInvoice.pdf');
+        const filePath = path.join(appDir, 'public', 'pdf', 'saleInvoice.pdf');
         const doc = new PDFDocument();
         const stream = fs.createWriteStream(filePath);
 
@@ -178,7 +178,7 @@ module.exports = {
         console.log(req.query.invoiceId);
         console.log(invoice);
 
-        const filePath = path.join(appDir, 'saleInvoice.pdf');
+        const filePath = path.join(appDir, 'public', 'pdf', 'saleInvoice.pdf');
         const doc = new PDFDocument();
         const stream = fs.createWriteStream(filePath);
 
