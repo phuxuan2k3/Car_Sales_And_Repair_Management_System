@@ -36,10 +36,7 @@ app.use(passport.session());
 //Router
 app.use('/api', require('./routers/api.r'));
 
-app.use('/', (req, res, next) => {
-    console.log('to here');
-    next();
-}, require('./routers/site.r'));
+app.use('/', require('./routers/site.r'));
 
 //Handle error middleware
 app.use(NotFound);

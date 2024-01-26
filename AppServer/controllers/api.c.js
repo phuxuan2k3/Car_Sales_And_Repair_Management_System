@@ -13,7 +13,7 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const CarType = require('../models/carType');
 const CarBrand = require('../models/carBrand');
-
+const bcrypt = require('bcrypt');
 const { SaleRecord } = require('../models/invoices/salerecord');
 
 module.exports = {
@@ -397,6 +397,8 @@ module.exports = {
     }),
     insertUser: tryCatch(async (req, res) => {
         const userData = req.body;
+        const hash = bcrypt.hashSync(newUser.password, parseInt(ENV.SALTROUNDS));
+        userData.password = hash;
         const result = await User.insertFromAdmin(userData);
         return res.json(result);
     }),

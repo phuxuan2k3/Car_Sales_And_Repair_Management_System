@@ -13,13 +13,13 @@ module.exports = (passport) => {
             const user = data[0];
 
             //todo: change password to hashed password
-            // if (!(await bcrypt.compare(password, user.Password))) {
+            if (!(await bcrypt.compare(password, user.password))) {
+                return done(null, false, { message: 'Password incorrect!' });
+            }
+            // if ((password !== user.password)) {
             //     return done(null, false, { message: 'Password incorrect!' });
             // }
 
-            if ((password !== user.password)) {
-                return done(null, false, { message: 'Password incorrect!' });
-            }
             user.nameOfUser = user.lastname + ' ' + user.firstname;
             return done(null, user);
         } catch (error) {
