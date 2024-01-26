@@ -3,7 +3,7 @@
 <div class="container-fluid">
     {{> Nav/guestNav}}
     <div class="m-3">
-        <button onclick="backToPrePage()"  type="button" class="btn btn-primary bgPrimary">
+        <button onclick="backToPrePage()" type="button" class="btn btn-primary bgPrimary">
             <i class="fa-solid fa-chevron-left"></i> Back
         </button>
     </div>
@@ -61,27 +61,28 @@
                                     SOLD OUT
                                 </button>
                                 {{else}}
-                                {{#isLessThan data.quantity cartQuantity}}
-                                <p class="me-3 text-danger ms-3">You`ve reached the maximum quantity in your cart.
-                                    ({{cartData.quantity}}) !</p>
-                                <button type="button" disabled class="btn w-25 p-2 border-0 btn-primary bgPrimary">
-                                    ADD TO CART
-                                </button>
-                                {{else}}
-                                {{#if cartQuantity}}
-                                <div>
-                                    <label>Number of items in the shopping cart: {{cartQuantity}}</label>
-                                </div>
-                                {{/if}}
-                                <div class="d-flex flex-row align-items-center">
-                                    <label class="no-wrap" for="#quantityInput">Enter quantity: </label>
-                                    <input type="number" id="quantityInput" class="rounded-pill form-control w-50"
-                                        value="1" min="1" max="{{subtract data.quantity cartData.quantity}}">
-                                </div>
-                                <button type="button" onclick="confirmAddEvent({{data.id}},{{cartQuantity}})"
-                                    class="btn w-25 p-2 border-0 btn-primary bgPrimary">
-                                    ADD TO CART
-                                </button>
+                                    {{#isLessThan data.quantity cartQuantity}}
+                                    <p class="me-3 text-danger ms-3">You`ve reached the maximum quantity in your cart.
+                                        ({{cartData.quantity}}) !</p>
+                                    <button type="submit" disabled class="btn w-25 p-2 border-0 btn-primary bgPrimary">
+                                        ADD TO CART
+                                    </button>
+                                    {{else}}
+                                    {{#if cartQuantity}}
+                                    <div>
+                                        <label>Number of items in the shopping cart: {{cartQuantity}}</label>
+                                    </div>
+                                    {{/if}}
+                                    <form action="#" class="d-flex w-100 flex-row justify-content-between align-items-center" onsubmit="confirmAddEvent({{data.id}},{{#if cartQuantity}} {{cartQuantity}} {{else}} null {{/if}},event)">
+                                        <div class="d-flex flex-row align-items-center">
+                                            <label class="no-wrap" for="#quantityInput">Enter quantity: </label>
+                                            <input required type="number" id="quantityInput" class="rounded-pill form-control w-50"
+                                                value="1" min="1" max="{{subtract data.quantity cartData.quantity}}">
+                                        </div>
+                                        <button type="submit" id="submitButton" class="btn w-25 p-2 border-0 btn-primary bgPrimary">
+                                            ADD TO CART
+                                        </button>
+                                    </form>
                                 {{/isLessThan}}
                                 {{/isLessThan }}
                             </div>

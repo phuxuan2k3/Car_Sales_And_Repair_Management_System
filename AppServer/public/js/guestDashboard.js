@@ -60,12 +60,6 @@ const nextPage = async () => {
     updatePageInfo();
 }
 
-// Will be fix for jwt
-const fetchData = async (url) => {
-    const rs = await fetch(url);
-    storage = await rs.json();
-    return storage;
-}
 
 const updateCarData = async (page) => {
     let checkedYear = $('.yearOption:checked')
@@ -109,15 +103,7 @@ const confirmAddEvent = async (carId, cartQuantity,event) => {
             "quantity": cartQuantity != null ? quantity + cartQuantity : quantity
         }
         const url = cartQuantity == null ? `/api/cart/add` : `/api/cart/update_quantity`
-        const rs = await fetch(url, {
-            method: 'post',
-            credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-            body: JSON.stringify(entity)
-        })
+        const rs = await fetchPos(entity,url);
         if (!rs.ok) {
             popupContent.append(`
             <div id="falseTransaction" class="  d-flex flex-column justify-content-center align-items-center">

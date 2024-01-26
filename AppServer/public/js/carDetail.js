@@ -1,26 +1,10 @@
+
 let overlay = $('.overlay');
 let popupWindow = $('#popupWindow')
 
-$('input[type="number"]').on('input', function () {
-    let inputValue = parseInt($(this).val(), 10);
-    if (inputValue == '' || null) $(this).val(1);
-    let min = parseInt($(this).attr('min'), 10);
-    let max = parseInt($(this).attr('max'), 10);
-    if (inputValue < min) {
-        $(this).val(min);
-    } else if (inputValue > max) {
-        $(this).val(max);
-    }
-});
 
 const backToPrePage = async () => {
     window.history.back();
-}
-
-const fetchData = async (url) => {
-    const rs = await fetch(url);
-    data = await rs.json();
-    return data;
 }
 
 const refreshEvent = async () => 
@@ -34,8 +18,8 @@ const redirectToCartEvent = async () => {
 
 
 
-
-const confirmAddEvent = async (carId,cartQuantity) => {
+const confirmAddEvent = async (carId,cartQuantity,ev) => {
+    ev.preventDefault();
     await setAddToCartEvent(userId,carId);
     let popupContent = $('#popupContent');
     let quantityInput = $('#quantityInput');
@@ -46,24 +30,14 @@ const confirmAddEvent = async (carId,cartQuantity) => {
     popupContent.empty();
     const currentCar = await fetchData(`/api/car/find?id=${carId}`);
     const quantity = parseInt(quantityInput.val());
-    console.log(cartQuantity);
-    if (quantity <= currentCar.quantity) {
+    if (quantity <= currentCar.quantity ) {
         const entity = {
             "customer_ID": userId,
             "car_ID": carId,
             "quantity":  cartQuantity != null ? quantity + cartQuantity : quantity
         }
-        console.log(entity);
         const url = cartQuantity == null ? `/api/cart/add` : `/api/cart/update_quantity`
-        const rs = await fetch(url, {
-            method: 'post',
-            credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-            body: JSON.stringify(entity)
-        })
+        const rs = await fetchPos(entity,url);
         if (!rs.ok) {
             popupContent.append(`
             <div id="falseTransaction" class="  d-flex flex-column justify-content-center align-items-center">
@@ -87,6 +61,8 @@ const confirmAddEvent = async (carId,cartQuantity) => {
             </div>
         `)
     }
+    let submitButton = $('#submitButton');
+    submitButton.attr('disabled',true);
 }
 
 
@@ -96,15 +72,14 @@ const setAddToCartEvent = async (userId, carId) => {
     popupWindow.toggleClass('d-none');
     popupWindow.empty();
     popupWindow.append(`
-    <div class="alert w-50 alert-light position-fixed z-3 top-50 start-50 translate-middle " id="paymentAlert" role="alert">
+    <div  class="alert w-50 alert-light position-fixed z-3 top-50 start-50 translate-middle " id="paymentAlert" role="alert">
             <h4 class="alert-heading"><i class="me-3 fa-solid fa-cart-plus" style="color: #74C0FC;"></i> ADD TO CART</h4>
             <hr>
             <div id="popupContent">
-                
             </div>
             <hr>
-            <button id="redirectToCartButton" onClick="redirectToCartEvent()" class="btn btn-warning w-100 mb-3 d-none"  role="button">Go to cart</button>
-            <button id="refreshButton" onClick="refreshEvent()" class="btn btn-danger w-100 mb-3 d-none"  role="button">Back</button>
-            </div>
+            <a id="redirectToCartButton" onClick="redirectToCartEvent()" class="btn btn-warning w-100 mb-3 d-none"  role="button">Go to cart</a>
+            <button onclick="refreshEvent()" id="refreshButton" type="submit" class="btn btn-danger w-100 mb-3 d-none"  role="button">Back</button>
+    </div>
     `)
 }
