@@ -49,7 +49,8 @@ const validation = () => {
 }
 
 const backToPrePage = async () => {
-    window.history.back();
+    // window.history.back();
+    window.location.assign('/dashboard')
 }
 
 

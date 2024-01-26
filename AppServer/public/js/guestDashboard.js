@@ -1,5 +1,5 @@
 let page = 1;
-let per_page = 6;
+let per_page = 12;
 let carData;
 let CurrentMP = $('#CurrentMP')
 let maxPriceRange = $('#maxPriceRange');
@@ -195,10 +195,10 @@ const generateCarInfo = async () => {
     CarList.empty();
     for (const car of carData) {
         CarList.append(`
-            <div class="carInfo m-3 ">
-                <div class="card ms-auto me-auto mb-3 h-100 carInfoCard d-flex flex-column " style="width: 18rem;">
-                    <div class="info" index="${car.id}">
-                        <div class="card-body">
+            <div class="col-xl-3 col-lg-4 col-md-6   carInfo mb-3">
+                <div class="card ms-auto me-auto mb-3 w-100 h-100 carInfoCard d-flex flex-column">
+                    <div class="info" index="${car.id}" >
+                        <div class="card-body" style="height:10rem">
                             <p class="card-text fw-bold fs-5 textPrimary mb-0">${car.car_name}</p>
                             <p class="fw-bold fs-8  text-opacity-25 textPrimary opacity4">${car.type}</p>
                         </div>
@@ -211,9 +211,9 @@ const generateCarInfo = async () => {
                         </div>
                     </div>
 
-                    <div class="card-body mt-auto d-flex flex-row justify-content-between align-items-center textPrimary">
-                        <div class="fs-4">${car.price}$</div>
-                        <button style="height: 3rem" onclick="setAddToCartEvent(${userId},{id: ${car.id},year: ${car.year},type: '${car.type}', quantity: ${car.quantity}, year: ${car.year}, price: ${car.price}, name: '${car.car_name}' })" type="button" ${car.quantity < 1 ? "disabled" : " "} id="buyButton_${car.id}" class="btn buyButton border-0 btn-primary bgPrimary">
+                    <div class="card-body w-100 mt-auto d-flex flex-row justify-content-between align-items-center textPrimary">
+                        <div class="fs-5 w-50">${car.price}$</div>
+                        <button style="height: 3rem; font-size: 0.7rem" onclick="setAddToCartEvent(${userId},{id: ${car.id},year: ${car.year},type: '${car.type}', quantity: ${car.quantity}, year: ${car.year}, price: ${car.price}, name: '${car.car_name}' })" type="button" ${car.quantity < 1 ? "disabled" : " "} id="buyButton_${car.id}" class="btn buyButton border-0 btn-primary no-wrap  w-50 bgPrimary">
                             ADD TO CART
                         </button>
                     </div>

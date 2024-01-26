@@ -11,7 +11,7 @@
                 <h4 class="card-title textPrimary fw-bold">REPAIR DETAIL</h4>
                 <h5 class="card-title textPrimary fw-bold">Record ID: {{recordId}}</h5>
 
-                <div class="table-responsive" style="height: 30rem;">
+                <div style="height: 20rem;">
                     <table class="table table-hover">
                         <thead class="table-info" id="tbHeader">
                             <tr class="text-center">
@@ -27,22 +27,24 @@
                             </tr>
                         </thead>
                         <tbody id="tbBody">
-                            {{#each data }}
-                            <tr class="text-center">
-                                <td scope="col">{{add @index 1}}</td>
-                                <td scope="col">{{this.date}}</td>
-                                <td scope="col">{{this.detail}}</td>
-                                <td scope="col">{{this.mec.lastname}}</td>
-                                <td scope="col">{{this.ap.name}}</td>
-                                <td scope="col">{{this.quantity}}</td>
-                                <td scope="col">{{this.ap.price}}</td>
-                                <td scope="col">{{this.price}}</td>
-                                <td scope="col">{{this.Status}}</td>
-                            </tr>
-                            {{/each}}
+                            
                         </tbody>
                     </table>
-
+                    <nav class="d-flex justify-content-center" aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" onclick="prePage(event)" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" id="PageInfo"></a></li>
+                            <li class="page-item">
+                                <a class="page-link" onclick="nextPage(event)" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -56,3 +58,24 @@
     let userId = {{ userId }}
 </script>
 {{/if}}
+<script>
+    let data = [];
+    {{#each data }}
+    data.push($(
+        `
+            <tr class="text-center">
+                                <td scope="col">{{add @index 1}}</td>
+                                <td scope="col">{{this.date}}</td>
+                                <td scope="col">{{this.detail}}</td>
+                                <td scope="col">{{this.mec.lastname}}</td>
+                                <td scope="col">{{this.ap.name}}</td>
+                                <td scope="col">{{this.quantity}}</td>
+                                <td scope="col">{{this.ap.price}}</td>
+                                <td scope="col">{{this.price}}</td>
+                                <td scope="col">{{this.Status}}</td>
+            </tr>
+            `
+
+    ))
+    {{/each}}
+</script>

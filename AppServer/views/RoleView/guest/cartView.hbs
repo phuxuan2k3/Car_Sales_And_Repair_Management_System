@@ -20,7 +20,12 @@
                             id="checkBox_{{this.car_ID}}_{{this.customer_ID}}" car_ID="{{this.car_ID}}"
                             car_price="{{this.car.price}}" type="checkbox">
                     </div>
-                    <div class="col-8">
+                    <div class="col-2">
+                        <img onclick="changeToCarDetailPage({{this.car_ID}},event)"
+                            src="/images/cars/{{this.car_ID}}/avatar.png" alt="{{this.car.car_name}}"
+                            style="width: 50%;">
+                    </div>
+                    <div class="col-6">
                         <div class="row ">
                             <div class="col-md-6">
                                 <div>Car name: {{this.car.car_name}}</div>

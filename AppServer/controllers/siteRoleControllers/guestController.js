@@ -17,8 +17,6 @@ module.exports = {
         let years = await Car.getAllYear();
         let type = await CarType.getAll();
         let brand = await CarBrand.getAll();
-        console.log(type);
-        console.log(brand);
         let dir = path.dirname(path.dirname(__dirname));
         const images = await fs.readdirSync(path.join(dir,`public/images/advertisement`));
         res.render('RoleView/guest/guestDashboard', {type: type, brand: brand,years: years,sliderImage: images,maxPrice: 100000,userId: req.user.id ,nameOfUser: req.session.passport.user.nameOfUser, title: 'DashBoard', jsFile: 'guestDashboard.js', cssFile: 'guestDashBoard.css', store : true });

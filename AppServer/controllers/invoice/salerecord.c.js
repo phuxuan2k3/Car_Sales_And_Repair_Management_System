@@ -1,4 +1,5 @@
 const tryCatch = require('../../utils/tryCatch');
+const Car = require('../../models/car')
 const { SaleRecord, SaleDetail } = require('../../models/invoices/salerecord');
 require('dotenv').config();
 
@@ -35,6 +36,10 @@ module.exports = {
     // require: body: cus_id, date, car_id_quantity_array ([car_id, quantity])
     // return: salerecord and saledetails (array) insert result
     addSaleRecordAndDetails: tryCatch(async (req, res) => {
+        const updateData = req.body.updateStorageData;
+        for (const e of updateData) {
+            await Car.updateQuanTity(e.id,e. quantity);
+        }
         const cus_id = req.body.cus_id;
         const date = new Date(req.body.date);
         const saleRecordData = SaleRecord.castParam(null, cus_id, date, null);

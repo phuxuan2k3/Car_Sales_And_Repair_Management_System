@@ -16,29 +16,21 @@ let mustToPay = $(`#mustToPay`);
 let payButton = $(`#payButton`);
 let totalPrice = 0;
 let spinner;
+
+
 mustToPay.text(totalPrice);
-const checking = async (event) => {
-    event.stopPropagation();
+
+
+// Will be fix for jwt
+const fetchData = async (url) => {
+    const rs = await fetch(url);
+    if (!rs.ok) return false;
+    storage = await rs.json();
+    return storage;
 }
 
-const getSaleRecordData = async (id) => {
-    window.location.assign(`/cart/detail?id=${id}`)
-}
-
-const createInvoice = async () => {
-    let items = $(`input[type='checkbox']:checked`);
-    let car_id_quantity_array = [];
-    for (const e of items) {
-        let car_ID = parseInt($(e).attr('car_ID'));
-        let ourQuantity = parseInt($(`#quantity_${car_ID}_${userId}`).val());
-        car_id_quantity_array.push({ car_id: car_ID, quantity: ourQuantity });
-    }
-    const data = {
-        cus_id: userId,
-        date: new Date(),
-        car_id_quantity_array: car_id_quantity_array
-    }
-    const rs = await fetch(`/api/csale/add-cart`, {
+const fetchPos = async (data, url) => {
+    return await fetch(url, {
         method: 'post',
         credentials: "same-origin",
         headers: {
@@ -48,30 +40,42 @@ const createInvoice = async () => {
         body: JSON.stringify(data)
     })
 }
-const updateStorage = async () => {
-    let items = $(`input[type='checkbox']:checked`);
-    for (const e of items) {
-        let car_ID = parseInt($(e).attr('car_ID'));
-        let ourQuantity = parseInt($(`#quantity_${car_ID}_${userId}`).val());
-        const rsf = await fetch(`/api/car/find?id=${car_ID}`)
-        const currentCarData = await rsf.json();
-        const data = {
-            "customer_ID": userId,
-            "id": car_ID,
-            "quantity": currentCarData.quantity - ourQuantity
-        }
-        const rs = await fetch(`/api/car/update_quantity`, {
-            method: 'post',
-            credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-            body: JSON.stringify(data)
-        })
-    }
+
+const checking = async (event) => {
+    event.stopPropagation();
 }
 
+const getSaleRecordData = async (id) => {
+    window.location.assign(`/cart/detail?id=${id}`)
+}
+
+const changeToCarDetailPage = async (id, event) => {
+    event.stopPropagation();
+    window.location.assign(`/cardetail?id=${id}`)
+}
+
+const createInvoice = async () => {
+    let items = $(`input[type='checkbox']:checked`);
+    let car_id_quantity_array = [];
+    let updateStorageData = [];
+    for (const e of items) {
+        let car_ID = parseInt($(e).attr('car_ID'));
+        const currentCarData = await fetchData(`/api/car/find?id=${car_ID}`);
+        let ourQuantity = parseInt($(`#quantity_${car_ID}_${userId}`).val());
+        car_id_quantity_array.push({ car_id: car_ID, quantity: ourQuantity });
+        updateStorageData.push( {
+            "id": car_ID,
+            "quantity": currentCarData.quantity - ourQuantity
+        })
+    }
+    const data = {
+        cus_id: userId,
+        date: new Date(),
+        car_id_quantity_array: car_id_quantity_array,
+        updateStorageData: updateStorageData,
+    }
+    const rs = await fetchPos(data, `/api/csale/add-cart`)
+}
 
 const removeCheckedItem = async () => {
     let items = $(`input[type='checkbox']:checked`);
@@ -81,15 +85,7 @@ const removeCheckedItem = async () => {
             "customer_ID": userId,
             "car_ID": car_ID,
         }
-        const rs = await fetch(`/api/cart/delete`, {
-            method: 'post',
-            credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-            body: JSON.stringify(entity)
-        })
+        const rs = await fetchPos(entity, `/api/cart/delete`);
     }
 }
 
@@ -99,15 +95,7 @@ const deleteCartItem = async (car_ID, event) => {
         "customer_ID": userId,
         "car_ID": car_ID,
     }
-    const rs = await fetch(`/api/cart/delete`, {
-        method: 'post',
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        redirect: "follow",
-        body: JSON.stringify(entity)
-    })
+    const rs = await fetchPos(entity, `/api/cart/delete`);
     location.href = location.href;
 }
 
@@ -164,15 +152,7 @@ const quantityInput = async (car_ID, storageQuantity, price, event) => {
             "car_ID": car_ID,
             "quantity": inputVal
         }
-        const rs = await fetch(`/api/cart/update_quantity`, {
-            method: 'post',
-            credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-            body: JSON.stringify(entity)
-        })
+        const rs = await fetchPos(entity, `/api/cart/update_quantity`)
         ele.attr('preQuantity', ele.val());
     }
     console.log(ele.attr('preQuantity'));
@@ -186,8 +166,7 @@ const check = async () => {
     for (const e of items) {
         let car_ID = parseInt($(e).attr('car_ID'));
         let ourQuantity = parseInt($(`#quantity_${car_ID}_${userId}`).val());
-        const rsf = await fetch(`/api/car/find?id=${car_ID}`)
-        const currentCarData = await rsf.json();
+        const currentCarData = await fetchData(`/api/car/find?id=${car_ID}`);
         if (ourQuantity > currentCarData.quantity || currentCarData.quantity <= 0) rs = false;
     }
     return rs;
@@ -216,32 +195,72 @@ payButton.on('click', async (e) => {
             <i class="fa-solid fa-circle-exclamation" style="color: #74C0FC;font-size: 10rem"></i>
             <p class="fs-3 textPrimary">Failed transaction <i class="fa-regular fa-face-sad-cry"></i></p>
         </div>
+        <div id="paymentServerError" class="d-none d-flex flex-column justify-content-center align-items-center">
+            <i class="fa-solid fa-circle-exclamation" style="color: #74C0FC;font-size: 10rem"></i>
+            <p class="fs-3 textPrimary">Can't get account from payment server <i class="fa-regular fa-face-sad-cry"></i></p>
+        </div>
         <hr>
         <button id="confirmPaymentButton" class="btn text-light btn-warning w-100 mb-3" role="button">Pay</button>
         <button id="cancelButton" class="btn btn-danger w-100 mb-3"  role="button">Cancel</button>
         <button id="backButton" class="btn btn-info w-100 mb-3 d-none"  role="button">Back cart page</button>
-        </div>
+    </div>
         `)
     spinner = $('#spinner')
     confirmPaymentButton = $('#confirmPaymentButton');
     successTransaction = $('#successTransaction');
     falseTransaction = $('#falseTransaction');
+    paymentServerError = $('#paymentServerError');
     cancelButton = $('#cancelButton');
     paymentAlert = $('#paymentAlert');
     paymentAlert.css('opacity', 1)
     paymentInfo = $('#paymentInfo');
-    const rs = await fetch(`http://localhost:3000/api/payment/account`);
-    const account = await rs.json();
-    paymentInfo.empty();
-    let date = new Date();
-    paymentInfo.append(`
-        <p>Date: ${date}</p>
-        <p>Your balance: ${account.balance}$</p>
-        <p>Total price: ${parseFloat($('#mustToPay').text())}$</p>
-    `)
-    const amount = parseFloat($('#mustToPay').text());
-    confirmPaymentButton.attr('disabled', (account.balance < amount ? true : false));
-    paymentAlert.css('opacity', 1);
+    const account = await fetchData(`/api/payment/account`);
+    if (!account) {
+        paymentInfo.empty();
+        paymentServerError.removeClass('d-none');
+        confirmPaymentButton.attr('disabled', true)
+        backButton.addClass('d-none');
+        cancelButton.removeClass('d-none');
+    } else {
+        paymentInfo.empty();
+        let date = new Date();
+        paymentInfo.append(`
+            <p>Date: ${date}</p>
+            <p>Your balance: ${account.balance}$</p>
+            <p>Total price: ${parseFloat($('#mustToPay').text())}$</p>
+        `)
+        const amount = parseFloat($('#mustToPay').text());
+        confirmPaymentButton.attr('disabled', (account.balance < amount ? true : false));
+        confirmPaymentButton.on('click', async () => {
+            spinner.removeClass('d-none');
+            paymentInfo.addClass('d-none');
+            confirmPaymentButton.addClass('d-none');
+            cancelButton.addClass('d-none')
+            const transactionData = {
+                from: userId,
+                to: adminId,
+                amount: amount,
+                content: "Buy car - SGXAUTO"
+            }
+            let checkRs = await check();
+            if (checkRs) {
+                const serverResponse = await fetchPos(transactionData, `api/payment/transfer`)
+                spinner.addClass('d-none');
+                backButton.removeClass('d-none');
+                if (serverResponse.ok) {
+                    successTransaction.removeClass('d-none');
+                    await createInvoice();
+                    await removeCheckedItem();
+                } else {
+                    falseTransaction.removeClass('d-none');
+                }
+            } else {
+                spinner.addClass('d-none');
+                backButton.removeClass('d-none');
+                falseTransaction.removeClass('d-none');
+            }
+        })
+    }
     cancelButton.on('click', () => {
         overplay.addClass('d-none');
         popupWindow.addClass('d-none');
@@ -251,43 +270,5 @@ payButton.on('click', async (e) => {
     backButton.on('click', () => {
         window.location.assign(`/cart`);
     });
-    confirmPaymentButton.on('click', async () => {
-        spinner.removeClass('d-none');
-        paymentInfo.addClass('d-none');
-        confirmPaymentButton.addClass('d-none');
-        cancelButton.addClass('d-none')
-        const transactionData = {
-            from: userId,
-            to: adminId,
-            amount: amount,
-            content: "Buy car - SGXAUTO"
-        }
-        let checkRs = await check();
-        if (checkRs) {
-            const serverResponse = await fetch('api/payment/transfer', {
-                method: 'post',
-                credentials: "same-origin",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                redirect: "follow",
-                body: JSON.stringify(transactionData)
-            })
-            spinner.addClass('d-none');
-            backButton.removeClass('d-none');
-            if (serverResponse.ok) {
-                successTransaction.removeClass('d-none');
-                //to do some thing here
-                await createInvoice();
-                await updateStorage();
-                await removeCheckedItem();
-            } else {
-                falseTransaction.removeClass('d-none');
-            }
-        } else {
-            spinner.addClass('d-none');
-            backButton.removeClass('d-none');
-            falseTransaction.removeClass('d-none');
-        }
-    })
 })
+
