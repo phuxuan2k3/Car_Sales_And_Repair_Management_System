@@ -9,6 +9,7 @@ const PDFDocument = require('pdfkit');
 const { SaleRecord, SaleDetail } = require('../../models/invoices/salerecord');
 const { FixRecord, FixDetail } = require('../../models/invoices/fixrecord');
 const User = require('../../models/user');
+const pagination = require('../../utils/pagination');
 
 module.exports = {
     getDashboard: tryCatch(async (req, res) => {
@@ -74,22 +75,43 @@ module.exports = {
     getSaleInvoices: tryCatch(async (req, res) => {
         let invoices = await SaleRecord.getJoinWithCustomer();
 
-        res.render('RoleView/sale/saleInvoice', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Invoices', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', invoices });
+        const noInvoicePerPage = 10;
+        const paginationResult = await pagination(noInvoicePerPage, invoices.length, req.query.page);
+        invoices = invoices.slice((paginationResult.page - 1) * noInvoicePerPage, noInvoicePerPage);
+
+        res.render('RoleView/sale/saleInvoice', { page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Invoices', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', invoices });
     }),
     getSaleDetails: tryCatch(async (req, res) => {
         let invoiceId = req.query.invoiceId;
 
+
         let details = await SaleRecord.getAllDetailFull(invoiceId);
-        res.render('RoleView/sale/saleDetail', { invoiceId, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Details', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', details });
+
+        const noDetailPerPage = 10;
+        const paginationResult = await pagination(noDetailPerPage, details.length, req.query.page);
+        details = details.slice((paginationResult.page - 1) * noDetailPerPage, noDetailPerPage);
+
+        res.render('RoleView/sale/saleDetail', { page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, invoiceId, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Details', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', details });
     }),
     getFixInvoices: tryCatch(async (req, res) => {
         let invoices = await FixRecord.getJoinWithCustomerPay();
-        res.render('RoleView/sale/fixInvoice', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Invoices', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', invoices });
+
+        const noInvoicePerPage = 10;
+        const paginationResult = await pagination(noInvoicePerPage, invoices.length, req.query.page);
+        invoices = invoices.slice((paginationResult.page - 1) * noInvoicePerPage, noInvoicePerPage);
+
+        res.render('RoleView/sale/fixInvoice', { page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Invoices', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', invoices });
     }),
     getFixDetails: tryCatch(async (req, res) => {
         let invoiceId = req.query.invoiceId;
         let details = await FixRecord.getAllDetailFull(invoiceId);
-        res.render('RoleView/sale/fixDetail', { invoiceId, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Invoices', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', details });
+
+        const noDetailPerPage = 10;
+        const paginationResult = await pagination(noDetailPerPage, details.length, req.query.page);
+        details = details.slice((paginationResult.page - 1) * noDetailPerPage, noDetailPerPage);
+
+
+        res.render('RoleView/sale/fixDetail', { page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, invoiceId, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Invoices', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', details });
     }),
     getSaleInvoicePdf: tryCatch(async (req, res) => {
 

@@ -39,6 +39,10 @@ module.exports = class AutoPart {
         ${smid});`;
         return await dbExecute.customQuery(query);
     }
+    static async countRecord() {
+        const query = `select count(*) from ${tableName}`
+        return (await dbExecute.customQuery(query))[0];
+    }
     static async delete(id) {
         let query = `DELETE  FROM "${tableName}"`;
         query += ` WHERE "ap_id" = ${id};`;
