@@ -40,3 +40,8 @@ Handlebars.registerHelper("when", function (operand_1, operator, operand_2, opti
     if (result) return options.fn(this);
     else return options.inverse(this);
 });
+
+Handlebars.registerHelper("orCompare", function (operand_1, operand_2, operand_3, options) {
+    if (operand_1 == operand_2 || operand_1 == operand_3) return options.fn(this);
+    else return options.inverse(this);
+});

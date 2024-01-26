@@ -24,31 +24,47 @@
             </div>
         </div>
         <div class="col-9 tab_content" style="height: 600px;">
-            <div class="card-body p-3 bg-white d-flex flex-column" id="mainContent" style="height: 100%;">
+            <div class="card-body p-3 bg-white d-flex flex-column justify-content-between" id="mainContent"
+                style="height: 100%;">
 
-                <div class="hstack"><a href="/outputSaleInvoice?invoiceId={{invoiceId}}"
-                        class="ms-auto btn btn-info col-3"> <i class="fa-solid fa-file-invoice"
-                            style="color: #7e1811;">Export
-                            Invoice</i></a></div>
+                <div class="row">
+                    <div class="hstack"><a href="/outputSaleInvoice?invoiceId={{invoiceId}}"
+                            class="ms-auto btn btn-info col-3"> <i class="fa-solid fa-file-invoice"
+                                style="color: #7e1811;">Export
+                                Invoice</i></a></div>
 
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Car name</th>
-                            <th scope="col">Quantity</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each details}}
-                        <tr>
-                            <td>{{this.car_name}}</td>
-                            <td>{{this.quantity}}</td>
-                        </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Car name</th>
+                                <th scope="col">Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each details}}
+                            <tr>
+                                <td>{{this.car_name}}</td>
+                                <td>{{this.quantity}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <ul class="pagination justify-content-center col-12">
+                    <li class="page-item {{#orCompare pageState 'min' 'only'}} disabled {{/orCompare}}">
+                        <a class="page-link"
+                            href="/saleDetail?invoiceId={{invoiceId}}&page={{#subtract page 1}}{{/subtract}}">Previous</a>
+                    </li>
+                    {{#each pagination}}
+                    <li class="page-item {{#when ../page 'eq' this}} active {{/when}}"><a class="page-link"
+                            href="/saleDetail?invoiceId={{../invoiceId}}&page={{this}}">{{this}}</a></li>
+                    {{/each}}
+                    <li class="page-item {{#orCompare pageState 'max' 'only'}} disabled {{/orCompare}}">
+                        <a class="page-link"
+                            href="/saleDetail?invoiceId={{invoiceId}}&page={{#addInt page 1}}{{/addInt}}">Next</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

@@ -6,7 +6,10 @@ module.exports = async (noPerPage, noAll, page) => {
     }
     let pagination = Array.from({ length: noPage }, (_, index) => index + 1);
     let pageState = 'ok';
-    if (page == noPage) {
+    if (noPage == 1) {
+        pageState = 'only';
+    }
+    else if (page == noPage) {
         pageState = 'max';
     } else if (page == 1) {
         pageState = 'min';
