@@ -28,3 +28,5 @@ async function fetchGet(dest, paramObj) {
     return data;
 }
 </code>
+<br/>
+Còn nếu muốn sửa quyền (authorization) thì vào file api.r.js và sửa tham số của hàm authApi (mảng các quyền dạng chuỗi, VD: ['ad', 'cus']).
