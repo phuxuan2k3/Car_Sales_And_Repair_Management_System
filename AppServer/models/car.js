@@ -68,6 +68,10 @@ module.exports = class Car {
         const query = `select* from ${tableName} where car_name ilike '%${name}%'`
         return await dbExecute.customQuery(query);
     }
+    static async countRecord() {
+        const query = `select count(*) from ${tableName}`
+        return (await dbExecute.customQuery(query))[0];
+    }
     static async count() {
         const query = `select sum(quantity) from ${tableName}`
         return (await dbExecute.customQuery(query))[0];

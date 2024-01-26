@@ -54,11 +54,19 @@
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-                                        <div class="col-md-12"><label class="labels">Brand</label><input type="text"
-                                                class="form-control" placeholder="brand" required name="brand">
+                                        <div class="col-md-12"><label class="labels">Select Brand</label><select
+                                                required name="brand" id="brand" class="form-select">
+                                                {{#each allBrands}}
+                                                <option value="{{this.brand}}">{{this.brand}}</option>
+                                                {{/each}}
+                                            </select>
                                         </div>
-                                        <div class="col-md-12"><label class="labels">Type</label><input type="text"
-                                                class="form-control" placeholder="type" required name="type">
+                                        <div class="col-md-12"><label class="labels">Select Type</label>
+                                            <select required name="type" id="type" class="form-select">
+                                                {{#each allTypes}}
+                                                <option value="{{this.type}}">{{this.type}}</option>
+                                                {{/each}}
+                                            </select>
                                         </div>
                                         <div class="col-md-12"><label class="labels">Year</label><input type="number"
                                                 class="form-control" placeholder="year" required name="year">

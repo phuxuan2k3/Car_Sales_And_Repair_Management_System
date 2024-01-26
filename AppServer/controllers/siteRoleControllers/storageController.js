@@ -6,27 +6,41 @@ const fs = require('fs');
 const path = require('path');
 const appDir = path.dirname((require.main.filename));
 const AutoPart = require('../../models/ap');
+const pagination = require('../../utils/pagination');
+const CarType = require('../../models/carType');
+const CarBrand = require('../../models/carBrand');
 
 module.exports = {
     getDashboard: tryCatch(async (req, res) => {
         res.render('RoleView/store/storeDashboard', { nameOfUser: req.session.passport.user.nameOfUser, title: 'DashBoard', jsFile: 'storeDashboard.js', cssFile: 'store.css', dashboardPage: true });
     }),
     getCarPage: tryCatch(async (req, res) => {
-        const cars = await Car.getAll();
-        res.render('RoleView/store/car', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Cars', jsFile: 'storeCar.js', cssFile: 'store.css', cars, carPage: true });
+        const noCarPerPage = 5;
+        const noAllCar = (await Car.countRecord()).count;
+        const paginationResult = await pagination(noCarPerPage, noAllCar, req.query.page);
+
+        const cars = await Car.getCustom(noCarPerPage, (paginationResult.page - 1) * noCarPerPage);
+
+        res.render('RoleView/store/car', { page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, nameOfUser: req.session.passport.user.nameOfUser, title: 'Cars', jsFile: 'storeCar.js', cssFile: 'store.css', cars, carPage: true });
     }),
     getApPage: tryCatch(async (req, res) => {
-        const aps = await AutoPart.getAll();
-        res.render('RoleView/store/ap', { nameOfUser: req.session.passport.user.nameOfUser, title: 'AutoPart', jsFile: 'storeAp.js', cssFile: 'store.css', aps, apPage: true });
+        const noApPerPage = 5;
+        const noAllAp = (await AutoPart.countRecord()).count;
+        const paginationResult = await pagination(noApPerPage, noAllAp, req.query.page);
+
+        const aps = await AutoPart.getCustom(noApPerPage, (paginationResult.page - 1) * noApPerPage);
+
+        res.render('RoleView/store/ap', { page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, nameOfUser: req.session.passport.user.nameOfUser, title: 'AutoPart', jsFile: 'storeAp.js', cssFile: 'store.css', aps, apPage: true });
     }),
     getEditCarPage: tryCatch(async (req, res) => {
         const id = req.params.id;
         const curCar = await Car.getCarById(id);
 
+        const allTypes = await CarType.getAll();
+        const allBrands = await CarBrand.getAll();
+
         let curImgs = [];
-
-
-        res.render('RoleView/store/editCar', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Edit Car', jsFile: 'editCar.js', cssFile: 'store.css', curCar });
+        res.render('RoleView/store/editCar', { allBrands, allTypes, nameOfUser: req.session.passport.user.nameOfUser, title: 'Edit Car', jsFile: 'editCar.js', cssFile: 'store.css', curCar });
     })
     ,
     getEditApPage: tryCatch(async (req, res) => {
@@ -50,9 +64,12 @@ module.exports = {
     })
     ,
     getInsertCarPage: tryCatch(async (req, res) => {
-        res.render('RoleView/store/insertCar', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Insert Car', jsFile: 'insertCar.js', cssFile: 'store.css' });
+        const allTypes = await CarType.getAll();
+        const allBrands = await CarBrand.getAll();
+        res.render('RoleView/store/insertCar', { allTypes, allBrands, nameOfUser: req.session.passport.user.nameOfUser, title: 'Insert Car', jsFile: 'insertCar.js', cssFile: 'store.css' });
     }),
     getInsertApPage: tryCatch(async (req, res) => {
+
         res.render('RoleView/store/insertAp', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Insert Auto Part', jsFile: 'insertAp.js', cssFile: 'store.css' });
     }),
     insertCar: tryCatch(async (req, res) => {
