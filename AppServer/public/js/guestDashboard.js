@@ -181,7 +181,7 @@ const generateCarInfo = async () => {
     CarList.empty();
     for (const car of carData) {
         CarList.append(`
-            <div class="col-xl-3 col-lg-4 col-md-6   carInfo mb-3">
+            <div class="col-xxl-3 col-lg-4 col-md-6   carInfo mb-3">
                 <div class="card ms-auto me-auto mb-3 w-100 h-100 carInfoCard d-flex flex-column">
                     <div class="info" index="${car.id}" >
                         <div class="card-body" style="height:10rem">

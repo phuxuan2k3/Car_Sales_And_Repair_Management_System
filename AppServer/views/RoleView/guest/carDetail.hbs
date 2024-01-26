@@ -61,28 +61,32 @@
                                     SOLD OUT
                                 </button>
                                 {{else}}
-                                    {{#isLessThan data.quantity cartQuantity}}
-                                    <p class="me-3 text-danger ms-3">You`ve reached the maximum quantity in your cart.
-                                        ({{cartData.quantity}}) !</p>
-                                    <button type="submit" disabled class="btn w-25 p-2 border-0 btn-primary bgPrimary">
+                                {{#isLessThan data.quantity cartQuantity}}
+                                <p class="me-3 text-danger ms-3">You`ve reached the maximum quantity in your cart.
+                                    ({{cartData.quantity}}) !</p>
+                                <button type="submit" disabled class="btn w-25 p-2 border-0 btn-primary bgPrimary">
+                                    ADD TO CART
+                                </button>
+                                {{else}}
+                                {{#if cartQuantity}}
+                                <div>
+                                    <label>Number of items in the shopping cart: {{cartQuantity}}</label>
+                                </div>
+                                {{/if}}
+                                <form action="#"
+                                    class="d-flex w-100 flex-row justify-content-between align-items-center"
+                                    onsubmit="confirmAddEvent({{data.id}},{{#if cartQuantity}} {{cartQuantity}} {{else}} null {{/if}},event)">
+                                    <div class="d-flex flex-row align-items-center">
+                                        <label class="no-wrap" for="#quantityInput">Enter quantity: </label>
+                                        <input required type="number" id="quantityInput"
+                                            class="rounded-pill form-control w-50" value="1" min="1"
+                                            max="{{subtract data.quantity cartData.quantity}}">
+                                    </div>
+                                    <button type="submit" id="submitButton"
+                                        class="btn w-25 p-2 border-0 btn-primary bgPrimary">
                                         ADD TO CART
                                     </button>
-                                    {{else}}
-                                    {{#if cartQuantity}}
-                                    <div>
-                                        <label>Number of items in the shopping cart: {{cartQuantity}}</label>
-                                    </div>
-                                    {{/if}}
-                                    <form action="#" class="d-flex w-100 flex-row justify-content-between align-items-center" onsubmit="confirmAddEvent({{data.id}},{{#if cartQuantity}} {{cartQuantity}} {{else}} null {{/if}},event)">
-                                        <div class="d-flex flex-row align-items-center">
-                                            <label class="no-wrap" for="#quantityInput">Enter quantity: </label>
-                                            <input required type="number" id="quantityInput" class="rounded-pill form-control w-50"
-                                                value="1" min="1" max="{{subtract data.quantity cartData.quantity}}">
-                                        </div>
-                                        <button type="submit" id="submitButton" class="btn w-25 p-2 border-0 btn-primary bgPrimary">
-                                            ADD TO CART
-                                        </button>
-                                    </form>
+                                </form>
                                 {{/isLessThan}}
                                 {{/isLessThan }}
                             </div>
@@ -92,6 +96,44 @@
             </div>
         </div>
     </div>
+    <div class="row  bg-white p-3">
+        <h2 class="textPrimary">Lien quan</h2>
+        <div id="carouselExample" class="carousel carousel-dark slide">
+            
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row justify-content-center align-items-center g-2">
+                        <div class="col text-center">Column</div>
+                        <div class="col text-center">Column</div>
+                        <div class="col text-center">Column</div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row justify-content-center align-items-center g-2">
+                        <div class="col text-center">Column</div>
+                        <div class="col text-center">Column</div>
+                        <div class="col text-center">Column</div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row justify-content-center align-items-center g-2">
+                        <div class="col text-center">Column</div>
+                        <div class="col text-center">Column</div>
+                        <div class="col text-center">Column</div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev textPrimary" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon textPrimary" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next textPrimary" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon textPrimary" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
     {{> footer}}
 </div>
 {{#if userId}}
