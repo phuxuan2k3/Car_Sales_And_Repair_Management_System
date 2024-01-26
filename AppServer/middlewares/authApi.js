@@ -9,11 +9,11 @@ module.exports = (permissionArray) => (req, res, next) => {
             const user = jwt.verify(jwtToken, "sgx");
             for (const permission of permissionArray) {
                 if (user.permission === permission) {
+                    req.user = user;
                     return next();
                 }
             }
             errMessage = 'No permission';
-            req.user = user;
         } catch (err) {
             errMessage = 'Invalid authorize token';
         }
