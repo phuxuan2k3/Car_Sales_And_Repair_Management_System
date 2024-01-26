@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
 module.exports = (passport) => {
-    passport.use(new LocalStrategy({ usernameField: 'Username', passwordField: 'Password' }, async (username, password, done) => {
+    passport.use('local', new LocalStrategy({ usernameField: 'Username', passwordField: 'Password' }, async (username, password, done) => {
         try {
             const data = await User.getByUsername(username);
             if (data.length == 0) {

@@ -1,8 +1,19 @@
 const url = 'http://127.0.0.1:3000/api/admin';
 
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 async function fetchGet(dest, paramObj) {
     const fetchUrl = `${url}${dest}?${(new URLSearchParams(paramObj)).toString()}`;
-    const raw = await fetch(fetchUrl);
+    const raw = await fetch(fetchUrl, {
+        method: 'GET',
+        headers: {
+            "Authorization": "Bearer " + getCookie("auth"),
+        }
+    });
     const data = await raw.json();
     return data;
 }
@@ -10,9 +21,10 @@ async function fetchPost(dest, bodyObj) {
     const fetchUrl = `${url}${dest}`;
     const raw = await fetch(fetchUrl, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
+            "Authorization": "Bearer " + getCookie("auth"),
         },
         body: JSON.stringify(bodyObj),
     });
@@ -60,8 +72,9 @@ const perPage = () => parseInt(perPageInput().val()) || 0;
 const loadUserContent = async () => {
     if (loading === true) return;
     loading = true;
-    // scroll preserve
+    // >>>> scroll preserve
     localStorage.setItem('scrollpos', window.scrollY);
+    // <<<< scroll preserve
     userContent().children().empty();
     const custom = {
         username: username(),
@@ -69,6 +82,13 @@ const loadUserContent = async () => {
         perPage: perPage(),
         page: storage.page,
     };
+    const totalUsers = await fetchGet('/count-custom', { username: custom.username, permission: custom.permission });
+    storage.totalPage = Math.ceil((parseInt(totalUsers) || 0) / custom.perPage);
+    if (storage.page > storage.totalPage) {
+        storage.page = storage.totalPage;
+        custom.page = storage.page;
+    }
+    await loadPagination();
     const users = await fetchGet('/custom', custom);
     for (const user of users) {
         userContent().append(
@@ -95,15 +115,10 @@ const loadUserContent = async () => {
             `
         );
     }
-    const totalUsers = await fetchGet('/count-custom', { username: custom.username, permission: custom.permission });
-    storage.totalPage = Math.ceil((parseInt(totalUsers) || 0) / custom.perPage);
-    if (storage.page > storage.totalPage) {
-        storage.page = storage.totalPage;
-    }
-    await loadPagination();
-    // scroll preserve
+    // >>>> scroll preserve
     var scrollpos = localStorage.getItem('scrollpos');
     if (scrollpos) window.scrollTo(0, scrollpos);
+    // <<<< scroll preserve
     loading = false;
 }
 const loadPagination = async () => {
