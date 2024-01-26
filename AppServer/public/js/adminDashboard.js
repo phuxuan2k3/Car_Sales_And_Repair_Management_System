@@ -1,11 +1,5 @@
 const url = 'http://127.0.0.1:3000/api/admin';
 
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
 async function fetchGet(dest, paramObj) {
     const fetchUrl = `${url}${dest}?${(new URLSearchParams(paramObj)).toString()}`;
     const raw = await fetch(fetchUrl, {
