@@ -203,7 +203,7 @@ const generateCarInfo = async () => {
                             <p class="fw-bold fs-8  text-opacity-25 textPrimary opacity4">${car.type}</p>
                         </div>
                         <img src="/images/cars/${car.id}/avatar.png" class="w-100"  style="height: 15rem;"  alt="${car.car_name}.png">  
-                        <div class="card-body d-flex flex-row justify-content-between opacity4 textPrimary">
+                        <div class="card-body d-flex flex-row p-0 ps-2 justify-content-between opacity4 textPrimary">
                             <div class="d-flex flex-row align-items-center ">
                                 <i class="fa-solid fa-calendar-days"></i>
                                 <p class="m-0 ms-1">${car.year}</p>
