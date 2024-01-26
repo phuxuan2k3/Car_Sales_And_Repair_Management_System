@@ -22,5 +22,10 @@ module.exports = class Transaction {
     static async AddNewTransaction(entity) {
         return await dbExecute.insert(entity,tableName);
     }
+    static async GetPaymentHistoryById(id) {
+        const query = `SELECT * FROM "${tableName}" where "from_id"=${id}`;
+        const data = await dbExecute.customQuery(query);
+        return data.map(e => {return new Transaction(e)});
+    }
 
 }

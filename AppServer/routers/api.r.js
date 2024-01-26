@@ -109,6 +109,7 @@ router.post('/cart/update_quantity', authApi(['cus']), ApiController.updateCarQu
 router.get('/payment/account', authApi(['cus']), ApiController.getAccount)
 router.post('/payment/transfer', authApi(['cus']), ApiController.transferMoney)
 router.post('/payment/deposits', authApi(['cus']), ApiController.deposits)
+router.post('/payment/history', ApiController.paymentHistory)
 
 
 //chart
