@@ -6,118 +6,120 @@ const CarImport = require('../controllers/invoice/carimport.c');
 const ApImport = require('../controllers/invoice/apimport.c');
 const SaleRecord = require('../controllers/invoice/salerecord.c');
 const FixRecord = require('../controllers/invoice/fixrecord.c');
+const authApi = require('../middlewares/authApi');
 
-//Handle login here
 //Car
-router.get('/car/all', ApiController.getAllCar);
-router.get('/car/count', ApiController.countCar);
-router.get('/car/find', ApiController.getByCarId);
-router.get('/car/name', ApiController.getCarByName);
-router.get('/car/type', ApiController.getAllType);
-router.get('/car/brand', ApiController.getAllBrand);
-router.get('/car/car_page', ApiController.getCarPage);
-router.get('/car/most_car', ApiController.getMostCar);
-router.post('/car/update_quantity', ApiController.updateCarQuantity);
-router.get('/car/imgs/:id', ApiController.getCarImgs);
-router.delete('/car', ApiController.deleteCar);
+router.get('/car/all', authApi(['cus']), ApiController.getAllCar);
+router.get('/car/count', authApi(['cus']), ApiController.countCar);
+router.get('/car/find', authApi(['cus']), ApiController.getByCarId);
+router.get('/car/name', authApi(['cus']), ApiController.getCarByName);
+router.get('/car/type', authApi(['cus']), ApiController.getAllType);
+router.get('/car/brand', authApi(['cus']), ApiController.getAllBrand);
+router.get('/car/car_page', authApi(['cus']), ApiController.getCarPage);
+router.get('/car/most_car', authApi(['cus']), ApiController.getMostCar);
+router.post('/car/update_quantity', authApi(['cus']), ApiController.updateCarQuantity);
+router.get('/car/imgs/:id', authApi(['cus']), ApiController.getCarImgs);
+
+router.delete('/car', authApi(['sm']), ApiController.deleteCar);
 
 //AutoPart
-router.get('/ap/all', ApiController.getAllAp);
-router.get('/ap/supplier', ApiController.getAllSupplier);
-router.get('/ap/detail', ApiController.getAp);
-router.get('/ap/ap_page', ApiController.getApPage);
-router.get('/ap/most_ap', ApiController.getMostAp);
-router.delete('/ap', ApiController.deleteAp);
-router.post('/ap/update-quantity', ApiController.updateAutoPartQuantity)
+router.get('/ap/all', authApi(['sm']), ApiController.getAllAp);
+router.get('/ap/supplier', authApi(['sm']), ApiController.getAllSupplier);
+router.get('/ap/detail', authApi(['sm']), ApiController.getAp);
+router.get('/ap/ap_page', authApi(['sm']), ApiController.getApPage);
+router.get('/ap/most_ap', authApi(['sm']), ApiController.getMostAp);
+router.delete('/ap', authApi(['sm']), ApiController.deleteAp);
+router.post('/ap/update-quantity', authApi(['sm']), ApiController.updateAutoPartQuantity)
 
 //Fixed car
-router.get('/car/fixed/all', ApiController.getAllFixedCar);
-router.get('/car/fixed/find', ApiController.getFixedCarByCusIdAndSearch);
-router.post('/car/fixed/add', ApiController.addNewFixedCar);
+router.get('/car/fixed/all', authApi(['cus']), ApiController.getAllFixedCar);
+router.get('/car/fixed/find', authApi(['cus']), ApiController.getFixedCarByCusIdAndSearch);
+router.post('/car/fixed/add', authApi(['cus']), ApiController.addNewFixedCar);
 
 //User
-router.get('/user/:id', ApiController.getUserById);
 router.post('/user/register', registerUser);
-router.get('/countCus', ApiController.getNumberOfCus);
-router.get('/countEm', ApiController.getNumberOfEmployee);
+
+router.get('/user/:id', authApi(['sm', 'ad']), ApiController.getUserById);
+router.get('/countCus', authApi(['ad']), ApiController.getNumberOfCus);
+router.get('/countEm', authApi(['ad']), ApiController.getNumberOfEmployee);
 
 //For store
-router.get('/store/items', ApiController.getRemainingItems);
+router.get('/store/items', authApi(['sm']), ApiController.getRemainingItems);
 
 // Invoices
 // router.use('/invoice', invoiceApiRouter);
 
 // Admin
-router.get('/admin/all', ApiController.getAllUsers);
-router.get('/admin/custom', ApiController.getUsersByUsernameSearchByPermissionByPage);
-router.get('/admin/count-custom', ApiController.getUsersCountByUsernameSearchByPermission);
-router.get('/admin/single', ApiController.getUserById);
-router.post('/admin/insert', ApiController.insertUser);
-router.post('/admin/update', ApiController.updateUser);
-router.post('/admin/delete', ApiController.deleteUser);
-router.post('/admin/check-username', ApiController.checkUsernameExists)
+router.get('/admin/all', authApi(['ad']), ApiController.getAllUsers);
+router.get('/admin/custom', authApi(['ad']), ApiController.getUsersByUsernameSearchByPermissionByPage);
+router.get('/admin/count-custom', authApi(['ad']), ApiController.getUsersCountByUsernameSearchByPermission);
+router.get('/admin/single', authApi(['ad']), ApiController.getUserById);
+router.post('/admin/insert', authApi(['ad']), ApiController.insertUser);
+router.post('/admin/update', authApi(['ad']), ApiController.updateUser);
+router.post('/admin/delete', authApi(['ad']), ApiController.deleteUser);
+router.post('/admin/check-username', authApi(['ad']), ApiController.checkUsernameExists)
 
 // car sale record
-router.get('/csale/all', SaleRecord.getAllSaleRecords);
-router.get('/csale/info', SaleRecord.getFullSaleRecord);
-router.get('/csale/customer', SaleRecord.getSaleRecordsByCusId);
-router.post('/csale/add-cart', SaleRecord.addSaleRecordAndDetails);
+router.get('/csale/all', authApi(['cus']), SaleRecord.getAllSaleRecords);
+router.get('/csale/info', authApi(['cus']), SaleRecord.getFullSaleRecord);
+router.get('/csale/customer', authApi(['cus']), SaleRecord.getSaleRecordsByCusId);
+router.post('/csale/add-cart', authApi(['cus']), SaleRecord.addSaleRecordAndDetails);
 
 // car fix record
-router.get('/cfix/all', FixRecord.getAllFixRecords);
-router.get('/cfix/info', FixRecord.getFullFixRecord);
-router.get('/cfix/car-plate', FixRecord.getSaleRecordsByPlate);
-router.post('/cfix/add', FixRecord.addFixRecord);
-router.post('/cfix/add-detail', FixRecord.addFixDetailToRecord);
-router.post('/cfix/update-status-detail', FixRecord.updateStatusOfFixDetail);
-router.post('/cfix/update-detail-detail', FixRecord.updateDetailOfFixDetail);
-router.post('/cfix/update-status', FixRecord.updateStatusOfFixRecord);
-router.post('/cfix/update-pay', FixRecord.updatePayOfFixRecord);
+router.get('/cfix/all', authApi(['cus']), FixRecord.getAllFixRecords);
+router.get('/cfix/info', authApi(['cus']), FixRecord.getFullFixRecord);
+router.get('/cfix/car-plate', authApi(['cus']), FixRecord.getSaleRecordsByPlate);
+router.post('/cfix/add', authApi(['cus']), FixRecord.addFixRecord);
+router.post('/cfix/add-detail', authApi(['mec']), FixRecord.addFixDetailToRecord);
+router.post('/cfix/update-status-detail', authApi(['mec']), FixRecord.updateStatusOfFixDetail);
+router.post('/cfix/update-detail-detail', authApi(['mec']), FixRecord.updateDetailOfFixDetail);
+router.post('/cfix/update-status', authApi(['mec']), FixRecord.updateStatusOfFixRecord);
+router.post('/cfix/update-pay', authApi(['cus']), FixRecord.updatePayOfFixRecord);
 
 // car import invoice
-router.get('/imcar/all', CarImport.getAllInvoices);
-router.get('/imcar/reports', CarImport.getCarReportsOfInvoice);
-router.get('/imcar/sm', CarImport.getInvoicesByStoreManager);
-router.post('/imcar/add-invoice', CarImport.addCarInvoice);
-router.post('/imcar/update-invoice', CarImport.updateCarInvoice);
-router.post('/imcar/delete-invoice', CarImport.deleteCarInvoice);
-router.post('/imcar/add-report', CarImport.addCarReportToInvoice);
-router.post('/imcar/update-report', CarImport.updateCarReport);
-router.post('/imcar/delete-report', CarImport.deleteCarReport);
+router.get('/imcar/all', authApi(['sm']), CarImport.getAllInvoices);
+router.get('/imcar/reports', authApi(['sm']), CarImport.getCarReportsOfInvoice);
+router.get('/imcar/sm', authApi(['sm']), CarImport.getInvoicesByStoreManager);
+router.post('/imcar/add-invoice', authApi(['sm']), CarImport.addCarInvoice);
+router.post('/imcar/update-invoice', authApi(['sm']), CarImport.updateCarInvoice);
+router.post('/imcar/delete-invoice', authApi(['sm']), CarImport.deleteCarInvoice);
+router.post('/imcar/add-report', authApi(['sm']), CarImport.addCarReportToInvoice);
+router.post('/imcar/update-report', authApi(['sm']), CarImport.updateCarReport);
+router.post('/imcar/delete-report', authApi(['sm']), CarImport.deleteCarReport);
 
 // ap import invoice
-router.get('/imap/all', ApImport.getAllInvoices);
-router.get('/imap/reports', ApImport.getApReportsOfInvoice);
-router.get('/imap/sm', ApImport.getInvoicesByStoreManager);
-router.post('/imap/add-invoice', ApImport.addApInvoice);
-router.post('/imap/update-invoice', ApImport.updateApInvoice);
-router.post('/imap/delete-invoice', ApImport.deleteApInvoice);
-router.post('/imap/add-report', ApImport.addApReportToInvoice);
-router.post('/imap/update-report', ApImport.updateApReport);
-router.post('/imap/delete-report', ApImport.deleteApReport);
+router.get('/imap/all', authApi(['sm']), ApImport.getAllInvoices);
+router.get('/imap/reports', authApi(['sm']), ApImport.getApReportsOfInvoice);
+router.get('/imap/sm', authApi(['sm']), ApImport.getInvoicesByStoreManager);
+router.post('/imap/add-invoice', authApi(['sm']), ApImport.addApInvoice);
+router.post('/imap/update-invoice', authApi(['sm']), ApImport.updateApInvoice);
+router.post('/imap/delete-invoice', authApi(['sm']), ApImport.deleteApInvoice);
+router.post('/imap/add-report', authApi(['sm']), ApImport.addApReportToInvoice);
+router.post('/imap/update-report', authApi(['sm']), ApImport.updateApReport);
+router.post('/imap/delete-report', authApi(['sm']), ApImport.deleteApReport);
 
 //Cart
-router.get('/cart', ApiController.getCartByCusID);
-router.get('/cart/find', ApiController.getCarInCart);
-router.post('/cart/add', ApiController.insertToCart);
-router.post('/cart/delete', ApiController.deleteCartItem);
-router.post('/cart/update_quantity', ApiController.updateCarQuanTityInCart);
+router.get('/cart', authApi(['cus']), ApiController.getCartByCusID);
+router.get('/cart/find', authApi(['cus']), ApiController.getCarInCart);
+router.post('/cart/add', authApi(['cus']), ApiController.insertToCart);
+router.post('/cart/delete', authApi(['cus']), ApiController.deleteCartItem);
+router.post('/cart/update_quantity', authApi(['cus']), ApiController.updateCarQuanTityInCart);
 
 //Payment 
-router.get('/payment/account', ApiController.getAccount)
-router.post('/payment/transfer', ApiController.transferMoney)
-router.post('/payment/deposits', ApiController.deposits)
+router.get('/payment/account', authApi(['cus']), ApiController.getAccount)
+router.post('/payment/transfer', authApi(['cus']), ApiController.transferMoney)
+router.post('/payment/deposits', authApi(['cus']), ApiController.deposits)
 
 
 //chart
-router.get('/revenue', ApiController.getRevenue);
-router.get('/topcar', ApiController.getTopCar);
-router.get('/saleTotal', ApiController.getSaleTotal);
-router.get('/fixTotal', ApiController.getFixTotal);
+router.get('/revenue', authApi(['sa']), ApiController.getRevenue);
+router.get('/topcar', authApi(['sa']), ApiController.getTopCar);
+router.get('/saleTotal', authApi(['sa']), ApiController.getSaleTotal);
+router.get('/fixTotal', authApi(['sa']), ApiController.getFixTotal);
 
 //Car type
-router.get('/type/all', ApiController.getAllCarType);
+router.get('/type/all', authApi(['cus', 'sm']), ApiController.getAllCarType);
 //Car brand
-router.get('/brand/all', ApiController.getAllBrand);
+router.get('/brand/all', authApi(['cus', 'sm']), ApiController.getAllBrand);
 
 module.exports = router;

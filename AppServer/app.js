@@ -11,6 +11,7 @@ const passport = require('./config/mainPassport');
 const bodyParser = require('body-parser');
 const flash = require('express-flash');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 // Config
 app.use(express.urlencoded({ extended: true }));
@@ -19,7 +20,8 @@ configStaticResource(app, path.join(__dirname, 'public'))
 configSession(app);
 app.use(bodyParser.json());
 app.use(flash());
-app.use(cors());
+app.use(cors({ credentials: true, origin: true }));
+app.use(cookieParser("sgx"));
 
 //No Caching
 // app.use((req, res, next) => {
@@ -30,14 +32,9 @@ app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 //Router
-app.use('/admin', require('./routers/siteRoleRouters/adminRouter')) //Test admin
-app.use('/test', require('./routers/testview.r')) //Test view
 app.use('/api', require('./routers/api.r'));
 app.use('/', require('./routers/site.r'));
-
 
 //Handle error middleware
 app.use(NotFound);
