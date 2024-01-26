@@ -1,35 +1,80 @@
 <div class="container-fluid">
     {{> Nav/guestNav}}
-    <div class="row">
-        <div class="card border-0">
-            <div class="card-body">
-                <h3 class="card-title textPrimary fw-bold">Deposit (demo)</h3>
-                <h4 class="card-title textPrimary fw-bold">Balance: <span id="cusBalance"></span>$</h4>
-                <div> 
-                    <button val="1000" type="button"  onclick="priceButtonClick(event,1000)" class="  m-2  btn btn-primary">
-                        1000$
-                    </button>
-                    <button  val="5000" type="button" onclick="priceButtonClick(event,5000)" class="  m-2 btn btn-primary">
-                        5000$
-                    </button>
-                    <button  val="10000" type="button" onclick="priceButtonClick(event,10000)" class="  m-2 btn btn-primary">
-                        10000$
-                    </button>
-                    <button  val="15000" type="button" onclick="priceButtonClick(event,15000)" class="  m-2 btn btn-primary">
-                        15000$
-                    </button>
-                    <button  val="50000" type="button" onclick="priceButtonClick(event,50000)" class="  m-2 btn btn-primary">
-                        50000$
-                    </button>
-                    <button  val="100000" type="button" onclick="priceButtonClick(event,100000)" class="  m-2 btn btn-primary">
-                        100000$
-                    </button>
-                </div>
-            </div>
+
+</div>
+
+<div class="row">
+    <div class="card border-0 ">
+        <div class="card-body err">
+            <h3 class="card-title textPrimary fw-bold">Can't get account from payment server</h3>
         </div>
     </div>
+</div>
+<div class="card success d-none border-0">
+    <div class="card-body">
+        <h3 class="card-title textPrimary fw-bold">Deposit (demo)</h3>
+        <h4 class="card-title textPrimary fw-bold">Balance: <span id="cusBalance"></span>$</h4>
+        <div>
+            <button val="1000" type="button" onclick="priceButtonClick(event,1000)" class="  m-2  btn btn-primary">
+                1000$
+            </button>
+            <button val="5000" type="button" onclick="priceButtonClick(event,5000)" class="  m-2 btn btn-primary">
+                5000$
+            </button>
+            <button val="10000" type="button" onclick="priceButtonClick(event,10000)" class="  m-2 btn btn-primary">
+                10000$
+            </button>
+            <button val="15000" type="button" onclick="priceButtonClick(event,15000)" class="  m-2 btn btn-primary">
+                15000$
+            </button>
+            <button val="50000" type="button" onclick="priceButtonClick(event,50000)" class="  m-2 btn btn-primary">
+                50000$
+            </button>
+            <button val="100000" type="button" onclick="priceButtonClick(event,100000)" class="  m-2 btn btn-primary">
+                100000$
+            </button>
+        </div>
+    </div>
+</div>
+<div class="card success d-none border-0">
+    <div class="card-body">
+        <h3 class="card-title textPrimary fw-bold">Payment history</h3>
+        <div style="height: 20rem;">
+            <table class="table table-hover">
+                <thead class="table-info" id="tbHeader">
+                    <tr class="text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Content</th>
+                        <th scope="col">Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="tbBody">
 
-    {{> footer}}
+                </tbody>
+            </table>
+
+        </div>
+        <nav class="d-flex justify-content-center" aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" onclick="prePage(event)" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" id="PageInfo"></a></li>
+                <li class="page-item">
+                    <a class="page-link" onclick="nextPage(event)" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</div>
+
+{{> footer}}
 </div>
 {{#if userId}}
 <script>
@@ -39,20 +84,21 @@
 
 <script>
     let cusBalance = $('#cusBalance')
+    let page = 1;
+    let per_page = 5;
+    let totalPage = 0
+    let hisData = []
+    let showDetail = [];
 
-    const init = async () => {
-        const rs = await fetch('/api/payment/account');
-        const account = await rs.json();
-        cusBalance.text(account.balance)
+    const fetchData = async (url) => {
+        const rs = await fetch(url);
+        if (!rs.ok) return false;
+        storage = await rs.json();
+        return storage;
     }
 
-
-    const priceButtonClick = async (e,price) => {
-        const data = {
-            id: userId,
-            money: price
-        }
-        const rs = await fetch('/api/payment/deposits',{
+    const fetchPos = async (data, url) => {
+        return await fetch(url, {
             method: 'post',
             credentials: "same-origin",
             headers: {
@@ -61,10 +107,100 @@
             redirect: "follow",
             body: JSON.stringify(data)
         })
-        let mss = rs.ok? 'success' : 'failed';
+    }
+
+
+    const init = async () => {
+        const account = await fetchData('/api/payment/account');
+        const data = {
+            id: userId
+        }
+        const rs = await fetchPos(data, '/api/payment/history')
+        if (account != false && rs.ok) {
+            $('.err').addClass('d-none')
+            $('.success').removeClass('d-none')
+            cusBalance.text(account.balance);
+            const his = await rs.json();
+            for (const [index, e] of his.entries()) {
+                hisData.push($(`
+                    <tr class="text-center">
+                                <td scope="col">${index + 1}</td>
+                                <td scope="col">${e.date}</td>
+                                <td scope="col">${e.content}</td>
+                                <td scope="col">${e.amount}</td>
+                    </tr>
+                `))
+            }
+        }
+    }
+
+
+    const priceButtonClick = async (e, price) => {
+        const data = {
+            id: userId,
+            money: price
+        }
+        const rs = await fetchPos(data, '/api/payment/deposits')
+        let mss = rs.ok ? 'success' : 'failed';
         alert(mss);
         await init();
     }
 
-    init();
+
+
+
+    const updatePageInfo = async () => {
+        $('#PageInfo').text(`${page}/${totalPage}`)
+    }
+
+    const prePage = async (event) => {
+        event.preventDefault();
+        if (page <= 1) return;
+        page -= 1;
+        await updateShowDetail(page);
+        await generateTable();
+        updatePageInfo();
+    }
+
+    const nextPage = async (event) => {
+        event.preventDefault();
+        if (page >= totalPage) return;
+        page += 1;
+        await updateShowDetail(page);
+        await generateTable();
+        updatePageInfo();
+    }
+
+    const updateShowDetail = async (curPage) => {
+        showDetail = hisData.slice((curPage - 1) * per_page, (curPage - 1) * per_page + per_page);
+    }
+
+    const generateTable = async () => {
+        let tbBody = $('#tbBody');
+        tbBody.empty();
+        for (const e of showDetail) {
+            tbBody.append(e);
+        }
+    }
+
+
+    const initPaging = async () => {
+        console.log(hisData)
+        if (hisData.length > per_page) {
+            $('.pagination').removeClass('d-none');
+            totalPage = Math.ceil(hisData.length / per_page);
+        } else {
+            $('.pagination').addClass('d-none');
+        }
+        await updateShowDetail(page);
+        await generateTable();
+        await updatePageInfo();
+    }
+
+
+   const realInit = async () => {
+    await init();
+    await initPaging();
+   }
+   realInit();
 </script>

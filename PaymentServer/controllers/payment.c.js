@@ -82,5 +82,16 @@ module.exports = {
         } catch (error) {
             return res.status(500).send("An error occurred while getting the account");
         }
+    }),
+    getPaymentHistory: tryCatch(async (req,res) => {
+        try {
+            var decoded = jwt.verify(req.body.token, process.env.SECRET_KEY);
+            const id = decoded.id;
+            const data = await Transaction.GetPaymentHistoryById(id);
+            const rsToken = jwt.sign({ data }, process.env.VERIFY_KEY);
+            res.json(rsToken);
+        } catch (error) {
+            return res.status(500).send("An error occurred while getting payment history");
+        };
     })
 }

@@ -3,6 +3,11 @@
 
 <div class="container-fluid">
     {{> Nav/guestNav}}
+    <div class="mb-3 mt-3">
+        <button onclick="backToPrePage()" type="button" class="btn btn-primary bgPrimary">
+            <i class="fa-solid fa-chevron-left"></i> Back
+        </button>
+    </div>
     <div class="card align-items-center justify-content-center p-3 border-0">
         <h4 class="card-title textPrimary fs-2 fw-bold">CART</h4>
         {{#each cartData}}
@@ -74,7 +79,7 @@
     <div class="card align-items-center justify-content-center p-3 border-0">
         <h4 class="card-title textPrimary fs-2 fw-bold">HISTORY</h4>
         <div class="card-body w-100">
-            <div class="table-responsive" style="height: 30rem;">
+            <div style="height: 20rem;">
                 <table class="table table-hover">
                     <thead class="table-info" id="tbHeader">
                         <tr class="text-center">
@@ -85,17 +90,25 @@
                         </tr>
                     </thead>
                     <tbody id="tbBody">
-                        {{#each saleData }}
-                        <tr class="text-center" onclick="getSaleRecordData({{this.salerecord_id}})">
-                            <td scope="col">{{add @index 1}}</td>
-                            <td scope="col">{{this.salerecord_id}}</td>
-                            <td scope="col">{{this.date}}</td>
-                            <td scope="col">{{this.total_price}}$</td>
-                        </tr>
-                        {{/each}}
+
                     </tbody>
                 </table>
             </div>
+                <nav class="d-flex justify-content-center" aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" onclick="prePage(event)" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" id="PageInfo"></a></li>
+                        <li class="page-item">
+                            <a class="page-link" onclick="nextPage(event)" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
         </div>
     </div>
 
@@ -107,3 +120,19 @@
     let adminId = {{ adminId }}
 </script>
 {{/if}}
+
+<script>
+    let data = [];
+    {{#each saleData }}
+    data.push($(
+        `
+           <tr class="text-center" onclick="getSaleRecordData({{this.salerecord_id}})">
+                            <td scope="col">{{add @index 1}}</td>
+                            <td scope="col">{{this.salerecord_id}}</td>
+                            <td scope="col">{{this.date}}</td>
+                            <td scope="col">{{this.total_price}}$</td>
+                        </tr>
+            `
+    ))
+    {{/each}}
+</script>

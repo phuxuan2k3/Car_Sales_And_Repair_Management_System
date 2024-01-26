@@ -24,7 +24,7 @@ module.exports = {
         res.json({ car: carData, ap: apData });
     }),
     //Car API
-    getAllYear: tryCatch(async (req,res) => {
+    getAllYear: tryCatch(async (req, res) => {
         const data = await Car.getAllYear();
         res.json(data);
     }),
@@ -68,7 +68,7 @@ module.exports = {
         if (!(types instanceof Array) && types != undefined) {
             types = [types];
         }
-        const data = await Car.getCarPage(years,searchStr, brands, types, maxPrice, perPage, offset);
+        const data = await Car.getCarPage(years, searchStr, brands, types, maxPrice, perPage, offset);
         res.json(data);
     }),
     addNewCar: tryCatch(async (req, res) => {
@@ -349,6 +349,31 @@ module.exports = {
         }
         return res.status('400').send('Error');
     }),
+
+    paymentHistory: tryCatch(
+        async (req, res) => {
+            let token = jwt.sign({ id: req.user.id }, ENV.SECRET_KEY);
+            const data = {
+                token: token
+            }
+            const rs = await fetch(`http://localhost:${ENV.PAYMENT_PORT}/get-payment-history`, {
+                method: 'post',
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                redirect: "follow",
+                body: JSON.stringify(data)
+            });
+            if (rs.ok) {
+                const rsToken = await rs.json();
+                const verifyData = jwt.verify(rsToken, ENV.VERIFY_KEY);
+                return res.json(verifyData.data)
+            }
+            return res.status('400').send('err');
+        }
+    ),
+
 
     // Admin - User
     getAllUsers: tryCatch(async (req, res) => {

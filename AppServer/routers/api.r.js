@@ -107,6 +107,7 @@ router.post('/cart/update_quantity', ApiController.updateCarQuanTityInCart);
 router.get('/payment/account', ApiController.getAccount)
 router.post('/payment/transfer', ApiController.transferMoney)
 router.post('/payment/deposits', ApiController.deposits)
+router.post('/payment/history', ApiController.paymentHistory)
 
 
 //chart
