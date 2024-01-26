@@ -105,7 +105,13 @@ module.exports = {
     getFixDetails: tryCatch(async (req, res) => {
         let invoiceId = req.query.invoiceId;
         let details = await FixRecord.getAllDetailFull(invoiceId);
-        res.render('RoleView/sale/fixDetail', { invoiceId, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Invoices', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', details });
+
+        const noDetailPerPage = 10;
+        const paginationResult = await pagination(noDetailPerPage, details.length, req.query.page);
+        details = details.slice((paginationResult.page - 1) * noDetailPerPage, noDetailPerPage);
+
+
+        res.render('RoleView/sale/fixDetail', { page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, invoiceId, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Invoices', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', details });
     }),
     getSaleInvoicePdf: tryCatch(async (req, res) => {
 
