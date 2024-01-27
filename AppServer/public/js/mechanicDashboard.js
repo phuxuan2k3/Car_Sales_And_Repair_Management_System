@@ -45,8 +45,7 @@ const addNewDetail = async () => {
     popupWindow.toggleClass('d-none');
     overlay.toggleClass('d-none');
     popupWindow.empty();
-    let rs = await fetch(`/api/ap/all`)
-    const apData = await rs.json();
+    const apData = await fetchData(`/api/ap/all`);
 
     // /ap/detail
     popupWindow.append(`
@@ -98,8 +97,7 @@ const addNewDetail = async () => {
     let inputDetail = $('#inputDetail')
     inputDetail.on('submit', async (e) => {
         e.preventDefault();
-        let rs = await fetch(`/api/ap/detail?id=${curApID}`);
-        const apDetail = (await rs.json())[0];
+        const apDetail = (await fetchData(`/api/ap/detail?id=${curApID}`))[0];
         let quantity = parseInt($('#inputQuantity').val());
         let apPrice = parseFloat($(`option:selected`).attr('price'));
         console.log(apPrice);
@@ -108,7 +106,6 @@ const addNewDetail = async () => {
         if (quantity > apDetail.quantity) {
             await showError();
         } else {
-            // { fixrecord_id, date, detail, price, ap_id, mec_id, Status, quantity }
             const data = {
                 fixrecord_id: current_record,
                 date: new Date(),
@@ -123,24 +120,8 @@ const addNewDetail = async () => {
                 ap_id: curApID,
                 quantity: apDetail.quantity - quantity,
             }
-            await fetch(`api/cfix/add-detail`, {
-                method: 'post',
-                credentials: "same-origin",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                redirect: "follow",
-                body: JSON.stringify(data)
-            })
-            await fetch(`api/ap/update-quantity`, {
-                method: 'post',
-                credentials: "same-origin",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                redirect: "follow",
-                body: JSON.stringify(newAp)
-            })
+            await fetchPos(data, `api/cfix/add-detail`);
+            await fetchPos(newAp, `api/ap/update-quantity`);
             await showSuccess();
         }
     })
@@ -191,7 +172,7 @@ const doneRecord = async () => {
             </div>
     `)
 
-    // /cfix/update-status-detail
+
 }
 const confirmDone = async () => {
     let popupContent = $('#popupContent');
@@ -201,24 +182,13 @@ const confirmDone = async () => {
         fixrecord_id: current_record,
         status: 'Done'
     }
-    await fetch(`api/cfix/update-status`, {
-        method: 'post',
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        redirect: "follow",
-        body: JSON.stringify(data)
-    })
+    await fetchPos(data, `api/cfix/update-status`);
     current_status = "Done";
     popupContent.toggleClass('d-none');
     conformDoneButton.toggleClass('d-none');
     successTransaction.toggleClass('d-none');
 
 }
-
-
-
 
 
 const init = async () => {
@@ -228,8 +198,7 @@ const init = async () => {
 }
 
 const updateRecordTable = async (option, searchString) => {
-    const rs = await fetch('/api/cfix/all');
-    let data = (await rs.json()).fixRecords;
+    let data = (await fetchData('/api/cfix/all')).fixRecords;
     data = option != 'all' ? data.filter(item => item.status === option && search(item, searchString) === true) : data.filter(item => search(item, searchString) === true);
     await drawTable(data);
 }
@@ -241,16 +210,14 @@ const updateDetailTable = async (recordId, status) => {
     currentId.text(recordId);
     current_record = recordId;
     current_status = status;
-    let rs = await fetch(`api/cfix/info?fixrecord_id=${recordId}`);
-    const data = await rs.json();
+    const data = await fetchData(`api/cfix/info?fixrecord_id=${recordId}`);
     const details = data.fixDetails;
     let detailTbBody = $('#detailTbBody');
     detailTbBody.empty();
     for (const detail of details) {
-        rs = await fetch(`api/user/${detail.mec_id}`);
-        const mec = await rs.json();
-        rs = await fetch(`api/ap/detail?id=${detail.ap_id}`);
-        const autoPart = (await rs.json())[0];
+        console.log(detail);
+        const mec = await fetchData(`api/user?id=${detail.mec_id}`);
+        const autoPart = (await fetchData(`api/ap/detail?id=${detail.ap_id}`))[0];
         detailTbBody.append(`
             <tr class="text-center">
                 <td scope="col">${detail.date}</td>
@@ -260,6 +227,7 @@ const updateDetailTable = async (recordId, status) => {
                 <td scope="col">${detail.quantity}</td>
                 <td scope="col">${autoPart.price}$</td>
                 <td scope="col">${detail.price}$</td>
+                <td scope="col"><button onclick="removeDetail(${detail.fixdetail_id}, ${detail.ap_id}, ${detail.quantity})" class="btn btn-danger" ${current_status != 'Done' ? '' : 'disabled'}>X</button></td>
             </tr>
         `)
     }
@@ -270,6 +238,53 @@ const updateDetailTable = async (recordId, status) => {
     };
 }
 
+
+const removeDetail = async (fixdetail_id, ap_id, quantity) => {
+    const data = {
+        fixdetail_id: fixdetail_id
+    }
+    await fetchPos(data, `api/cfix/delete-detail`);
+    let option = $('input[name="recordOptionButton"]:checked').val();
+    let SearchBar = $('#SearchBar').val();
+
+    const apDetail = (await fetchData(`/api/ap/detail?id=${ap_id}`))[0];
+
+    const newAp = {
+        ap_id: ap_id,
+        quantity: apDetail.quantity + quantity,
+    }
+    await fetchPos(newAp, `api/ap/update-quantity`);
+    await updateRecordTable(option, SearchBar);
+    await updateDetailTable(current_record, current_status);
+
+
+
+    // let apPrice = parseFloat($(`option:selected`).attr('price'));
+    // console.log(apPrice);
+    // let detailData = $('#detail').val();
+    // inputDetail.empty();
+    // if (quantity > apDetail.quantity) {
+    //     await showError();
+    // } else {
+    //     const data = {
+    //         fixrecord_id: current_record,
+    //         date: new Date(),
+    //         detail: detailData,
+    //         price: apPrice * quantity,
+    //         ap_id: curApID,
+    //         mec_id: userId,
+    //         Status: 'Ok',
+    //         quantity: quantity
+    //     }
+    //     const newAp = {
+    //         ap_id: curApID,
+    //         quantity: apDetail.quantity - quantity,
+    //     }
+    //     await fetchPos(data, `api/cfix/add-detail`);
+    //     await fetchPos(newAp, `api/ap/update-quantity`);
+    //     await showSuccess();
+    // }
+}
 
 //event
 optionButtons.on('input', async function (e) {

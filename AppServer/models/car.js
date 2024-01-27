@@ -134,4 +134,8 @@ module.exports = class Car {
         let query = `SELECT DISTINCT "year" from ${tableName} ORDER BY "year"`
         return (await dbExecute.customQuery(query));
     }
+    static async getCarByStyle(type) {
+        let query = `select * from "${tableName}" where "type"='${type}'`;
+        return (await dbExecute.customQuery(query));
+    }
 }

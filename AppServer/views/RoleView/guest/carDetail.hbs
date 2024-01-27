@@ -3,7 +3,7 @@
 <div class="container-fluid">
     {{> Nav/guestNav}}
     <div class="m-3">
-        <button onclick="backToPrePage()"  type="button" class="btn btn-primary bgPrimary">
+        <button onclick="backToPrePage()" type="button" class="btn btn-primary bgPrimary">
             <i class="fa-solid fa-chevron-left"></i> Back
         </button>
     </div>
@@ -64,7 +64,7 @@
                                 {{#isLessThan data.quantity cartQuantity}}
                                 <p class="me-3 text-danger ms-3">You`ve reached the maximum quantity in your cart.
                                     ({{cartData.quantity}}) !</p>
-                                <button type="button" disabled class="btn w-25 p-2 border-0 btn-primary bgPrimary">
+                                <button type="submit" disabled class="btn w-25 p-2 border-0 btn-primary bgPrimary">
                                     ADD TO CART
                                 </button>
                                 {{else}}
@@ -73,15 +73,20 @@
                                     <label>Number of items in the shopping cart: {{cartQuantity}}</label>
                                 </div>
                                 {{/if}}
-                                <div class="d-flex flex-row align-items-center">
-                                    <label class="no-wrap" for="#quantityInput">Enter quantity: </label>
-                                    <input type="number" id="quantityInput" class="rounded-pill form-control w-50"
-                                        value="1" min="1" max="{{subtract data.quantity cartData.quantity}}">
-                                </div>
-                                <button type="button" onclick="confirmAddEvent({{data.id}},{{cartQuantity}})"
-                                    class="btn w-25 p-2 border-0 btn-primary bgPrimary">
-                                    ADD TO CART
-                                </button>
+                                <form action="#"
+                                    class="d-flex w-100 flex-row justify-content-between align-items-center"
+                                    onsubmit="confirmAddEvent({{data.id}},{{#if cartQuantity}} {{cartQuantity}} {{else}} null {{/if}},event)">
+                                    <div class="d-flex flex-row align-items-center">
+                                        <label class="no-wrap" for="#quantityInput">Enter quantity: </label>
+                                        <input required type="number" id="quantityInput"
+                                            class="rounded-pill form-control w-50" value="1" min="1"
+                                            max="{{subtract data.quantity cartData.quantity}}">
+                                    </div>
+                                    <button type="submit" id="submitButton"
+                                        class="btn w-25 p-2 border-0 btn-primary bgPrimary">
+                                        ADD TO CART
+                                    </button>
+                                </form>
                                 {{/isLessThan}}
                                 {{/isLessThan }}
                             </div>
@@ -91,6 +96,52 @@
             </div>
         </div>
     </div>
+    <div class="row  bg-white p-3">
+        <h2 class="textPrimary">Related products</h2>
+        <div id="carouselExample" class="carousel carousel-dark slide">
+
+            <div class="carousel-inner">
+
+                {{#each relatedCars}}
+                <div class="carousel-item {{#if @first}}active{{/if}}">
+                    <div class="row justify-content-center align-items-center g-2">
+                        {{#each this}}
+                        <div class="col-md-3   carInfo mb-3">
+                            <div class="card ms-auto me-auto mb-3 w-100 h-100 carInfoCard d-flex flex-column" onclick="relatedCarClick({{this.id}})">
+                                <div class="info" index="${car.id}">
+                                    <div class="card-body" style="height:10rem">
+                                        <p class="card-text fw-bold fs-5 textPrimary mb-0">{{this.car_name}}</p>
+                                        <p class="fw-bold fs-8  text-opacity-25 textPrimary opacity4">{{this.type}}</p>
+                                    </div>
+                                    <img src="/images/cars/{{this.id}}/avatar.png" class="w-100" style="height: 12rem;"
+                                        alt="${car.car_name}.png">
+                                    <div class="card-body d-flex flex-row justify-content-between opacity4 textPrimary">
+                                        <div class="d-flex flex-row align-items-center ">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                            <p class="m-0 ms-1">{{this.year}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            <button class="carousel-control-prev textPrimary" type="button" data-bs-target="#carouselExample"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon textPrimary" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next textPrimary" type="button" data-bs-target="#carouselExample"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon textPrimary" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
     {{> footer}}
 </div>
 {{#if userId}}

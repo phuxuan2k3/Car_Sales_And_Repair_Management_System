@@ -25,26 +25,6 @@ let spinner;
 mustToPay.text(totalPrice);
 
 
-// Will be fix for jwt
-const fetchData = async (url) => {
-    const rs = await fetch(url);
-    if (!rs.ok) return false;
-    storage = await rs.json();
-    return storage;
-}
-
-const fetchPos = async (data, url) => {
-    return await fetch(url, {
-        method: 'post',
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        redirect: "follow",
-        body: JSON.stringify(data)
-    })
-}
-
 const checking = async (event) => {
     event.stopPropagation();
 }

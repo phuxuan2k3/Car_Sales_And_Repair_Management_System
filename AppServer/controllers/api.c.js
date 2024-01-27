@@ -219,6 +219,7 @@ module.exports = {
         res.json(data);
     }),
     //User
+
     getUserById: tryCatch(async (req, res) => {
         const data = await User.getById(req.params.id);
         res.json(data);

@@ -28,11 +28,7 @@ let failedAlert = $('#failedAlert');
 let successAlert = $('#successAlert');
 
 // Will be fix for jwt
-const fetchData = async (url) => {
-    const rs = await fetch(url);
-    storage = await rs.json();
-    return storage;
-}
+
 
 const validation = () => {
     let inputCarPlate = $('#inputCarPlate');
@@ -67,15 +63,7 @@ registerButton.on('click',async (e) => {
             id: userId
         }
         console.log(entity)
-        const serverResponse = await fetch('/api/car/fixed/add', {
-            method: 'post',
-            credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-            body: JSON.stringify(entity)
-        })
+        const serverResponse = await fetchPos(entity,'/api/car/fixed/add')
         if (serverResponse.ok) {
             overplay.removeClass('d-none');
             popupWindow.empty();
@@ -125,6 +113,7 @@ registerButton.on('click',async (e) => {
 
 
 const updateFixRecordData = async () => {
+    fixRecordsData = [];
     for (const car of fixedCar) {
         const records = (await fetchData(`/api/cfix/car-plate?car_plate=${car.car_plate}`)).fixRecords;
         for (const record of records) {
@@ -227,15 +216,7 @@ const generateTable = async () => {
                 amount: parseFloat(amount),
                 content: "Repair service - SGXAUTO"
             }
-            const serverResponse = await fetch('/api/payment/transfer', {
-                method: 'post',
-                credentials: "same-origin",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                redirect: "follow",
-                body: JSON.stringify(transactionData)
-            })
+            serverResponse = await fetchPos(transactionData,'/api/payment/transfer');
             spinner.addClass('d-none');
             backButton.removeClass('d-none');
             backButton.on('click', () => {
@@ -247,14 +228,7 @@ const generateTable = async () => {
                     fixrecord_id: recordId,
                     pay: true
                 }
-                const rs = await fetch('api/cfix/update-pay', {
-                    method: 'post',
-                    credentials: "same-origin",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data)
-                })
+                rs = await fetchPos(data,'api/cfix/update-pay')
             } else {
                 falseTransaction.removeClass('d-none');
             }
@@ -278,7 +252,11 @@ let carPlateInput = $('#carPlateInput');
 carPlateInput.on('input', async function (e) {
     const car_plate = $(this).val();
     fixedCar = await fetchData(`/api/car/fixed/find?id=${userId}&car_plate=${car_plate}`);
-    generateTable();
+    page=1;
+    await updateFixRecordData();
+    await updateShowedRecordData(page);
+    await generateTable();
+    updatePageInfo();
 })
 
 

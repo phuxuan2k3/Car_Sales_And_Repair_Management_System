@@ -70,6 +70,12 @@ module.exports = {
         return res.json({ result });
     }),
 
+    deleteFixDetail: tryCatch(async (req, res) => {
+        const { fixdetail_id } = req.body;
+        const result = FixDetail.delete({ fixdetail_id });
+        return res.json({ result });
+    }),
+
     // require: body: fixdetail_id, detail
     // return: fixdetail update result
     updateDetailOfFixDetail: tryCatch(async (req, res) => {
