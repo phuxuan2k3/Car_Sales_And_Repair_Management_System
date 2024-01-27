@@ -34,7 +34,7 @@ async function getImgs() {
     const id = $($('.edit-form')[0]).data('id');
     const url = `/api/car/imgs/${id}`;
     try {
-        const response = await fetch(url);
+        const response = await xuanFetchGet(url);
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);

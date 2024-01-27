@@ -17,7 +17,7 @@ $(".single_quick_activity").addClass("show");
 
 async function displayChart() {
     var selectedOption = $('#dropdownBtn').data('value');
-    let response = await fetch(`/api/revenue?type=day&limit=${$('#limit').val()}`);
+    let response = await xuanFetchGet(`/api/revenue?type=day&limit=${$('#limit').val()}`);
     if (response.ok) {
         const data1 = await response.json();
 
@@ -52,7 +52,7 @@ async function displayChart() {
             }
         });
 
-        response = await fetch('/api/topcar');
+        response = await xuanFetchGet('/api/topcar');
         if (response.ok) {
             const data2 = await response.json();
 
@@ -82,19 +82,19 @@ async function displayChart() {
             });
         }
 
-        response = await fetch('/api/countCus');
+        response = await xuanFetchGet('/api/countCus');
         if (response.ok) {
             $('#noCus').text(await response.json());
         }
-        response = await fetch('/api/car/count');
+        response = await xuanFetchGet('/api/car/count');
         if (response.ok) {
             $('#noCar').text(await response.json());
         }
-        response = await fetch('/api/saleTotal');
+        response = await xuanFetchGet('/api/saleTotal');
         if (response.ok) {
             $('#saleTotal').text(Math.round(await response.json()));
         }
-        response = await fetch('/api/fixTotal');
+        response = await xuanFetchGet('/api/fixTotal');
         if (response.ok) {
             $('#fixTotal').text(Math.round(await response.json()));
         }
@@ -108,7 +108,7 @@ $(".dropdown-item").on('click', async function () {
     $('#dropdownBtn').text(selectedOption);
     $('#dropdownBtn').data('n', selectedOption);
 
-    let response = await fetch(`/api/revenue?type=${selectedOption}&limit=${$('#limit').val()}`);
+    let response = await xuanFetchGet(`/api/revenue?type=${selectedOption}&limit=${$('#limit').val()}`);
     if (response.ok) {
         const data1 = await response.json();
 
@@ -157,7 +157,7 @@ $("#limit").on("input", function () {
 $('#limit').on('input', async function () {
     var selectedOption = $('#dropdownBtn').data('n');
     console.log($("#dropdownBtn").text(), $("#limit").val());
-    let response = await fetch(`/api/revenue?type=${selectedOption}&limit=${$('#limit').val()}`);
+    let response = await xuanFetchGet(`/api/revenue?type=${selectedOption}&limit=${$('#limit').val()}`);
     if (response.ok) {
         const data1 = await response.json();
 
