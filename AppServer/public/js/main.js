@@ -37,6 +37,33 @@ async function anFetchPost(baseUrl = '', dest = '', bodyObj, method = 'POST') {
         },
         body: JSON.stringify(bodyObj),
     });
+    if (!raw.ok) {
+        throw new Error(`HTTP error! Status: ${raw.status}`);
+    }
     const data = await raw.json();
     return data;
+}
+
+async function xuanFetchGet(baseUrl = '', dest = '', paramObj) {
+    const fetchUrl = `${baseUrl}${dest}?${(new URLSearchParams(paramObj)).toString()}`;
+    const raw = await fetch(fetchUrl, {
+        method: 'GET',
+        headers: {
+            "Authorization": "Bearer " + getCookie("auth"),
+        }
+    });
+    return raw;
+}
+async function xuanFetchPost(baseUrl = '', dest = '', bodyObj, method = 'POST') {
+    const fetchUrl = `${baseUrl}${dest}`;
+    const raw = await fetch(fetchUrl, {
+        method: method,
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + getCookie("auth"),
+        },
+        body: JSON.stringify(bodyObj),
+    });
+    return raw;
 }

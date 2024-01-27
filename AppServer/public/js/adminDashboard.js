@@ -1,4 +1,4 @@
-const baseUrl = 'https://127.0.0.1:3000/api/admin';
+const baseUrl = '/api/admin';
 
 // data
 // storage

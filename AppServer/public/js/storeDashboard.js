@@ -15,7 +15,7 @@ let allItems;
 async function getData() {
     try {
         let url = '/api/store/items';
-        let response = await anFetchGet(url);
+        let response = await xuanFetchGet(url);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -32,7 +32,7 @@ async function getData() {
         });
 
         url = '/api/car/most_car';
-        response = await anFetchGet(url);
+        response = await xuanFetchGet(url);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -47,7 +47,7 @@ async function getData() {
 
 
         url = '/api/ap/most_ap';
-        response = await anFetchGet(url);
+        response = await xuanFetchGet(url);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }

@@ -16,7 +16,7 @@ $('.delete').on('click', async function (e) {
     const data = { id };
     $('#sureDelete').on('click', async () => {
         try {
-            const response = await anFetchPost('', url, data, 'DELETE');
+            const response = await xuanFetchPost('', url, data, 'DELETE');
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -51,7 +51,7 @@ function displayDeleteResult(result) {
 $('#SearchBar').on('input', async function () {
     var inputValue = $(this).val();
     try {
-        const response = await anFetchGet(`/api/car/name?name=${inputValue}`);
+        const response = await xuanFetchGet(`/api/car/name?name=${inputValue}`);
         if (response.ok) {
             const cars = await response.json();
             $('#car-container').empty();

@@ -15,7 +15,7 @@ $('.delete').on('click', async function (e) {
     const data = { id };
     $('#sureDelete').on('click', async () => {
         try {
-            const response = await anFetchPost('', url, data, 'DELETE');
+            const response = await xuanFetchPost('', url, data, 'DELETE');
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
