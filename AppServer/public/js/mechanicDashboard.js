@@ -1,4 +1,4 @@
-let optionButtons = $('input[name="recordOptionButton"]');
+let optionButtons = $('input[type="radio"]');
 let SearchBar = $('#SearchBar');
 let popupWindow = $('#popupWindow');
 let overlay = $('.overlay');
@@ -34,7 +34,7 @@ const backEvent = async () => {
     popupWindow.toggleClass('d-none');
     overlay.toggleClass('d-none');
     popupWindow.empty();
-    let option = $('input[name="recordOptionButton"]:checked').val();
+    let option = $('input[type="radio"]:checked').val();
     let SearchBar = $('#SearchBar').val();
     await updateRecordTable(option, SearchBar);
     await updateDetailTable(current_record, current_status);
@@ -187,12 +187,11 @@ const confirmDone = async () => {
     popupContent.toggleClass('d-none');
     conformDoneButton.toggleClass('d-none');
     successTransaction.toggleClass('d-none');
-
 }
 
 
 const init = async () => {
-    let option = $('input[name="recordOptionButton"]:checked').val();
+    let option = $('input[type="radio"]:checked').val();
     let SearchBar = $('#SearchBar').val();
     await updateRecordTable(option, SearchBar);
 }
@@ -244,7 +243,7 @@ const removeDetail = async (fixdetail_id, ap_id, quantity) => {
         fixdetail_id: fixdetail_id
     }
     await fetchPos(data, `api/cfix/delete-detail`);
-    let option = $('input[name="recordOptionButton"]:checked').val();
+    let option = $('input[type="radio"]:checked').val();
     let SearchBar = $('#SearchBar').val();
 
     const apDetail = (await fetchData(`/api/ap/detail?id=${ap_id}`))[0];
@@ -288,13 +287,13 @@ const removeDetail = async (fixdetail_id, ap_id, quantity) => {
 
 //event
 optionButtons.on('input', async function (e) {
-    let option = $('input[name="recordOptionButton"]:checked').val();
+    let option = $('input[type="radio"]:checked').val();
     let SearchBar = $('#SearchBar').val();
     await updateRecordTable(option, SearchBar);
 })
 
 SearchBar.on('input', async function (e) {
-    let option = $('input[name="recordOptionButton"]:checked').val();
+    let option = $('input[type="radio"]:checked').val();
     let SearchBar = $('#SearchBar').val();
     await updateRecordTable(option, SearchBar);
 })
