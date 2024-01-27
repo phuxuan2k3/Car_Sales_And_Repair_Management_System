@@ -18,7 +18,7 @@ router.get('/car/brand', authApi(['cus']), ApiController.getAllBrand);
 router.get('/car/car_page', authApi(['cus']), ApiController.getCarPage);
 router.get('/car/most_car', authApi(['cus']), ApiController.getMostCar);
 router.post('/car/update_quantity', authApi(['cus']), ApiController.updateCarQuantity);
-router.get('/car/imgs/:id', authApi(['cus']), ApiController.getCarImgs);
+router.get('/car/imgs/:id', authApi(['sm']), ApiController.getCarImgs);
 
 router.delete('/car', authApi(['sm']), ApiController.deleteCar);
 

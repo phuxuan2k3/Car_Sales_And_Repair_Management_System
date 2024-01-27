@@ -289,7 +289,7 @@ module.exports = {
         const data = {
             token: token
         }
-        const rs = await fetch(`http://localhost:${ENV.PAYMENT_PORT}/account`, {
+        const rs = await fetch(`https://localhost:${ENV.PAYMENT_PORT}/account`, {
             method: 'post',
             credentials: "same-origin",
             headers: {
@@ -310,7 +310,7 @@ module.exports = {
         const data = {
             token: token,
         }
-        const rs = await fetch(`http://localhost:${ENV.PAYMENT_PORT}/deposit`, {
+        const rs = await fetch(`https://localhost:${ENV.PAYMENT_PORT}/deposit`, {
             method: 'post',
             credentials: "same-origin",
             headers: {
@@ -333,7 +333,7 @@ module.exports = {
         const data = {
             token: token
         }
-        const rs = await fetch(`http://localhost:${ENV.PAYMENT_PORT}/transaction`, {
+        const rs = await fetch(`https://localhost:${ENV.PAYMENT_PORT}/transaction`, {
             method: 'post',
             credentials: "same-origin",
             headers: {
@@ -356,7 +356,7 @@ module.exports = {
             const data = {
                 token: token
             }
-            const rs = await fetch(`http://localhost:${ENV.PAYMENT_PORT}/get-payment-history`, {
+            const rs = await fetch(`https://localhost:${ENV.PAYMENT_PORT}/get-payment-history`, {
                 method: 'post',
                 credentials: "same-origin",
                 headers: {

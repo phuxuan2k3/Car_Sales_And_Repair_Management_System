@@ -1,6 +1,6 @@
 require('dotenv').config();
 const ENV = process.env;
-const url = `http://localhost:${ENV.PAYMENT_PORT}/create-payment-account`;
+const url = `https://localhost:${ENV.PAYMENT_PORT}/create-payment-account`;
 const AppError = require('../utils/AppError');
 const jwt = require('jsonwebtoken');
 
@@ -8,7 +8,7 @@ module.exports = async (id, balance) => {
     if (!balance) {
         balance = ENV.DEFAULT_BALANCE;
     }
-    const data = { id:id, balance };
+    const data = { id: id, balance };
     const sendData = {
         token: jwt.sign(data, ENV.SECRET_KEY)
     }

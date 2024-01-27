@@ -3,6 +3,7 @@ const app = express();
 require('dotenv').config();
 const ENV = process.env;
 const bodyParser = require('body-parser');
+const sslServer = require('./config/configSSL');
 
 // Config
 app.use((req, res, next) => {
@@ -23,4 +24,6 @@ app.use(bodyParser.json());
 app.use(require('./routers/payment.r'))
 
 //Run server
-app.listen(ENV.PAYMENT_PORT);
+const appSSL = sslServer(app);
+
+appSSL.listen(ENV.PAYMENT_PORT);
