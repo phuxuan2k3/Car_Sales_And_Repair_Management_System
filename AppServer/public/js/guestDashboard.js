@@ -188,7 +188,7 @@ const generateCarInfo = async () => {
                             <p class="card-text fw-bold fs-5 textPrimary mb-0">${car.car_name}</p>
                             <p class="fw-bold fs-8  text-opacity-25 textPrimary opacity4">${car.type}</p>
                         </div>
-                        <img src="/images/cars/${car.id}/avatar.png" class="w-100"  style="height: 15rem;"  alt="${car.car_name}.png">  
+                        <img src="/images/cars/${car.id}/avatar.png" class="w-100"  style="height: 12rem;"  alt="${car.car_name}.png">  
                         <div class="card-body d-flex flex-row justify-content-between opacity4 textPrimary">
                             <div class="d-flex flex-row align-items-center ">
                                 <i class="fa-solid fa-calendar-days"></i>
