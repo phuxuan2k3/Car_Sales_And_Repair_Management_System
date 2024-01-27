@@ -11,7 +11,7 @@
 <div class="container-fluid">
     {{> Nav/adminNav}}
     <div class="row">
-        <div class="col-2 col-md-3 tabs">
+        <div class="col-12 col-md-3 col-sm-2 gy-2 tabs">
             <div class="nav flex-column nav-pills h-100" id="v-pills-tab"
                 role="tablist"
                 aria-orientation="vertical">
@@ -23,42 +23,47 @@
                             role="tab" aria-controls="v-pills-all"
                             aria-selected="true" data-permission><i
                                 class="fa-solid fa-list"></i><span
-                                class="d-none d-md-inline">All</span></button>
+                                class="d-inline d-sm-none d-md-inline">All</span></button>
                         <button class="w-100 text-start nav-link mb-1"
                             id="v-pills-customer-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-customer" type="button"
                             role="tab" aria-controls="v-pills-customer"
                             aria-selected="false" data-permission="cus"><i
-                                class="fa-solid fa-user"></i><span
-                                class="d-none d-md-inline">Customer</span></button>
+                                class="fa-regular fa-user"></i><span
+                                class="d-inline d-sm-none d-md-inline">Customer</span></button>
                         <button class="w-100 text-start nav-link mb-1"
                             id="v-pills-mechanic-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-mechanic" type="button"
                             role="tab" aria-controls="v-pills-mechanic"
                             aria-selected="false" data-permission="mec"><i
                                 class="fa-solid fa-gears"></i><span
-                                class="d-none d-md-inline">Mechanic</span></button>
+                                class="d-inline d-sm-none d-md-inline">Mechanic</span></button>
                         <button class="w-100 text-start nav-link mb-1"
                             id="v-pills-storage-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-storage" type="button"
                             role="tab" aria-controls="v-pills-storage"
                             aria-selected="false" data-permission="sm"><i
                                 class="fa-solid fa-warehouse"></i><span
-                                class="d-none d-md-inline">Storage
-                                Manager</span></button>
+                                class="d-inline d-sm-none d-md-inline">Storage</span></button>
                         <button class="w-100 text-start nav-link mb-1"
                             id="v-pills-sale-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-sale" type="button"
                             role="tab" aria-controls="v-pills-sale"
                             aria-selected="false" data-permission="sa"><i
                                 class="fa-solid fa-money-bill-trend-up"></i><span
-                                class="d-none d-md-inline">Sale
-                                Manager</span></button>
+                                class="d-inline d-sm-none d-md-inline">Sale</span></button>
+                        <button class="w-100 text-start nav-link mb-1"
+                            id="v-pills-admin-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-admin" type="button"
+                            role="tab" aria-controls="v-pills-admin"
+                            aria-selected="false" data-permission="ad"><i
+                                class="fa-solid fa-user-tie"></i><span
+                                class="d-inline d-sm-none d-md-inline">Admin</span></button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-10 col-md-9">
+        <div class="col-12 col-md-9 col-sm-10 gy-2">
             <div class="card-body p-4 bg-white rounded-2"
                 style="height:100%; min-height:100%;">
                 <div class="container w-100"
@@ -68,7 +73,7 @@
                         {{!-- Header --}}
                         <div class="row mt-2 mb-4">
                             <div
-                                class="col-3 col-md-6 tab-content d-flex align-items-center"
+                                class="col-auto col-sm-3 col-md-4 tab-content d-flex align-items-center"
                                 id="v-pills-tabContent">
                                 <div class="tab-pane fade active show"
                                     id="v-pills-all" role="tabpanel"
@@ -100,10 +105,16 @@
                                     tabindex="0">
                                     <h1>Sale Manager</h1>
                                 </div>
+                                <div class="tab-pane fade" id="v-pills-admin"
+                                    role="tabpanel"
+                                    aria-labelledby="v-pills-all-tab d-flex flex-row"
+                                    tabindex="0">
+                                    <h1>Admin</h1>
+                                </div>
                             </div>
                             <div
-                                class="col-6 col-md-4 d-flex align-items-center">
-                                <div class="searchForm me-auto w-100 mx-3">
+                                class="col-12 col-sm-6 col-md-5 d-flex align-items-end order-3 order-sm-2 ms-0 gy-2">
+                                <div class="searchForm me-auto w-100">
                                     <i class="fa fa-search"
                                         aria-hidden="true"></i>
                                     <input id="searchInput"
@@ -114,37 +125,41 @@
                                 </div>
                             </div>
                             <div
-                                class="col-3 col-md-2 d-flex align-items-center">
+                                class="col-auto ms-auto col-sm-3 col-md-3 d-flex align-items-end order-2 order-sm-3">
                                 <button onclick="toggleContent('form')"
                                     class="btn ms-auto inlinePrimary"><i
-                                        class="fa-solid fa-plus"></i> Add
-                                    New</button>
+                                        class="fa-solid fa-plus"></i> <span
+                                        class="d-md-inline d-none">Add
+                                        New</span></button>
                             </div>
                         </div>
 
                         {{!-- Table --}}
-                        <table id="contentTable" class="table table-hover mb-2">
-                            <thead class="table-primary"
-                                style="border-bottom: 2px solid black">
-                                <tr>
-                                    <th>First name</th>
-                                    <th>Last name</th>
-                                    <th>Username</th>
-                                    <th>Permission</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="userContent">
-                            </tbody>
-                        </table>
+                        <div style="overflow-x: scroll;">
+                            <table id="contentTable"
+                                class="table table-hover table-striped my-2">
+                                <thead>
+                                    <tr>
+                                        <th>First name</th>
+                                        <th>Last name</th>
+                                        <th>Username</th>
+                                        <th>Permission</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="userContent">
+                                </tbody>
+                            </table>
+                        </div>
 
                         {{!-- Pagination Container --}}
-                        <div class="row my-4 align-items-center px-3 gy-2">
+                        <div class="row my-5 align-items-center px-3 gy-2">
                             {{!-- PerPage --}}
                             <div class="col-auto row align-items-center">
-                                <div class="col-auto me-2">
+                                <div class="col-auto me-1">
                                     <label for="perPageInput"
-                                        class="col-form-label">Per Page</label>
+                                        class="col-form-label fw-semibold">Per
+                                        Page</label>
                                 </div>
                                 <div class="col-auto">
                                     <input type="number" id="perPageInput"
@@ -161,8 +176,9 @@
                             {{!-- Pagination --}}
                             <div class="col-auto ms-md-auto">
                                 <ul id="paginationContainer"
-                                    class="pagination">
-                                    <li class="page-item" onclick="decrPage()">
+                                    class="pagination flex-wrap">
+                                    <li class="page-item"
+                                        onclick="decrPage()">
                                         <a class="page-link" href="#/"
                                             aria-label="Previous">
                                             <span
@@ -188,7 +204,7 @@
                         <form method="post" class="m-4 form mt-3"
                             id="detailForm">
                             <div class="row col-12 mb-3">
-                                <div class="row col-8 pe-3">
+                                <div class="row col-12 col-sm-8 pe-3">
                                     <div class="mb-2">
                                         <label for="Username"
                                             class="form-label">Username</label>
@@ -207,10 +223,11 @@
                                             placeholder="Password" />
                                     </div>
                                 </div>
-                                <div class="row col-4 mx-md-2 mx-2 my-0 gy-1">
+                                <div
+                                    class="row col-12 col-sm-4 row-cols-auto row-cols-md-1 mx-sm-2 gy-1">
                                     <p
-                                        class="col-12 my-0 ms-2">Permission</label>
-                                    <div class="col col-md-6 my-0 form-check">
+                                        class="col-12 mb-2">Permission</label>
+                                    <div class="form-check ms-2">
                                         <input class="form-check-input"
                                             type="radio" name="permission"
                                             value="cus"
@@ -220,7 +237,7 @@
                                             Customer
                                         </label>
                                     </div>
-                                    <div class="col col-md-6 my-0 form-check">
+                                    <div class="form-check ms-2">
                                         <input class="form-check-input"
                                             type="radio" name="permission"
                                             value="mec"
@@ -230,7 +247,7 @@
                                             Mechanic
                                         </label>
                                     </div>
-                                    <div class="col col-md-6 my-0 form-check">
+                                    <div class="form-check ms-2">
                                         <input class="form-check-input"
                                             type="radio" name="permission"
                                             value="sm"
@@ -240,7 +257,7 @@
                                             Storage
                                         </label>
                                     </div>
-                                    <div class="col col-md-6 my-0 form-check">
+                                    <div class="form-check ms-2">
                                         <input class="form-check-input"
                                             type="radio" name="permission"
                                             value="sa"
@@ -252,8 +269,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row col-12 mb-2 gy-2">
-                                <div class="col-6">
+                            <div class="row col-12 mb-4 gy-2">
+                                <div class="col-12 col-md-6">
                                     <label for="Firstname"
                                         class="form-label">First Name</label>
                                     <input name="firstname" type="text"
@@ -261,14 +278,14 @@
                                         id="Firstname"
                                         placeholder="First name">
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12 col-md-6">
                                     <label for="Lastname"
                                         class="form-label">Last Name</label>
                                     <input name="lastname" type="text"
                                         class="form-control w-100" id="Lastname"
                                         placeholder="Last name">
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12 col-md-6">
                                     <label for="Phonenumber"
                                         class="form-label">Phone Number</label>
                                     <input name="phonenumber" type="text"
@@ -276,7 +293,7 @@
                                         id="Phonenumber"
                                         placeholder="Phone number">
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12 col-md-6">
                                     <label for="Dob" class="form-label">Date of
                                         Birth</label>
                                     <input name="dob" type="date"
@@ -295,11 +312,11 @@
                                 <div class="col-6">
                                     <button type="button"
                                         onclick="toggleContent('table')"
-                                        class="btn btn-outline-primary rounded-5 w-100">Cancel</button>
+                                        class="btn outlinePrimary rounded-5 w-100">Cancel</button>
                                 </div>
                                 <div class="col-6">
                                     <button type="button" onclick="formSubmit()"
-                                        class="btn btn-primary rounded-5 w-100">Confirm</button>
+                                        class="btn inlinePrimary rounded-5 w-100">Confirm</button>
                                 </div>
                             </div>
                         </form>

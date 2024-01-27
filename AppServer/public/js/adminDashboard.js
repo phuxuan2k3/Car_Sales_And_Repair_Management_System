@@ -124,17 +124,17 @@ const loadPagination = async () => {
     // item types
     const tripleDotsItem =
         `<li class="page-item">
-            <span class="page-link"
+            <a class="page-link no-select"
                 style="user-select: none;">
                 ...
-            </span>
+            </a>
         </li>`;
     const currentPageItem = (i) =>
         `<li class="page-item active">
-            <span class="page-link"
+            <a class="page-link no-select"
                 style = "user-select: none;" >
                 ${i}
-            </span>
+            </a>
         </li>`;
     const normalPageItem = (i) =>
         `<li class="page-item" onclick="setPage(${i})">

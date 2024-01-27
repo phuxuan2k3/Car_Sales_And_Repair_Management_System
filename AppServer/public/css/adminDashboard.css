@@ -56,3 +56,67 @@
         opacity: 1;
     }
 }
+
+/* Table */
+
+#contentTable {
+    overflow-x: scroll;
+}
+
+#contentTable>thead>tr>th {
+    background-color: var(--primaryColor);
+    color: var(--secondaryColor);
+    border-bottom: 2px solid black
+}
+
+/* cho no theo thu tu de khoi phai them 'and' */
+@media only screen and (max-width: 768px) {
+    #contentTable {
+        font-size: 0.9rem;
+    }
+
+    #contentTable button {
+        font-size: 0.9rem;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    #contentTable {
+        font-size: 0.8rem;
+    }
+
+    #contentTable button {
+        font-size: 0.8rem;
+    }
+}
+
+
+/* Pagination */
+
+.page-item {
+    border-width: 0px;
+    margin: 1px;
+}
+
+.page-item>.page-link {
+    background-color: transparent;
+    border-color: var(--primaryColor);
+    border-width: 1px;
+    color: var(--primaryColor);
+    margin: 1px;
+}
+
+.page-item.active>.page-link {
+    background-color: var(--primaryColor) !important;
+    border-color: var(--primaryColor) !important;
+    color: var(--secondaryColor) !important;
+}
+
+
+.page-item>.no-select.page-link:hover {
+    background-color: transparent;
+}
+
+.page-item>.page-link:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}

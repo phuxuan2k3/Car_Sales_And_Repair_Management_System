@@ -157,6 +157,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"nodemon AppServer/app.js\" \"nodemon PaymentServer/paymentServer.js\"",
+    "app": "nodemon AppServer/app.js",
     "testdb": "node models/user.js"
   },
   "keywords": [],
