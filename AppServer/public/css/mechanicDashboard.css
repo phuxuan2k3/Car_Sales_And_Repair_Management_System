@@ -9,6 +9,7 @@
     align-items: center;
     z-index: 1000;
 }
+
 .tabs .active {
     background-color: var(--primaryColor) !important;
 }
@@ -17,15 +18,16 @@
     color: gray;
 }
 
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     #v-pills-tab {
         height: auto !important;
     }
-    #recordHeader {
+
+    /* #recordHeader {
         flex-direction: column !important;
         justify-content: center !important;
     }
     #recordHeader .searchForm {
         width: 100% !important;
-    }
- }
+    } */
+}

@@ -1,3 +1,5 @@
+/* Permission */
+
 .carInfoCard:hover {
     background-color: lightgray;
 }
@@ -17,6 +19,8 @@
 #v-pills-tabContent h1 {
     color: var(--dangerColor);
 }
+
+/* Content container */
 
 #tableContainer,
 #formContainer {

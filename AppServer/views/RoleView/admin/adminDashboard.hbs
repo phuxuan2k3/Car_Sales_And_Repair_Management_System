@@ -69,7 +69,7 @@
                 <div class="container w-100"
                     style="overflow: hidden;position: relative;min-height:100%; height:auto;">
                     {{!-- List content --}}
-                    <div class="container" id="tableContainer">
+                    <div class="container w-100" id="tableContainer">
                         {{!-- Header --}}
                         <div class="row mt-2 mb-4">
                             <div
@@ -199,7 +199,7 @@
                     </div>
 
                     {{!-- Detail content --}}
-                    <div class="slideRight" id="formContainer">
+                    <div class="slideRight w-100" id="formContainer">
                         <h3 class="mt-2" id="formHeader"></h3>
                         <form method="post" class="m-4 form mt-3"
                             id="detailForm">
@@ -359,9 +359,9 @@
 </div>
 
 {{!-- Toast --}}
-{{!--
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="liveToast" class="toast" role="alert" aria-live="assertive"
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="adminNotification" class="toast" role="alert" aria-live="assertive"
         data-bs-autohide="true" data-bs-delay="2000"
         aria-atomic="true">
         <div class="toast-header">
@@ -372,4 +372,4 @@
         <div class="toast-body">
         </div>
     </div>
-</div> --}}
+</div>

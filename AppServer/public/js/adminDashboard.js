@@ -299,7 +299,6 @@ async function formSubmit() {
     if (storage.currentUserId == null) {
         let username = $('#Username').val();
         const check = await fetchPost('/check-username', { username });
-        console.log(check);
         if (check == true) {
             displayToastResult(false, 'Username already exists');
             return;
@@ -358,18 +357,18 @@ function cudResultDisplay(result) {
     }
 }
 function displayToastResult(success, message) {
-    // $('.toast-body').text(message);
-    // if (success) {
-    //     $('.toast-header').addClass('inlinePrimary').removeClass('inlineDanger').find('p').text('Success');
-    // } else {
-    //     $('.toast-header').addClass('inlineDanger').removeClass('inlinePrimary').find('p').text('Warning');
-    // }
-    // $('.toast-body').text(message);
-    // let toast = document.querySelector('.toast');
-    // if (toast) {
-    //     let myToast = new bootstrap.Toast(toast);
-    //     myToast.show();
-    // }
+    $('#adminNotification>.toast-body').text(message);
+    if (success) {
+        $('#adminNotification>.toast-header').addClass('inlineSuccess').removeClass('inlineDanger').find('p').text('Success');
+    } else {
+        $('#adminNotification>.toast-header').addClass('inlineDanger').removeClass('inlineSuccess').find('p').text('Error');
+    }
+    $('#adminNotification>.toast-body').text(message);
+    let toast = document.querySelector('#adminNotification');
+    if (toast) {
+        let myToast = new bootstrap.Toast(toast, {});
+        myToast.show();
+    }
 }
 const permissionMapper = {
     cus: 'Customer',
