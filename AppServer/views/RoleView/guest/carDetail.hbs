@@ -97,37 +97,45 @@
         </div>
     </div>
     <div class="row  bg-white p-3">
-        <h2 class="textPrimary">Lien quan</h2>
+        <h2 class="textPrimary">Related products</h2>
         <div id="carouselExample" class="carousel carousel-dark slide">
-            
+
             <div class="carousel-inner">
-                <div class="carousel-item active">
+
+                {{#each relatedCars}}
+                <div class="carousel-item {{#if @first}}active{{/if}}">
                     <div class="row justify-content-center align-items-center g-2">
-                        <div class="col text-center">Column</div>
-                        <div class="col text-center">Column</div>
-                        <div class="col text-center">Column</div>
+                        {{#each this}}
+                        <div class="col-md-3   carInfo mb-3">
+                            <div class="card ms-auto me-auto mb-3 w-100 h-100 carInfoCard d-flex flex-column" onclick="relatedCarClick({{this.id}})">
+                                <div class="info" index="${car.id}">
+                                    <div class="card-body" style="height:10rem">
+                                        <p class="card-text fw-bold fs-5 textPrimary mb-0">{{this.car_name}}</p>
+                                        <p class="fw-bold fs-8  text-opacity-25 textPrimary opacity4">{{this.type}}</p>
+                                    </div>
+                                    <img src="/images/cars/{{this.id}}/avatar.png" class="w-100" style="height: 12rem;"
+                                        alt="${car.car_name}.png">
+                                    <div class="card-body d-flex flex-row justify-content-between opacity4 textPrimary">
+                                        <div class="d-flex flex-row align-items-center ">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                            <p class="m-0 ms-1">{{this.year}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <div class="row justify-content-center align-items-center g-2">
-                        <div class="col text-center">Column</div>
-                        <div class="col text-center">Column</div>
-                        <div class="col text-center">Column</div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row justify-content-center align-items-center g-2">
-                        <div class="col text-center">Column</div>
-                        <div class="col text-center">Column</div>
-                        <div class="col text-center">Column</div>
-                    </div>
-                </div>
+                {{/each}}
             </div>
-            <button class="carousel-control-prev textPrimary" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <button class="carousel-control-prev textPrimary" type="button" data-bs-target="#carouselExample"
+                data-bs-slide="prev">
                 <span class="carousel-control-prev-icon textPrimary" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next textPrimary" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <button class="carousel-control-next textPrimary" type="button" data-bs-target="#carouselExample"
+                data-bs-slide="next">
                 <span class="carousel-control-next-icon textPrimary" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>

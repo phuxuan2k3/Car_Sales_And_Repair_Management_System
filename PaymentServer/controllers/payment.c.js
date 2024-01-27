@@ -37,11 +37,15 @@ module.exports = {
         }
     }),
     createTransaction: tryCatch(async (req, res) => {
+        let backUpData_from = null;
+        let backupData_to = null;
         try {
             var decoded = jwt.verify(req.body.token, process.env.SECRET_KEY);
             const { from, to, amount, content } = decoded;
             const fromUser = await PaymentAccount.GetAccountById(from);
+            backUpData_from = {id: fromUser.id, balance: fromUser.balance};
             const toUser = await PaymentAccount.GetAccountById(to);
+            backupData_to = {id: toUser.id, balance: toUser.balance};
             if (!fromUser || !toUser) {
                 return res.status(400).send('Users must exist for a transaction');
             }
@@ -65,6 +69,8 @@ module.exports = {
             const rsToken = jwt.sign('success', process.env.VERIFY_KEY);
             return res.json(rsToken);
         } catch (error) {
+            if(backUpData_from) await PaymentAccount.UpdateBalance(backUpData_from.id, backUpData_from.balance);
+            if(backupData_to) await PaymentAccount.UpdateBalance(backupData_to.id, backupData_to.balance);
             return res.status(500).send("An error occurred while creating an transaction");
         }
     }),

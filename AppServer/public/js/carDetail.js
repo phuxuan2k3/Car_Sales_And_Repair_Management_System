@@ -65,7 +65,9 @@ const confirmAddEvent = async (carId,cartQuantity,ev) => {
     submitButton.attr('disabled',true);
 }
 
-
+const relatedCarClick = async (id) => {
+    window.location.assign(`/cardetail?id=${id}`)
+}
 
 const setAddToCartEvent = async (userId, carId) => {
     overlay.toggleClass('d-none');
