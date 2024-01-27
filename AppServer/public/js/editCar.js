@@ -40,7 +40,7 @@ async function getImgs() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const result = await response.json();
-        var dataSource = result.map(item => `https://localhost:3000/images/cars/${id}/other/` + item);;
+        var dataSource = result.map(item => `/images/cars/${id}/other/` + item);;
         console.log(dataSource);
         let config = dataSource.map((url, index) => ({
             downloadUrl: url,

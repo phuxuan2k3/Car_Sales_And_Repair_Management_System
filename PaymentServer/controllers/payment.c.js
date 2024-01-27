@@ -6,7 +6,7 @@ require('dotenv').config();
 
 module.exports = {
 
-    deposit: tryCatch(async (req,res) => {
+    deposit: tryCatch(async (req, res) => {
         try {
             var decoded = jwt.verify(req.body.token, process.env.SECRET_KEY);
             const { id, money } = decoded;
@@ -21,14 +21,15 @@ module.exports = {
     }),
 
     createNewAccount: tryCatch(async (req, res) => {
+        console.log('go to here');
         try {
-            const {token} = req.body;
-            const entity = jwt.verify(token,process.env.SECRET_KEY);
+            const { token } = req.body;
+            const entity = jwt.verify(token, process.env.SECRET_KEY);
             delete entity.iat;
             const check = await PaymentAccount.GetAccountById(entity.id);
             if (check == null) {
                 await PaymentAccount.AddNewAccount(entity);
-                return res.json(jwt.sign('success',process.env.VERIFY_KEY));
+                return res.json(jwt.sign('success', process.env.VERIFY_KEY));
             } else {
                 return res.status(400).send("Account already exists");
             }
@@ -43,9 +44,9 @@ module.exports = {
             var decoded = jwt.verify(req.body.token, process.env.SECRET_KEY);
             const { from, to, amount, content } = decoded;
             const fromUser = await PaymentAccount.GetAccountById(from);
-            backUpData_from = {id: fromUser.id, balance: fromUser.balance};
+            backUpData_from = { id: fromUser.id, balance: fromUser.balance };
             const toUser = await PaymentAccount.GetAccountById(to);
-            backupData_to = {id: toUser.id, balance: toUser.balance};
+            backupData_to = { id: toUser.id, balance: toUser.balance };
             if (!fromUser || !toUser) {
                 return res.status(400).send('Users must exist for a transaction');
             }
@@ -69,8 +70,8 @@ module.exports = {
             const rsToken = jwt.sign('success', process.env.VERIFY_KEY);
             return res.json(rsToken);
         } catch (error) {
-            if(backUpData_from) await PaymentAccount.UpdateBalance(backUpData_from.id, backUpData_from.balance);
-            if(backupData_to) await PaymentAccount.UpdateBalance(backupData_to.id, backupData_to.balance);
+            if (backUpData_from) await PaymentAccount.UpdateBalance(backUpData_from.id, backUpData_from.balance);
+            if (backupData_to) await PaymentAccount.UpdateBalance(backupData_to.id, backupData_to.balance);
             return res.status(500).send("An error occurred while creating an transaction");
         }
     }),
@@ -89,7 +90,7 @@ module.exports = {
             return res.status(500).send("An error occurred while getting the account");
         }
     }),
-    getPaymentHistory: tryCatch(async (req,res) => {
+    getPaymentHistory: tryCatch(async (req, res) => {
         try {
             var decoded = jwt.verify(req.body.token, process.env.SECRET_KEY);
             const id = decoded.id;

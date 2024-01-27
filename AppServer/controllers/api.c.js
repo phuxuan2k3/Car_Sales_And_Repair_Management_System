@@ -15,6 +15,8 @@ const CarType = require('../models/carType');
 const CarBrand = require('../models/carBrand');
 const bcrypt = require('bcrypt');
 const { SaleRecord } = require('../models/invoices/salerecord');
+const https = require('https');
+const fetch = require('node-fetch');
 
 module.exports = {
     //For store
@@ -297,7 +299,10 @@ module.exports = {
                 "Content-Type": "application/json",
             },
             redirect: "follow",
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            agent: new https.Agent({
+                rejectUnauthorized: false,
+            })
         });
         if (rs.ok) {
             const rsToken = await rs.json();
@@ -318,7 +323,10 @@ module.exports = {
                 "Content-Type": "application/json",
             },
             redirect: "follow",
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            agent: new https.Agent({
+                rejectUnauthorized: false,
+            })
         });
         if (rs.ok) {
             const rsToken = await rs.json();
@@ -341,7 +349,10 @@ module.exports = {
                 "Content-Type": "application/json",
             },
             redirect: "follow",
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            agent: new https.Agent({
+                rejectUnauthorized: false,
+            })
         });
         if (rs.ok) {
             const rsToken = await rs.json();
@@ -364,7 +375,10 @@ module.exports = {
                     "Content-Type": "application/json",
                 },
                 redirect: "follow",
-                body: JSON.stringify(data)
+                body: JSON.stringify(data),
+                agent: new https.Agent({
+                    rejectUnauthorized: false,
+                })
             });
             if (rs.ok) {
                 const rsToken = await rs.json();
@@ -398,7 +412,7 @@ module.exports = {
     }),
     insertUser: tryCatch(async (req, res) => {
         const userData = req.body;
-        const hash = bcrypt.hashSync(newUser.password, parseInt(ENV.SALTROUNDS));
+        const hash = bcrypt.hashSync(userData.password, parseInt(ENV.SALTROUNDS));
         userData.password = hash;
         const result = await User.insertFromAdmin(userData);
         return res.json(result);

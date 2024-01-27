@@ -20,7 +20,7 @@ const formatData = (per_line, data) => {
     for (let j = 0; j < totalLine; j++) {
         const line = [];
         for (let i = 0; i < per_line; i++) {
-            if(data[j * per_line + i])  line.push(data[j * per_line + i]);
+            if (data[j * per_line + i]) line.push(data[j * per_line + i]);
         }
         rs.push(line);
     }
@@ -39,16 +39,16 @@ module.exports = {
     getCarDetail: tryCatch(async (req, res) => {
         const id = req.query.id;
         const carData = await Car.getCarById(id);
-        const relatedCars = formatData( 3,(await Car.getCarByStyle(carData.type)).filter(car => car.id != carData.id));
+        const relatedCars = formatData(3, (await Car.getCarByStyle(carData.type)).filter(car => car.id != carData.id));
         let dir = path.dirname(path.dirname(__dirname));
         let cartData = await Cart.getCarInCart(req.user.id, id);
         const images = await fs.readdirSync(path.join(dir, `public/images/cars/${id}/other`));
         cartData = cartData.length <= 0 ? null : cartData[0];
         let cartQuantity = cartData == null ? null : cartData.quantity;
-        res.render('RoleView/guest/carDetail', { relatedCars: relatedCars,images: images, cartQuantity: cartQuantity, userId: req.user.id, cartData: cartData, nameOfUser: req.session.passport.user.nameOfUser, data: carData, title: carData.car_name, store: true, jsFile: 'carDetail.js', cssFile: 'carDetail.css' })
+        res.render('RoleView/guest/carDetail', { relatedCars: relatedCars, images: images, cartQuantity: cartQuantity, userId: req.user.id, cartData: cartData, nameOfUser: req.session.passport.user.nameOfUser, data: carData, title: carData.car_name, store: true, jsFile: 'carDetail.js', cssFile: 'carDetail.css' })
     }),
     getRepairService: tryCatch(async (req, res) => {
-        res.render('RoleView/guest/repairService', { adminId: 440, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Repair service", cssFile: "repairService.css", repair: true, jsFile: "repairService.js" });
+        res.render('RoleView/guest/repairService', { adminId: 479, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Repair service", cssFile: "repairService.css", repair: true, jsFile: "repairService.js" });
     }),
     getRepairDetail: tryCatch(async (req, res) => {
         const id = req.query.id;
@@ -68,7 +68,7 @@ module.exports = {
             const car = await Car.getCarById(cartItem.car_ID);
             cartItem.car = car;
         }
-        res.render('RoleView/guest/cartView', { saleData: saleData, adminId: 440, cartData: cartData, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Cart", cssFile: "cartView.css", jsFile: "cartView.js" });
+        res.render('RoleView/guest/cartView', { saleData: saleData, adminId: 479, cartData: cartData, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Cart", cssFile: "cartView.css", jsFile: "cartView.js" });
     }),
     getRecordDetail: tryCatch(async (req, res) => {
         const id = req.query.id;
@@ -78,10 +78,10 @@ module.exports = {
             const car = await Car.getCarById(e.car_id);
             e.car = car;
         }
-        res.render('RoleView/guest/saleRecordDetail', { jsFile: 'cartDetail.js', order: order, saleData: saleData, adminId: 440, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Detail sale order" });
+        res.render('RoleView/guest/saleRecordDetail', { jsFile: 'cartDetail.js', order: order, saleData: saleData, adminId: 479, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Detail sale order" });
     }),
     getDepositPage: tryCatch(async (req, res) => {
-        res.render('RoleView/guest/deposit', { adminId: 440, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Deposit" });
+        res.render('RoleView/guest/deposit', { adminId: 479, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Deposit" });
     })
 
 }

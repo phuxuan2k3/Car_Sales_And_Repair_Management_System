@@ -71,8 +71,22 @@ module.exports = class User {
     }
     // return {id}
     static async insertFromAdmin(entity) {
-        const res = await InsertQuery.init(tableName).default(entity, ['id']).execute();
-        return res;
+       // const res2 = await InsertQuery.init(tableName).default(entity, ['id']).execute();
+       // return res;
+
+        if (!entity.permission) {
+            entity.permission = 'cus';
+        }
+        try {
+            const res = await dbExecute.insert(entity, tableName);
+            if (entity.permission == 'cus') {
+                await createPaymentAccount(res.id);
+            }
+            return res;
+        } catch (error) {
+            throw error;
+        }
+
     }
     // return rows affected
     static async updateFromAdmin(entity) {

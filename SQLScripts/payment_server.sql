@@ -102,8 +102,9 @@ ALTER TABLE ONLY public.transaction ALTER COLUMN id SET DEFAULT nextval('public.
 --
 
 COPY public.account (id, balance) FROM stdin;
-220	898800
-440	1300
+479	5000
+480	405000
+485	5000
 \.
 
 
@@ -112,10 +113,6 @@ COPY public.account (id, balance) FROM stdin;
 --
 
 COPY public.transaction (id, from_id, to_id, content, date, amount) FROM stdin;
-5	220	440	thanh toan don muon	2024-01-20 00:44:59.569+07	100
-6	220	440	thanh toan don muon	2024-01-20 00:48:45.701+07	100
-7	220	440	thanh toan don muon	2024-01-20 00:48:47.128+07	100
-8	220	440	end	2024-01-20 01:02:01.898+07	100
 \.
 
 
@@ -123,7 +120,7 @@ COPY public.transaction (id, from_id, to_id, content, date, amount) FROM stdin;
 -- Name: transaction_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.transaction_id_seq', 8, true);
+SELECT pg_catalog.setval('public.transaction_id_seq', 15, true);
 
 
 --

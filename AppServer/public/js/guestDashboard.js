@@ -28,7 +28,7 @@ const updateData = async () => {
     updatePageInfo();
 }
 
-const menuClickEvent = async(carBrand,carType) => {
+const menuClickEvent = async (carBrand, carType) => {
     console.log(`${brand} ${type}`);
     brand = carBrand != null ? `${carBrand}` : 'All';
     type = carType != null ? `${carType}` : 'All';
@@ -85,7 +85,7 @@ const backEvent = async () => {
     popupWindow.toggleClass('d-none');
 }
 
-const confirmAddEvent = async (carId, cartQuantity,event) => {
+const confirmAddEvent = async (carId, cartQuantity, event) => {
     event.preventDefault();
     let popupContent = $('#popupContent');
     let quantityInput = $('#quantityInput');
@@ -103,7 +103,7 @@ const confirmAddEvent = async (carId, cartQuantity,event) => {
             "quantity": cartQuantity != null ? quantity + cartQuantity : quantity
         }
         const url = cartQuantity == null ? `/api/cart/add` : `/api/cart/update_quantity`
-        const rs = await fetchPos(entity,url);
+        const rs = await fetchPos(entity, url);
         if (!rs.ok) {
             popupContent.append(`
             <div id="falseTransaction" class="  d-flex flex-column justify-content-center align-items-center">
@@ -209,7 +209,7 @@ const generateCarInfo = async () => {
     }
     $('.info').each((index, ele) => {
         $(ele).click((e) => {
-            window.location.assign(`http://localhost:3000/cardetail?id=${$(ele).attr('index')}`)
+            window.location.assign(`/cardetail?id=${$(ele).attr('index')}`)
         })
     })
 }
