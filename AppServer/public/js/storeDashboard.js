@@ -15,14 +15,14 @@ let allItems;
 async function getData() {
     try {
         let url = '/api/store/items';
-        let response = await fetch(url);
+        let response = await xuanFetchGet(url);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         allItems = await response.json();
         allItems.car.forEach(e => {
             carName.push(e.car_name);
-            carQuantity.push(e.quantity)
+            carQuantity.push(e.quantity);
             noCar += e.quantity;
         });
         allItems.ap.forEach(e => {
@@ -32,7 +32,7 @@ async function getData() {
         });
 
         url = '/api/car/most_car';
-        response = await fetch(url);
+        response = await xuanFetchGet(url);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -47,7 +47,7 @@ async function getData() {
 
 
         url = '/api/ap/most_ap';
-        response = await fetch(url);
+        response = await xuanFetchGet(url);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -277,12 +277,12 @@ function displayMode(mode) {
     }
 }
 
-$('#dashboard').on('click',() => {
+$('#dashboard').on('click', () => {
     window.location.href = '/dashboard';
 })
-$('#car').on('click',() => {
+$('#car').on('click', () => {
     window.location.href = '/car';
 })
-$('#ap').on('click',() => {
+$('#ap').on('click', () => {
     window.location.href = '/ap';
 })

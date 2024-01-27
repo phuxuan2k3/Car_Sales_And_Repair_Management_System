@@ -1,8 +1,12 @@
 :root {
     --primaryColor: #0B488E;
     --secondaryColor: #fff;
-    --warningColor: #c7a21e;
+    --warningColor: #c5930a;
     --dangerColor: #c71e32;
+    --successColor: #005b08;
+    /* darker */
+    --darkerPrimaryColor: #0c386b;
+    --darkerWarningColor: #a37a0a;
 }
 
 .textPrimary {
@@ -39,6 +43,14 @@ pre {
 
 .bgDanger {
     background-color: var(--dangerColor) !important;
+}
+
+.textSuccess {
+    color: var(--successColor) !important;
+}
+
+.bgSuccess {
+    background-color: var(--successColor) !important;
 }
 
 .inlinePrimary,
@@ -78,4 +90,17 @@ pre {
     background-color: transparent !important;
     color: var(--dangerColor) !important;
     border-color: var(--dangerColor) !important;
+}
+
+.inlineSuccess,
+.outlineSuccess:hover {
+    color: var(--secondaryColor) !important;
+    background-color: var(--successColor) !important;
+}
+
+.outlineSuccess,
+.inlineSuccess:hover {
+    background-color: transparent !important;
+    color: var(--successColor) !important;
+    border-color: var(--successColor) !important;
 }

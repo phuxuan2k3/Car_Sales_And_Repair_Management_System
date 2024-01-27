@@ -1,30 +1,4 @@
-const url = 'http://127.0.0.1:3000/api/admin';
-
-async function fetchGet(dest, paramObj) {
-    const fetchUrl = `${url}${dest}?${(new URLSearchParams(paramObj)).toString()}`;
-    const raw = await fetch(fetchUrl, {
-        method: 'GET',
-        headers: {
-            "Authorization": "Bearer " + getCookie("auth"),
-        }
-    });
-    const data = await raw.json();
-    return data;
-}
-async function fetchPost(dest, bodyObj) {
-    const fetchUrl = `${url}${dest}`;
-    const raw = await fetch(fetchUrl, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + getCookie("auth"),
-        },
-        body: JSON.stringify(bodyObj),
-    });
-    const data = await raw.json();
-    return data;
-}
+const baseUrl = '/api/admin';
 
 // data
 // storage
@@ -76,14 +50,14 @@ const loadUserContent = async () => {
         perPage: perPage(),
         page: storage.page,
     };
-    const totalUsers = await fetchGet('/count-custom', { username: custom.username, permission: custom.permission });
+    const totalUsers = await anFetchGet(baseUrl, '/count-custom', { username: custom.username, permission: custom.permission });
     storage.totalPage = Math.ceil((parseInt(totalUsers) || 0) / custom.perPage);
     if (storage.page > storage.totalPage) {
         storage.page = storage.totalPage;
         custom.page = storage.page;
     }
     await loadPagination();
-    const users = await fetchGet('/custom', custom);
+    const users = await anFetchGet(baseUrl, '/custom', custom);
     for (const user of users) {
         userContent().append(
             /*html*/
@@ -124,17 +98,17 @@ const loadPagination = async () => {
     // item types
     const tripleDotsItem =
         `<li class="page-item">
-            <span class="page-link"
+            <a class="page-link no-select"
                 style="user-select: none;">
                 ...
-            </span>
+            </a>
         </li>`;
     const currentPageItem = (i) =>
         `<li class="page-item active">
-            <span class="page-link"
+            <a class="page-link no-select"
                 style = "user-select: none;" >
                 ${i}
-            </span>
+            </a>
         </li>`;
     const normalPageItem = (i) =>
         `<li class="page-item" onclick="setPage(${i})">
@@ -172,7 +146,7 @@ const loadForm = async () => {
             phonenumber,
             dob,
             address,
-            lastname } = await fetchGet('/single', { id: storage.currentUserId });
+            lastname } = await anFetchGet(baseUrl, '/single', { id: storage.currentUserId });
         $('#Username').val(username);
         $('#Password').val(password);
         $(`input[name=permission][value=${permission}]`).prop('checked', true)
@@ -298,14 +272,13 @@ async function formSubmit() {
     // insert
     if (storage.currentUserId == null) {
         let username = $('#Username').val();
-        const check = await fetchPost('/check-username', { username });
-        console.log(check);
+        const check = await anFetchPost(baseUrl, '/check-username', { username });
         if (check == true) {
             displayToastResult(false, 'Username already exists');
             return;
         }
         dest = '/insert';
-        const fres = await fetchPost(dest, bodyObj);
+        const fres = await anFetchPost(baseUrl, dest, bodyObj);
         if (fres != null) {
             res = true;
         }
@@ -314,7 +287,7 @@ async function formSubmit() {
     else {
         dest = '/update';
         bodyObj.id = storage.currentUserId;
-        const fres = await fetchPost(dest, bodyObj);
+        const fres = await anFetchPost(baseUrl, dest, bodyObj);
         if (parseInt(fres) != NaN || parseInt(fres) > 0) {
             res = true;
         }
@@ -323,7 +296,7 @@ async function formSubmit() {
     toggleContent('table');
 }
 async function modalDeleteAccept() {
-    const result = await fetchPost('/delete', { id: storage.currentUserId });
+    const result = await anFetchPost(baseUrl, '/delete', { id: storage.currentUserId });
     cudResultDisplay(result);
     toggleContent('table');
 }
@@ -358,18 +331,18 @@ function cudResultDisplay(result) {
     }
 }
 function displayToastResult(success, message) {
-    // $('.toast-body').text(message);
-    // if (success) {
-    //     $('.toast-header').addClass('inlinePrimary').removeClass('inlineDanger').find('p').text('Success');
-    // } else {
-    //     $('.toast-header').addClass('inlineDanger').removeClass('inlinePrimary').find('p').text('Warning');
-    // }
-    // $('.toast-body').text(message);
-    // let toast = document.querySelector('.toast');
-    // if (toast) {
-    //     let myToast = new bootstrap.Toast(toast);
-    //     myToast.show();
-    // }
+    $('#adminNotification>.toast-body').text(message);
+    if (success) {
+        $('#adminNotification>.toast-header').addClass('inlineSuccess').removeClass('inlineDanger').find('p').text('Success');
+    } else {
+        $('#adminNotification>.toast-header').addClass('inlineDanger').removeClass('inlineSuccess').find('p').text('Error');
+    }
+    $('#adminNotification>.toast-body').text(message);
+    let toast = document.querySelector('#adminNotification');
+    if (toast) {
+        let myToast = new bootstrap.Toast(toast, {});
+        myToast.show();
+    }
 }
 const permissionMapper = {
     cus: 'Customer',

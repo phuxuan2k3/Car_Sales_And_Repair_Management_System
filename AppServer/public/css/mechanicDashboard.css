@@ -9,23 +9,53 @@
     align-items: center;
     z-index: 1000;
 }
+
 .tabs .active {
-    background-color: var(--primaryColor) !important;
+    background-color: var(--warningColor) !important;
 }
 
 .tabs button {
     color: gray;
 }
 
-@media (max-width: 768px) { 
+.tabs .nav-link:hover:not(.active) {
+    color: var(--warningColor);
+}
+
+@media (max-width: 768px) {
     #v-pills-tab {
         height: auto !important;
     }
-    #recordHeader {
-        flex-direction: column !important;
-        justify-content: center !important;
-    }
-    #recordHeader .searchForm {
-        width: 100% !important;
-    }
- }
+}
+
+/* Radio */
+
+#radioDisplayOptions>div>label {
+    min-width: 100px;
+}
+
+.inlineWarningRadio {
+    color: var(--secondaryColor) !important;
+    background-color: var(--primaryColor) !important;
+    border-color: var(--primaryColor) !important;
+}
+
+#radioDisplayOptions>div>input[type=radio]:hover+.inlineWarningRadio {
+    background-color: transparent !important;
+    color: var(--primaryColor) !important;
+    border-color: var(--primaryColor) !important;
+
+}
+
+#radioDisplayOptions>div>input[type=radio]:checked+.inlineWarningRadio {
+    color: var(--secondaryColor) !important;
+    background-color: var(--darkerPrimaryColor) !important;
+    border-color: var(--darkerPrimaryColor) !important;
+}
+
+/* Table */
+#tbHeader>tr>th {
+    background-color: var(--darkerWarningColor);
+    color: var(--secondaryColor);
+    border-bottom: 2px solid black
+}
