@@ -6,25 +6,16 @@
     {{> Nav/mechanicNav}}
     <div class="row">
         <div class="col-12 col-md-3 tabs gy-2">
-            <div class="nav flex-column nav-pills h-100" id="v-pills-tab"
-                role="tablist"
-                aria-orientation="vertical">
+            <div class="nav flex-column nav-pills h-100" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <div class="card w-100 h-100 border border-0 ">
                     <div class="card-body">
-                        <button class="w-100 text-start nav-link active mb-1"
-                            id="v-pills-dashboard-tab"
-                            data-bs-toggle="pill"
-                            data-bs-target="#v-pills-dashboard" type="button"
-                            role="tab"
-                            aria-controls="v-pills-dashboard"
-                            aria-selected="true"><i
+                        <button class="w-100 text-start nav-link active mb-1" id="v-pills-dashboard-tab"
+                            data-bs-toggle="pill" data-bs-target="#v-pills-dashboard" type="button" role="tab"
+                            aria-controls="v-pills-dashboard" aria-selected="true"><i
                                 class="fa-solid fa-house me-2"></i><span>Dashboard</span></button>
-                        <button class="w-100 text-start nav-link mb-1"
-                            id="v-pills-document-tab" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-document" type="button"
-                            role="tab" aria-controls="v-pills-document"
-                            aria-selected="false"><i
-                                class="fa-regular fa-file-lines me-2"></i><span>Repair
+                        <button class="w-100 text-start nav-link mb-1" id="v-pills-document-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i class="fa-regular fa-file-lines me-2"></i><span>Repair
                                 documents</span></button>
                     </div>
                 </div>
@@ -34,74 +25,47 @@
             <div class="card-body p-4 h-100 bg-white rounded-2">
                 <div class="tab-content" id="v-pills-tabContent">
                     {{!-- PHẦN DASHBOARD --}}
-                    <div class="tab-pane fade active show"
-                        id="v-pills-dashboard" role="tabpanel"
-                        aria-labelledby="v-pills-dashboard-tab d-flex flex-row"
-                        tabindex="0">
+                    <div class="tab-pane fade active show" id="v-pills-dashboard" role="tabpanel"
+                        aria-labelledby="v-pills-dashboard-tab d-flex flex-row" tabindex="0">
                         <div id="fixRecord">
-                            <div id="recordHeader"
-                                class="row gy-2 mb-2 align-items-end">
+                            <div id="recordHeader" class="row gy-2 mb-2 align-items-end">
                                 <h1 class="textPrimary col-12 col-md-4 mb-0">Fix
                                     Record</h1>
                                 <div class="col-12 col-md-8 mb-0">
                                     <div class="searchForm ">
                                         <i class="fa fa-search"></i>
-                                        <input id="SearchBar"
-                                            class="w-100 form-control me-auto w-50 rounded-pill"
-                                            type="search"
-                                            placeholder="ID/ Car plate"
-                                            aria-label="Search">
+                                        <input id="SearchBar" class="w-100 form-control me-auto w-50 rounded-pill"
+                                            type="search" placeholder="ID/ Car plate" aria-label="Search">
                                     </div>
                                 </div>
-                                <div
-                                    class="col-12 gy-3 gx-2 row row-cols-auto justify-content-md-end px-3"
+                                <div class="col-12 gy-3 gx-2 row row-cols-auto justify-content-md-end px-3"
                                     id="radioDisplayOptions">
                                     <div>
-                                        <input type="radio"
-                                            class="btn-check"
-                                            name="options" id="allButton"
-                                            value="all"
-                                            name="recordOptionButton"
-                                            autocomplete="off" checked>
-                                        <label
-                                            class="btn inlineWarningRadio"
-                                            for="allButton">All</label>
+                                        <input type="radio" class="btn-check" name="options" id="allButton" value="all"
+                                            name="recordOptionButton" autocomplete="off" checked>
+                                        <label class="btn inlineWarningRadio" for="allButton">All</label>
                                     </div>
                                     <div>
-                                        <input type="radio" class="btn-check"
-                                            name="options" id="processingButton"
-                                            value="Processing"
-                                            name="recordOptionButton"
-                                            autocomplete="off">
-                                        <label class="btn inlineWarningRadio"
-                                            for="processingButton">Processing</label>
+                                        <input type="radio" class="btn-check" name="options" id="processingButton"
+                                            value="Processing" name="recordOptionButton" autocomplete="off">
+                                        <label class="btn inlineWarningRadio" for="processingButton">Processing</label>
                                     </div>
                                     <div>
-                                        <input type="radio" class="btn-check"
-                                            name="options" id="doneButton"
-                                            value="Done"
-                                            name="recordOptionButton"
-                                            autocomplete="off">
-                                        <label class="btn inlineWarningRadio"
-                                            for="doneButton">Done</label>
+                                        <input type="radio" class="btn-check" name="options" id="doneButton"
+                                            value="Done" name="recordOptionButton" autocomplete="off">
+                                        <label class="btn inlineWarningRadio" for="doneButton">Done</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="table-responsive"
-                                style="height: 20rem;">
+                            <div class="table-responsive" style="height: 20rem;">
                                 <table class="table  table-hover">
                                     <thead class="table-info" id="tbHeader">
                                         <tr class="text-center">
-                                            <th scope="col"
-                                                style="width: 5%;">ID</th>
-                                            <th scope="col"
-                                                style="width: 25%;">Car&nbsp;Plate</th>
-                                            <th scope="col"
-                                                style="width: 30%;">Date</th>
-                                            <th scope="col"
-                                                style="width: 20%;">Total&nbsp;Price</th>
-                                            <th scope="col"
-                                                style="width: 20%;">Status</th>
+                                            <th scope="col" style="width: 5%;">ID</th>
+                                            <th scope="col" style="width: 25%;">Car&nbsp;Plate</th>
+                                            <th scope="col" style="width: 30%;">Date</th>
+                                            <th scope="col" style="width: 20%;">Total&nbsp;Price</th>
+                                            <th scope="col" style="width: 20%;">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbBody">
@@ -112,36 +76,27 @@
                         <div id="fixDetail">
                             <div id="recordHeader"
                                 class="d-flex flex-row justify-content-between align-items-center mb-2">
-                                <h2 class="textPrimary me-2">Fix detail<span
-                                        id="currentId"></span></h2>
+                                <h2 class="textPrimary me-2">Fix detail<span id="currentId"></span></h2>
                             </div>
-                            <div class="table-responsive"
-                                style="height: 15rem;">
+                            <div class="table-responsive" style="height: 15rem;">
                                 <table class="table table-hover">
                                     <thead class="table-info" id="tbHeader">
                                         <tr class="text-center">
-                                            <th scope="col"
-                                                style="width: 20%;">Date</th>
-                                            <th scope="col"
-                                                style="width: 30%;">Detail</th>
-                                            <th scope="col"
-                                                style="width: 10%;">Mechanic</th>
-                                            <th scope="col"
-                                                style="width: 10%">Auto&nbsp;part</th>
-                                            <th scope="col"
-                                                style="width: 10%">Quantity</th>
-                                            <th scope="col"
-                                                style="width: 10%">AP&nbsp;price</th>
-                                            <th scope="col"
-                                                style="width: 10%">Total&nbsp;price</th>
+                                            <th scope="col" style="width: 20%;">Date</th>
+                                            <th scope="col" style="width: 30%;">Detail</th>
+                                            <th scope="col" style="width: 10%;">Mechanic</th>
+                                            <th scope="col" style="width: 10%">Auto&nbsp;part</th>
+                                            <th scope="col" style="width: 10%">Quantity</th>
+                                            <th scope="col" style="width: 10%">AP&nbsp;price</th>
+                                            <th scope="col" style="width: 10%">Total&nbsp;price</th>
+                                            <th scope="col" style="width: 10%">X</th>
                                         </tr>
                                     </thead>
                                     <tbody id="detailTbBody">
                                     </tbody>
                                 </table>
                             </div>
-                            <div id="optionButtonGroup"
-                                class="d-flex flex-row d-none ">
+                            <div id="optionButtonGroup" class="d-flex flex-row d-none ">
                                 <button id="addButton" onclick="addNewDetail()"
                                     class="w-25 me-3 btn btn-primary">ADD</button>
                                 <button id="doneButton" onclick="doneRecord()"
@@ -149,16 +104,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-document"
-                        role="tabpanel"
-                        aria-labelledby="v-pills-dashboard-tab d-flex flex-row"
-                        tabindex="0">
+                    <div class="tab-pane fade" id="v-pills-document" role="tabpanel"
+                        aria-labelledby="v-pills-dashboard-tab d-flex flex-row" tabindex="0">
                         <h1 class="textPrimary h-100">Repair Documents</h1>
                         <div>
-                            <iframe
-                                src="https://www.workshopautomanuals.com/toyota/"
-                                class="w-100" style="height: 30rem;"
-                                title="Iframe Example"></iframe>
+                            <iframe src="https://www.workshopautomanuals.com/toyota/" class="w-100"
+                                style="height: 30rem;" title="Iframe Example"></iframe>
                         </div>
                     </div>
                 </div>
