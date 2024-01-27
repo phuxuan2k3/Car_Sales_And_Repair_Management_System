@@ -1,33 +1,25 @@
-$('#dashboard').on('click',() => {
+$('#dashboard').on('click', () => {
     window.location.href = '/dashboard';
 })
-$('#car').on('click',() => {
+$('#car').on('click', () => {
     window.location.href = '/car';
 })
-$('#ap').on('click',() => {
+$('#ap').on('click', () => {
     window.location.href = '/ap';
 })
 
-$('.delete').on('click',async function (e) {
+$('.delete').on('click', async function (e) {
 
     const id = $(e.target).data('id');
     console.log($(e.target));
     const url = `api/car`;
     const data = { id };
-    $('#sureDelete').on('click',async () => {
+    $('#sureDelete').on('click', async () => {
         try {
-            const response = await fetch(url, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-
+            const response = await anFetchPost('', url, data, 'DELETE');
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-
             const result = await response.json();
             displayDeleteResult(result);
         } catch (error) {
@@ -59,7 +51,7 @@ function displayDeleteResult(result) {
 $('#SearchBar').on('input', async function () {
     var inputValue = $(this).val();
     try {
-        const response = await fetch(`/api/car/name?name=${inputValue}`);
+        const response = await anFetchGet(`/api/car/name?name=${inputValue}`);
         if (response.ok) {
             const cars = await response.json();
             $('#car-container').empty();

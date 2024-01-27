@@ -15,14 +15,7 @@ $('.delete').on('click', async function (e) {
     const data = { id };
     $('#sureDelete').on('click', async () => {
         try {
-            const response = await fetch(url, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-
+            const response = await anFetchPost('', url, data, 'DELETE');
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
