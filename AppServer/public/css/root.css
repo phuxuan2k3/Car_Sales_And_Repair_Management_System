@@ -4,6 +4,9 @@
     --warningColor: #c5930a;
     --dangerColor: #c71e32;
     --successColor: #005b08;
+    /* darker */
+    --darkerPrimaryColor: #0c386b;
+    --darkerWarningColor: #a37a0a;
 }
 
 .textPrimary {
