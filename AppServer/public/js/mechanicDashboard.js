@@ -255,34 +255,6 @@ const removeDetail = async (fixdetail_id, ap_id, quantity) => {
     await fetchPos(newAp, `api/ap/update-quantity`);
     await updateRecordTable(option, SearchBar);
     await updateDetailTable(current_record, current_status);
-
-
-
-    // let apPrice = parseFloat($(`option:selected`).attr('price'));
-    // console.log(apPrice);
-    // let detailData = $('#detail').val();
-    // inputDetail.empty();
-    // if (quantity > apDetail.quantity) {
-    //     await showError();
-    // } else {
-    //     const data = {
-    //         fixrecord_id: current_record,
-    //         date: new Date(),
-    //         detail: detailData,
-    //         price: apPrice * quantity,
-    //         ap_id: curApID,
-    //         mec_id: userId,
-    //         Status: 'Ok',
-    //         quantity: quantity
-    //     }
-    //     const newAp = {
-    //         ap_id: curApID,
-    //         quantity: apDetail.quantity - quantity,
-    //     }
-    //     await fetchPos(data, `api/cfix/add-detail`);
-    //     await fetchPos(newAp, `api/ap/update-quantity`);
-    //     await showSuccess();
-    // }
 }
 
 //event
