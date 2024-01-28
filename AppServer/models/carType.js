@@ -21,9 +21,17 @@ module.exports = class Type {
         const data = await dbExecute.customQuery(query);
         return data;
     }
-    static async deleteCartItem(brandName) {
+    static async deleteType(brandName) {
         const query = `DELETE FROM "${tableName}"
-                        WHERE "type"=${brandName};`
+                        WHERE type='${brandName}';`
+        return await dbExecute.customQuery(query);
+    }
+    static async getType(brand) {
+        const query = `select * from ${tableName} where type = '${brand}';`;
+        return await dbExecute.customQuery(query);
+    }
+    static async update(newBrand, oldBrand) {
+        const query = `update ${tableName} set type = '${newBrand}' where type = '${oldBrand}';`;
         return await dbExecute.customQuery(query);
     }
 }

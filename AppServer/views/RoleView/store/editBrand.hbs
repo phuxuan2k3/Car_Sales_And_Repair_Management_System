@@ -1,0 +1,57 @@
+<div class="container-fluid vh-100">
+    {{> Nav/storageNav}}
+    <div class="row h-100">
+        <div class="col-3 tabs">
+            <div class="nav flex-column nav-pills" style="height: 100%;" id="v-pills-tab" role="tablist"
+                aria-orientation="vertical">
+                <div class="card w-100 h-100 border border-0">
+                    <div class="card-body">
+                        <button id="dashboard" class="w-100 text-start nav-link  mb-1" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-dashboard" type="button" role="tab"
+                            aria-controls="v-pills-dashboard" aria-selected="true"><i
+                                class="fa-solid fa-house me-2"></i> <a style="all:unset" href="/">Dashboard</a></button>
+                        <button id="brand" class="w-100 text-start nav-link mb-1 active" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i class="fa-solid fa-car me-2"></i>Brands</button>
+                        <button id="type" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i class="fa-solid fa-car me-2"></i>Types</button>
+                        <button id="car" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i class="fa-solid fa-car me-2"></i><a style="all:unset"
+                                href="/car">Cars</a></button>
+                        <button id="ap" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i class="fa-solid fa-gears me-2"></i><a style="all:unset"
+                                href="/ap">Auto
+                                Parts</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-9 tab_content " style="height:100%;">
+            <div class="card-body p-3 bg-white h-100">
+                <div id="car-container ">
+                    <div class="card-body p-3 bg-white d-flex flex-column justify-content-between" id="mainContent"
+                        style="height: 100%;">
+                        <div class=" hstack">
+                            <a class="ms-auto add-experience" href="/brand"><i
+                                    class="fa-solid fa-arrow-left"></i>&nbsp;Back
+                            </a>
+                        </div><br>
+                        <form action="/brand/edit/{{curBrand.brand}}" method="POST">
+                            <div class="col-md-12 ">
+                                <label class="labels">Brand</label>
+                                <input type="text" class="form-control" name="brand" placeholder="brand" required
+                                    value="{{curBrand.brand}}">
+                            </div>
+                            <div class="col-md-12 m-5 d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary col-3">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

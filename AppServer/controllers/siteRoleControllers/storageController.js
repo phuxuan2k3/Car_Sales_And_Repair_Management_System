@@ -114,4 +114,70 @@ module.exports = {
         await AutoPart.insert(ap, req.session.passport.user.id);
         res.redirect('/ap');
     })
+    ,
+    getBrandPage: tryCatch(async (req, res) => {
+        const allBrands = await CarBrand.getAll();
+        res.render('RoleView/store/brand', { allBrands, nameOfUser: req.session.passport.user.nameOfUser, title: 'Brand', jsFile: 'storeBrand.js', cssFile: 'store.css' });
+    }),
+    getEditBrandPage: tryCatch(async (req, res) => {
+        const brand = req.params.brand;
+        const curBrand = (await CarBrand.getBrand(brand))[0];
+        res.render('RoleView/store/editBrand', { curBrand, nameOfUser: req.session.passport.user.nameOfUser, title: 'Edit Car', jsFile: 'storeBrand.js', cssFile: 'store.css' });
+    })
+    ,
+    editBrand: tryCatch(async (req, res) => {
+        const oldBrand = req.params.brand;
+        const newBrand = req.body.brand;
+        await CarBrand.update(newBrand, oldBrand);
+        res.redirect('/brand');
+    }),
+    getInsertBrandPage: tryCatch(async (req, res) => {
+        res.render('RoleView/store/insertBrand', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Edit Car', jsFile: 'storeBrand.js', cssFile: 'store.css' });
+    })
+    ,
+    insertBrand: tryCatch(async (req, res) => {
+        const brand = req.body.brand;
+        await CarBrand.insert({ brand });
+        res.redirect('/brand');
+    }),
+    deleteBrand: tryCatch(async (req, res) => {
+        const brand = req.params.brand;
+        await CarBrand.deleteBrand(brand);
+        res.json({
+            success: true
+        })
+    }),
+
+    getTypePage: tryCatch(async (req, res) => {
+        const allTypes = await CarType.getAll();
+        res.render('RoleView/store/type', { allTypes, nameOfUser: req.session.passport.user.nameOfUser, title: 'Brand', jsFile: 'storeType.js', cssFile: 'store.css' });
+    }),
+    getEditTypePage: tryCatch(async (req, res) => {
+        const type = req.params.type;
+        const curType = (await CarType.getType(type))[0];
+        res.render('RoleView/store/editType', { curType, nameOfUser: req.session.passport.user.nameOfUser, title: 'Edit Car', jsFile: 'storeType.js', cssFile: 'store.css' });
+    })
+    ,
+    editType: tryCatch(async (req, res) => {
+        const oldType = req.params.type;
+        const newType = req.body.type;
+        await CarType.update(newType, oldType);
+        res.redirect('/type');
+    }),
+    getInsertTypePage: tryCatch(async (req, res) => {
+        res.render('RoleView/store/insertType', { nameOfUser: req.session.passport.user.nameOfUser, title: 'Edit Car', jsFile: 'storeType.js', cssFile: 'store.css' });
+    })
+    ,
+    insertType: tryCatch(async (req, res) => {
+        const type = req.body.type;
+        await CarType.insert({ type });
+        res.redirect('/type');
+    }),
+    deleteType: tryCatch(async (req, res) => {
+        const type = req.params.type;
+        await CarType.deleteType(type);
+        res.json({
+            success: true
+        })
+    }),
 }
