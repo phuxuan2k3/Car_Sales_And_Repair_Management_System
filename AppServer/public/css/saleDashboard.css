@@ -10,10 +10,12 @@
     color: var(--successColor);
 }
 
+/* 
 ul {
     list-style: none;
-}
+} */
 
+/* 
 .list-disk li {
     list-style: none;
     margin-bottom: 12px;
@@ -21,10 +23,10 @@ ul {
 
 .list-disk li:last-child {
     margin-bottom: 0;
-}
+} */
 
 /* add */
-.single_quick_activity {
+/* .single_quick_activity {
     background-color: #fff;
     border-radius: 10px;
     padding: 5px 25px;
@@ -33,17 +35,17 @@ ul {
     color: antiquewhite;
     height: 100px;
     width: 24%;
-}
-
+} */
+/* 
 .title {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 20px;
-}
-
+} */
+/* 
 .bold {
     font-weight: bold;
     font-size: 40px;
-}
+} */
 
 .single_quick_activity {
     opacity: 0;
