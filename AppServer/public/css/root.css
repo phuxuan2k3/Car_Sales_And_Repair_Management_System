@@ -104,3 +104,9 @@ pre {
     color: var(--successColor) !important;
     border-color: var(--successColor) !important;
 }
+
+.validation-message {
+    color: red;
+    font-size: 15px;
+    margin-top: 10px;
+}

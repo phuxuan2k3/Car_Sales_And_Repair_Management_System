@@ -71,26 +71,26 @@ async function xuanFetchPost(baseUrl = '', dest = '', bodyObj, method = 'POST') 
 
 
 const fetchData = async (url) => {
-    const rs = await fetch(url,{
+    const rs = await fetch(url, {
         method: 'GET',
         headers: {
             "Authorization": "Bearer " + getCookie("auth"),
         }
     });
-    if(!rs.ok) return false;
+    if (!rs.ok) return false;
     data = await rs.json();
     return data;
 }
 
-const fetchPos = async (data,url) => {
+const fetchPos = async (data, url) => {
     return await fetch(url, {
         method: 'post',
-            credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + getCookie("auth"),
-            },
-            redirect: "follow",
-            body: JSON.stringify(data)
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + getCookie("auth"),
+        },
+        redirect: "follow",
+        body: JSON.stringify(data)
     })
 }
