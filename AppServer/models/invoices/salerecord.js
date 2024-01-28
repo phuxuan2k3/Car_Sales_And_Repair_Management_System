@@ -121,7 +121,6 @@ class SaleRecord {
         ORDER BY start_date DESC
         LIMIT ${limit}
         `;
-        console.log(query);
         const data = await execute(query);
         const start_date = data.map(d => d.start_date);
         const total_price = data.map(d => d.total_price);
@@ -208,7 +207,6 @@ class SaleRecord {
             .addEqual('sd.salerecord_id', salerecord_id, 'alias')
             .execute();
 
-        console.log(data);
         return data;
     }
 

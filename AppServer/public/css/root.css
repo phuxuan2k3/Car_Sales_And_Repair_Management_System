@@ -4,9 +4,11 @@
     --warningColor: #c5930a;
     --dangerColor: #c71e32;
     --successColor: #005b08;
+    --grayColor: #7f8287;
     /* darker */
     --darkerPrimaryColor: #0c386b;
     --darkerWarningColor: #a37a0a;
+    --darkerGrayColor: #5b5c5e;
 }
 
 .textPrimary {
@@ -51,6 +53,14 @@ pre {
 
 .bgSuccess {
     background-color: var(--successColor) !important;
+}
+
+.textGray {
+    color: var(--grayColor) !important;
+}
+
+.bgGray {
+    background-color: var(--grayColor) !important;
 }
 
 .inlinePrimary,
@@ -103,4 +113,17 @@ pre {
     background-color: transparent !important;
     color: var(--successColor) !important;
     border-color: var(--successColor) !important;
+}
+
+.inlineGray,
+.outlineGray:hover {
+    color: var(--secondaryColor) !important;
+    background-color: var(--grayColor) !important;
+}
+
+.outlineGray,
+.inlineGray:hover {
+    background-color: transparent !important;
+    color: var(--grayColor) !important;
+    border-color: var(--grayColor) !important;
 }
