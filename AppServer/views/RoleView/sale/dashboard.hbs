@@ -84,48 +84,67 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-6">
-                        <div class=" mt-3 col-6 pt-1" style=" background: #fff;
-    -webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
-    box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);">
-                            <div class="row col-12">
-                                <div class="form-contain col-4">
-                                    In the nearest
+                {{!-- Charts --}}
+                <div class="row row-cols-md-2 row-cols-1 gx-3 gy-2 my-5">
+                    <div class="col h-100">
+                        <div class="chartBackground h-100">
+                            <div class="row p-4">
+                                <div class="col-12 row gx-2 gy-2 p-4">
+                                    <div
+                                        class="ms-auto col-auto d-flex align-items-center">
+                                        <div class="form-contain">
+                                            Last
+                                        </div>
+                                    </div>
+                                    <div class="col-4 mx-1">
+                                        <div class="form-contain">
+                                            <input type="number" value="3"
+                                                id="limit"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="dropdown">
+                                            <button
+                                                class="btn dropdown-toggle w-100 border"
+                                                id="dropdownBtn" data-n="day"
+                                                type="button"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false">day</button>
+                                            <ul class="dropdown-menu"
+                                                style="list-style-type: style none;">
+                                                <li><a class="dropdown-item"
+                                                        href="#">day</a></li>
+                                                <li><a class="dropdown-item"
+                                                        href="#">month</a></li>
+                                                <li><a class="dropdown-item"
+                                                        href="#">year</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-contain col-3">
-                                    <input type="number" value="1" id="limit"
-                                        class="form-control">
+                                <div class="col-12" id="chart1Con"
+                                    style="overflow-x:visible;">
+                                    <canvas id="chart1"></canvas>
                                 </div>
-                                <div class="dropdown col-3">
-                                    <button class="btn dropdown-toggle"
-                                        id="dropdownBtn" data-n="day"
-                                        type="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">day</button>
-                                    <ul class="dropdown-menu"
-                                        style="list-style-type: style none;">
-                                        <li><a class="dropdown-item"
-                                                href="#">day</a></li>
-                                        <li><a class="dropdown-item"
-                                                href="#">month</a></li>
-                                        <li><a class="dropdown-item"
-                                                href="#">year</a></li>
-                                    </ul>
-                                </div>
+                                <span class="col-12"
+                                    style="font-size: 15px;color:red">*revenue</span>
                             </div>
-                            <div id="chart1Con">
-                                <canvas class=" col-4" id="chart1"
-                                    style="max-height:40%"></canvas>
-                            </div>
-                            <span
-                                style="font-size: 15px;color:red">*revenue</span>
                         </div>
                     </div>
-                    <div class="col-4">
-                        <canvas class=" col-4" id="chart2"
-                            style="height:30%"></canvas>
-                        <span style="font-size: 15px;color:red">*car</span>
+                    <div class="col h-100">
+                        <div class="chartBackground h-100">
+                            <div
+                                class="row p-4">
+                                <div class="col-12"
+                                    style="overflow-x:visible;">
+                                    <canvas
+                                        id="chart2"></canvas>
+                                </div>
+                                <span class="col-12"
+                                    style="font-size: 15px;color:red">*car</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
