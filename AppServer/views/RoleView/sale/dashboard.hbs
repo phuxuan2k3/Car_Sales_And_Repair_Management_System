@@ -1,52 +1,80 @@
+<style>
+</style>
+
 <div class="container-fluid">
-    {{!-- //todo: change nav --}}
     {{> Nav/saleNav}}
     <div class="row">
-        <div class="col-3 tabs">
-            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <div class="card w-100 border border-0" style="height: 600px;">
-                    <div class="card-body" style="height: 100%;">
-                        <button id="dashboard" class="w-100 text-start nav-link active mb-1" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-dashboard" type="button" role="tab"
-                            aria-controls="v-pills-dashboard" aria-selected="true"><i
-                                class="fa-solid fa-house me-2"></i> Dashboard</button>
-                        <button id="report" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
-                            aria-selected="false"><i class="fa-regular fa-file-lines me-3"></i>Report</button>
-                        <button id="sale-invoices" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
-                            aria-selected="false"><i class="fa-solid fa-file-invoice-dollar me-3"></i>Sale Invoices</button>
-                        <button id="fix-invoices" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
-                            aria-selected="false"><i class="fa-solid fa-file-invoice me-3"></i>Fix Invoices</button>
+        <div class="col-12 col-md-3 gy-2 tabs">
+            <div class="nav flex-column nav-pills h-100" id="v-pills-tab"
+                role="tablist" aria-orientation="vertical">
+                <div class="card w-100 border border-0 h-100">
+                    <div class="card-body">
+                        <button id="dashboard"
+                            class="w-100 text-start nav-link active mb-1"
+                            data-bs-toggle="pill"
+                            data-bs-target="#v-pills-dashboard" type="button"
+                            role="tab"
+                            aria-controls="v-pills-dashboard"
+                            aria-selected="true"><i
+                                class="fa-solid fa-house me-2"></i>
+                            Dashboard</button>
+                        <button id="report"
+                            class="w-100 text-start nav-link mb-1"
+                            data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button"
+                            role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i
+                                class="fa-regular fa-file-lines me-3"></i>Report</button>
+                        <button id="sale-invoices"
+                            class="w-100 text-start nav-link mb-1"
+                            data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button"
+                            role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i
+                                class="fa-solid fa-file-invoice-dollar me-3"></i>Sale
+                            Invoices</button>
+                        <button id="fix-invoices"
+                            class="w-100 text-start nav-link mb-1"
+                            data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button"
+                            role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i
+                                class="fa-solid fa-file-invoice me-3"></i>Fix
+                            Invoices</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-9 tab_content" style="height: 600px;">
-            <div class="card-body p-3 bg-white d-flex flex-column" id="mainContent" style="height: 100%;">
-
+        <div class="col-12 col-md-9 gy-2 tab_content" style="height: 600px;">
+            <div class="card-body p-3 bg-white d-flex flex-column"
+                id="mainContent" style="height: 100%;">
                 <div class=" row justify-content-between mb-2">
-
                     <div class="single_quick_activity">
                         <div class="title">Total Sale Income</div>
-                        <div class="bold">$ <span class="counter" id="saleTotal">637,000</span> </div>
+                        <div class="bold">$ <span class="counter"
+                                id="saleTotal">637,000</span> </div>
                     </div>
-                    <div class="single_quick_activity" style="background-color:#0dcaf0">
+                    <div class="single_quick_activity"
+                        style="background-color:#0dcaf0">
                         <div class="title">Total Fix Income</div>
-                        <div class="bold">$ <span class="counter" id="fixTotal">224,000</span> </div>
+                        <div class="bold">$ <span class="counter"
+                                id="fixTotal">224,000</span> </div>
                     </div>
-                    <div class="single_quick_activity" style="background-color:#6f42c1">
+                    <div class="single_quick_activity"
+                        style="background-color:#6f42c1">
                         <div class="title">Number of Products</div>
-                        <div class="bold">🚗 <span class="counter" id="noCar">579,000</span> </div>
+                        <div class="bold">🚗 <span class="counter"
+                                id="noCar">579,000</span> </div>
                     </div>
-                    <div class="single_quick_activity" style="background-color:#20c997">
+                    <div class="single_quick_activity"
+                        style="background-color:#20c997">
                         <div class="title">Number of Customer</div>
-                        <div class="bold">👨 <span class="counter" id="noCus">579,000</span> </div>
+                        <div class="bold">👨 <span class="counter"
+                                id="noCus">579,000</span> </div>
                     </div>
-
                 </div>
-                <div class="row justify-content-around col-12" style=" height: 300px; ">
+                <div class="row justify-content-around col-12"
+                    style=" height: 300px; ">
                     <div class=" mt-3 col-6 pt-1" style=" background: #fff;
     -webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
     box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);">
@@ -55,25 +83,33 @@
                                 In the nearest
                             </div>
                             <div class="form-contain col-3">
-                                <input type="number" value="1" id="limit" class="form-control">
+                                <input type="number" value="1" id="limit"
+                                    class="form-control">
                             </div>
                             <div class="dropdown col-3">
-                                <button class="btn dropdown-toggle" id="dropdownBtn" data-n="day" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">day</button>
+                                <button class="btn dropdown-toggle"
+                                    id="dropdownBtn" data-n="day" type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">day</button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">day</a></li>
-                                    <li><a class="dropdown-item" href="#">month</a></li>
-                                    <li><a class="dropdown-item" href="#">year</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="#">day</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="#">month</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="#">year</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div id="chart1Con">
-                            <canvas class=" col-4" id="chart1" style="max-height:40%"></canvas>
+                            <canvas class=" col-4" id="chart1"
+                                style="max-height:40%"></canvas>
                         </div>
                         <span style="font-size: 15px;color:red">*revenue</span>
                     </div>
                     <div class="col-4">
-                        <canvas class=" col-4" id="chart2" style="height:30%"></canvas>
+                        <canvas class=" col-4" id="chart2"
+                            style="height:30%"></canvas>
                         <span style="font-size: 15px;color:red">*car</span>
                     </div>
                 </div>
@@ -81,5 +117,4 @@
             </div>
         </div>
     </div>
-</div>
 </div>
