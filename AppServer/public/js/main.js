@@ -44,8 +44,8 @@ async function anFetchPost(baseUrl = '', dest = '', bodyObj, method = 'POST') {
     return data;
 }
 
-async function xuanFetchGet(baseUrl = '', dest = '', paramObj) {
-    const fetchUrl = `${baseUrl}${dest}?${(new URLSearchParams(paramObj)).toString()}`;
+async function xuanFetchGet(baseUrl) {
+    const fetchUrl = `${baseUrl}`;
     const raw = await fetch(fetchUrl, {
         method: 'GET',
         headers: {
@@ -54,7 +54,7 @@ async function xuanFetchGet(baseUrl = '', dest = '', paramObj) {
     });
     return raw;
 }
-async function xuanFetchPost(baseUrl = '', dest = '', bodyObj, method = 'POST') {
+async function xuanFetchPost(baseUrl, bodyObj, method = 'POST') {
     const fetchUrl = `${baseUrl}${dest}`;
     const raw = await fetch(fetchUrl, {
         method: method,

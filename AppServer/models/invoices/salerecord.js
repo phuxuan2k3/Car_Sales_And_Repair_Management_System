@@ -113,15 +113,35 @@ class SaleRecord {
         return data.tp;
     }
     static async getTotalPriceByNearestDateChunk(type, limit) {
+        // const query = `
+        // SELECT DATE_TRUNC('${type}', "date") as start_date, ROUND(SUM(total_price)::numeric,2) as total_price
+        // FROM sale_record
+        // GROUP BY DATE_TRUNC('${type}', "date")
+        // HAVING DATE_TRUNC('${type}', "date") IS NOT NULL
+        // ORDER BY start_date DESC
+        // LIMIT ${limit}
+        // `;
         const query = `
-        SELECT DATE_TRUNC('${type}', "date") as start_date, ROUND(SUM(total_price)::numeric,2) as total_price
-        FROM sale_record
-        GROUP BY DATE_TRUNC('${type}', "date")
-        HAVING DATE_TRUNC('${type}', "date") IS NOT NULL
-        ORDER BY start_date DESC
-        LIMIT ${limit}
+        with
+        date_chunk as (
+            select dt::date sd, (dt + interval '1 ${type}')::date ed
+            from generate_series(current_date - interval '${limit - 1} ${type}', current_date, interval '1 ${type}') dt
+        ),
+        data_by_day as (
+            SELECT DATE_TRUNC('day', "date")::date d, ROUND(SUM(total_price)::numeric, 2) total_price
+            FROM sale_record
+            GROUP BY DATE_TRUNC('day', "date")
+            HAVING DATE_TRUNC('day', "date") IS NOT NULL
+        )
+        select dc.sd::text start_date, dc.ed::text end_date, sum(COALESCE(total_price, 0)) total_price
+        from data_by_day dbd right join date_chunk dc
+        on dbd.d >= dc.sd and dbd.d < dc.ed
+        group by dc.sd, dc.ed
+        order by end_date asc
         `;
         const data = await execute(query);
+        // console.log(data);
+        // console.log(query);
         const start_date = data.map(d => d.start_date);
         const total_price = data.map(d => d.total_price);
         return { start_date, total_price };

@@ -125,7 +125,6 @@ module.exports = {
     }),
     countCar: tryCatch(async (req, res) => {
         const data = await Car.count();
-        console.log(data);
         res.send(data.sum);
     }),
 
@@ -268,9 +267,8 @@ module.exports = {
 
     //for sale
     getRevenue: tryCatch(async (req, res) => {
-        console.log(req.query.type, req.query.limit);
-
-        const data = await SaleRecord.getTotalPriceByNearestDateChunk(req.query.type, req.query.limit)
+        // console.log(req.query.type, req.query.limit);
+        const data = await SaleRecord.getTotalPriceByNearestDateChunk(req.query.type, req.query.limit);
         return res.json(data);
     }),
     getTopCar: tryCatch(async (req, res) => {

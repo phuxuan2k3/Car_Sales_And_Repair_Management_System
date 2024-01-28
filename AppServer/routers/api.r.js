@@ -10,7 +10,7 @@ const authApi = require('../middlewares/authApi');
 
 //Car
 router.get('/car/all', authApi(['cus', 'sm']), ApiController.getAllCar);
-router.get('/car/count', authApi(['cus', 'sm']), ApiController.countCar);
+router.get('/car/count', authApi(['cus', 'sa', 'sm']), ApiController.countCar);
 router.get('/car/find', authApi(['cus', 'sm']), ApiController.getByCarId);
 router.get('/car/name', authApi(['cus', 'sm']), ApiController.getCarByName);
 router.get('/car/type', authApi(['cus', 'sm']), ApiController.getAllType);
@@ -23,13 +23,13 @@ router.get('/car/imgs/:id', authApi(['cus', 'sm']), ApiController.getCarImgs);
 router.delete('/car', authApi(['sm']), ApiController.deleteCar);
 
 //AutoPart
-router.get('/ap/all', authApi(['sm','mec']), ApiController.getAllAp);
+router.get('/ap/all', authApi(['sm', 'mec']), ApiController.getAllAp);
 router.get('/ap/supplier', authApi(['sm']), ApiController.getAllSupplier);
-router.get('/ap/detail', authApi(['sm','mec']), ApiController.getAp);
+router.get('/ap/detail', authApi(['sm', 'mec']), ApiController.getAp);
 router.get('/ap/ap_page', authApi(['sm']), ApiController.getApPage);
 router.get('/ap/most_ap', authApi(['sm']), ApiController.getMostAp);
 router.delete('/ap', authApi(['sm']), ApiController.deleteAp);
-router.post('/ap/update-quantity', authApi(['sm','mec']), ApiController.updateAutoPartQuantity)
+router.post('/ap/update-quantity', authApi(['sm', 'mec']), ApiController.updateAutoPartQuantity)
 
 //Fixed car
 router.get('/car/fixed/all', authApi(['cus', 'mec']), ApiController.getAllFixedCar);
@@ -39,7 +39,7 @@ router.post('/car/fixed/add', authApi(['cus', 'mec']), ApiController.addNewFixed
 //User
 router.post('/user/register', registerUser);
 
-router.get('/user', authApi(['sm', 'ad','mec']), ApiController.getUserById);
+router.get('/user', authApi(['sm', 'ad', 'mec']), ApiController.getUserById);
 router.get('/countCus', authApi(['sa', 'ad']), ApiController.getNumberOfCus);
 router.get('/countEm', authApi(['sa', 'ad']), ApiController.getNumberOfEmployee);
 
@@ -66,10 +66,10 @@ router.get('/csale/customer', authApi(['cus']), SaleRecord.getSaleRecordsByCusId
 router.post('/csale/add-cart', authApi(['cus']), SaleRecord.addSaleRecordAndDetails);
 
 // car fix record
-router.get('/cfix/all', authApi(['cus','mec']), FixRecord.getAllFixRecords);
-router.get('/cfix/info', authApi(['cus','mec']), FixRecord.getFullFixRecord);
-router.get('/cfix/car-plate', authApi(['cus','mec']), FixRecord.getSaleRecordsByPlate);
-router.post('/cfix/add', authApi(['cus','mec']), FixRecord.addFixRecord);
+router.get('/cfix/all', authApi(['cus', 'mec']), FixRecord.getAllFixRecords);
+router.get('/cfix/info', authApi(['cus', 'mec']), FixRecord.getFullFixRecord);
+router.get('/cfix/car-plate', authApi(['cus', 'mec']), FixRecord.getSaleRecordsByPlate);
+router.post('/cfix/add', authApi(['cus', 'mec']), FixRecord.addFixRecord);
 router.post('/cfix/add-detail', authApi(['mec']), FixRecord.addFixDetailToRecord);
 router.post('/cfix/delete-detail', authApi(['mec']), FixRecord.deleteFixDetail);
 router.post('/cfix/update-status-detail', authApi(['mec']), FixRecord.updateStatusOfFixDetail);
@@ -110,7 +110,7 @@ router.post('/cart/update_quantity', authApi(['cus']), ApiController.updateCarQu
 router.get('/payment/account', authApi(['cus']), ApiController.getAccount)
 router.post('/payment/transfer', authApi(['cus']), ApiController.transferMoney)
 router.post('/payment/deposits', authApi(['cus']), ApiController.deposits)
-router.post('/payment/history',authApi(['cus']), ApiController.paymentHistory)
+router.post('/payment/history', authApi(['cus']), ApiController.paymentHistory)
 
 
 //chart
