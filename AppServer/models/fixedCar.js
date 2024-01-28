@@ -18,8 +18,11 @@ module.exports = class FixedCar {
     }
     static async insert(entity) {
         const check = await module.exports.getFixedCarByPlate(entity.car_plate);
+        for (const e of check) {
+            if(e.car_plate == entity.car_plate && e.id != entity.id) return false;
+        }
         if(check.length <= 0) await dbExecute.insert(entity, tableName);
-        return entity.id;
+        return true;
     }
     static async update(id, entity) {
         return await dbExecute.update(id, entity, tableName);

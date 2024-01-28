@@ -90,7 +90,7 @@ registerButton.on('click',async (e) => {
             popupWindow.empty()
             popupWindow.removeClass('d-none');
             popupWindow.append(`
-            <div class="alert alert-light position-fixed z-3 top-50 start-50 translate-middle  d-none" id="failedAlert"
+            <div class="alert alert-light position-fixed z-3 top-50 start-50 translate-middle " id="failedAlert"
                 role="alert">
                 <h4 class="alert-heading"><i class="fa-solid fa-circle-xmark" style="color: #ff0f0f;"></i> Registration Failed</h4>
                 <p> Dear ${nameOfUser},<br>
@@ -105,7 +105,7 @@ registerButton.on('click',async (e) => {
                 </div>
             </div>
             `)
-            failedAlert = $('#successAlert');
+            failedAlert = $('#failedAlert');
             failedAlert.css('opacity', 1);
         }
     }

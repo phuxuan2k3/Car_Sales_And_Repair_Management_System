@@ -215,9 +215,10 @@ module.exports = {
     }),
     addNewFixedCar: tryCatch(async (req, res) => {
         const entity = req.body;
-        const cusId = await FixedCar.insert(entity);
+        const check = await FixedCar.insert(entity);
+        if(!check) return res.status(500).send('error');
         const data = await FixRecord.insert(FixRecord.castParam(null, entity.car_plate, new Date(), 0, 'Processing', false));
-        res.json(data);
+        return res.json(data);
     }),
     //User
 
