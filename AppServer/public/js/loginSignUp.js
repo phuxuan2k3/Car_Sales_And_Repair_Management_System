@@ -32,6 +32,9 @@ if (typeof isRegister !== 'undefined') {
 
 $('#registerForm').on('submit', async function (e) {
     e.preventDefault();
+    if (!checkRegisterForm()) {
+        return;
+    }
     const url = '/api/user/register';
     const data = $('#registerForm').serializeArray().reduce(function (obj, item) {
         obj[item.name] = item.value;
@@ -82,13 +85,16 @@ function displayRegisterResult(result) {
 const regexs =
 {
     username: /^[a-zA-Z0-9_]{3,20}$/,
-    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/,
     atLeastLower: /^.*[a-z].*$/,
     atLeastUpper: /^.*[A-Z].*$/,
     atLeastDigit: /^.*\d.*$/,
     atLeastSpecial: /^.*[@$!%*?&.].*$/,
     trueChars: /^[A-Za-z\d@$!%*?&.]{8,}$/,
-    eightChars: /^.{8,}$/
+    eightChars: /^.{8,}$/,
+    phone: /^0\d{9}$/,
+    firstname: /^[A-Za-z]{1,30}$/,
+    lastname: /^[A-Za-z]{1,30}$/
 }
 const messageClass = 'validation-message';
 
@@ -97,10 +103,11 @@ function validate(selector, regex, message) {
     $input = $(selector);
     $input.on('input', function () {
         const value = $(this).val();
-        if (!regex.test(value) && !$($(this).next()).hasClass(messageClass)) {
-            $(this).after(createMessage(message));
-        } else if ((regex.test(value) && $($(this).next()).hasClass(messageClass)) || value.length == 0) {
+        if ((regex.test(value) && $($(this).next()).hasClass(messageClass)) || value.length == 0) {
             $(this).siblings(`.${messageClass}`).remove();
+        }
+        else if (!regex.test(value) && !$($(this).next()).hasClass(messageClass)) {
+            $(this).after(createMessage(message));
         }
     })
 }
@@ -111,14 +118,39 @@ function createMessage(message) {
 
 
 
-validate('.validation-username', regexs.username, 'username must start with a letter, includes letters, ditgits and userscores, from 3 - 20 characters.')
+validate('.validation-username', regexs.username, 'username must start with a letter, includes letters, digits and userscores, from 3 to 20 characters.')
+validate('.validation-phone', regexs.phone, 'username must start with 0 and includes 10 digits.')
+validate('.validation-firstname', regexs.firstname, 'firstname must start with letter and includes from 1 to 30 letters.')
+validate('.validation-lastname', regexs.lastname, 'lastname must start with letter and includes from 1 to 30 letters.')
+validatePassword();
+validateDOB();
 
-//only password
+//for dob
+function testDOB(value) {
+    return new Date(value) < new Date()
+}
+function validateDOB() {
+    $input = $('.validation-dob');
+    $input.on('input', function () {
+        const value = $(this).val();
+        $(this).siblings(`.${messageClass}`).remove();
+        if (!testDOB(value)) {
+            let content = `
+            <div class = 'validation-message'>
+                *date of birth must before or equal current date.
+            </div>
+            `;
+            $(this).after(content);
+        }
+    })
+}
+
+//for password
 function validatePassword() {
     $input = $('.validation-password');
     $input.on('input', function () {
-        $(this).siblings(`.${messageClass}`).remove();
         const value = $(this).val();
+        $(this).siblings(`.${messageClass}`).remove();
         if (!regexs.password.test(value)) {
             let content = `
             <div class = 'validation-message'>
@@ -134,8 +166,6 @@ function validatePassword() {
             </div>
             `;
             $(this).after(content);
-        } else if (value.length == 0) {
-            $(this).siblings(`.${messageClass}`).remove();
         }
     })
 }
@@ -147,4 +177,18 @@ function getColorFromTesting(regex, input) {
     return 'red';
 }
 
-validatePassword();
+function checkRegisterForm() {
+    const res = regexs.username.test($('#signupUsername').val())
+        && regexs.password.test($('#signupPassword').val())
+        && regexs.firstname.test($('#firstname').val())
+        && regexs.lastname.test($('#lastname').val())
+        && regexs.phone.test($('#phonenumber').val())
+        && testDOB($('#dob').val());
+    return res;
+}
+
+function checkLoginForm() {
+    const res = regexs.username.test($('#loginUsername').val())
+        && regexs.password.test($('#loginPassword').val())
+    return res;
+}
