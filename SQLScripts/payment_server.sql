@@ -102,9 +102,7 @@ ALTER TABLE ONLY public.transaction ALTER COLUMN id SET DEFAULT nextval('public.
 --
 
 COPY public.account (id, balance) FROM stdin;
-479	5000
-480	405000
-485	5000
+479	40240
 \.
 
 
@@ -120,7 +118,7 @@ COPY public.transaction (id, from_id, to_id, content, date, amount) FROM stdin;
 -- Name: transaction_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.transaction_id_seq', 15, true);
+SELECT pg_catalog.setval('public.transaction_id_seq', 17, true);
 
 
 --

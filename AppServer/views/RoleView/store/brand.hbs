@@ -1,0 +1,127 @@
+<div class="container-fluid vh-100">
+    {{> Nav/storageNav}}
+    <div class="row">
+        <div class="col-3 tabs">
+            <div class="nav flex-column nav-pills" style="height: 100%;" id="v-pills-tab" role="tablist"
+                aria-orientation="vertical">
+                <div class="card w-100 h-100 border border-0">
+                    <div class="card-body">
+                        <button id="dashboard" class="w-100 text-start nav-link  mb-1" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-dashboard" type="button" role="tab"
+                            aria-controls="v-pills-dashboard" aria-selected="true"><i
+                                class="fa-solid fa-house me-2"></i> <a style="all:unset" href="/">Dashboard</a></button>
+                        <button id="brand" class="w-100 text-start nav-link mb-1 active" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i class="fa-solid fa-car me-2"></i>Brands</button>
+                        <button id="type" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i class="fa-solid fa-car me-2"></i>Types</button>
+                        <button id="car" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i class="fa-solid fa-car me-2"></i><a style="all:unset"
+                                href="/car">Cars</a></button>
+                        <button id="ap" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i class="fa-solid fa-gears me-2"></i><a style="all:unset"
+                                href="/ap">Auto
+                                Parts</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-9 tab_content" style="height:100%;">
+            <div class="card-body p-3 bg-white">
+                <div class="hstack mb-3">
+                    <a href="car/insert" type="button" class="ms-auto btn mr-md-2 mb-md-0 mb-2"
+                        style=" color:white; background-color: #f0134d;">
+                        <i class="fa-solid fa-plus"></i> Add a new Car
+                    </a>
+                </div>
+                <div id="car-container">
+                    {{#each cars}}
+                    <div class="job-box d-md-flex align-items-center justify-content-between mb-30">
+                        <div class="job-left d-md-flex align-items-center flex-wrap">
+                            <img src="/images/cars/{{this.id}}/avatar.png" class="rounded-end-circle"
+                                style="height: 150px;width:150px">
+                            <div class="job-content">
+                                <h5 class="text-center text-md-left">{{this.car_name}}</h5>
+                                <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
+                                    <li class="mr-md-4 ms-5">
+                                        <i class="zmdi zmdi-car-wash"></i>{{this.brand}}
+                                    </li>
+                                    <li class="mr-md-4 ms-5">
+                                        <i class="zmdi zmdi-money mr-2"></i>{{this.price}}
+                                    </li>
+                                    <li class="mr-md-4 ms-5">
+                                        <i class="zmdi zmdi-drink"></i> {{this.type}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="job-right my-4 flex-shrink-0 ">
+                                <a href="/car/edit/{{this.id}}"
+                                    class="btn d-block w-100 d-sm-inline-block btn-light edit"><i
+                                        class="fa-solid fa-pen-to-square" style="color: #0b488e;"></i></a>
+                            </div>
+
+                            <div class="job-right my-4 flex-shrink-0 " data-bs-target="#deleteModal"
+                                data-bs-toggle="modal">
+                                <a href="#!" class="btn d-block w-100 d-sm-inline-block btn-light delete"
+                                    data-bs-target="#deleteModal" data-bs-toggle="modal" data-id={{this.id}}><i
+                                        class="fa-solid fa-trash" style="color: #7e1811;" data-id={{this.id}}></i></a>
+                            </div>
+
+                        </div>
+                    </div>
+                    {{/each}}
+                    <ul class="pagination justify-content-center col-12">
+                        <li class="page-item {{#orCompare pageState 'only' 'min' }} disabled {{/orCompare}}">
+                            <a class="page-link" href="/car?page={{#subtract page 1}}{{/subtract}}">Previous</a>
+                        </li>
+                        {{#each pagination}}
+                        <li class="page-item {{#when ../page 'eq' this}} active {{/when}}"><a class="page-link"
+                                href="/car?page={{this}}">{{this}}</a></li>
+                        {{/each}}
+                        <li class="page-item {{#orCompare pageState 'only' 'max' }} disabled {{/orCompare}}">
+                            <a class="page-link" href="/car?page={{#addInt page 1}}{{/addInt}}">Next</a>
+                        </li>
+                    </ul>
+                </div>
+                {{!-- Delete Modal --}}
+                <div class="modal fade modalfade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title textDanger" id="exampleModalLabel">Delete</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" id="deleteModalContent">
+                                Do you really want to delete this item?
+                            </div>
+                            <div class="modal-footer">
+                                <div class="row w-100">
+                                    <div class="col-6">
+                                        <button type="button" class="btn outlineDanger rounded-4 w-100"
+                                            data-bs-dismiss="modal">Decline</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" data-bs-dismiss="modal"
+                                            class="btn inlineDanger rounded-4 w-100" id="sureDelete">Accept</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>

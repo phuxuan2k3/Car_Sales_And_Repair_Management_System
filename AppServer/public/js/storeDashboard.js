@@ -286,3 +286,9 @@ $('#car').on('click', () => {
 $('#ap').on('click', () => {
     window.location.href = '/ap';
 })
+$('#brand').on('click', () => {
+    window.location.href = '/brand';
+})
+$('#type').on('click', () => {
+    window.location.href = '/type';
+})

@@ -68,6 +68,10 @@ module.exports = class Car {
         const query = `select* from ${tableName} where car_name ilike '%${name}%'`
         return await dbExecute.customQuery(query);
     }
+    static async getMaxPrice() {
+        const query = `select max(price) from ${tableName};`;
+        return await dbExecute.customQuery(query);
+    }
     static async countRecord() {
         const query = `select count(*) from ${tableName}`
         return (await dbExecute.customQuery(query))[0];
@@ -76,7 +80,7 @@ module.exports = class Car {
         const query = `select sum(quantity) from ${tableName}`
         return (await dbExecute.customQuery(query))[0];
     }
-    static async getCarPage(years,searchStr, brands, types, maxPrice, limit, offset) {
+    static async getCarPage(years, searchStr, brands, types, maxPrice, limit, offset) {
         let query = `select * from "${tableName}"`
         let brandQuery;
         let typeQuery;
@@ -103,7 +107,7 @@ module.exports = class Car {
             filterArr.push(typeQuery);
         }
         if (years != undefined) {
-            for (const year  of years) {
+            for (const year of years) {
                 yearFilter.push(`"year"=${year}`)
             }
             yearQuery = yearFilter.join(' or ');
