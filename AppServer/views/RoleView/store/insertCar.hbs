@@ -14,21 +14,21 @@
                             role="tab"
                             aria-controls="v-pills-dashboard"
                             aria-selected="true"><i
-                                class="fa-solid fa-house me-2"></i>
-                            Dashboard</button>
+                                class="fa-solid fa-house me-2"></i>Dashboard</button>
                         <button id="car"
                             class="w-100 text-start nav-link mb-1 active"
                             data-bs-toggle="pill"
                             data-bs-target="#v-pills-document" type="button"
                             role="tab" aria-controls="v-pills-document"
                             aria-selected="false"><i
-                                class="fa-regular fa-file-lines me-2"></i>Cars</button>
-                        <button id="ap" class="w-100 text-start nav-link mb-1"
+                                class="fa-solid fa-car me-2"></i>Cars</button>
+                        <button id="ap"
+                            class="w-100 text-start nav-link mb-1"
                             data-bs-toggle="pill"
                             data-bs-target="#v-pills-document" type="button"
                             role="tab" aria-controls="v-pills-document"
                             aria-selected="false"><i
-                                class="fa-regular fa-file-lines me-2"></i>Auto
+                                class="fa-solid fa-gears me-2"></i>Auto
                             Parts</button>
                     </div>
                 </div>
@@ -80,17 +80,25 @@
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-                                        <div class="col-md-12"><label class="labels">Select Brand</label><select
-                                                required name="brand" id="brand" class="form-select">
+                                        <div class="col-md-12"><label
+                                                class="labels">Select
+                                                Brand</label><select
+                                                required name="brand" id="brand"
+                                                class="form-select">
                                                 {{#each allBrands}}
-                                                <option value="{{this.brand}}">{{this.brand}}</option>
+                                                <option
+                                                    value="{{this.brand}}">{{this.brand}}</option>
                                                 {{/each}}
                                             </select>
                                         </div>
-                                        <div class="col-md-12"><label class="labels">Select Type</label>
-                                            <select required name="type" id="type" class="form-select">
+                                        <div class="col-md-12"><label
+                                                class="labels">Select
+                                                Type</label>
+                                            <select required name="type"
+                                                id="type" class="form-select">
                                                 {{#each allTypes}}
-                                                <option value="{{this.type}}">{{this.type}}</option>
+                                                <option
+                                                    value="{{this.type}}">{{this.type}}</option>
                                                 {{/each}}
                                             </select>
                                         </div>
