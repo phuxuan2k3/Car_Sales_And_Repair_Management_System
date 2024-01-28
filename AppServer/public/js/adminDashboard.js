@@ -148,17 +148,20 @@ const loadForm = async () => {
             address,
             lastname } = await anFetchGet(baseUrl, '/single', { id: storage.currentUserId });
         $('#Username').val(username);
-        $('#Password').val(password);
-        $(`input[name=permission][value=${permission}]`).prop('checked', true)
+        $('#Password').val(' ');
+        $(`input[name=permission][value=${permission}]`).prop('checked', true);
         $('#Firstname').val(firstname);
         $('#Phonenumber').val(phonenumber);
         $('#Dob').val(dateToString(dob));
         $('#Address').val(address);
         $('#Lastname').val(lastname);
+        if (permission === 'ad') {
+            $('#sumbitButton').prop('disabled', true);
+        }
     } else {
         $('#Username').val('');
         $('#Password').val('');
-        $(`input[name=permission][value=cus]`).prop('checked', true)
+        $(`input[name=permission][value=cus]`).prop('checked', true);
         $('#Firstname').val('');
         $('#Phonenumber').val('');
         $('#Dob').val(dateToString(new Date()));
@@ -417,10 +420,12 @@ async function toggleContent(content, id = null) {
         storage.currentUserId = id;
         $('#formHeader').text('Update').addClass('textDanger').removeClass('textPrimary');
         $('#Username').prop('disabled', true);
+        $('#Password').prop('disabled', true);
     } else {
         storage.currentUserId = null;
         $('#formHeader').text('Add new').removeClass('textDanger`').addClass('textPrimary');
         $('#Username').prop('disabled', false);
+        $('#Password').prop('disabled', false);
     }
     if (content === 'form') {
         $('#tableContainer').addClass('slideLeft');

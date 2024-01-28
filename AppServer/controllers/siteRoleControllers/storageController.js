@@ -15,22 +15,22 @@ module.exports = {
         res.render('RoleView/store/storeDashboard', { nameOfUser: req.session.passport.user.nameOfUser, title: 'DashBoard', jsFile: 'storeDashboard.js', cssFile: 'store.css', dashboardPage: true });
     }),
     getCarPage: tryCatch(async (req, res) => {
-        const noCarPerPage = 5;
+        const noCarPerPage = 2;
         const noAllCar = (await Car.countRecord()).count;
         const paginationResult = await pagination(noCarPerPage, noAllCar, req.query.page);
 
         const cars = await Car.getCustom(noCarPerPage, (paginationResult.page - 1) * noCarPerPage);
 
-        res.render('RoleView/store/car', { page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, nameOfUser: req.session.passport.user.nameOfUser, title: 'Cars', jsFile: 'storeCar.js', cssFile: 'store.css', cars, carPage: true });
+        res.render('RoleView/store/car', { totalPage: paginationResult.noPage, page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, nameOfUser: req.session.passport.user.nameOfUser, title: 'Cars', jsFile: 'storeCar.js', cssFile: 'store.css', cars, carPage: true });
     }),
     getApPage: tryCatch(async (req, res) => {
-        const noApPerPage = 5;
+        const noApPerPage = 2;
         const noAllAp = (await AutoPart.countRecord()).count;
         const paginationResult = await pagination(noApPerPage, noAllAp, req.query.page);
 
         const aps = await AutoPart.getCustom(noApPerPage, (paginationResult.page - 1) * noApPerPage);
 
-        res.render('RoleView/store/ap', { page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, nameOfUser: req.session.passport.user.nameOfUser, title: 'AutoPart', jsFile: 'storeAp.js', cssFile: 'store.css', aps, apPage: true });
+        res.render('RoleView/store/ap', { totalPage: paginationResult.noPage, page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, nameOfUser: req.session.passport.user.nameOfUser, title: 'AutoPart', jsFile: 'storeAp.js', cssFile: 'store.css', aps, apPage: true });
     }),
     getEditCarPage: tryCatch(async (req, res) => {
         const id = req.params.id;

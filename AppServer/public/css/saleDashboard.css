@@ -1,44 +1,13 @@
 .tabs .active {
-    background-color: var(--primaryColor) !important;
+    background-color: var(--successColor) !important;
 }
 
 .tabs button {
     color: gray;
 }
 
-ul {
-    list-style: none;
-}
-
-.list-disk li {
-    list-style: none;
-    margin-bottom: 12px;
-}
-
-.list-disk li:last-child {
-    margin-bottom: 0;
-}
-
-/* add */
-.single_quick_activity {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 5px 25px;
-    position: relative;
-    background: #3b76ef;
-    color: antiquewhite;
-    height: 100px;
-    width: 24%;
-}
-
-.title {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 20px;
-}
-
-.bold {
-    font-weight: bold;
-    font-size: 40px;
+.tabs .nav-link:hover:not(.active) {
+    color: var(--successColor);
 }
 
 .single_quick_activity {
@@ -50,4 +19,11 @@ ul {
 .single_quick_activity.show {
     opacity: 1;
     transform: translateY(0);
+}
+
+.chartBackground {
+    border: 1px solid rgba(10, 10, 10, 0.4);
+    border-radius: 5%;
+    -webkit-box-shadow: 0 0 5px 0 rgba(10, 10, 0, 0.2);
+    box-shadow: 0 0 5px 0 rgba(10, 10, 0, 0.2);
 }

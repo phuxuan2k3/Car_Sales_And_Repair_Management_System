@@ -14,5 +14,5 @@ module.exports = async (noPerPage, noAll, page) => {
     } else if (page == 1) {
         pageState = 'min';
     }
-    return { pageState, pagination, page };
+    return { pageState, pagination, page, noPage };
 }

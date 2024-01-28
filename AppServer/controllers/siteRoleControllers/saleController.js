@@ -79,7 +79,7 @@ module.exports = {
         const paginationResult = await pagination(noInvoicePerPage, invoices.length, req.query.page);
         invoices = invoices.slice((paginationResult.page - 1) * noInvoicePerPage, noInvoicePerPage);
 
-        res.render('RoleView/sale/saleInvoice', { page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Invoices', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', invoices });
+        res.render('RoleView/sale/saleInvoice', { totalPage: paginationResult.noPage, page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Invoices', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', invoices });
     }),
     getSaleDetails: tryCatch(async (req, res) => {
         let invoiceId = req.query.invoiceId;
@@ -91,7 +91,7 @@ module.exports = {
         const paginationResult = await pagination(noDetailPerPage, details.length, req.query.page);
         details = details.slice((paginationResult.page - 1) * noDetailPerPage, noDetailPerPage);
 
-        res.render('RoleView/sale/saleDetail', { page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, invoiceId, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Details', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', details });
+        res.render('RoleView/sale/saleDetail', { totalPage: paginationResult.noPage, page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, invoiceId, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Details', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', details });
     }),
     getFixInvoices: tryCatch(async (req, res) => {
         let invoices = await FixRecord.getJoinWithCustomerPay();
@@ -100,7 +100,7 @@ module.exports = {
         const paginationResult = await pagination(noInvoicePerPage, invoices.length, req.query.page);
         invoices = invoices.slice((paginationResult.page - 1) * noInvoicePerPage, noInvoicePerPage);
 
-        res.render('RoleView/sale/fixInvoice', { page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Invoices', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', invoices });
+        res.render('RoleView/sale/fixInvoice', { totalPage: paginationResult.noPage, page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Invoices', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', invoices });
     }),
     getFixDetails: tryCatch(async (req, res) => {
         let invoiceId = req.query.invoiceId;
@@ -111,7 +111,7 @@ module.exports = {
         details = details.slice((paginationResult.page - 1) * noDetailPerPage, noDetailPerPage);
 
 
-        res.render('RoleView/sale/fixDetail', { page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, invoiceId, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Invoices', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', details });
+        res.render('RoleView/sale/fixDetail', { totalPage: paginationResult.noPage, page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, invoiceId, nameOfUser: req.session.passport.user.nameOfUser, title: 'Sale Invoices', jsFile: 'saleDashboard.js', cssFile: 'saleDashboard.css', details });
     }),
     getSaleInvoicePdf: tryCatch(async (req, res) => {
 
