@@ -228,6 +228,7 @@ ul {
     border-radius: 10px;
 }
 
+
 @media (min-width: 992px) {
     .job-overview {
         position: -webkit-sticky;
@@ -262,6 +263,12 @@ ul {
     opacity: 0.75;
     border-bottom: 1px solid #ccc;
     padding: 10px 5px;
+}
+
+@media (max-width: 768px) {
+    .textHeader {
+        text-align: center;
+    }
 }
 
 @media (min-width: 768px) {

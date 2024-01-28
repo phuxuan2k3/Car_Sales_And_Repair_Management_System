@@ -198,47 +198,66 @@ function displayApChart() {
 }
 
 async function displayDashboard() {
-    $('#mainContent').html(` <div class="row justify-content-center">
-        <canvas id = "carChart" style = "width:100%;height:300px"> </>
-                </div >
-                <div class="row justify-content-center">
-                    <canvas id="apChart" style="width:100%;height:300px"></canvas>
-                </div>
-
-                <div class="row justify-content-evenly">
-                    <div class="card m-3 col-5">
-                        <div class="card-body">
-                            <div class="row align-items-center flex-row">
-                                <div style="font-size: 12px; color:red"><i>*the most remaining car</i></div>
-                                <div class="col-5">
-                                    <h2 class="mb-0 d-flex align-items-center"><span id="noMostCar">86.4</span><span
-                                            class="dot bg-green d-inline-block ml-3"></span></h2><span
-                                        class="text-muted text-uppercase small" id="nameMostCar">Work hours</span>
-                                    <hr><small class="text-muted" id="priceMostCar"></small>
-                                </div>
-                                <div class="col-7">
-                                    <canvas id="mostCar" style="height:50px;width:50px"></canvas>
-                                </div>
+    $('#mainContent').html(`
+        <div class="row justify-content-center my-2">
+            <canvas id="carChart" style="height:300px"></canvas>
+        </div>
+        <div class="row justify-content-center my-2">
+            <canvas id="apChart" style="height:300px"></canvas>
+        </div>
+        <div class="row gx-2 my-2 row-cols-1 row-cols-md-2 gy-2 my-2">
+            <div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center flex-row">
+                            <div
+                                style="font-size: 12px; color:red"><i>*the
+                                    most remaining car</i></div>
+                            <div class="col-5">
+                                <h2
+                                    class="mb-0 d-flex align-items-center"><span
+                                        id="noMostCar">86.4</span><span
+                                        class="dot bg-green d-inline-block ml-3"></span></h2><span
+                                    class="text-muted text-uppercase small"
+                                    id="nameMostCar">Work hours</span>
+                                <hr><small class="text-muted"
+                                    id="priceMostCar"></small>
                             </div>
-                        </div>
-                    </div>
-                    <div class="card m-3 col-5">
-                        <div class="card-body">
-                            <div class="row align-items-center flex-row">
-                                <div style="font-size: 12px; color:red"><i>*the most remaining auto part</i></div>
-                                <div class="col-5">
-                                    <h2 class="mb-0 d-flex align-items-center"><span id="noMostAp">86.4</span><span
-                                            class="dot bg-green d-inline-block ml-3"></span></h2><span
-                                        class="text-muted text-uppercase small" id="nameMostAp">Work hours</span>
-                                    <hr><small class="text-muted" id="priceMostAp">Lorem ipsum dolor sit</small>
-                                </div>
-                                <div class="col-7">
-                                    <canvas id="mostAp" style="height:50px;width:50px"></canvas>
-                                </div>
+                            <div class="col-7">
+                                <canvas id="mostCar"
+                                    style="height:50px;width:50px"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center flex-row">
+                            <div
+                                style="font-size: 12px; color:red"><i>*the
+                                    most remaining auto part</i></div>
+                            <div class="col-5">
+                                <h2
+                                    class="mb-0 d-flex align-items-center"><span
+                                        id="noMostAp">86.4</span><span
+                                        class="dot bg-green d-inline-block ml-3"></span></h2><span
+                                    class="text-muted text-uppercase small"
+                                    id="nameMostAp">Work hours</span>
+                                <hr><small class="text-muted"
+                                    id="priceMostAp">Lorem ipsum dolor
+                                    sit</small>
+                            </div>
+                            <div class="col-7">
+                                <canvas id="mostAp"
+                                    style="height:50px;width:50px"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 `);
     try {
         displayCarChart();
