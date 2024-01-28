@@ -48,7 +48,7 @@
                 <table class="table table-hover">
                     <thead class="table-danger">
                         <tr>
-                            <th scope="col">Customer Name</th>
+                            <th scope="col">Customer&nbsp;Name</th>
                             <th scope="col">Date</th>
                             <th scope="col">Total Price</th>
                         </tr>
@@ -70,12 +70,10 @@
                         <a class="page-link"
                             href="/fixInvoices?page={{#subtract page 1}}{{/subtract}}">Previous</a>
                     </li>
-                    {{#each pagination}}
                     <li
-                        class="page-item {{#when ../page 'eq' this}} active {{/when}}"><a
-                            class="page-link"
-                            href="/fixInvoices?page={{this}}">{{this}}</a></li>
-                    {{/each}}
+                        class="page-item"><span
+                            class="page-link">{{page}}&nbsp;/&nbsp;{{totalPage}}</span>
+                    </li>
                     <li
                         class="page-item {{#orCompare pageState 'max' 'only'}} disabled {{/orCompare}}">
                         <a class="page-link"
