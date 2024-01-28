@@ -118,7 +118,7 @@ function createMessage(message) {
 
 
 
-validate('.validation-username', regexs.username, 'username must start with a letter, includes letters, digits and userscores, from 3 to 20 characters.')
+validate('.validation-username', regexs.username, 'username must start with a letter, includes letters, digits and underscores, from 3 to 20 characters.')
 validate('.validation-phone', regexs.phone, 'username must start with 0 and includes 10 digits.')
 validate('.validation-firstname', regexs.firstname, 'firstname must start with letter and includes from 1 to 30 letters.')
 validate('.validation-lastname', regexs.lastname, 'lastname must start with letter and includes from 1 to 30 letters.')
