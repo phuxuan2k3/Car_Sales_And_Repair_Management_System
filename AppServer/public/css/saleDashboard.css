@@ -1,9 +1,13 @@
 .tabs .active {
-    background-color: var(--primaryColor) !important;
+    background-color: var(--successColor) !important;
 }
 
 .tabs button {
     color: gray;
+}
+
+.tabs .nav-link:hover:not(.active) {
+    color: var(--darkerSuccessColor);
 }
 
 ul {
