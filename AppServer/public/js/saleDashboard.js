@@ -12,12 +12,13 @@ $('#fix-invoices').on('click', () => {
     window.location.href = '/fixInvoices';
 })
 
-displayChart();
 $(".single_quick_activity").addClass("show");
 
 async function displayChart() {
     var selectedOption = $('#dropdownBtn').data('value');
-    let response = await xuanFetchGet(`/api/revenue?type=day&limit=${$('#limit').val()}`);
+    const queryUrl = `/api/revenue?type=day&limit=${$('#limit').val()}`;
+    console.log(queryUrl);
+    let response = await xuanFetchGet(queryUrl);
     if (response.ok) {
         const data1 = await response.json();
 
@@ -195,3 +196,8 @@ $('#limit').on('input', async function () {
     }
 })
 
+$(() => {
+    if ($('#dashboard').hasClass('active')) {
+        displayChart();
+    }
+});
