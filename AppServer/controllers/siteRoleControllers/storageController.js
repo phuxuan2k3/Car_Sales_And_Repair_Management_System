@@ -116,8 +116,14 @@ module.exports = {
     })
     ,
     getBrandPage: tryCatch(async (req, res) => {
-        const allBrands = await CarBrand.getAll();
-        res.render('RoleView/store/brand', { allBrands, nameOfUser: req.session.passport.user.nameOfUser, title: 'Brand', jsFile: 'storeBrand.js', cssFile: 'store.css' });
+
+        const noCarPerPage = 5;
+        const noAllCar = (await CarBrand.countRecord()).count;
+        const paginationResult = await pagination(noCarPerPage, noAllCar, req.query.page);
+
+        const allBrands = await CarBrand.getCustom(noCarPerPage, (paginationResult.page - 1) * noCarPerPage);
+
+        res.render('RoleView/store/brand', { totalPage: paginationResult.noPage, page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, allBrands, nameOfUser: req.session.passport.user.nameOfUser, title: 'Brand', jsFile: 'storeBrand.js', cssFile: 'store.css' });
     }),
     getEditBrandPage: tryCatch(async (req, res) => {
         const brand = req.params.brand;
@@ -149,8 +155,12 @@ module.exports = {
     }),
 
     getTypePage: tryCatch(async (req, res) => {
-        const allTypes = await CarType.getAll();
-        res.render('RoleView/store/type', { allTypes, nameOfUser: req.session.passport.user.nameOfUser, title: 'Brand', jsFile: 'storeType.js', cssFile: 'store.css' });
+        const noCarPerPage = 5;
+        const noAllCar = (await CarType.countRecord()).count;
+        const paginationResult = await pagination(noCarPerPage, noAllCar, req.query.page);
+
+        const allTypes = await CarType.getCustom(noCarPerPage, (paginationResult.page - 1) * noCarPerPage);
+        res.render('RoleView/store/type', { totalPage: paginationResult.noPage, page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, allTypes, nameOfUser: req.session.passport.user.nameOfUser, title: 'Brand', jsFile: 'storeType.js', cssFile: 'store.css' });
     }),
     getEditTypePage: tryCatch(async (req, res) => {
         const type = req.params.type;

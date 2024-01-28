@@ -12,10 +12,10 @@
                                 class="fa-solid fa-house me-2"></i> <a style="all:unset" href="/">Dashboard</a></button>
                         <button id="brand" class="w-100 text-start nav-link mb-1 " data-bs-toggle="pill"
                             data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
-                            aria-selected="false"><i class="fa-solid fa-car me-2"></i>Brands</button>
+                            aria-selected="false"><i class="fa-brands fa-bandcamp me-2"></i>Brands</button>
                         <button id="type" class="w-100 text-start nav-link mb-1 active" data-bs-toggle="pill"
                             data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
-                            aria-selected="false"><i class="fa-solid fa-car me-2"></i>Types</button>
+                            aria-selected="false"><i class="fa-solid fa-layer-group me-2"></i>Types</button>
                         <button id="car" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
                             data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
                             aria-selected="false"><i class="fa-solid fa-car me-2"></i><a style="all:unset"
@@ -71,14 +71,11 @@
                     </div>
                     <ul class="pagination justify-content-center col-12">
                         <li class="page-item {{#orCompare pageState 'only' 'min' }} disabled {{/orCompare}}">
-                            <a class="page-link" href="/car?page={{#subtract page 1}}{{/subtract}}">Previous</a>
+                            <a class="page-link" href="/type?page={{#subtract page 1}}{{/subtract}}">Previous</a>
                         </li>
-                        {{#each pagination}}
-                        <li class="page-item {{#when ../page 'eq' this}} active {{/when}}"><a class="page-link"
-                                href="/car?page={{this}}">{{this}}</a></li>
-                        {{/each}}
+                        <li class="page-item"><span class="page-link">{{page}}&nbsp;/&nbsp;{{totalPage}}</span>
                         <li class="page-item {{#orCompare pageState 'only' 'max' }} disabled {{/orCompare}}">
-                            <a class="page-link" href="/car?page={{#addInt page 1}}{{/addInt}}">Next</a>
+                            <a class="page-link" href="/type?page={{#addInt page 1}}{{/addInt}}">Next</a>
                         </li>
                     </ul>
                 </div>

@@ -34,4 +34,8 @@ module.exports = class Type {
         const query = `update ${tableName} set type = '${newBrand}' where type = '${oldBrand}';`;
         return await dbExecute.customQuery(query);
     }
+    static async countRecord() {
+        const query = `select count(*) from ${tableName}`
+        return (await dbExecute.customQuery(query))[0];
+    }
 }

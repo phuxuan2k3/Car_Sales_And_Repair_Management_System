@@ -1,5 +1,5 @@
 module.exports = async (noPerPage, noAll, page) => {
-    const noPage = Math.floor(noAll / noPerPage) + 1;
+    const noPage = Math.ceil(noAll / noPerPage);
     page = page || 1;
     if (page > noPage) {
         page = 1;
