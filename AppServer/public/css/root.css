@@ -127,3 +127,9 @@ pre {
     color: var(--grayColor) !important;
     border-color: var(--grayColor) !important;
 }
+
+.validation-message {
+    color: red;
+    font-size: 15px;
+    margin-top: 10px;
+}

@@ -3,16 +3,16 @@
         <div class="col-7 content">
             <div class=" m-5 loginContent">
                 <p class="h1 mb-5">Welcome to SGX Auto</p>
-                <form action="/login" method="POST" class="loginForm">
+                <form action="/login" method="POST" class="loginForm" onsubmit="return checkLoginForm()">
                     <div class="mb-4">
                         <label for="loginUsername" class="form-label">Username</label>
-                        <input name="Username" type="text" class="form-control w-75" id="loginUsername"
-                            placeholder="Enter username">
+                        <input name="Username" type="text" class="form-control w-75 validation-username"
+                            id="loginUsername" placeholder="Enter username">
                     </div>
                     <div class="mb-4">
                         <label for="loginPassword" class="form-label ">Password</label>
-                        <input name="Password" type="password" id="loginPassword" class="form-control  w-75"
-                            placeholder="Enter password" />
+                        <input name="Password" type="password" id="loginPassword"
+                            class="form-control  w-75 validation-password" placeholder="Enter password" />
                     </div>
                     <div class="mb-4">
                         <input name="Remember" class="form-check-input me-2" type="checkbox" value="" id="rememberMe" />
@@ -62,34 +62,34 @@
                 <form action="#" class="m-5 signupForm mt-1" id="registerForm">
                     <div class="mb-2">
                         <label for="signupUsername" class="form-label">What is your username?</label>
-                        <input required name="username" type="text" class="form-control w-100" id="signupUsername"
-                            placeholder="Enter your username">
+                        <input required name="username" type="text" class="form-control w-100 validation-username"
+                            id="signupUsername" placeholder="Enter your username">
                     </div>
                     <div class="mb-2">
                         <label for="signupPassword" class="form-label ">Create a password</label>
-                        <input required name="password" type="password" id="signupPassword" class="form-control  w-100"
-                            placeholder="Enter your password" />
+                        <input required name="password" type="password" id="signupPassword"
+                            class="form-control  w-100 validation-password" placeholder="Enter your password" />
                     </div>
                     <div class="row col-12 mb-2">
                         <div class="col-6">
                             <label for="firstname" class="form-label">First name</label>
-                            <input required name="firstname" type="text" class="form-control w-100" id="firstname"
-                                placeholder="Enter your first name">
+                            <input required name="firstname" type="text" class="form-control w-100 validation-firstname"
+                                id="firstname" placeholder="Enter your first name">
                         </div>
                         <div class="col-6">
                             <label for="lastname" class="form-label">Last name</label>
-                            <input required name="lastname" type="text" class="form-control w-100" id="lastname"
-                                placeholder="Enter your last name">
+                            <input required name="lastname" type="text" class="form-control w-100 validation-lastname"
+                                id="lastname" placeholder="Enter your last name">
                         </div>
                     </div>
                     <div class="mb-2">
                         <label for="phonenumber" class="form-label">What's your phone number?</label>
-                        <input name="lastname" type="text" class="form-control w-100" id="phonenumber"
+                        <input name="lastname" type="text" class="form-control w-100 validation-phone" id="phonenumber"
                             placeholder="Enter your phone number">
                     </div>
                     <div class="mb-2">
                         <label for="dob" class="form-label">What's your date of birth?</label>
-                        <input required name="dob" type="date" class="form-control w-100" id="dob"
+                        <input required name="dob" type="date" class="form-control w-100 validation-dob" id="dob"
                             placeholder="Enter your date of birth">
                     </div>
                     <div class="mb-2">
