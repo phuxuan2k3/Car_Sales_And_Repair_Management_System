@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-9 tab_content" style="height:100%;">
+        <div class="col-12 col-md-9 tab_content">
             <div class="card-body p-3 bg-white">
                 <div class="hstack mb-3">
                     <a href="car/insert" type="button" class="ms-auto btn mr-md-2 mb-md-0 mb-2"
@@ -41,37 +41,42 @@
                     {{#each cars}}
                     <div class="job-box d-md-flex align-items-center justify-content-between mb-30">
                         <div class="job-left d-md-flex align-items-center flex-wrap">
-                            <img src="/images/cars/{{this.id}}/avatar.png" class="rounded-end-circle"
-                                style="height: 150px;width:150px">
+                            <div class="ms-md-auto me-md-auto">
+                                <img src="/images/cars/{{this.id}}/avatar.png" style="height: 150px;width:150px;"
+                                    class="mx-lg-auto">
+                            </div>
                             <div class="job-content">
                                 <h5 class="text-center text-md-left">{{this.car_name}}</h5>
                                 <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
-                                    <li class="mr-md-4 ms-5">
-                                        <i class="zmdi zmdi-car-wash"></i>{{this.brand}}
+                                    <li class="me-md-4 ms-5">
+                                        <i class="zmdi zmdi-car-wash me-2"></i>{{this.brand}}
                                     </li>
-                                    <li class="mr-md-4 ms-5">
-                                        <i class="zmdi zmdi-money mr-2"></i>{{this.price}}
+                                    <li class="me-md-4 ms-5">
+                                        <i class="zmdi zmdi-money me-2"></i>{{this.price}}
                                     </li>
-                                    <li class="mr-md-4 ms-5">
-                                        <i class="zmdi zmdi-drink"></i> {{this.type}}
+                                    <li class="me-md-4 ms-5">
+                                        <i class="zmdi zmdi-drink me-2"></i>{{this.type}}
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-1">
-                            <div class="job-right my-4 flex-shrink-0 ">
-                                <a href="/car/edit/{{this.id}}"
-                                    class="btn d-block w-100 d-sm-inline-block btn-light edit"><i
-                                        class="fa-solid fa-pen-to-square" style="color: #0b488e;"></i></a>
+                        <div class="row row-cols-2 row-cols-md-1 my-0 gy-0">
+                            <div>
+                                <div class="job-right my-4 flex-shrink-0 ">
+                                    <a href="/car/edit/{{this.id}}"
+                                        class="btn d-block w-100 d-sm-inline-block btn-light edit"><i
+                                            class="fa-solid fa-pen-to-square" style="color: #0b488e;"></i></a>
+                                </div>
                             </div>
-
-                            <div class="job-right my-4 flex-shrink-0 " data-bs-target="#deleteModal"
-                                data-bs-toggle="modal">
-                                <a href="#!" class="btn d-block w-100 d-sm-inline-block btn-light delete"
-                                    data-bs-target="#deleteModal" data-bs-toggle="modal" data-id={{this.id}}><i
-                                        class="fa-solid fa-trash" style="color: #7e1811;" data-id={{this.id}}></i></a>
+                            <div>
+                                <div class="job-right my-4 flex-shrink-0 " data-bs-target="#deleteModal"
+                                    data-bs-toggle="modal">
+                                    <a href="#!" class="btn d-block w-100 d-sm-inline-block btn-light delete"
+                                        data-bs-target="#deleteModal" data-bs-toggle="modal" data-id={{this.id}}><i
+                                            class="fa-solid fa-trash" style="color: #7e1811;"
+                                            data-id={{this.id}}></i></a>
+                                </div>
                             </div>
-
                         </div>
                     </div>
                     {{/each}}
@@ -79,10 +84,8 @@
                         <li class="page-item {{#orCompare pageState 'only' 'min' }} disabled {{/orCompare}}">
                             <a class="page-link" href="/car?page={{#subtract page 1}}{{/subtract}}">Previous</a>
                         </li>
-                        {{#each pagination}}
-                        <li class="page-item {{#when ../page 'eq' this}} active {{/when}}"><a class="page-link"
-                                href="/car?page={{this}}">{{this}}</a></li>
-                        {{/each}}
+                        <li class="page-item"><span class="page-link">{{page}}&nbsp;/&nbsp;{{totalPage}}</span>
+                        </li>
                         <li class="page-item {{#orCompare pageState 'only' 'max' }} disabled {{/orCompare}}">
                             <a class="page-link" href="/car?page={{#addInt page 1}}{{/addInt}}">Next</a>
                         </li>
@@ -120,8 +123,4 @@
             </div>
         </div>
     </div>
-</div>
-</div>
-</div>
-</div>
 </div>
