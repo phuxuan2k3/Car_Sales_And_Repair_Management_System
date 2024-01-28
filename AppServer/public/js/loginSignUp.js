@@ -151,7 +151,7 @@ function validatePassword() {
     $input.on('input', function () {
         const value = $(this).val();
         $(this).siblings(`.${messageClass}`).remove();
-        if (!regexs.password.test(value)) {
+        if (!regexs.password.test(value) && value.length != 0) {
             let content = `
             <div class = 'validation-message'>
                 password must include: 

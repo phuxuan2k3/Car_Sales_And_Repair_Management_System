@@ -48,7 +48,7 @@ module.exports = {
         res.render('RoleView/guest/carDetail', { relatedCars: relatedCars, images: images, cartQuantity: cartQuantity, userId: req.user.id, cartData: cartData, nameOfUser: req.session.passport.user.nameOfUser, data: carData, title: carData.car_name, store: true, jsFile: 'carDetail.js', cssFile: 'carDetail.css' })
     }),
     getRepairService: tryCatch(async (req, res) => {
-        res.render('RoleView/guest/repairService', { adminId: 479, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Repair service", cssFile: "repairService.css", repair: true, jsFile: "repairService.js" });
+        res.render('RoleView/guest/repairService', { adminId: 491, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Repair service", cssFile: "repairService.css", repair: true, jsFile: "repairService.js" });
     }),
     getRepairDetail: tryCatch(async (req, res) => {
         const id = req.query.id;
@@ -68,7 +68,7 @@ module.exports = {
             const car = await Car.getCarById(cartItem.car_ID);
             cartItem.car = car;
         }
-        res.render('RoleView/guest/cartView', { saleData: saleData, adminId: 479, cartData: cartData, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Cart", cssFile: "cartView.css", jsFile: "cartView.js" });
+        res.render('RoleView/guest/cartView', { saleData: saleData, adminId: 491, cartData: cartData, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Cart", cssFile: "cartView.css", jsFile: "cartView.js" });
     }),
     getRecordDetail: tryCatch(async (req, res) => {
         const id = req.query.id;
@@ -78,10 +78,10 @@ module.exports = {
             const car = await Car.getCarById(e.car_id);
             e.car = car;
         }
-        res.render('RoleView/guest/saleRecordDetail', { jsFile: 'cartDetail.js', order: order, saleData: saleData, adminId: 479, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Detail sale order" });
+        res.render('RoleView/guest/saleRecordDetail', { jsFile: 'cartDetail.js', order: order, saleData: saleData, adminId: 491, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Detail sale order" });
     }),
     getDepositPage: tryCatch(async (req, res) => {
-        res.render('RoleView/guest/deposit', { adminId: 479, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Deposit" });
+        res.render('RoleView/guest/deposit', { adminId: 491, userId: req.user.id, nameOfUser: req.session.passport.user.nameOfUser, title: "Deposit" });
     })
 
 }
