@@ -160,7 +160,7 @@ module.exports = {
         const paginationResult = await pagination(noCarPerPage, noAllCar, req.query.page);
 
         const allTypes = await CarType.getCustom(noCarPerPage, (paginationResult.page - 1) * noCarPerPage);
-        res.render('RoleView/store/type', { totalPage: paginationResult.noPage, page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, allTypes, nameOfUser: req.session.passport.user.nameOfUser, title: 'Brand', jsFile: 'storeType.js', cssFile: 'store.css' });
+        res.render('RoleView/store/type', { totalPage: paginationResult.noPage, page: paginationResult.page, pageState: paginationResult.pageState, pagination: paginationResult.pagination, allTypes, nameOfUser: req.session.passport.user.nameOfUser, title: 'Type', jsFile: 'storeType.js', cssFile: 'store.css' });
     }),
     getEditTypePage: tryCatch(async (req, res) => {
         const type = req.params.type;

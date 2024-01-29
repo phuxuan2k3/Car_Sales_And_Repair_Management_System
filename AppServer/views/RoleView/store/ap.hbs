@@ -72,10 +72,7 @@
                     <li class="page-item {{#orCompare pageState 'only' 'min' }} disabled {{/orCompare}}">
                         <a class="page-link" href="/ap?page={{#subtract page 1}}{{/subtract}}">Previous</a>
                     </li>
-                    {{#each pagination}}
-                    <li class="page-item {{#when ../page 'eq' this}} active {{/when}}"><a class="page-link"
-                            href="/ap?page={{this}}">{{this}}</a></li>
-                    {{/each}}
+                    <li class="page-item"><span class="page-link">{{page}}&nbsp;/&nbsp;{{totalPage}}</span>
                     <li class="page-item {{#orCompare pageState 'only' 'max' }} disabled {{/orCompare}}">
                         <a class="page-link" href="/ap?page={{#addInt page 1}}{{/addInt}}">Next</a>
                     </li>

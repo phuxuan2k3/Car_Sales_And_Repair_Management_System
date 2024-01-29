@@ -996,7 +996,6 @@ COPY public.ap_import_report (importinvoice_id, ap_id, date, quantity) FROM stdi
 --
 
 COPY public.auto_part (name, supplier, price, ap_id, quantity) FROM stdin;
-Brake Pads	ABC Auto Parts	50	13	5
 Battery	PowerDrive Inc.	100	21	20
 Air Filter	AutoTech Supplies	13	15	9
 new	1213	123	158	345
@@ -1007,6 +1006,7 @@ Radiator	PartsRUs	80	16	0
 Shock Absorbers	Global Automotive	35	20	0
 Oil Filter	Superior Parts	9	19	6
 Fuel Pump	CarCare Depot	60	17	0
+Brake Pads	ABC Auto Parts	50	13	2
 \.
 
 
@@ -1040,6 +1040,7 @@ G-Class 2021	Mercedes-Benz	Off-Road	2021	130000	Embark on a journey of off-road 
 G-Class 2020	Mercedes-Benz	Off-Road	2020	125000	Luxurious 2020 Mercedes-Benz G-Class Off-Road Vehicle. Introducing the 2020 Mercedes-Benz G-Class, where ruggedness meets luxury. Immerse yourself in a refined interior and cutting-edge off-road features for the ultimate off-road experience.	1	187
 GLB-Class 2019	Mercedes-Benz	Off-Road	2019	47000	The 2019 Mercedes-Benz GLB-Class combines off-road capability with versatility. With its compact size and rugged features, it is ready for your off-road adventures.	1	188
 GLB-Class 2018	Mercedes-Benz	Off-Road	2018	45000	Experience off-road versatility with the 2018 Mercedes-Benz GLB-Class. With a compact size and rugged design, it is the perfect companion for those seeking adventure.	1	189
+X3 2019	BMW1	Off-Road	2019	75000	The 2019 BMW X3 combines off-road capability with versatility. With its compact size and rugged features, it is ready for your off-road adventures.	1	238
 Santa Fe 2019	Hyundai	SUV	2019	32000	Versatile 2019 Hyundai Santa Fe SUV. Experience a perfect blend of style and functionality with the 2019 Hyundai Santa Fe. This SUV features a spacious interior and advanced safety features for a comfortable and secure driving experience.	5	240
 Palisade 2020	Hyundai	SUV	2020	35000	Spacious 2020 Hyundai Palisade SUV. Introducing the 2020 Hyundai Palisade, where versatility meets luxury. With its roomy interior and advanced safety features, this SUV sets new standards in comfort and safety.	5	241
 Tucson 2021	Hyundai	SUV	2021	25000	Stylish 2021 Hyundai Tucson SUV. Step into the future of driving with the 2021 Hyundai Tucson SUV. Immerse yourself in style with its sleek design and experience advanced safety features and technology.	5	242
@@ -1047,59 +1048,17 @@ Kona 2022	Hyundai	SUV	2022	21000	Compact 2022 Hyundai Kona SUV. Elevate your dri
 Nexo 2023	Hyundai	SUV	2023	60000	Eco-Friendly 2023 Hyundai Nexo SUV. Embark on a journey of sustainability with the 2023 Hyundai Nexo SUV. Featuring advanced fuel cell technology, this SUV redefines the concept of eco-friendly driving.	5	244
 Veloster 2019	Hyundai	Hatchback	2019	18000	Sporty 2019 Hyundai Veloster Hatchback. Discover the thrill of driving with the 2019 Hyundai Veloster Hatchback. This sporty hatchback features a unique design and agile performance for an exhilarating driving experience.	5	245
 Elantra GT 2020	Hyundai	Hatchback	2020	19000	Dynamic 2020 Hyundai Elantra GT Hatchback. Experience the perfect balance of style and performance with the 2020 Hyundai Elantra GT. With its dynamic design and efficient features, this hatchback sets new standards in versatility.	5	246
-Accent 2021	Hyundai	Hatchback	2021	16000	Efficient 2021 Hyundai Accent Hatchback. Elevate your daily commute with the 2021 Hyundai Accent Hatchback. This efficient and compact hatchback delivers a comfortable and economical driving experience.	5	247
 Ioniq 5 2022	Hyundai	Hatchback	2022	45000	Innovative 2022 Hyundai Ioniq 5 Hatchback. Introducing the 2022 Hyundai Ioniq 5, where innovation meets style. With its futuristic design and advanced electric technology, this hatchback sets new standards in sustainable driving.	5	248
 Venue 2023	Hyundai	Hatchback	2023	18000	Compact 2023 Hyundai Venue Hatchback. Embark on urban adventures with the 2023 Hyundai Venue Hatchback. Featuring a compact design and advanced technology, this hatchback is perfect for city living.	5	249
 CR-V 2019	Honda	SUV	2019	30000	Versatile 2019 Honda CR-V SUV. Experience the perfect blend of practicality and style with the 2019 Honda CR-V SUV. This SUV offers a spacious interior and advanced safety features for a comfortable and secure driving experience.	5	190
-CR-V 2020	Honda	SUV	2020	32000	Versatile 2020 Honda CR-V SUV. Introducing the 2020 Honda CR-V SUV, where functionality meets sophistication. With its spacious interior and advanced safety features, this SUV sets new standards in comfort and reliability.	5	191
-Pilot 2021	Honda	SUV	2021	40000	Spacious 2021 Honda Pilot SUV. Step into the future of family driving with the 2021 Honda Pilot SUV. Immerse yourself in a roomy interior and experience advanced safety features for a worry-free journey.	5	192
-Passport 2022	Honda	SUV	2022	45000	Adventure-ready 2022 Honda Passport SUV. Elevate your driving experience with the 2022 Honda Passport SUV. This rugged SUV boasts a spacious interior and advanced safety features, making it the perfect companion for your next adventure.	5	193
-HR-V 2023	Honda	SUV	2023	25000	Compact 2023 Honda HR-V SUV. Explore urban landscapes with the 2023 Honda HR-V SUV. Featuring a compact size and versatile interior, this SUV is designed for city living and beyond.	5	194
-Civic 2019	Honda	Hatchback	2019	22000	Sporty 2019 Honda Civic Hatchback. Discover the perfect combination of performance and style with the 2019 Honda Civic Hatchback. This hatchback features a sleek design and advanced safety features for an exhilarating driving experience.	5	195
-Civic 2020	Honda	Hatchback	2020	23000	Sporty 2020 Honda Civic Hatchback. Experience the thrill of driving with the 2020 Honda Civic Hatchback. With its sleek design and advanced safety features, this hatchback sets new standards in sporty elegance.	5	196
-Fit 2021	Honda	Hatchback	2021	18000	Compact 2021 Honda Fit Hatchback. Elevate your city driving with the 2021 Honda Fit Hatchback. Featuring a compact size and versatile interior, this hatchback is perfect for navigating urban environments with ease.	5	197
-Civic 2022	Honda	Hatchback	2022	24000	Dynamic 2022 Honda Civic Hatchback. Introducing the 2022 Honda Civic Hatchback, where dynamic design meets practicality. With its sleek exterior and advanced safety features, this hatchback delivers an exciting driving experience.	5	198
-Fit 2023	Honda	Hatchback	2023	19000	Compact 2023 Honda Fit Hatchback. Navigate the city streets with the 2023 Honda Fit Hatchback. Featuring a compact size and efficient design, this hatchback is tailored for urban adventures.	5	199
-Clarity 2019	Honda	Electric	2019	33000	Innovative 2019 Honda Clarity Electric Vehicle. Experience the future of sustainable driving with the 2019 Honda Clarity Electric Vehicle. This electric vehicle combines eco-friendly technology with a comfortable interior for a guilt-free and luxurious driving experience.	5	200
-Clarity 2020	Honda	Electric	2020	34000	Innovative 2020 Honda Clarity Electric Vehicle. Introducing the 2020 Honda Clarity Electric Vehicle, where sustainability meets luxury. Immerse yourself in a comfortable interior and experience the latest in electric vehicle technology.	5	201
-Insight 2021	Honda	Electric	2021	28000	Efficient 2021 Honda Insight Electric Vehicle. Step into the world of electric efficiency with the 2021 Honda Insight. Featuring a comfortable interior and advanced electric technology, this electric vehicle sets new standards in efficiency and style.	5	202
-Clarity 2022	Honda	Electric	2022	35000	Innovative 2022 Honda Clarity Electric Vehicle. Elevate your driving experience with the 2022 Honda Clarity Electric Vehicle. Immerse yourself in a comfortable interior and cutting-edge electric technology, setting new standards in sustainable opulence.	5	203
-Civic EV 2023	Honda	Electric	2023	32000	Modern 2023 Honda Civic Electric Vehicle. Step into the world of electric luxury with the 2023 Honda Civic EV. Featuring a comfortable interior and advanced electric technology, this electric vehicle sets new standards in opulence and sustainability.	5	204
-Accord 2022	Honda	Sedan	2022	28000	The 2022 Honda Accord Sedan combines style with efficiency. With its comfortable interior and advanced features, it offers a reliable and luxurious driving experience.	1	205
-Civic 2021	Honda	Sedan	2021	24000	Experience elegance and efficiency with the 2021 Honda Civic Sedan. Featuring a stylish interior and advanced driver-assistance systems, it sets new standards in opulent driving.	1	206
-Civic 2021	Honda	Sedan	2021	24000	The 2021 Honda Civic Sedan combines style with performance. With its comfortable interior and advanced features, it offers a luxurious driving experience that captivates.	1	207
-Accord 2020	Honda	Sedan	2020	26000	Introducing the 2020 Honda Accord Sedan, where sophistication meets comfort. Immerse yourself in luxury with its comfortable interior and cutting-edge technology.	1	208
-Civic 2019	Honda	Sedan	2019	22000	The 2019 Honda Civic Sedan redefines entry-level luxury. With a comfortable interior and advanced features, it delivers a premium driving experience.	1	209
-Pilot 2022	Honda	Off-Road	2022	40000	Conquer the off-road in style with the 2022 Honda Pilot. Immerse yourself in comfort with its spacious interior and cutting-edge off-road capabilities.	1	210
-Pilot 2021	Honda	Off-Road	2021	38000	Embark on a journey of off-road luxury with the 2021 Honda Pilot. Featuring a spacious interior and advanced off-road capabilities, this vehicle redefines the concept of rugged opulence.	1	211
-Ridgeline 2020	Honda	Off-Road	2020	35000	Luxurious 2020 Honda Ridgeline Off-Road Vehicle. Introducing the 2020 Honda Ridgeline, where ruggedness meets luxury. Immerse yourself in a comfortable interior and cutting-edge off-road features for the ultimate off-road experience.	1	212
-HR-V 2019	Honda	Off-Road	2019	27000	The 2019 Honda HR-V combines off-road capability with versatility. With its compact size and rugged features, it is ready for your off-road adventures.	1	213
-CR-V 2018	Honda	Off-Road	2018	25000	Experience off-road versatility with the 2018 Honda CR-V. With a compact size and rugged design, it is the perfect companion for those seeking adventure.	1	214
-X5 2019	BMW	SUV	2019	50000	Luxurious 2019 BMW X5 SUV. Experience the perfect combination of performance and style with the 2019 BMW X5 SUV. This SUV offers a refined interior and advanced driver-assistance features for an unparalleled driving experience.	5	215
-X5 2020	BMW	SUV	2020	52000	Luxurious 2020 BMW X5 SUV. Introducing the 2020 BMW X5, where power meets elegance. With its refined interior and advanced driver-assistance features, this SUV sets new standards in luxury and performance.	5	216
-X7 2021	BMW	SUV	2021	65000	Luxurious 2021 BMW X7 SUV. Step into the world of driving excellence with the 2021 BMW X7 SUV. Immerse yourself in luxury with its refined interior and cutting-edge safety features and driver-assistance systems.	5	217
-X6 2022	BMW	SUV	2022	80000	Luxurious 2022 BMW X6 SUV. Elevate your driving experience with the 2022 BMW X6 SUV. This luxurious SUV boasts a refined interior and advanced driver-assistance features, delivering unparalleled comfort and safety.	5	218
-iX3 2023	BMW	SUV	2023	90000	Luxurious 2023 BMW iX3 SUV. Embark on a journey of luxury and sustainability with the 2023 BMW iX3 SUV. Featuring a refined interior and state-of-the-art electric technology, this SUV redefines the concept of a high-end, eco-friendly driving experience.	5	219
-1 Series 2019	BMW	Hatchback	2019	35700	Luxurious 2019 BMW 1 Series Hatchback. Discover the perfect blend of style and performance with the 2019 BMW 1 Series Hatchback. This luxurious hatchback features a refined interior and cutting-edge driver-assistance systems for an unparalleled driving experience.	5	220
-1 Series 2020	BMW	Hatchback	2020	33795	Luxurious 2020 BMW 1 Series Hatchback. Experience the epitome of hatchback luxury with the 2020 BMW 1 Series. With its refined interior and advanced driver-assistance systems, this hatchback sets new standards in comfort and safety.	5	221
-2 Series 2021	BMW	Hatchback	2021	35986	Luxurious 2021 BMW 2 Series Hatchback. Elevate your driving experience with the 2021 BMW 2 Series Hatchback. Immerse yourself in luxury with its refined interior and cutting-edge driver-assistance features.	5	222
-2 Series 2022	BMW	Hatchback	2022	33795	Luxurious 2022 BMW 2 Series Hatchback. Introducing the 2022 BMW 2 Series Hatchback, where style meets performance. With its refined interior and advanced driver-assistance systems, this hatchback delivers an unmatched driving experience.	5	223
-3 Series 2023	BMW	Hatchback	2023	35986	Luxurious 2023 BMW 3 Series Hatchback. Embark on a journey of luxury with the 2023 BMW 3 Series Hatchback. Featuring a refined interior and cutting-edge driver-assistance systems, this hatchback redefines the art of driving.	5	224
-i3 2019	BMW	Electric	2019	67900	Luxurious 2019 BMW i3 Electric Vehicle. Experience the future of driving with the 2019 BMW i3 Electric Vehicle. This luxurious electric vehicle combines cutting-edge technology with a refined interior for a sustainable and opulent driving experience.	5	225
-i4 2020	BMW	Electric	2020	69900	Luxurious 2020 BMW i4 Electric Vehicle. Introducing the 2020 BMW i4 Electric Vehicle, where sustainability meets luxury. Immerse yourself in a refined interior and experience the latest in electric vehicle technology.	5	226
-iX 2021	BMW	Electric	2021	55000	Luxurious 2021 BMW iX Electric Vehicle. Step into the world of electric luxury with the 2021 BMW iX. Featuring a refined interior and advanced electric technology, this electric vehicle sets new standards in opulence and sustainability.	5	227
-iX5 2022	BMW	Electric	2022	102310	Luxurious 2022 BMW iX5 Electric Vehicle. Elevate your driving experience with the 2022 BMW iX5 Electric Vehicle. Immerse yourself in luxury with a refined interior and cutting-edge electric technology, setting new standards in sustainable opulence.	5	228
-iX7 2023	BMW	Electric	2023	105550	Luxurious 2023 BMW iX7 Electric Vehicle. Step into the world of electric luxury with the 2021 BMW iX7. Featuring a refined interior and advanced electric technology, this electric vehicle sets new standards in opulence and sustainability.	5	229
-5 Series 2022	BMW	Sedan	2022	75000	The 2022 BMW 5 Series Sedan is the epitome of luxury and performance. With its refined interior and cutting-edge technology, it offers a driving experience like no other.	1	230
-7 Series 2021	BMW	Sedan	2021	72000	Experience elegance and power with the 2021 BMW 7 Series Sedan. Featuring a sophisticated interior and advanced driver-assistance systems, it sets new standards in opulent driving.	1	231
-3 Series 2021	BMW	Sedan	2021	58000	The 2021 BMW 3 Series Sedan combines style with performance. With its refined interior and advanced features, it offers a luxurious driving experience that captivates.	1	232
-3 Series 2020	BMW	Sedan	2020	55000	Introducing the 2020 BMW 3 Series Sedan, where sophistication meets comfort. Immerse yourself in luxury with its refined interior and cutting-edge technology.	1	233
-2 Series 2019	BMW	Sedan	2019	49000	The 2019 BMW 2 Series Sedan redefines entry-level luxury. With a refined interior and advanced features, it delivers a premium driving experience.	1	234
-X5 M 2022	BMW	Off-Road	2022	120000	Conquer the off-road in style with the 2022 BMW X5 M. Immerse yourself in luxury with its refined interior and cutting-edge off-road capabilities.	1	235
-X5 M 2021	BMW	Off-Road	2021	115000	Embark on a journey of off-road luxury with the 2021 BMW X5 M. Featuring a refined interior and advanced off-road capabilities, this vehicle redefines the concept of rugged opulence.	1	236
-X5 M 2020	BMW	Off-Road	2020	110000	Luxurious 2020 BMW X5 M Off-Road Vehicle. Introducing the 2020 BMW X5 M, where ruggedness meets luxury. Immerse yourself in a refined interior and cutting-edge off-road features for the ultimate off-road experience.	1	237
-X3 2019	BMW	Off-Road	2019	75000	The 2019 BMW X3 combines off-road capability with versatility. With its compact size and rugged features, it is ready for your off-road adventures.	1	238
-X3 2018	BMW	Off-Road	2018	73000	Experience off-road versatility with the 2018 BMW X3. With a compact size and rugged design, it is the perfect companion for those seeking adventure.	1	239
+X5 2019	BMW1	SUV	2019	50000	Luxurious 2019 BMW X5 SUV. Experience the perfect combination of performance and style with the 2019 BMW X5 SUV. This SUV offers a refined interior and advanced driver-assistance features for an unparalleled driving experience.	5	215
+X5 2020	BMW1	SUV	2020	52000	Luxurious 2020 BMW X5 SUV. Introducing the 2020 BMW X5, where power meets elegance. With its refined interior and advanced driver-assistance features, this SUV sets new standards in luxury and performance.	5	216
+X7 2021	BMW1	SUV	2021	65000	Luxurious 2021 BMW X7 SUV. Step into the world of driving excellence with the 2021 BMW X7 SUV. Immerse yourself in luxury with its refined interior and cutting-edge safety features and driver-assistance systems.	5	217
+X6 2022	BMW1	SUV	2022	80000	Luxurious 2022 BMW X6 SUV. Elevate your driving experience with the 2022 BMW X6 SUV. This luxurious SUV boasts a refined interior and advanced driver-assistance features, delivering unparalleled comfort and safety.	5	218
+iX3 2023	BMW1	SUV	2023	90000	Luxurious 2023 BMW iX3 SUV. Embark on a journey of luxury and sustainability with the 2023 BMW iX3 SUV. Featuring a refined interior and state-of-the-art electric technology, this SUV redefines the concept of a high-end, eco-friendly driving experience.	5	219
+1 Series 2019	BMW1	Hatchback	2019	35700	Luxurious 2019 BMW 1 Series Hatchback. Discover the perfect blend of style and performance with the 2019 BMW 1 Series Hatchback. This luxurious hatchback features a refined interior and cutting-edge driver-assistance systems for an unparalleled driving experience.	5	220
+1 Series 2020	BMW1	Hatchback	2020	33795	Luxurious 2020 BMW 1 Series Hatchback. Experience the epitome of hatchback luxury with the 2020 BMW 1 Series. With its refined interior and advanced driver-assistance systems, this hatchback sets new standards in comfort and safety.	5	221
+5 Series 2022	BMW1	Sedan	2022	75000	The 2022 BMW 5 Series Sedan is the epitome of luxury and performance. With its refined interior and cutting-edge technology, it offers a driving experience like no other.	1	230
 Kona Electric 2019	Hyundai	Electric	2019	32000	Eco-Friendly 2019 Hyundai Kona Electric Vehicle. Experience the future of driving with the 2019 Hyundai Kona Electric. This electric vehicle combines sustainability with a modern design for an eco-friendly driving experience.	5	250
 Ioniq Electric 2020	Hyundai	Electric	2020	34000	Innovative 2020 Hyundai Ioniq Electric Vehicle. Introducing the 2020 Hyundai Ioniq Electric, where innovation meets efficiency. Immerse yourself in a sustainable driving experience with this electric vehicle.	5	251
 Santa Fe Plug-in Hybrid 2021	Hyundai	Electric	2021	40000	Efficient 2021 Hyundai Santa Fe Plug-in Hybrid. Step into the world of hybrid technology with the 2021 Hyundai Santa Fe Plug-in Hybrid. This SUV offers a versatile and eco-friendly driving solution.	5	252
@@ -1107,7 +1066,6 @@ Ioniq 5 2022	Hyundai	Electric	2022	45000	Cutting-Edge 2022 Hyundai Ioniq 5 Elect
 Nexo 2023	Hyundai	Electric	2023	60000	Eco-Friendly 2023 Hyundai Nexo Electric Vehicle. Embark on a journey of sustainability with the 2023 Hyundai Nexo Electric Vehicle. Featuring advanced fuel cell technology, this electric SUV redefines the concept of eco-friendly driving.	5	254
 Elantra 2022	Hyundai	Sedan	2022	20000	The 2022 Hyundai Elantra Sedan is a perfect blend of style and efficiency. With its modern design and advanced features, it offers a comfortable and enjoyable driving experience.	1	255
 Sonata 2021	Hyundai	Sedan	2021	23000	Experience elegance and performance with the 2021 Hyundai Sonata Sedan. Featuring a sophisticated interior and advanced driver-assistance systems, it sets new standards in opulent driving.	1	256
-Accent 2021	Hyundai	Sedan	2021	16000	The 2021 Hyundai Accent Sedan combines style with efficiency. With its compact design and advanced features, it offers a comfortable and economical driving experience.	1	257
 Elantra 2020	Hyundai	Sedan	2020	19000	Introducing the 2020 Hyundai Elantra Sedan, where sophistication meets comfort. Immerse yourself in style with its refined interior and cutting-edge technology.	1	258
 Venue 2019	Hyundai	Sedan	2019	18000	The 2019 Hyundai Venue Sedan is designed for urban living. With its compact size and efficient features, it delivers a convenient and enjoyable driving experience.	1	259
 Santa Cruz 2022	Hyundai	Off-Road	2022	25000	Versatile 2022 Hyundai Santa Cruz Off-Road Vehicle. Conquer the off-road with the 2022 Hyundai Santa Cruz. Featuring a rugged design and off-road capabilities, this vehicle is ready for adventure.	1	260
@@ -1122,6 +1080,7 @@ Land Cruiser 2022	Toyota	SUV	2022	85000	Luxurious 2022 Toyota Land Cruiser SUV. 
 RAV4 Prime 2023	Toyota	SUV	2023	42000	Efficient 2023 Toyota RAV4 Prime SUV. Embark on a journey of efficiency and style with the 2023 Toyota RAV4 Prime. Featuring a plug-in hybrid system, this SUV redefines the concept of eco-friendly driving.	5	269
 Corolla Hatchback 2019	Toyota	Hatchback	2019	21000	Sporty 2019 Toyota Corolla Hatchback. Discover the thrill of driving with the 2019 Toyota Corolla Hatchback. This sporty hatchback features a dynamic design and agile performance for an exhilarating driving experience.	5	270
 Prius 2020	Toyota	Hatchback	2020	24000	Efficient 2020 Toyota Prius Hatchback. Experience the perfect balance of style and efficiency with the 2020 Toyota Prius. With its iconic design and hybrid technology, this hatchback sets new standards in versatility.	5	271
+2 Series 2019	BMW1	Sedan	2019	49000	The 2019 BMW 2 Series Sedan redefines entry-level luxury. With a refined interior and advanced features, it delivers a premium driving experience.	1	234
 Yaris 2021	Toyota	Hatchback	2021	17000	Compact 2021 Toyota Yaris Hatchback. Elevate your daily commute with the 2021 Toyota Yaris Hatchback. This compact and efficient hatchback delivers a comfortable and economical driving experience.	5	272
 GR Yaris 2022	Toyota	Hatchback	2022	32000	High-Performance 2022 Toyota GR Yaris Hatchback. Introducing the 2022 Toyota GR Yaris, where high-performance meets style. With its dynamic design and turbocharged engine, this hatchback delivers an unmatched driving experience.	5	273
 Prius Prime 2023	Toyota	Hatchback	2023	28000	Efficient 2023 Toyota Prius Prime Hatchback. Embark on a journey of efficiency with the 2023 Toyota Prius Prime. Featuring a plug-in hybrid system, this hatchback offers sustainable and eco-friendly driving.	5	274
@@ -1140,6 +1099,47 @@ Land Cruiser 2022	Toyota	Off-Road	2022	85000	Conquer the off-road in style with 
 Tacoma TRD Pro 2020	Toyota	Off-Road	2020	42000	High-Performance 2020 Toyota Tacoma TRD Pro Off-Road Vehicle. Introducing the 2020 Toyota Tacoma TRD Pro, where ruggedness meets performance. Immerse yourself in a refined interior and cutting-edge off-road features for the ultimate off-road experience.	1	287
 Sequoia 2019	Toyota	Off-Road	2019	50000	The 2019 Toyota Sequoia combines off-road capability with versatility. With its spacious interior and rugged design, it is ready for your off-road adventures.	1	288
 Tacoma 2018	Toyota	Off-Road	2018	32000	Experience off-road versatility with the 2018 Toyota Tacoma. With a rugged design and advanced off-road features, it is the perfect companion for those seeking adventure.	1	289
+Accent 2021	Hyundai	Hatchback	2021	16000	Efficient 2021 Hyundai Accent Hatchback. Elevate your daily commute with the 2021 Hyundai Accent Hatchback. This efficient and compact hatchback delivers a comfortable and economical driving experience.	3	247
+Accent 2021	Hyundai	Sedan	2021	16000	The 2021 Hyundai Accent Sedan combines style with efficiency. With its compact design and advanced features, it offers a comfortable and economical driving experience.	0	257
+CR-V 2020	Honda	SUV	2020	32000	Versatile 2020 Honda CR-V SUV. Introducing the 2020 Honda CR-V SUV, where functionality meets sophistication. With its spacious interior and advanced safety features, this SUV sets new standards in comfort and reliability.	5	191
+Pilot 2021	Honda	SUV	2021	40000	Spacious 2021 Honda Pilot SUV. Step into the future of family driving with the 2021 Honda Pilot SUV. Immerse yourself in a roomy interior and experience advanced safety features for a worry-free journey.	5	192
+Passport 2022	Honda	SUV	2022	45000	Adventure-ready 2022 Honda Passport SUV. Elevate your driving experience with the 2022 Honda Passport SUV. This rugged SUV boasts a spacious interior and advanced safety features, making it the perfect companion for your next adventure.	5	193
+HR-V 2023	Honda	SUV	2023	25000	Compact 2023 Honda HR-V SUV. Explore urban landscapes with the 2023 Honda HR-V SUV. Featuring a compact size and versatile interior, this SUV is designed for city living and beyond.	5	194
+Civic 2019	Honda	Hatchback	2019	22000	Sporty 2019 Honda Civic Hatchback. Discover the perfect combination of performance and style with the 2019 Honda Civic Hatchback. This hatchback features a sleek design and advanced safety features for an exhilarating driving experience.	5	195
+Civic 2020	Honda	Hatchback	2020	23000	Sporty 2020 Honda Civic Hatchback. Experience the thrill of driving with the 2020 Honda Civic Hatchback. With its sleek design and advanced safety features, this hatchback sets new standards in sporty elegance.	5	196
+Fit 2021	Honda	Hatchback	2021	18000	Compact 2021 Honda Fit Hatchback. Elevate your city driving with the 2021 Honda Fit Hatchback. Featuring a compact size and versatile interior, this hatchback is perfect for navigating urban environments with ease.	5	197
+Civic 2022	Honda	Hatchback	2022	24000	Dynamic 2022 Honda Civic Hatchback. Introducing the 2022 Honda Civic Hatchback, where dynamic design meets practicality. With its sleek exterior and advanced safety features, this hatchback delivers an exciting driving experience.	5	198
+Fit 2023	Honda	Hatchback	2023	19000	Compact 2023 Honda Fit Hatchback. Navigate the city streets with the 2023 Honda Fit Hatchback. Featuring a compact size and efficient design, this hatchback is tailored for urban adventures.	5	199
+Clarity 2019	Honda	Electric	2019	33000	Innovative 2019 Honda Clarity Electric Vehicle. Experience the future of sustainable driving with the 2019 Honda Clarity Electric Vehicle. This electric vehicle combines eco-friendly technology with a comfortable interior for a guilt-free and luxurious driving experience.	5	200
+Clarity 2020	Honda	Electric	2020	34000	Innovative 2020 Honda Clarity Electric Vehicle. Introducing the 2020 Honda Clarity Electric Vehicle, where sustainability meets luxury. Immerse yourself in a comfortable interior and experience the latest in electric vehicle technology.	5	201
+Accord 2022	Honda	Sedan	2022	28000	The 2022 Honda Accord Sedan combines style with efficiency. With its comfortable interior and advanced features, it offers a reliable and luxurious driving experience.	1	205
+X3 2018	BMW1	Off-Road	2018	73000	Experience off-road versatility with the 2018 BMW X3. With a compact size and rugged design, it is the perfect companion for those seeking adventure.	1	239
+Insight 2021	Honda	Electric	2021	28000	Efficient 2021 Honda Insight Electric Vehicle. Step into the world of electric efficiency with the 2021 Honda Insight. Featuring a comfortable interior and advanced electric technology, this electric vehicle sets new standards in efficiency and style.	5	202
+Clarity 2022	Honda	Electric	2022	35000	Innovative 2022 Honda Clarity Electric Vehicle. Elevate your driving experience with the 2022 Honda Clarity Electric Vehicle. Immerse yourself in a comfortable interior and cutting-edge electric technology, setting new standards in sustainable opulence.	5	203
+Civic EV 2023	Honda	Electric	2023	32000	Modern 2023 Honda Civic Electric Vehicle. Step into the world of electric luxury with the 2023 Honda Civic EV. Featuring a comfortable interior and advanced electric technology, this electric vehicle sets new standards in opulence and sustainability.	5	204
+Civic 2021	Honda	Sedan	2021	24000	Experience elegance and efficiency with the 2021 Honda Civic Sedan. Featuring a stylish interior and advanced driver-assistance systems, it sets new standards in opulent driving.	1	206
+Civic 2021	Honda	Sedan	2021	24000	The 2021 Honda Civic Sedan combines style with performance. With its comfortable interior and advanced features, it offers a luxurious driving experience that captivates.	1	207
+Accord 2020	Honda	Sedan	2020	26000	Introducing the 2020 Honda Accord Sedan, where sophistication meets comfort. Immerse yourself in luxury with its comfortable interior and cutting-edge technology.	1	208
+Civic 2019	Honda	Sedan	2019	22000	The 2019 Honda Civic Sedan redefines entry-level luxury. With a comfortable interior and advanced features, it delivers a premium driving experience.	1	209
+Pilot 2022	Honda	Off-Road	2022	40000	Conquer the off-road in style with the 2022 Honda Pilot. Immerse yourself in comfort with its spacious interior and cutting-edge off-road capabilities.	1	210
+Pilot 2021	Honda	Off-Road	2021	38000	Embark on a journey of off-road luxury with the 2021 Honda Pilot. Featuring a spacious interior and advanced off-road capabilities, this vehicle redefines the concept of rugged opulence.	1	211
+Ridgeline 2020	Honda	Off-Road	2020	35000	Luxurious 2020 Honda Ridgeline Off-Road Vehicle. Introducing the 2020 Honda Ridgeline, where ruggedness meets luxury. Immerse yourself in a comfortable interior and cutting-edge off-road features for the ultimate off-road experience.	1	212
+HR-V 2019	Honda	Off-Road	2019	27000	The 2019 Honda HR-V combines off-road capability with versatility. With its compact size and rugged features, it is ready for your off-road adventures.	1	213
+CR-V 2018	Honda	Off-Road	2018	25000	Experience off-road versatility with the 2018 Honda CR-V. With a compact size and rugged design, it is the perfect companion for those seeking adventure.	1	214
+2 Series 2021	BMW1	Hatchback	2021	35986	Luxurious 2021 BMW 2 Series Hatchback. Elevate your driving experience with the 2021 BMW 2 Series Hatchback. Immerse yourself in luxury with its refined interior and cutting-edge driver-assistance features.	5	222
+2 Series 2022	BMW1	Hatchback	2022	33795	Luxurious 2022 BMW 2 Series Hatchback. Introducing the 2022 BMW 2 Series Hatchback, where style meets performance. With its refined interior and advanced driver-assistance systems, this hatchback delivers an unmatched driving experience.	5	223
+3 Series 2023	BMW1	Hatchback	2023	35986	Luxurious 2023 BMW 3 Series Hatchback. Embark on a journey of luxury with the 2023 BMW 3 Series Hatchback. Featuring a refined interior and cutting-edge driver-assistance systems, this hatchback redefines the art of driving.	5	224
+i3 2019	BMW1	Electric	2019	67900	Luxurious 2019 BMW i3 Electric Vehicle. Experience the future of driving with the 2019 BMW i3 Electric Vehicle. This luxurious electric vehicle combines cutting-edge technology with a refined interior for a sustainable and opulent driving experience.	5	225
+i4 2020	BMW1	Electric	2020	69900	Luxurious 2020 BMW i4 Electric Vehicle. Introducing the 2020 BMW i4 Electric Vehicle, where sustainability meets luxury. Immerse yourself in a refined interior and experience the latest in electric vehicle technology.	5	226
+iX 2021	BMW1	Electric	2021	55000	Luxurious 2021 BMW iX Electric Vehicle. Step into the world of electric luxury with the 2021 BMW iX. Featuring a refined interior and advanced electric technology, this electric vehicle sets new standards in opulence and sustainability.	5	227
+iX5 2022	BMW1	Electric	2022	102310	Luxurious 2022 BMW iX5 Electric Vehicle. Elevate your driving experience with the 2022 BMW iX5 Electric Vehicle. Immerse yourself in luxury with a refined interior and cutting-edge electric technology, setting new standards in sustainable opulence.	5	228
+iX7 2023	BMW1	Electric	2023	105550	Luxurious 2023 BMW iX7 Electric Vehicle. Step into the world of electric luxury with the 2021 BMW iX7. Featuring a refined interior and advanced electric technology, this electric vehicle sets new standards in opulence and sustainability.	5	229
+7 Series 2021	BMW1	Sedan	2021	72000	Experience elegance and power with the 2021 BMW 7 Series Sedan. Featuring a sophisticated interior and advanced driver-assistance systems, it sets new standards in opulent driving.	1	231
+3 Series 2021	BMW1	Sedan	2021	58000	The 2021 BMW 3 Series Sedan combines style with performance. With its refined interior and advanced features, it offers a luxurious driving experience that captivates.	1	232
+3 Series 2020	BMW1	Sedan	2020	55000	Introducing the 2020 BMW 3 Series Sedan, where sophistication meets comfort. Immerse yourself in luxury with its refined interior and cutting-edge technology.	1	233
+X5 M 2022	BMW1	Off-Road	2022	120000	Conquer the off-road in style with the 2022 BMW X5 M. Immerse yourself in luxury with its refined interior and cutting-edge off-road capabilities.	1	235
+X5 M 2021	BMW1	Off-Road	2021	115000	Embark on a journey of off-road luxury with the 2021 BMW X5 M. Featuring a refined interior and advanced off-road capabilities, this vehicle redefines the concept of rugged opulence.	1	236
+X5 M 2020	BMW1	Off-Road	2020	110000	Luxurious 2020 BMW X5 M Off-Road Vehicle. Introducing the 2020 BMW X5 M, where ruggedness meets luxury. Immerse yourself in a refined interior and cutting-edge off-road features for the ultimate off-road experience.	1	237
 \.
 
 
@@ -1149,10 +1149,10 @@ Tacoma 2018	Toyota	Off-Road	2018	32000	Experience off-road versatility with the 
 
 COPY public.car_brand (brand) FROM stdin;
 Mercedes-Benz
-Honda
-BMW
 Hyundai
 Toyota
+Honda
+BMW1
 \.
 
 
@@ -1202,6 +1202,9 @@ COPY public.customer (id) FROM stdin;
 479
 461
 462
+489
+490
+496
 \.
 
 
@@ -1210,6 +1213,8 @@ COPY public.customer (id) FROM stdin;
 --
 
 COPY public.federated_credentials (id, user_id, provider, subject) FROM stdin;
+4	489	facebook	1587045301832696
+5	496	https://accounts.google.com	116287136621512967237
 \.
 
 
@@ -1218,6 +1223,7 @@ COPY public.federated_credentials (id, user_id, provider, subject) FROM stdin;
 --
 
 COPY public.fix_detail (date, detail, price, fixdetail_id, fixrecord_id, ap_id, mec_id, "Status", quantity) FROM stdin;
+2024-01-28	detail	150	24	16	13	491	Ok	3
 \.
 
 
@@ -1226,6 +1232,8 @@ COPY public.fix_detail (date, detail, price, fixdetail_id, fixrecord_id, ap_id, 
 --
 
 COPY public.fix_record (fixrecord_id, car_plate, date, total_price, status, pay) FROM stdin;
+17	59H-12345	2024-01-28	0	Processing	f
+16	64K-12345	2024-01-28	150	Done	t
 \.
 
 
@@ -1234,6 +1242,8 @@ COPY public.fix_record (fixrecord_id, car_plate, date, total_price, status, pay)
 --
 
 COPY public.fixed_car (car_plate, id) FROM stdin;
+64K-12345	496
+59H-12345	496
 \.
 
 
@@ -1242,6 +1252,7 @@ COPY public.fixed_car (car_plate, id) FROM stdin;
 --
 
 COPY public.mechanic (id) FROM stdin;
+491
 \.
 
 
@@ -1250,6 +1261,8 @@ COPY public.mechanic (id) FROM stdin;
 --
 
 COPY public.sale_detail (salerecord_id, car_id, quantity) FROM stdin;
+323	247	2
+324	257	1
 \.
 
 
@@ -1258,6 +1271,8 @@ COPY public.sale_detail (salerecord_id, car_id, quantity) FROM stdin;
 --
 
 COPY public.sale_record (salerecord_id, cus_id, date, total_price) FROM stdin;
+323	496	2024-01-28	32000
+324	496	2024-01-28	16000
 \.
 
 
@@ -1266,6 +1281,7 @@ COPY public.sale_record (salerecord_id, cus_id, date, total_price) FROM stdin;
 --
 
 COPY public.sales_assistant (id) FROM stdin;
+492
 \.
 
 
@@ -1276,6 +1292,7 @@ COPY public.sales_assistant (id) FROM stdin;
 COPY public.storage_manager (id) FROM stdin;
 4
 5
+495
 \.
 
 
@@ -1291,6 +1308,10 @@ LO6BzR-FhRGvKuHfz_8gyZ7WPrvaofbE	{"cookie":{"originalMaxAge":null,"expires":null
 0sdyw3xIvqFwkEKazRxpm4E-mQJn3Rda	{"cookie":{"originalMaxAge":null,"expires":null,"httpOnly":true,"path":"/"},"passport":{"user":{"id":488,"permission":"mec","nameOfUser":"2 2"}},"flash":{}}	2024-01-28 23:17:01
 I2LlG0J1c4AJfNdjnjkawVThkEOuJoR4	{"cookie":{"originalMaxAge":null,"expires":null,"httpOnly":true,"path":"/"},"passport":{"user":{"id":487,"permission":"cus","nameOfUser":"1 1"}},"flash":{}}	2024-01-28 23:17:15
 Pyic8aBdozuVFJx6SqLpGXUJcZXbypZI	{"cookie":{"originalMaxAge":null,"expires":null,"httpOnly":true,"path":"/"},"passport":{"user":{"id":487,"permission":"cus","nameOfUser":"1 1"}},"flash":{}}	2024-01-29 01:20:11
+Ya2qETQDYTi1nh-g0BlgeKFbQb1AU0YM	{"cookie":{"originalMaxAge":null,"expires":null,"httpOnly":true,"path":"/"}}	2024-01-29 20:15:19
+PbL0q_eXosJYNb9xW9z8XwAcg3GAAJm5	{"cookie":{"originalMaxAge":null,"expires":null,"httpOnly":true,"path":"/"},"passport":{"user":{"id":495,"permission":"sm","nameOfUser":"smm smm"}},"flash":{}}	2024-01-30 10:50:49
+KTyztkCwYIXp_YAoV_fqgCAiKLUIoq-5	{"cookie":{"originalMaxAge":null,"expires":null,"httpOnly":true,"path":"/"},"flash":{}}	2024-01-30 00:48:15
+1AeTzUtwxxv55dVQSesxRgX7ElhWZvbK	{"cookie":{"originalMaxAge":null,"expires":null,"httpOnly":true,"path":"/"},"passport":{"user":{"id":496,"permission":"cus","nameOfUser":"Xuân Nguyễn"}},"flash":{}}	2024-01-29 20:46:22
 \.
 
 
@@ -1300,6 +1321,12 @@ Pyic8aBdozuVFJx6SqLpGXUJcZXbypZI	{"cookie":{"originalMaxAge":null,"expires":null
 
 COPY public.user_info (username, password, permission, id, firstname, phonenumber, dob, address, lastname) FROM stdin;
 ad	$2b$10$oGFpSON.g0etVVnbtWC6rOXLlfHp.uqW1ZIM4xKcpsNEKGMOQbnNW	ad	479	ad	\N	2024-01-26		ad
+\N	\N	cus	489	Nguyễn Phạm Phú Xuân	\N	\N	\N	\N
+xuan	$2b$10$TSA6ouHnX96nvIbAS3FhxO9qq34FKOPiHJ8rQ7.lRHrY3PX1o0G9S	cus	490	xuan	0123456788	2024-01-24	hcm	nguyen
+mec	$2b$10$N7xaQdAWHRE8vqp5DbNlDOQDEbblZ6frJ485qcDTqWdueI14cJK.m	mec	491	mec	0121321212	2024-01-08	sdfds	mec
+saa	$2b$10$YNnULv9gerTXNNubl3Pu5utgrxVNNm/XDdUsRrtWN88PnGete/Ohi	sa	492	saa	0121455455	2024-01-28	sdfsdf	saa
+smm	$2b$10$Vj797cHCPUG36V0AmGA1VOxVb.kNpUxim4u51k61VdlZ44y9YFtz2	sm	495	smm	0168468515	2024-01-28	hcm	smm
+\N	\N	cus	496	Xuân Nguyễn	\N	\N	\N	\N
 \.
 
 
@@ -1335,35 +1362,35 @@ SELECT pg_catalog.setval('public.car_import_invoice_importinvoice_id_seq', 416, 
 -- Name: federated_credentials_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.federated_credentials_id_seq', 3, true);
+SELECT pg_catalog.setval('public.federated_credentials_id_seq', 5, true);
 
 
 --
 -- Name: fix_detail_fixdetail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.fix_detail_fixdetail_id_seq', 21, true);
+SELECT pg_catalog.setval('public.fix_detail_fixdetail_id_seq', 24, true);
 
 
 --
 -- Name: fix_record_fixrecord_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.fix_record_fixrecord_id_seq', 15, true);
+SELECT pg_catalog.setval('public.fix_record_fixrecord_id_seq', 17, true);
 
 
 --
 -- Name: sale_record_salerecord_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.sale_record_salerecord_id_seq', 322, true);
+SELECT pg_catalog.setval('public.sale_record_salerecord_id_seq', 324, true);
 
 
 --
 -- Name: user_info_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.user_info_id_seq', 488, true);
+SELECT pg_catalog.setval('public.user_info_id_seq', 496, true);
 
 
 --
@@ -1870,7 +1897,7 @@ ALTER TABLE ONLY public.fixed_car
 --
 
 ALTER TABLE ONLY public.car
-    ADD CONSTRAINT fk_brand FOREIGN KEY (brand) REFERENCES public.car_brand(brand) NOT VALID;
+    ADD CONSTRAINT fk_brand FOREIGN KEY (brand) REFERENCES public.car_brand(brand) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
 
 
 --
@@ -1878,7 +1905,7 @@ ALTER TABLE ONLY public.car
 --
 
 ALTER TABLE ONLY public.car
-    ADD CONSTRAINT fk_type FOREIGN KEY (type) REFERENCES public.car_type(type) NOT VALID;
+    ADD CONSTRAINT fk_type FOREIGN KEY (type) REFERENCES public.car_type(type) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
 
 
 --
