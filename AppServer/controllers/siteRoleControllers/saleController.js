@@ -149,7 +149,6 @@ module.exports = {
             doc.text(`Quantity: ${e.quantity}`);
             doc.moveDown();
         });
-        doc.moveDown();
 
         doc.fontSize(16).text('4. Total:', { underline: true });
         doc.text(`Total: $${invoice.total_price}`);
@@ -210,7 +209,6 @@ module.exports = {
 
             doc.moveDown();
         });
-        doc.moveDown();
 
         doc.fontSize(16).text('4. Total:', { underline: true });
         doc.text(`Total: $${invoice.total_price}`);

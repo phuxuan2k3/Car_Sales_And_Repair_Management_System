@@ -7,6 +7,12 @@ $('#ap, .close').click(() => {
 $('#car').click(() => {
     window.location.href = '/car';
 })
+$('#brand').on('click', () => {
+    window.location.href = '/brand';
+})
+$('#type').on('click', () => {
+    window.location.href = '/type';
+})
 
 $('input[type="number"]').on('input', function () {
     var inputValue = $(this).val();
