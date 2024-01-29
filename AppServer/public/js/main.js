@@ -55,7 +55,7 @@ async function xuanFetchGet(baseUrl) {
     return raw;
 }
 async function xuanFetchPost(baseUrl, bodyObj, method = 'POST') {
-    const fetchUrl = `${baseUrl}${dest}`;
+    const fetchUrl = `${baseUrl}`;
     const raw = await fetch(fetchUrl, {
         method: method,
         credentials: 'include',

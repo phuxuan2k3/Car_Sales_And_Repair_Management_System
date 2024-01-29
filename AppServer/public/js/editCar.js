@@ -7,6 +7,12 @@ $('#car, .close').click(() => {
 $('#ap').click(() => {
     window.location.href = '/ap';
 })
+$('#brand').on('click', () => {
+    window.location.href = '/brand';
+})
+$('#type').on('click', () => {
+    window.location.href = '/type';
+})
 
 $("#input-id").fileinput({
     maxFileSize: 5000,
