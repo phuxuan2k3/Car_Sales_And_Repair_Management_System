@@ -71,26 +71,34 @@ async function xuanFetchPost(baseUrl, bodyObj, method = 'POST') {
 
 
 const fetchData = async (url) => {
-    const rs = await fetch(url, {
-        method: 'GET',
-        headers: {
-            "Authorization": "Bearer " + getCookie("auth"),
-        }
-    });
-    if (!rs.ok) return false;
-    data = await rs.json();
-    return data;
+    try {
+        const rs = await fetch(url, {
+            method: 'GET',
+            headers: {
+                "Authorization": "Bearer " + getCookie("auth"),
+            }
+        });
+        if (!rs.ok) return false;
+        data = await rs.json();
+        return data;
+    } catch (error) {
+        return false;
+    };
 }
 
 const fetchPos = async (data, url) => {
-    return await fetch(url, {
-        method: 'post',
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + getCookie("auth"),
-        },
-        redirect: "follow",
-        body: JSON.stringify(data)
-    })
+    try {
+        return await fetch(url, {
+            method: 'post',
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + getCookie("auth"),
+            },
+            redirect: "follow",
+            body: JSON.stringify(data)
+        })
+    } catch (error) {
+        return new Response(null, { status: 500, statusText: "ERR_INTERNET_DISCONNECTED" });
+    };
 }
