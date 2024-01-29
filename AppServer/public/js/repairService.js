@@ -179,6 +179,7 @@ const generateTable = async () => {
             <button id="backButton" class="btn btn-info w-100 mb-3 d-none"  role="button">Back to service page</button>
             </div>
             `)
+        spinner = $('#spinner');
         confirmPaymentButton = $('#confirmPaymentButton');
         successTransaction = $('#successTransaction');
         falseTransaction = $('#falseTransaction');
