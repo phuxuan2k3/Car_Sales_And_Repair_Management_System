@@ -143,7 +143,7 @@ module.exports = class Car {
         return (await dbExecute.customQuery(query));
     }
     static async getTop10Quantity() {
-        let query = `SELECT * FROM ${tableName} ORDER BY quantity DESC LIMIT 10;`
+        let query = `SELECT * FROM ${tableName} ORDER BY quantity ASC LIMIT 20;`
         const data = await dbExecute.customQuery(query)
         return data.map(c => { return new Car(c) });
     }
