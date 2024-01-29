@@ -21,8 +21,8 @@ const fetch = require('node-fetch');
 module.exports = {
     //For store
     getRemainingItems: tryCatch(async (req, res) => {
-        const carData = await Car.getAll();
-        const apData = await AutoPart.getAll();
+        const carData = await Car.getTop10Quantity();
+        const apData = await AutoPart.getTop10Quantity();
         res.json({ car: carData, ap: apData });
     }),
     //Car API
@@ -216,7 +216,7 @@ module.exports = {
     addNewFixedCar: tryCatch(async (req, res) => {
         const entity = req.body;
         const check = await FixedCar.insert(entity);
-        if(!check) return res.status(500).send('error');
+        if (!check) return res.status(500).send('error');
         const data = await FixRecord.insert(FixRecord.castParam(null, entity.car_plate, new Date(), 0, 'Processing', false));
         return res.json(data);
     }),

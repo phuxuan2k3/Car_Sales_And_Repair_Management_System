@@ -93,4 +93,9 @@ module.exports = class AutoPart {
         `
         return (await dbExecute.customQuery(query))[0];
     }
+    static async getTop10Quantity() {
+        let query = `SELECT * FROM ${tableName} ORDER BY quantity DESC LIMIT 10;`
+        const data = await dbExecute.customQuery(query)
+        return data.map(c => { return new AutoPart(c) });
+    }
 }
