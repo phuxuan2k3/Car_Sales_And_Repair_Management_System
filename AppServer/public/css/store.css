@@ -105,10 +105,20 @@ ul {
     padding: 10px 5px;
 }
 
+.job-box .img-thumbnail {
+    height: auto;
+    width: 30%;
+}
+
 @media (min-width: 768px) {
     .job-content ul li {
         border-bottom: 0;
         padding: 0;
+    }
+
+    .job-box .img-thumbnail {
+        height: 75%;
+        width: auto;
     }
 }
 
@@ -273,6 +283,7 @@ ul {
 
 @media (min-width: 768px) {
     .job-content ul li {
+        font-size: 16px;
         border-bottom: 0;
         padding: 0;
     }

@@ -7,22 +7,40 @@
                 aria-orientation="vertical">
                 <div class="card w-100 h-100 border border-0">
                     <div class="card-body">
-                        <button id="dashboard" class="w-100 text-start nav-link  mb-1" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-dashboard" type="button" role="tab"
-                            aria-controls="v-pills-dashboard" aria-selected="true"><i
+                        <button id="dashboard"
+                            class="w-100 text-start nav-link  mb-1"
+                            data-bs-toggle="pill"
+                            data-bs-target="#v-pills-dashboard" type="button"
+                            role="tab"
+                            aria-controls="v-pills-dashboard"
+                            aria-selected="true"><i
                                 class="fa-solid fa-house me-2"></i>Dashboard</button>
-                        <button id="brand" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
-                            aria-selected="false"><i class="fa-brands fa-bandcamp me-2"></i>Brands</button>
-                        <button id="type" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
-                            aria-selected="false"><i class="fa-solid fa-layer-group me-2"></i>Types</button>
-                        <button id="car" class="w-100 text-start nav-link mb-1 active" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
-                            aria-selected="false"><i class="fa-solid fa-car me-2"></i>Cars</button>
-                        <button id="ap" class="w-100 text-start nav-link mb-1" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-document" type="button" role="tab" aria-controls="v-pills-document"
-                            aria-selected="false"><i class="fa-solid fa-gears me-2"></i>Auto
+                        <button id="brand"
+                            class="w-100 text-start nav-link mb-1"
+                            data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button"
+                            role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i
+                                class="fa-brands fa-bandcamp me-2"></i>Brands</button>
+                        <button id="type" class="w-100 text-start nav-link mb-1"
+                            data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button"
+                            role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i
+                                class="fa-solid fa-layer-group me-2"></i>Types</button>
+                        <button id="car"
+                            class="w-100 text-start nav-link mb-1 active"
+                            data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button"
+                            role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i
+                                class="fa-solid fa-car me-2"></i>Cars</button>
+                        <button id="ap" class="w-100 text-start nav-link mb-1"
+                            data-bs-toggle="pill"
+                            data-bs-target="#v-pills-document" type="button"
+                            role="tab" aria-controls="v-pills-document"
+                            aria-selected="false"><i
+                                class="fa-solid fa-gears me-2"></i>Auto
                             Parts</button>
                     </div>
                 </div>
@@ -33,73 +51,108 @@
 
                 <div class="row justify-content-evenly main-content col-12">
                     <div class=" hstack">
-                        <div class="ms-auto add-experience close"><i class="fa-solid fa-arrow-left"></i>&nbsp;Back
+                        <div class="ms-auto add-experience close"><i
+                                class="fa-solid fa-arrow-left"></i>&nbsp;Back
                         </div>
                     </div><br>
                 </div>
 
-                <form class="edit-form" action="/car/insert" method="POST" enctype="multipart/form-data">
+                <form class="edit-form" action="/car/insert" method="POST"
+                    enctype="multipart/form-data">
                     <div class="form-container rounded bg-white">
                         <div class="row justify-content-center">
                             <div class="col-md-4 border-right">
-                                <div class="d-flex flex-column align-items-center text-center"><span
+                                <div
+                                    class="d-flex flex-column align-items-center text-center"><span
                                         class="font-weight-bold">Avatar</span>
 
-                                    <div class="small font-italic text-muted mb-4">JPG
+                                    <div
+                                        class="small font-italic text-muted mb-4">JPG
                                         or PNG no larger than 5 MB
                                     </div>
-                                    <input required id="input-id" type="file" multiple class="file form-control"
-                                        data-preview-file-type="text" name="avatar" data-show-upload="false">
+                                    <input required id="input-id" type="file"
+                                        multiple class="file form-control"
+                                        data-preview-file-type="text"
+                                        name="avatar" data-show-upload="false">
                                 </div>
                             </div>
                             <div class="col-md-7 border-right ms-5 ps-4">
                                 <div class>
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div
+                                        class="d-flex justify-content-between align-items-center mb-3">
                                         <h4 class="text-right">Car Info</h4>
                                     </div>
                                     <div class="row mt-2">
-                                        <div class="col-md-12"><label class="labels">Name</label><input type="text"
-                                                class="form-control" placeholder="name" required name="car_name">
+                                        <div class="col-md-12"><label
+                                                class="labels">Name</label><input
+                                                type="text"
+                                                class="form-control"
+                                                placeholder="name" required
+                                                name="car_name">
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-                                        <div class="col-md-12"><label class="labels">Select
-                                                Brand</label><select required name="brand" id="brand"
+                                        <div class="col-md-12"><label
+                                                class="labels">Select
+                                                Brand</label><select required
+                                                name="brand" id="brand"
                                                 class="form-select">
                                                 {{#each allBrands}}
-                                                <option value="{{this.brand}}">{{this.brand}}</option>
+                                                <option
+                                                    value="{{this.brand}}">{{this.brand}}</option>
                                                 {{/each}}
                                             </select>
                                         </div>
-                                        <div class="col-md-12"><label class="labels">Select
+                                        <div class="col-md-12"><label
+                                                class="labels">Select
                                                 Type</label>
-                                            <select required name="type" id="type" class="form-select">
+                                            <select required name="type"
+                                                id="type" class="form-select">
                                                 {{#each allTypes}}
-                                                <option value="{{this.type}}">{{this.type}}</option>
+                                                <option
+                                                    value="{{this.type}}">{{this.type}}</option>
                                                 {{/each}}
                                             </select>
                                         </div>
-                                        <div class="col-md-12"><label class="labels">Year</label><input type="number"
-                                                class="form-control" placeholder="year" required name="year">
+                                        <div class="col-md-12"><label
+                                                class="labels">Year</label><input
+                                                type="number"
+                                                class="form-control"
+                                                placeholder="year" required
+                                                name="year">
                                         </div>
-                                        <div class="col-md-12"><label class="labels">Price</label><input type="number"
-                                                class="form-control" placeholder="price" required name="price">
+                                        <div class="col-md-12"><label
+                                                class="labels">Price</label><input
+                                                type="number"
+                                                class="form-control"
+                                                placeholder="price" required
+                                                name="price">
                                         </div>
-                                        <div class="col-md-12"><label class="labels">Description</label><input
-                                                type="text" class="form-control" required name="description"
-                                                placeholder="description" value="{{curCar.description}}">
+                                        <div class="col-md-12"><label
+                                                class="labels">Description</label><input
+                                                type="text" class="form-control"
+                                                required name="description"
+                                                placeholder="description"
+                                                value="{{curCar.description}}">
                                         </div>
-                                        <div class="col-md-12"><label class="labels">Quantity</label><input
-                                                type="number" class="form-control" name="quantity" required
+                                        <div class="col-md-12"><label
+                                                class="labels">Quantity</label><input
+                                                type="number"
+                                                class="form-control"
+                                                name="quantity" required
                                                 placeholder="quantity">
                                         </div>
-                                        <div class="col-md-12"><label class="labels">Illustrate
+                                        <div class="col-md-12"><label
+                                                class="labels">Illustrate
                                                 Images</label>
-                                            <input id="input-24" name="other-images" type="file" multiple>
+                                            <input id="input-24"
+                                                name="other-images" type="file"
+                                                multiple>
                                         </div>
 
                                     </div>
-                                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button"
+                                    <div class="mt-5 text-center"><button
+                                            class="btn btn-primary profile-button"
                                             type="submit">Insert
                                         </button></div>
                                 </div>
@@ -107,7 +160,6 @@
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
